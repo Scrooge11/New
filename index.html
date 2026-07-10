@@ -625,7 +625,7 @@ function OverviewTab({ M, MC, cfg, setCfg, scenario, exportSchedule, goMemo }) {
         <Card title="Revenue bridge — 2026 → 2027 year-1" sub="effective uplift by segment, less legacy-rate carryover and realization drag ($M)">
           <ChartBox type="bar" data={bridge} options={{ plugins: { legend: { display: false },
             tooltip: { callbacks: { label: (c) => "$" + (c.raw[1] - c.raw[0]).toFixed(2) + "M" } } },
-            scales: { y: { ticks: { callback: (v) => "$" + v + "M" } } } }} height={280} />
+            scales: { y: { min: 100, ticks: { callback: (v) => "$" + v + "M" } } } }} height={280} />
         </Card>
         <Card title="Segment schedule" sub="avg standard rates">
           <table><thead><tr><th>Segment</th><th>N</th><th>'26</th><th>'27</th><th>Inc</th></tr></thead>
@@ -1171,7 +1171,7 @@ function MemoTab({ M, cfg, scenario, MC, statuses }) {
         <div className="chartbox">
           <ChartBox type="bar" data={exB} options={{ plugins: { legend: { display: false },
             tooltip: { callbacks: { label: (c) => "$" + (c.raw[1] - c.raw[0]).toFixed(2) + "M" } } },
-            scales: { y: { ticks: { callback: (v) => "$" + v + "M" }, ...memoAx }, x: memoAx } }} height={210} />
+            scales: { y: { min: 100, ticks: { callback: (v) => "$" + v + "M" }, ...memoAx }, x: memoAx } }} height={210} />
           <div className="cap-t">2026 revenue to 2027 net: segment uplift at realization, less modeled realization drag.</div>
         </div>
         <h2>Exhibit C — Segment Schedule (standard vs effective)</h2>
