@@ -153,6 +153,32 @@ table.mini tbody tr:hover{background:transparent;cursor:default}
 .tabcount{display:inline-block;background:var(--warn);color:#fff;font-size:10px;font-weight:700;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:1px}
 table.heat td{text-align:center}
 @media (max-width:1020px){.mcstats{grid-template-columns:1fr 1fr}}
+
+/* v5 management report */
+html{scroll-behavior:smooth}
+.rpt{background:#fff;color:var(--tx);border:1px solid var(--line2);border-radius:4px;max-width:1140px;margin:0 auto;padding:46px 50px;box-shadow:0 14px 40px rgba(23,37,31,.10)}
+.rpt-actions{display:flex;justify-content:flex-end;gap:8px;margin:0 auto 12px;max-width:1140px}
+.rpt h1{font-family:'Source Serif 4',serif;font-size:27px;font-weight:700;color:var(--ink);line-height:1.15}
+.rpt .rsub{font-size:12.5px;color:var(--dim);margin:6px 0 0}
+.rpt .rhead{border-bottom:2.5px solid var(--grn);padding-bottom:14px;margin-bottom:20px}
+.rpt h2{font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--grn);border-bottom:1px solid var(--line2);padding-bottom:6px;margin:32px 0 10px}
+.rpt h2 .secno{color:var(--gold);margin-right:8px}
+.rpt p{font-size:13px;line-height:1.65;margin-bottom:10px}
+.rpt section{scroll-margin-top:14px}
+.rpt table{font-size:11.8px;margin:8px 0 6px}
+.rpt thead th{position:static;cursor:default}
+.rpt tbody tr:hover{background:transparent;cursor:default}
+.rpt tbody tr.frm{background:var(--grn-soft)}
+.rpt tbody tr.frm td{font-weight:700;color:var(--ink)}
+.rpt .fnote{font-size:11px;color:var(--dim);margin:4px 0 0;line-height:1.5}
+.toc{columns:2;column-gap:34px;margin:6px 0 4px;padding:0}
+.toc li{list-style:none;break-inside:avoid;border-bottom:1px dashed var(--line);padding:6px 0;font-size:13px}
+.toc a{color:var(--ink);text-decoration:none;font-weight:600}
+.toc a:hover{color:var(--grn)}
+.toc .no{color:var(--gold);font-weight:700;display:inline-block;width:24px}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:1020px){.toc{columns:1}.rgrid{grid-template-columns:1fr}}
+@media print{.rpt{box-shadow:none;border:none;max-width:100%;padding:0}.rpt section{break-inside:avoid}}
 </style>
 </head>
 <body>
@@ -214,6 +240,8 @@ function genHistory(rate2026, incAvg) {
   return rates;
 }
 function finishTk(t) {
+  if (t.billReal == null) t.billReal = clamp(0.925 + (t.real - 0.78) * 0.35, 0.90, 0.99);
+  if (t.rateReal == null) t.rateReal = clamp(t.real / t.billReal, 0.70, 1.02);
   t.realHist = {}; t.hoursHist = {};
   YEARS.forEach((yr, i) => { const d = YEARS.length - 1 - i;
     t.realHist[yr] = clamp(t.real + d * R(-0.012, 0.004), 0.76, 0.985);
@@ -224,8 +252,10 @@ function makeMockTimekeepers() {
   const tks = []; let id = 1; const used = new Set();
   const nm = () => { let n; do { n = pick(FIRST) + " " + pick(LAST); } while (used.has(n)); used.add(n); return n; };
   for (let i = 0; i < 14; i++) tks.push(finishTk({ id: id++, name: nm(), title: "Partner", segment: "Litigation",
+    ptrType: i % 3 === 2 ? "Income" : "Share",
     cls: null, practice: PRACTICES_LIT[i % 4], rate2026: round5(R(1050, 1520)), hours: Math.round(R(1350, 2150)), real: R(0.82, 0.965) }));
   for (let i = 0; i < 12; i++) tks.push(finishTk({ id: id++, name: nm(), title: "Partner", segment: "Non-Litigation",
+    ptrType: i % 3 === 2 ? "Income" : "Share",
     cls: null, practice: PRACTICES_NONLIT[i % 6], rate2026: round5(R(1120, 1640)), hours: Math.round(R(1300, 2100)), real: R(0.83, 0.97) }));
   for (let i = 0; i < 8; i++) tks.push(finishTk({ id: id++, name: nm(), title: "Counsel",
     segment: i % 2 ? "Litigation" : "Non-Litigation", cls: null,
@@ -243,6 +273,40 @@ function makeMockTimekeepers() {
   return tks;
 }
 const MOCK_TKS = makeMockTimekeepers();
+
+/* ---------- mock top-50 client book (MOCK — replace with billing-system extract) ---------- */
+const CLIENT_DEFS = [
+  ["Northgate Energy Holdings","Energy"],["Vantera Pharmaceuticals","Life Sciences"],["Cobalt Ridge Capital","Private Equity"],
+  ["Halloran Industrial Group","Manufacturing"],["Meridian Assurance Co.","Insurance"],["TruNorth Logistics","Transportation"],
+  ["Argent Financial Corp","Banking"],["Silverline Media Group","Media"],["Beacon Health Systems","Healthcare"],
+  ["Crestwood Properties Trust","Real Estate"],["Ionis Semiconductor","Technology"],["Pinnacle Foods International","Consumer"],
+  ["Atlas Marine Underwriters","Insurance"],["Quarry Lake Partners","Private Equity"],["Helix Biotherapeutics","Life Sciences"],
+  ["Standard Rail Corp","Transportation"],["Orion Data Systems","Technology"],["Fairmont Hospitality Group","Hospitality"],
+  ["Kingsbridge Utilities","Energy"],["Delta Apparel Brands","Consumer"],["Westfield Aerospace","Aerospace"],
+  ["Cardinal Chemical Co.","Chemicals"],["Lakeshore Bancshares","Banking"],["Provident Mutual Life","Insurance"],
+  ["Summit Ridge Resources","Mining"],["Novara Automotive","Automotive"],["Blue Harbor Shipping","Transportation"],
+  ["Granite Peak Insurance","Insurance"],["Veritas Grid Partners","Energy"],["Amberline Retail Group","Retail"],
+  ["Foxglove Ventures","Venture Capital"],["Harborview Medical Centers","Healthcare"],["Stellar Freight Systems","Transportation"],
+  ["Monarch Paper Company","Manufacturing"],["Citrine Software","Technology"],["Redwood Timber Holdings","Forestry"],
+  ["Palisade Defense Group","Defense"],["Nimbus Cloudworks","Technology"],["Eastgate Development","Real Estate"],
+  ["Torrent Hydro Power","Energy"],["Sablewood Spirits Co.","Consumer"],["Ivory Tower Publishing","Media"],
+  ["Quantum Ledger Inc.","Fintech"],["Marlowe & Finch Retail","Retail"],["Osprey Airlines","Aviation"],
+  ["Birchwall Construction","Construction"],["Gilded Gate Resorts","Gaming"],["Thornfield AgriScience","Agriculture"],
+  ["Lumen Court Analytics","Technology"],["Windward Reinsurance","Reinsurance"],
+];
+const MOCK_CLIENTS = (() => {
+  const cr = mulberry32(90210); const CR = (lo, hi) => lo + cr() * (hi - lo);
+  const cpick = (a) => a[Math.floor(cr() * a.length)];
+  return CLIENT_DEFS.map(([name, industry], i) => {
+    const fees = 6.2e6 * Math.pow(0.916, i) * CR(0.86, 1.14);
+    const effRate = round5(CR(500, 1000));
+    const rateReal = CR(0.86, 0.99), billReal = CR(0.90, 0.99);
+    const cap = cr() < 0.42 ? +CR(2, 5).toFixed(1) : null;
+    return { name, industry, fees, hours: Math.round(fees / effRate), effRate,
+      rateReal, billReal, real: rateReal * billReal, cap,
+      lead: cpick([...PRACTICES_LIT, ...PRACTICES_NONLIT]) };
+  }).sort((a, b) => b.fees - a.fees);
+})();
 
 /* ---------- engine (pure — reusable for scenarios & sensitivity) ---------- */
 function buildPeerStats(selectedIds, peerInfl) {
@@ -921,10 +985,11 @@ function TrendsTab({ M }) {
 }
 
 /* ---------- DATA ---------- */
-const CSV_TEMPLATE = `name,title,segment,class,practice,rate_2026,hours_t12m,realization_pct,rate_2025,rate_2024,rate_2023
-J. Example,Partner,Litigation,,Commercial Litigation,1250,1875,91.2,1175,1105,1040
-A. Example,Associate,Non-Litigation,4,M&A / PE,775,2050,86.5,,,
-P. Example,Paralegal,Litigation,,Product Liability,365,1650,94.0,,,`;
+const CSV_TEMPLATE = `name,title,segment,class,practice,partner_type,rate_2026,hours_t12m,realization_pct,rate_realization_pct,billing_realization_pct,rate_2025,rate_2024,rate_2023
+J. Example,Partner,Litigation,,Commercial Litigation,Share,1250,1875,,95.5,95.5,1175,1105,1040
+K. Example,Partner,Non-Litigation,,M&A / PE,Income,1180,1720,89.4,,,1110,1045,985
+A. Example,Associate,Non-Litigation,4,M&A / PE,,775,2050,86.5,,,,,
+P. Example,Paralegal,Litigation,,Product Liability,,365,1650,94.0,,,,,`;
 
 function parseCsvRows(results) {
   const errors = []; const tks = []; let id = 1;
@@ -939,12 +1004,18 @@ function parseCsvRows(results) {
       if (!(cls >= 1 && cls <= 8)) { errors.push(`Row ${line}: associate class must be 1–8`); return; } }
     const rate2026 = parseFloat(row.rate_2026), hours = parseFloat(row.hours_t12m);
     let real = parseFloat(row.realization_pct);
+    let rateReal = parseFloat(row.rate_realization_pct), billReal = parseFloat(row.billing_realization_pct);
+    if (real > 1.5) real = real / 100;
+    if (rateReal > 1.5) rateReal = rateReal / 100;
+    if (billReal > 1.5) billReal = billReal / 100;
+    if (!(real > 0) && rateReal > 0 && billReal > 0) real = rateReal * billReal;
     if (!(rate2026 > 0)) { errors.push(`Row ${line}: rate_2026 missing/invalid`); return; }
     if (!(hours > 0)) { errors.push(`Row ${line}: hours_t12m missing/invalid`); return; }
-    if (!(real > 0)) { errors.push(`Row ${line}: realization_pct missing/invalid`); return; }
-    if (real > 1.5) real = real / 100;
+    if (!(real > 0)) { errors.push(`Row ${line}: realization missing/invalid (supply realization_pct or rate_/billing_realization_pct)`); return; }
     const t = { id: id++, name, title, segment, cls, practice: T(row.practice) || "—",
+      ptrType: title === "Partner" ? (/^inc/i.test(T(row.partner_type)) ? "Income" : "Share") : null,
       rate2026: round5(rate2026), hours: Math.round(hours), real: clamp(real, 0.5, 1.05), rates: {} };
+    if (rateReal > 0 && billReal > 0) { t.rateReal = clamp(rateReal, 0.5, 1.05); t.billReal = clamp(billReal, 0.5, 1.05); }
     const hist = { 2026: round5(rate2026) };
     [["rate_2025",2025],["rate_2024",2024],["rate_2023",2023]].forEach(([k, yr]) => { const v = parseFloat(row[k]); if (v > 0) hist[yr] = round5(v); });
     let last = hist[2026];
@@ -1004,8 +1075,8 @@ function DataTab({ tks, setTks, dataSource, setDataSource, exportSchedule, audit
       </Card>
       <Card title="Load specification" sub="hand this to finance / IT">
         <div className="notes">
-          <p><b>Required:</b> name · title (Partner / Counsel / Associate / Paralegal) · segment (Litigation / Non-Litigation) · class (1–8, associates only) · practice · rate_2026 · hours_t12m · realization_pct (accepts 91.2 or 0.912).</p>
-          <p><b>Optional:</b> rate_2025 / rate_2024 / rate_2023 for true YoY lines; missing years back-fill at an assumed 6% walk-back.</p>
+          <p><b>Required:</b> name · title (Partner / Counsel / Associate / Paralegal) · segment (Litigation / Non-Litigation) · class (1–8, associates only) · practice · rate_2026 · hours_t12m · realization_pct (accepts 91.2 or 0.912), or rate_realization_pct + billing_realization_pct in its place (combined = product).</p>
+          <p><b>Optional:</b> partner_type (Share / Income, partners only — defaults Share) · rate_realization_pct / billing_realization_pct (back-solved from combined if omitted) · rate_2025 / rate_2024 / rate_2023 for true YoY lines; missing years back-fill at an assumed 6% walk-back.</p>
           <p><b>Behavior:</b> rates round to nearest $5 on load; failing rows are skipped and itemized by line number — nothing silently mangles. All processing is in-browser; safe for confidential extracts on a firm machine.</p>
         </div>
       </Card>
@@ -1117,13 +1188,243 @@ function MemoTab({ M, cfg, scenario, MC, statuses }) {
 }
 
 
+/* ---------- MANAGEMENT REPORT ---------- */
+const RPT_GROUPS = [
+  { label: "Share Partner — Litigation", coh: "PtrLit", test: (r) => r.title === "Partner" && r.ptrType === "Share" && r.segment === "Litigation" },
+  { label: "Share Partner — Non-Litigation", coh: "PtrNonLit", test: (r) => r.title === "Partner" && r.ptrType === "Share" && r.segment !== "Litigation" },
+  { label: "Income Partner — Litigation", coh: "PtrLit", test: (r) => r.title === "Partner" && r.ptrType !== "Share" && r.segment === "Litigation" },
+  { label: "Income Partner — Non-Litigation", coh: "PtrNonLit", test: (r) => r.title === "Partner" && r.ptrType !== "Share" && r.segment !== "Litigation" },
+  ...[1,2,3,4,5,6,7,8].map((c) => ({ label: "Associate — Class " + c, coh: "A" + c, test: (r) => r.title === "Associate" && r.cls === c })),
+];
+const TITLE_GROUPS = [
+  ["Share Partners", (r) => r.title === "Partner" && r.ptrType === "Share"],
+  ["Income Partners", (r) => r.title === "Partner" && r.ptrType !== "Share"],
+  ["Counsel", (r) => r.title === "Counsel"],
+  ["Associates (scale)", (r) => r.title === "Associate"],
+  ["Paralegals", (r) => r.title === "Paralegal"],
+];
+const RPT_TOC = [
+  "Executive Summary — Increase by Title & Rate Ranges",
+  "Peer Group Listing",
+  "Summary Table — Cohort Economics vs Peer Panel",
+  "Summary of Top 50 Clients",
+  "Peer Data — Detailed Rankings",
+  "Associate Rate Ladder — Market & Step Recommendation",
+  "2027 Partner & Counsel Timekeeper Detail & Recommendation",
+];
+const LFT = { textAlign: "left" };
+
+function RptRank({ M, coh, title }) {
+  const firmVal = M.firmCohort26[coh];
+  const med = M.peer.stats[coh].p50 || 1;
+  const entries = [
+    ...M.peer.firms.map((f) => ({ name: f.name, src: f.src, v: f.rates[coh], firm: false })),
+    ...(firmVal ? [{ name: "Meridian & Cole", src: "—", v: firmVal, firm: true }] : []),
+  ].sort((a, b) => b.v - a.v);
+  return (
+    <div>
+      <div className="slabel" style={{ marginBottom: 4 }}>{title}</div>
+      <table className="mini"><thead><tr><th>#</th><th style={LFT}>Firm</th><th>Src</th><th>2026 rate</th><th>vs median</th></tr></thead>
+        <tbody>{entries.map((e, i) => (
+          <tr key={e.name} className={e.firm ? "frm" : ""}>
+            <td>{i + 1}</td><td className={e.firm ? "tname" : ""} style={LFT}>{e.name}</td>
+            <td className="dim">{e.src}</td><td>{fmt$(e.v)}</td>
+            <td className={e.v >= med ? "pos-t" : "neg-t"}>{e.v >= med ? "+" : ""}{fmtPct((e.v / med - 1) * 100)}</td></tr>))}</tbody>
+      </table>
+    </div>
+  );
+}
+
+function MgmtReportTab({ M, MC, cfg, scenario, dataSource }) {
+  const summary = useMemo(() => RPT_GROUPS.map((g) => {
+    const rows = M.rows.filter(g.test); if (!rows.length) return null;
+    const gh = rows.reduce((a, r) => a + r.hours, 0) || 1;
+    const avg26 = rows.reduce((a, r) => a + r.rate2026, 0) / rows.length;
+    const ps = M.peer.stats[g.coh];
+    const xs = M.peer.firms.map((f) => f.rates[g.coh]);
+    return { label: g.label, n: rows.length, hours: gh, avg26,
+      rateReal: rows.reduce((a, r) => a + (r.rateReal || r.real) * r.hours, 0) / gh,
+      billReal: rows.reduce((a, r) => a + (r.billReal || 1) * r.hours, 0) / gh,
+      comb: rows.reduce((a, r) => a + r.real * r.hours, 0) / gh,
+      p25: ps.p25, p50: ps.p50, vsMed: (avg26 / (ps.p50 || 1) - 1) * 100,
+      rank: xs.filter((x) => x > avg26).length + 1, of: xs.length + 1 };
+  }).filter(Boolean), [M]);
+
+  const byTitle = useMemo(() => TITLE_GROUPS.map(([label, test]) => {
+    const rows = M.rows.filter(test); if (!rows.length) return null;
+    const gh = rows.reduce((a, r) => a + r.hours, 0) || 1;
+    const incs = rows.map((r) => r.incPct);
+    return { label, n: rows.length,
+      lo26: Math.min(...rows.map((r) => r.rate2026)), hi26: Math.max(...rows.map((r) => r.rate2026)),
+      lo27: Math.min(...rows.map((r) => r.rate2027)), hi27: Math.max(...rows.map((r) => r.rate2027)),
+      inc: rows.reduce((a, r) => a + r.incPct * r.hours, 0) / gh,
+      loInc: Math.min(...incs), hiInc: Math.max(...incs) };
+  }).filter(Boolean), [M]);
+
+  const clients = MOCK_CLIENTS;
+  const cTot = clients.reduce((a, c) => a + c.fees, 0);
+  const top10 = clients.slice(0, 10).reduce((a, c) => a + c.fees, 0);
+  const capped = clients.filter((c) => c.cap != null);
+  const cappedFees = capped.reduce((a, c) => a + c.fees, 0);
+
+  const ladderRows = useMemo(() => M.ladder.map((l, i) => {
+    const next = M.ladder[i + 1];
+    return { cls: l.cls, firm26: l.firm26, p25: l.p25, p50: l.p50, p50_27: l.p50_27, firm27: l.firm27,
+      scaleMove: l.firm26 && l.firm27 ? (l.firm27 / l.firm26 - 1) * 100 : null,
+      vs27: l.firm27 ? (l.firm27 / (l.p50_27 || 1) - 1) * 100 : null,
+      step27: next && next.firm27 ? next.firm27 : null,
+      stepMove: l.firm26 && next && next.firm27 ? (next.firm27 / l.firm26 - 1) * 100 : null };
+  }), [M]);
+
+  const pc = useMemo(() => [...M.rows.filter((r) => r.title === "Partner" || r.title === "Counsel")]
+    .sort((a, b) => a.title !== b.title ? (a.title === "Partner" ? -1 : 1)
+      : (a.ptrType || "") !== (b.ptrType || "") ? (a.ptrType === "Share" ? -1 : 1)
+      : b.rate2026 - a.rate2026), [M]);
+
+  const assocMatrix = useMemo(() => {
+    const rows = [...M.peer.firms.map((f) => ({ name: f.name, src: f.src, rates: f.rates, firm: false })),
+      { name: "Meridian & Cole", src: "—", rates: Object.fromEntries(COHORTS.map((c) => [c, M.firmCohort26[c]])), firm: true }];
+    return rows.sort((a, b) => (b.rates.A8 || 0) - (a.rates.A8 || 0));
+  }, [M]);
+
+  const secno = (n) => <span className="secno">{n}.</span>;
+  const dt = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+
+  return (
+    <div>
+      <div className="noprint rpt-actions"><button className="btn gold" onClick={() => window.print()}>Print / PDF</button></div>
+      <div className="rpt">
+        <div className="rhead">
+          <h1>2027 Rate Committee — Management Report</h1>
+          <p className="rsub">Meridian &amp; Cole LLP · {scenario} scenario · {M.peer.firms.length}-firm peer panel (BRASS + Valeo) · data source: {dataSource} · prepared {dt}</p>
+        </div>
+
+        <h2>Table of Contents</h2>
+        <ul className="toc">{RPT_TOC.map((t, i) => (
+          <li key={t}><span className="no">{i + 1}.</span><a href={"#rpt-s" + (i + 1)}>{t}</a></li>))}</ul>
+
+        <section id="rpt-s1">
+          <h2>{secno(1)} Executive Summary — Increase by Title &amp; Rate Ranges</h2>
+          <p>The recommended 2027 schedule produces a blended standard-rate increase of <b>+{fmtPct(M.blendedInc)}</b> ({fmt$(M.blended26)} → {fmt$(M.blended27)}, hours-weighted) and an effective increase of <b>+{fmtPct(M.effBlendedInc)}</b> after client rate caps ({fmtPct(cfg.capShare, 0)} of the book capped at an average {fmtPct(cfg.capLevel, 1)}). Full-year effective uplift is <b>{fmtM(M.grossEff)}</b>; after a {fmtPct(cfg.velocity, 0)} year-1 repricing velocity and modeled realization drag, year-1 net uplift is <b>{fmtM(M.net)}</b>.{MC ? ` Monte Carlo testing (${MC.N.toLocaleString()} runs) shows positive year-1 net uplift in ${(MC.probPos * 100).toFixed(1)}% of scenarios, with 90% confidence of at least ${fmtM(MC.p10)}.` : ""}</p>
+          <p>Following the increase, {M.abovePeer} of {M.headcount} timekeepers sit above the projected 2027 peer-panel median (peers assumed to move {fmtPct(cfg.peerInfl, 1)}). {M.holds.length} timekeeper(s) are held below the scoring threshold, {M.ovr.length} carry manual overrides, and {M.flagged.length} carry QC flags itemized in the console.</p>
+          <table><thead><tr><th>Title</th><th>N</th><th>2026 rate range</th><th>2027 rate range</th><th>Wtd increase</th><th>Increase range</th></tr></thead>
+            <tbody>{byTitle.map((g) => (
+              <tr key={g.label}><td className="tname">{g.label}</td><td>{g.n}</td>
+                <td>{fmt$(g.lo26)} – {fmt$(g.hi26)}</td><td className="strong">{fmt$(g.lo27)} – {fmt$(g.hi27)}</td>
+                <td className="pos-t">+{fmtPct(g.inc)}</td><td className="dim">{fmtPct(g.loInc)} – {fmtPct(g.hiInc)}</td></tr>))}</tbody></table>
+          <p className="fnote">Increase % is hours-weighted within each title group; ranges reflect individual standard rates after rounding to the nearest ${cfg.roundTo}.</p>
+        </section>
+
+        <section id="rpt-s2">
+          <h2>{secno(2)} Peer Group Listing</h2>
+          <p>The panel comprises {M.peer.firms.length} firms selected in the console. Quartiles, medians, rankings and headroom scoring throughout this report recompute live from this selection.</p>
+          <table className="mini"><thead><tr><th style={LFT}>Firm</th><th>Source</th><th>Ptr Lit</th><th>Ptr Non-Lit</th><th>Counsel</th><th>A1</th><th>A8</th><th>Paralegal</th><th>4-yr avg move</th></tr></thead>
+            <tbody>{M.peer.firms.map((f) => (
+              <tr key={f.id}><td className="tname">{f.name}</td><td className="dim">{f.src}</td>
+                <td>{fmt$(f.rates.PtrLit)}</td><td>{fmt$(f.rates.PtrNonLit)}</td><td>{fmt$(f.rates.Counsel)}</td>
+                <td>{fmt$(f.rates.A1)}</td><td>{fmt$(f.rates.A8)}</td><td>{fmt$(f.rates.Paralegal)}</td>
+                <td className="pos-t">+{fmtPct(f.incHist.reduce((a, b) => a + b, 0) / f.incHist.length)}</td></tr>))}</tbody></table>
+          <p className="fnote">BRASS = PwC Billing Rate &amp; Associate Salary Survey (confidential composite). Valeo = Valeo Partners publicly filed rate data. Values shown are placeholders pending current-cycle extracts; 4-yr avg move is each firm's average annual standard-rate increase 2023–2026.</p>
+        </section>
+
+        <section id="rpt-s3">
+          <h2>{secno(3)} Summary Table — Cohort Economics vs Peer Panel</h2>
+          <div className="twrap" style={{ maxHeight: "none" }}><table>
+            <thead><tr><th>Cohort</th><th>2026 rate</th><th>Head-count</th><th>Billed hrs (T12M)</th><th>Rate real.</th><th>Billing real.</th><th>Combined real.</th><th>Peer P25</th><th>Peer median</th><th>% vs median</th><th>Firm rank</th></tr></thead>
+            <tbody>{summary.map((s) => (
+              <tr key={s.label}>
+                <td className="tname">{s.label}</td><td>{fmt$(s.avg26)}</td><td>{s.n}</td><td>{s.hours.toLocaleString()}</td>
+                <td>{fmtPct(s.rateReal * 100)}</td><td>{fmtPct(s.billReal * 100)}</td><td>{fmtPct(s.comb * 100)}</td>
+                <td>{fmt$(s.p25)}</td><td className="gold-t">{fmt$(s.p50)}</td>
+                <td className={s.vsMed >= 0 ? "pos-t" : "neg-t"}>{s.vsMed >= 0 ? "+" : ""}{fmtPct(s.vsMed)}</td>
+                <td className="strong">{s.rank} of {s.of}</td></tr>))}</tbody>
+          </table></div>
+          <p className="fnote">2026 rate is the cohort average standard rate (associates: class scale). Rate realization = agreed ÷ standard rate; billing realization = billed ÷ worked value; combined = product of the two. Firm rank places Meridian &amp; Cole within the {M.peer.firms.length}-firm panel plus the firm itself (1 = highest rate). Share and Income partners are benchmarked against the same partner peer cohorts — survey data does not split partner class.</p>
+        </section>
+
+        <section id="rpt-s4">
+          <h2>{secno(4)} Summary of Top 50 Clients</h2>
+          <p>The top 50 clients represent <b>{fmtM(cTot)}</b> of 2026 fees; the top 10 account for {fmtPct(top10 / cTot * 100, 0)} of that total. {capped.length} of 50 operate under negotiated rate caps covering {fmtM(cappedFees)} ({fmtPct(cappedFees / cTot * 100, 0)}) of top-50 fees — these agreements drive the {fmtM(M.capLeak)} rack-value leakage reflected in the effective economics.</p>
+          <div className="twrap" style={{ maxHeight: 430 }}><table className="mini">
+            <thead><tr><th>#</th><th style={LFT}>Client</th><th style={LFT}>Industry</th><th style={LFT}>Lead practice</th><th>2026 fees</th><th>% of top 50</th><th>Billed hrs</th><th>Eff. rate</th><th>Rate real.</th><th>Billing real.</th><th>Combined</th><th>Rate cap</th></tr></thead>
+            <tbody>{clients.map((c, i) => (
+              <tr key={c.name}>
+                <td>{i + 1}</td><td className="tname" style={LFT}>{c.name}</td><td className="dim" style={LFT}>{c.industry}</td><td className="dim" style={LFT}>{c.lead}</td>
+                <td className="strong">{fmtM(c.fees)}</td><td>{fmtPct(c.fees / cTot * 100)}</td><td>{c.hours.toLocaleString()}</td><td>{fmt$(c.effRate)}</td>
+                <td>{fmtPct(c.rateReal * 100)}</td><td>{fmtPct(c.billReal * 100)}</td><td>{fmtPct(c.real * 100)}</td>
+                <td className={c.cap != null ? "warn-t" : "dim"}>{c.cap != null ? "Y · " + fmtPct(c.cap) + " cap" : "—"}</td></tr>))}</tbody>
+          </table></div>
+          <p className="fnote">Client figures are mock placeholders pending the billing-system extract. Capped clients constrain the standard increase to the negotiated cap; the effective-rate economics in Section 1 apply the console's cap-share and cap-level assumptions.</p>
+        </section>
+
+        <section id="rpt-s5">
+          <h2>{secno(5)} Peer Data — Detailed Rankings</h2>
+          <div className="rgrid">
+            <RptRank M={M} coh="PtrLit" title="Partners — Litigation (2026)" />
+            <RptRank M={M} coh="PtrNonLit" title="Partners — Non-Litigation (2026)" />
+            <RptRank M={M} coh="Counsel" title="Counsel (2026)" />
+            <RptRank M={M} coh="Paralegal" title="Paralegals (2026)" />
+          </div>
+          <div className="slabel" style={{ margin: "18px 0 4px" }}>Associate scale by class (2026) — firms ranked by senior-class rate</div>
+          <div className="twrap" style={{ maxHeight: "none" }}><table className="mini">
+            <thead><tr><th style={LFT}>Firm</th><th>Src</th>{[1,2,3,4,5,6,7,8].map((c) => <th key={c}>A{c}</th>)}</tr></thead>
+            <tbody>{assocMatrix.map((f) => (
+              <tr key={f.name} className={f.firm ? "frm" : ""}>
+                <td className={f.firm ? "tname" : ""} style={LFT}>{f.name}</td><td className="dim">{f.src}</td>
+                {[1,2,3,4,5,6,7,8].map((c) => <td key={c}>{f.rates["A" + c] ? fmt$(f.rates["A" + c]) : "–"}</td>)}</tr>))}</tbody>
+          </table></div>
+        </section>
+
+        <section id="rpt-s6">
+          <h2>{secno(6)} Associate Rate Ladder — Market &amp; Step Recommendation</h2>
+          <p>The recommended ladder applies a uniform market move of <b>+{fmtPct(cfg.assocScale, 1)}</b> to every class, preserving internal equity and recruiting parity. A progressing associate additionally advances one class: the step-up column shows the 2027 rate the class steps into, and the total-move column combines the market move with the class step.</p>
+          <table><thead><tr><th>Class</th><th>Firm '26</th><th>Panel P25</th><th>Panel med '26</th><th>Panel med '27E</th><th>Reco '27 (market)</th><th>Market move</th><th>vs med '27E</th><th>Step-up '27</th><th>Total move (market + step)</th></tr></thead>
+            <tbody>{ladderRows.map((l) => (
+              <tr key={l.cls}>
+                <td className="tname">{l.cls}</td>
+                <td>{l.firm26 ? fmt$(l.firm26) : "–"}</td><td>{fmt$(l.p25)}</td><td className="gold-t">{fmt$(l.p50)}</td><td>{fmt$(l.p50_27)}</td>
+                <td className="strong">{l.firm27 ? fmt$(l.firm27) : "–"}</td>
+                <td className="pos-t">{l.scaleMove != null ? "+" + fmtPct(l.scaleMove) : "–"}</td>
+                <td className={l.vs27 == null ? "dim" : l.vs27 >= 0 ? "pos-t" : "neg-t"}>{l.vs27 != null ? (l.vs27 >= 0 ? "+" : "") + fmtPct(l.vs27) : "–"}</td>
+                <td>{l.step27 ? fmt$(l.step27) : "— promotion track"}</td>
+                <td className="strong">{l.stepMove != null ? "+" + fmtPct(l.stepMove) : "—"}</td></tr>))}</tbody></table>
+          <p className="fnote">Market move = uniform scale increase (console lever). Panel med '27E projects the selected panel's median forward at the assumed peer move of {fmtPct(cfg.peerInfl, 1)}. Class 8 has no step rate — seniors move to counsel or partner consideration.</p>
+        </section>
+
+        <section id="rpt-s7">
+          <h2>{secno(7)} 2027 Partner &amp; Counsel Timekeeper Detail &amp; Recommendation</h2>
+          <p>{pc.length} partners and counsel are scored individually on trailing-twelve-month hours ({(cfg.wHours * 100).toFixed(0)}%), realization ({(cfg.wReal * 100).toFixed(0)}%) and peer headroom ({(cfg.wPeer * 100).toFixed(0)}%). Scores map to increases between {fmtPct(cfg.floorPct, 1)} and {fmtPct(cfg.capPct, 1)}; scores below {cfg.holdBelow} are held. Manual overrides are marked in the basis column and reflected in all totals.</p>
+          <div className="twrap" style={{ maxHeight: "none" }}><table className="mini">
+            <thead><tr><th>Timekeeper</th><th style={LFT}>Type</th><th>Seg</th><th style={LFT}>Practice</th><th>T12M hrs</th><th>Rate real.</th><th>Billing real.</th><th>Combined</th><th>Score</th><th>2026</th><th>Inc %</th><th>2027 reco</th><th>vs med '27E</th><th>Basis</th></tr></thead>
+            <tbody>{pc.map((r) => (
+              <tr key={r.id}>
+                <td className="tname">{r.name}</td>
+                <td style={LFT}>{r.title === "Counsel" ? "Counsel" : (r.ptrType || "Share") + " Ptr"}</td>
+                <td className="dim">{r.segment === "Litigation" ? "Lit" : "N-Lit"}</td>
+                <td className="dim" style={LFT}>{r.practice}</td>
+                <td>{r.hours.toLocaleString()}</td>
+                <td>{fmtPct((r.rateReal || r.real) * 100)}</td><td>{fmtPct((r.billReal || 1) * 100)}</td><td>{fmtPct(r.real * 100)}</td>
+                <td>{r.score}</td><td>{fmt$(r.rate2026)}</td><td className="pos-t">+{fmtPct(r.incPct)}</td>
+                <td className="strong">{fmt$(r.rate2027)}</td>
+                <td className={r.vsPeer27 >= 0 ? "pos-t" : "neg-t"}>{r.vsPeer27 >= 0 ? "+" : ""}{fmtPct(r.vsPeer27)}</td>
+                <td className="dim">{r.mode}</td></tr>))}</tbody>
+          </table></div>
+          <p className="fnote">vs med '27E compares the recommended rate to the projected 2027 median of the timekeeper's peer cohort (litigation and non-litigation partners benchmarked separately). Basis: scored = methodology output · hold = below score threshold · override = committee manual entry.</p>
+        </section>
+
+        <p className="fnote" style={{ marginTop: 24 }}>Prepared by the Office of the CFO — Pricing &amp; Rates. All computation runs in-browser from the console levers; peer and client values are placeholders pending BRASS / Valeo and billing-system extracts.</p>
+      </div>
+    </div>
+  );
+}
+
 /* ---------- shell v4 ---------- */
 const PRESETS = {
   Conservative: { floorPct: 1.5, capPct: 8, holdBelow: 35, assocScale: 6, peerInfl: 6, dragBps: 25, capShare: 45, capLevel: 3.5, velocity: 60, adj: { PtrLit: 0, PtrNonLit: 0, Counsel: 0, Paralegal: 0 } },
   Base: { floorPct: 2, capPct: 12, holdBelow: 30, assocScale: 8, peerInfl: 7, dragBps: 15, capShare: 35, capLevel: 4, velocity: 70, adj: { PtrLit: 0, PtrNonLit: 0, Counsel: 0, Paralegal: 0 } },
   Aggressive: { floorPct: 3, capPct: 14, holdBelow: 25, assocScale: 10, peerInfl: 8, dragBps: 10, capShare: 30, capLevel: 4.5, velocity: 78, adj: { PtrLit: 0.5, PtrNonLit: 0.5, Counsel: 0, Paralegal: 0 } },
 };
-const TABS = ["Overview", "Rate Model", "Peer Panel", "Risk & QC", "Trends", "Data", "Memo"];
+const TABS = ["Overview", "Rate Model", "Peer Panel", "Risk & QC", "Trends", "Data", "Mgmt Report", "Memo"];
 const now = () => new Date().toLocaleTimeString("en-US", { hour12: false });
 
 function App() {
@@ -1211,6 +1512,7 @@ function App() {
         {tab === "Risk & QC" && <RiskTab M={M} MC={MC} cfg={cfg} statuses={statuses} setStatus={setStatus} bulkApprove={bulkApprove} />}
         {tab === "Trends" && <TrendsTab M={M} />}
         {tab === "Data" && <DataTab tks={tks} setTks={setTks} dataSource={dataSource} setDataSource={setDataSource} exportSchedule={exportSchedule} auditLog={auditLog} exportAudit={exportAudit} logEvent={logEvent} />}
+        {tab === "Mgmt Report" && <MgmtReportTab M={M} MC={MC} cfg={cfg} scenario={scenario} dataSource={dataSource} />}
         {tab === "Memo" && <MemoTab M={M} cfg={cfg} scenario={scenario} MC={MC} statuses={statuses} />}
       </main>
       <footer className="foot noprint">Peer values are placeholders pending BRASS / Valeo extracts · All computation is in-browser; no data leaves this file · Monte Carlo is seeded for reproducibility.</footer>
