@@ -495,15 +495,41 @@ Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
 Chart.defaults.font.size = 11;
 Chart.defaults.borderColor = "#E3E9E2";
 
-function ChartBox({ type, data, options, height = 260 }) {
+function ChartBox({ type, data, options, plugins, height = 260 }) {
   const ref = useRef(null), inst = useRef(null);
   useEffect(() => {
     if (inst.current) inst.current.destroy();
-    inst.current = new Chart(ref.current, { type, data, options: { responsive: true, maintainAspectRatio: false, ...options } });
+    inst.current = new Chart(ref.current, { type, data, options: { responsive: true, maintainAspectRatio: false, ...options }, plugins: plugins || [] });
     return () => { if (inst.current) { inst.current.destroy(); inst.current = null; } };
-  }, [data, options, type]);
+  }, [data, options, type, plugins]);
   return <div style={{ height }}><canvas ref={ref} /></div>;
 }
+/* draws each point's value above it — used on the timekeeper profile charts */
+const VALUE_LABELS = { id: "valueLabels",
+  afterDatasetsDraw(chart, args, opts) {
+    if (!opts || opts.display === false) return;
+    const { ctx } = chart;
+    ctx.save(); ctx.font = "600 9.5px 'IBM Plex Sans', sans-serif"; ctx.fillStyle = opts.color || "#4A5A50"; ctx.textAlign = "center";
+    chart.data.datasets.forEach((ds, di) => {
+      const meta = chart.getDatasetMeta(di); if (meta.hidden) return;
+      meta.data.forEach((pt, i) => { const v = ds.data[i]; if (v == null) return;
+        ctx.fillText(opts.fmt ? opts.fmt(v) : v, pt.x, pt.y - 6); });
+    });
+    ctx.restore();
+  } };
+/* shades the hold zone on the score-mapping chart */
+const HOLD_SHADE = { id: "holdShade",
+  beforeDatasetsDraw(chart, args, opts) {
+    if (!opts || !opts.limit) return;
+    const { ctx, chartArea, scales: { x } } = chart;
+    const xr = Math.min(x.getPixelForValue(opts.limit), chartArea.right);
+    if (xr <= chartArea.left) return;
+    ctx.save(); ctx.fillStyle = "rgba(183,121,31,.07)";
+    ctx.fillRect(chartArea.left, chartArea.top, xr - chartArea.left, chartArea.bottom - chartArea.top);
+    ctx.fillStyle = "#B7791F"; ctx.font = "600 10px 'IBM Plex Sans', sans-serif"; ctx.textAlign = "left";
+    ctx.fillText("hold zone — score < " + opts.limit, chartArea.left + 6, chartArea.top + 13);
+    ctx.restore();
+  } };
 const legend = (pos = "bottom") => ({ legend: { position: pos, labels: { boxWidth: 10, boxHeight: 10, padding: 10, usePointStyle: true } } });
 const money = { ticks: { callback: (v) => "$" + v.toLocaleString() } };
 const pct = { ticks: { callback: (v) => v + "%" } };
@@ -540,6 +566,18 @@ function Spark({ pts, color = "#14563F", fmt }) {
     tooltip: { callbacks: { label: (c) => fmt ? fmt(c.parsed.y) : c.parsed.y } } },
     scales: { x: { display: false }, y: { display: false } } }), [fmt]);
   return <ChartBox type="line" data={data} options={options} height={44} />;
+}
+function TrendChart({ pts, color = "#14563F", fmt, height = 100 }) {
+  const data = useMemo(() => ({ labels: pts.map((p) => p.yr),
+    datasets: [{ data: pts.map((p) => p.v), borderColor: color, borderWidth: 1.8, pointRadius: 2.5,
+      pointBackgroundColor: color, tension: .3, fill: true,
+      backgroundColor: (ctx) => { const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, height);
+        g.addColorStop(0, color + "2A"); g.addColorStop(1, color + "00"); return g; } }] }), [pts, color, height]);
+  const options = useMemo(() => ({ layout: { padding: { top: 16, left: 10, right: 10 } },
+    plugins: { legend: { display: false }, tooltip: { enabled: false }, valueLabels: { fmt } },
+    scales: { x: { grid: { display: false }, ticks: { font: { size: 9.5 } } }, y: { display: false } } }), [fmt]);
+  const plugs = useMemo(() => [VALUE_LABELS], []);
+  return <ChartBox type="line" data={data} options={options} plugins={plugs} height={height} />;
 }
 
 /* ---------- OVERVIEW ---------- */
@@ -639,12 +677,11 @@ function OverviewTab({ M, MC, cfg, setCfg, scenario, exportSchedule, goMemo }) {
 }
 
 /* ---------- RATE MODEL ---------- */
-function RatesTab({ M, cfg, setCfg, overrides, setOverrides, scenarios, saveScenario, scenario, statuses, setStatus }) {
+function TkTable({ M, statuses, selId, setSelId, initTitle, tag }) {
   const [seg, setSeg] = useState("All");
-  const [title, setTitle] = useState("All");
+  const [title, setTitle] = useState(initTitle);
   const [q, setQ] = useState("");
   const [sort, setSort] = useState({ k: "score", dir: -1 });
-  const [selId, setSelId] = useState(null);
 
   const rows = useMemo(() => {
     let r = M.rows;
@@ -654,10 +691,43 @@ function RatesTab({ M, cfg, setCfg, overrides, setOverrides, scenarios, saveScen
     return [...r].sort((a, b) => ((a[sort.k] ?? 0) > (b[sort.k] ?? 0) ? 1 : -1) * sort.dir);
   }, [M, seg, title, q, sort]);
 
-  const sel = M.rows.find((r) => r.id === selId);
   const th = (k, label) => (
     <th className={sort.k === k ? "on" : ""} onClick={() => setSort((s) => ({ k, dir: s.k === k ? -s.dir : -1 }))}>
       {label}{sort.k === k ? (sort.dir < 0 ? " ↓" : " ↑") : ""}</th>);
+
+  return (
+    <Card title={"Rate model — " + tag} sub={rows.length + " shown · click a row for the timekeeper profile & override"}>
+      <div className="selrow">
+        <select value={seg} onChange={(e) => setSeg(e.target.value)} aria-label="Segment">
+          <option>All</option><option>Litigation</option><option>Non-Litigation</option></select>
+        <select value={title} onChange={(e) => setTitle(e.target.value)} aria-label="Title">
+          <option>All</option><option>Partner</option><option>Counsel</option><option>Associate</option><option>Paralegal</option></select>
+        <input type="text" placeholder="Search name or practice…" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search" />
+      </div>
+      <div className="twrap" style={{ maxHeight: 380 }}><table>
+        <thead><tr>{th("name","Timekeeper")}{th("title","Title")}{th("segment","Seg")}{th("hours","T12M")}{th("real","Real%")}
+          {th("score","Score")}{th("rate2026","'26")}{th("incPct","Inc%")}{th("rate2027","'27 Reco")}{th("vsPeer27","vs Panel")}</tr></thead>
+        <tbody>{rows.map((r) => (
+          <tr key={r.id} className={r.id === selId ? "sel" : ""} onClick={() => setSelId(r.id === selId ? null : r.id)}>
+            <td className="tname"><span className={"dot " + (statuses[r.id] || (r.flags.length ? "flagged" : "proposed"))}></span>{r.name}{r.mode === "override" && <span className="gold-t"> *</span>}</td>
+            <td>{r.title}{r.cls ? <span className="dim"> C{r.cls}</span> : ""}</td>
+            <td className="dim">{r.segment === "Litigation" ? "Lit" : "N-Lit"}</td>
+            <td>{r.hours.toLocaleString()}</td>
+            <td className={r.real < 0.85 ? "warn-t" : ""}>{(r.real * 100).toFixed(1)}</td>
+            <td><span className="scorebar"><span className="sb"><i style={{ width: r.score + "%" }} /></span>{r.score}</span></td>
+            <td>{fmt$(r.rate2026)}</td>
+            <td className="pos-t">+{fmtPct(r.incPct)}</td>
+            <td className="strong">{fmt$(r.rate2027)}</td>
+            <td className={r.vsPeer27 > 5 ? "warn-t" : r.vsPeer27 < -8 ? "neg-t" : ""}>{r.vsPeer27 >= 0 ? "+" : ""}{fmtPct(r.vsPeer27)}</td>
+          </tr>))}</tbody>
+      </table></div>
+    </Card>
+  );
+}
+
+function RatesTab({ M, cfg, setCfg, overrides, setOverrides, scenarios, saveScenario, scenario, statuses, setStatus }) {
+  const [selId, setSelId] = useState(null);
+  const sel = M.rows.find((r) => r.id === selId);
   const slider = (key, label, min, max, step, fmt, group) => (
     <div className="ctl" key={key}>
       <div className="crow"><span>{label}</span><b>{fmt(group ? cfg.adj[key] : cfg[key])}</b></div>
@@ -716,12 +786,12 @@ function RatesTab({ M, cfg, setCfg, overrides, setOverrides, scenarios, saveScen
             <div className="dl"><span>Score / basis</span><b>{sel.score}/100 · {sel.mode}</b></div>
             <div className="dl"><span>T12M hours · realization</span><b>{sel.hours.toLocaleString()} · {fmtPct(sel.real * 100)}</b></div>
             <div className="dl"><span>Panel median '27E</span><b>{fmt$(sel.peerMed27)} ({sel.vsPeer27 >= 0 ? "+" : ""}{fmtPct(sel.vsPeer27)})</b></div>
-            <div className="slabel" style={{ marginTop: 10 }}>Rate history</div>
-            <Spark pts={YEARS.map((yr) => ({ yr, v: sel.rates[yr] }))} fmt={fmt$} />
-            <div className="slabel">Realization %</div>
-            <Spark pts={YEARS.map((yr) => ({ yr, v: +(sel.realHist[yr] * 100).toFixed(1) }))} color="#A87F2E" fmt={(v) => v + "%"} />
-            <div className="slabel">Billable hours</div>
-            <Spark pts={YEARS.map((yr) => ({ yr, v: sel.hoursHist[yr] }))} color="#3E7CB1" />
+            <div className="slabel" style={{ marginTop: 10 }}>Standard rate — 2022–26 actual · '27 reco</div>
+            <TrendChart pts={[...YEARS.map((yr) => ({ yr, v: sel.rates[yr] })), { yr: "'27R", v: sel.rate2027 }]} fmt={(v) => "$" + v.toLocaleString()} />
+            <div className="slabel">Realization % — collected ÷ standard</div>
+            <TrendChart pts={YEARS.map((yr) => ({ yr, v: +(sel.realHist[yr] * 100).toFixed(1) }))} color="#A87F2E" fmt={(v) => v + "%"} />
+            <div className="slabel">Billable hours — annualized T12M</div>
+            <TrendChart pts={YEARS.map((yr) => ({ yr, v: sel.hoursHist[yr] }))} color="#3E7CB1" fmt={(v) => v.toLocaleString()} />
             <div className="statusrow">
               <span className={"stpill " + (statuses[sel.id] || "proposed")}>{(statuses[sel.id] || "proposed").replace("review","needs review")}</span>
               <button className="btn" onClick={() => setStatus(sel.id, "approved", sel.name)}>Approve</button>
@@ -743,32 +813,10 @@ function RatesTab({ M, cfg, setCfg, overrides, setOverrides, scenarios, saveScen
           </Card>)}
       </div>
 
-      <Card title="Timekeeper rate model" sub={rows.length + " shown · click a row for detail and override"}>
-        <div className="selrow">
-          <select value={seg} onChange={(e) => setSeg(e.target.value)} aria-label="Segment">
-            <option>All</option><option>Litigation</option><option>Non-Litigation</option></select>
-          <select value={title} onChange={(e) => setTitle(e.target.value)} aria-label="Title">
-            <option>All</option><option>Partner</option><option>Counsel</option><option>Associate</option><option>Paralegal</option></select>
-          <input type="text" placeholder="Search name or practice…" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search" />
-        </div>
-        <div className="twrap"><table>
-          <thead><tr>{th("name","Timekeeper")}{th("title","Title")}{th("segment","Seg")}{th("hours","T12M")}{th("real","Real%")}
-            {th("score","Score")}{th("rate2026","'26")}{th("incPct","Inc%")}{th("rate2027","'27 Reco")}{th("vsPeer27","vs Panel")}</tr></thead>
-          <tbody>{rows.map((r) => (
-            <tr key={r.id} className={r.id === selId ? "sel" : ""} onClick={() => setSelId(r.id === selId ? null : r.id)}>
-              <td className="tname"><span className={"dot " + (statuses[r.id] || (r.flags.length ? "flagged" : "proposed"))}></span>{r.name}{r.mode === "override" && <span className="gold-t"> *</span>}</td>
-              <td>{r.title}{r.cls ? <span className="dim"> C{r.cls}</span> : ""}</td>
-              <td className="dim">{r.segment === "Litigation" ? "Lit" : "N-Lit"}</td>
-              <td>{r.hours.toLocaleString()}</td>
-              <td className={r.real < 0.85 ? "warn-t" : ""}>{(r.real * 100).toFixed(1)}</td>
-              <td><span className="scorebar"><span className="sb"><i style={{ width: r.score + "%" }} /></span>{r.score}</span></td>
-              <td>{fmt$(r.rate2026)}</td>
-              <td className="pos-t">+{fmtPct(r.incPct)}</td>
-              <td className="strong">{fmt$(r.rate2027)}</td>
-              <td className={r.vsPeer27 > 5 ? "warn-t" : r.vsPeer27 < -8 ? "neg-t" : ""}>{r.vsPeer27 >= 0 ? "+" : ""}{fmtPct(r.vsPeer27)}</td>
-            </tr>))}</tbody>
-        </table></div>
-      </Card>
+      <div className="stack">
+        <TkTable M={M} statuses={statuses} selId={selId} setSelId={setSelId} initTitle="Partner" tag="partners & counsel" />
+        <TkTable M={M} statuses={statuses} selId={selId} setSelId={setSelId} initTitle="Associate" tag="associates & paralegals" />
+      </div>
     </div>
   );
 }
@@ -949,36 +997,111 @@ function RiskTab({ M, MC, cfg, statuses, setStatus, bulkApprove }) {
   );
 }
 /* ---------- TRENDS ---------- */
-function TrendsTab({ M }) {
-  const rateData = useMemo(() => ({ labels: [...M.trend.map((t) => t.yr), 2027],
-    datasets: [{ label: "Avg standard rate", data: [...M.trend.map((t) => t.avgRate), Math.round(M.blended27)],
-      borderColor: "#14563F", borderWidth: 2.2, pointRadius: 3, fill: false,
-      segment: { borderDash: (c) => c.p1DataIndex === M.trend.length ? [6,4] : undefined } }] }), [M]);
+const TREND_GROUPS = [
+  ["Partners", (r) => r.title === "Partner", "#14563F"],
+  ["Counsel", (r) => r.title === "Counsel", "#3E7CB1"],
+  ["Associates", (r) => r.title === "Associate", "#A87F2E"],
+  ["Paralegals", (r) => r.title === "Paralegal", "#7A5CA8"],
+];
+function TrendsTab({ M, cfg }) {
+  const byTitleLine = (val, dec) => TREND_GROUPS.map(([label, test, color]) => {
+    const g = M.rows.filter(test);
+    return { label, borderColor: color, backgroundColor: color, borderWidth: 2.2, pointRadius: 3, fill: false,
+      data: YEARS.map((yr) => +(g.reduce((a, r) => a + val(r, yr), 0) / (g.length || 1)).toFixed(dec)) };
+  });
+
+  const rateByTitle = useMemo(() => {
+    const datasets = TREND_GROUPS.map(([label, test, color]) => {
+      const g = M.rows.filter(test);
+      const data = YEARS.map((yr) => Math.round(g.reduce((a, r) => a + (r.rates[yr] || r.rate2026), 0) / (g.length || 1)));
+      data.push(Math.round(g.reduce((a, r) => a + r.rate2027, 0) / (g.length || 1)));
+      return { label, data, borderColor: color, backgroundColor: color, borderWidth: 2.2, pointRadius: 3, fill: false,
+        segment: { borderDash: (c) => c.p1DataIndex === YEARS.length ? [6, 4] : undefined } };
+    });
+    return { labels: [...YEARS, "2027R"], datasets };
+  }, [M]);
+
   const incData = useMemo(() => ({ labels: M.trendInc.map((t) => t.yr),
     datasets: [
       { type: "bar", label: "Peer panel", data: M.trendInc.map((t) => t.peer), backgroundColor: "rgba(168,127,46,.55)", borderRadius: 3 },
       { type: "line", label: "Firm", data: M.trendInc.map((t) => t.firm), borderColor: "#14563F", borderWidth: 2.2, pointRadius: 3, fill: false }] }), [M]);
-  const realData = useMemo(() => ({ labels: M.trend.map((t) => t.yr),
-    datasets: [{ label: "Realization", data: M.trend.map((t) => t.real), borderColor: "#A87F2E", borderWidth: 2.2, pointRadius: 3, fill: false }] }), [M]);
-  const hrsData = useMemo(() => ({ labels: M.trend.map((t) => t.yr),
-    datasets: [{ label: "Avg billable hours", data: M.trend.map((t) => t.hours), backgroundColor: "rgba(20,86,63,.55)", borderRadius: 3 }] }), [M]);
-  const scatterData = useMemo(() => ({ datasets: [{ label: "Scored timekeepers",
-    data: M.rows.filter((r) => r.title !== "Associate").map((r) => ({ x: r.score, y: +r.incPct.toFixed(2) })),
-    pointBackgroundColor: M.rows.filter((r) => r.title !== "Associate").map((r) =>
-      r.mode === "hold" ? "#B7791F" : r.mode === "override" ? "#C23934" : "#14563F"), pointRadius: 3.5 }] }), [M]);
+
+  const realByTitle = useMemo(() => ({ labels: YEARS,
+    datasets: byTitleLine((r, yr) => (r.realHist[yr] || r.real) * 100, 1) }), [M]);
+  const hoursByTitle = useMemo(() => ({ labels: YEARS,
+    datasets: byTitleLine((r, yr) => r.hoursHist[yr] || r.hours, 0) }), [M]);
+
+  const incByTitle = useMemo(() => {
+    const groups = TREND_GROUPS.map(([label, test]) => {
+      const g = M.rows.filter(test); const gh = g.reduce((a, r) => a + r.hours, 0) || 1;
+      return { std: +(g.reduce((a, r) => a + r.incPct * r.hours, 0) / gh).toFixed(2),
+        eff: +(g.reduce((a, r) => a + r.incEff * r.hours, 0) / gh).toFixed(2) };
+    });
+    return { labels: TREND_GROUPS.map(([l]) => l), datasets: [
+      { label: "Standard increase", data: groups.map((g) => g.std), backgroundColor: "rgba(20,86,63,.78)", borderRadius: 3 },
+      { label: "Effective after client caps", data: groups.map((g) => g.eff), backgroundColor: "rgba(168,127,46,.7)", borderRadius: 3 }] };
+  }, [M]);
+
+  const scoreMap = useMemo(() => {
+    const cats = [
+      ["Ptr — Litigation", (r) => r.title === "Partner" && r.segment === "Litigation", "#14563F", "circle"],
+      ["Ptr — Non-Lit", (r) => r.title === "Partner" && r.segment !== "Litigation", "#2E8B72", "circle"],
+      ["Counsel", (r) => r.title === "Counsel", "#3E7CB1", "circle"],
+      ["Paralegal", (r) => r.title === "Paralegal", "#7A5CA8", "circle"],
+      ["Hold", (r) => r.mode === "hold", "#B7791F", "triangle"],
+      ["Override", (r) => r.mode === "override", "#C23934", "rectRot"],
+    ];
+    const scored = M.rows.filter((r) => r.title !== "Associate");
+    const taken = new Set();
+    const ds = [];
+    // holds & overrides claim their points first so they don't double-plot
+    [4, 5, 0, 1, 2, 3].forEach((ci) => {
+      const [label, test, color, style] = cats[ci];
+      const pts = scored.filter((r) => !taken.has(r.id) && test(r) && (ci < 4 ? r.mode === "scored" : true));
+      pts.forEach((r) => taken.add(r.id));
+      ds.push({ label, showLine: false, pointStyle: style, pointRadius: ci >= 4 ? 5.5 : 4,
+        pointBackgroundColor: color, backgroundColor: color, borderColor: color,
+        data: pts.map((r) => ({ x: r.score, y: +r.incPct.toFixed(2), name: r.name, ttl: r.title, r26: r.rate2026, r27: r.rate2027 })) });
+    });
+    const curve = [];
+    for (let s = 0; s <= 100; s += 2) curve.push({ x: s,
+      y: +((s < cfg.holdBelow ? cfg.floorPct * 0.5 : cfg.floorPct + (cfg.capPct - cfg.floorPct) * Math.pow(s / 100, 0.9)) * (M.goalMult || 1)).toFixed(2) });
+    ds.push({ label: "Policy curve", showLine: true, data: curve, borderColor: "#17251F",
+      borderWidth: 1.6, borderDash: [4, 3], pointRadius: 0, fill: false });
+    return { datasets: ds.sort((a, b) => (a.label === "Policy curve" ? 1 : 0) - (b.label === "Policy curve" ? 1 : 0)) };
+  }, [M, cfg]);
+  const scorePlugs = useMemo(() => [HOLD_SHADE], []);
+
   return (
     <div className="stack">
       <div className="grid g2">
-        <Card title="Average standard rate" sub="2022–2026 actual · 2027 recommended (dashed)"><ChartBox type="line" data={rateData} options={{ plugins: { legend: { display: false } }, scales: { y: money } }} height={230} /></Card>
-        <Card title="Rate increase % — firm vs peer panel" sub="2027 = live recommendation vs assumption"><ChartBox type="bar" data={incData} options={{ ...legend(), scales: { y: pct } }} height={230} /></Card>
+        <Card title="Average standard rate by title" sub="2022–2026 actual · 2027 recommended (dashed segment)">
+          <ChartBox type="line" data={rateByTitle} options={{ ...legend(), scales: { y: money } }} height={250} /></Card>
+        <Card title="Rate increase % — firm vs peer panel" sub="2027 = live recommendation vs peer-move assumption">
+          <ChartBox type="bar" data={incData} options={{ ...legend(), scales: { y: pct } }} height={250} /></Card>
       </div>
       <div className="grid g2">
-        <Card title="Realization — firm average" sub="collected / standard"><ChartBox type="line" data={realData} options={{ plugins: { legend: { display: false } }, scales: { y: { ...pct, suggestedMin: 84, suggestedMax: 92 } } }} height={230} /></Card>
-        <Card title="Average billable hours" sub="per timekeeper, annualized"><ChartBox type="bar" data={hrsData} options={{ plugins: { legend: { display: false } }, scales: { y: { suggestedMin: 1500 } } }} height={230} /></Card>
+        <Card title="Realization by title" sub="collected ÷ standard · hours-weighted history">
+          <ChartBox type="line" data={realByTitle} options={{ ...legend(), scales: { y: pct } }} height={250} /></Card>
+        <Card title="Average billable hours by title" sub="per timekeeper, annualized T12M">
+          <ChartBox type="line" data={hoursByTitle} options={{ ...legend(), scales: { y: { ticks: { callback: (v) => v.toLocaleString() } } } }} height={250} /></Card>
       </div>
-      <Card title="Score → increase mapping" sub="green = scored · gold = hold · red = override">
-        <ChartBox type="scatter" data={scatterData} options={{ plugins: { legend: { display: false } },
-          scales: { x: { min: 0, max: 100, title: { display: true, text: "Composite score" } }, y: pct } }} height={250} />
+      <div className="grid g2">
+        <Card title="2027 increase by title — standard vs effective" sub="hours-weighted · the gap is client rate-cap leakage">
+          <ChartBox type="bar" data={incByTitle} options={{ ...legend(), scales: { y: pct } }} height={250} /></Card>
+        <Card title="Increase distribution" sub={M.headcount + " timekeepers · recommended 2027 moves"}>
+          <ChartBox type="bar" data={{ labels: [[0,2],[2,4],[4,6],[6,8],[8,10],[10,14]].map(([a,b]) => `${a}–${b}%`),
+            datasets: [{ data: [[0,2],[2,4],[4,6],[6,8],[8,10],[10,14]].map(([a,b]) => M.rows.filter((r) => r.incPct >= a && r.incPct < b).length),
+              backgroundColor: [[0,2],[2,4],[4,6],[6,8],[8,10],[10,14]].map((_, i) => i === 0 ? "#B7791F" : `rgba(20,86,63,${.35 + i * .12})`), borderRadius: 3 }] }}
+            options={{ plugins: { legend: { display: false } } }} height={250} /></Card>
+      </div>
+      <Card title="Score → increase mapping" sub={"Live policy curve: floor " + fmtPct(cfg.floorPct, 1) + " → cap " + fmtPct(cfg.capPct, 1) + (M.goalMult !== 1 ? " · goal-seek ×" + M.goalMult.toFixed(2) : "") + " · shaded band = hold zone · points off the curve carry segment adjusters or overrides · hover any point for the timekeeper"}>
+        <ChartBox type="scatter" data={scoreMap} plugins={scorePlugs} options={{
+          plugins: { ...legend(), holdShade: { limit: cfg.holdBelow },
+            tooltip: { callbacks: { label: (c) => { const p = c.raw;
+              return p.name ? p.name + " (" + p.ttl + ") — score " + p.x + " · +" + p.y + "% · " + fmt$(p.r26) + " → " + fmt$(p.r27) : "policy: +" + c.parsed.y + "% at score " + c.parsed.x; } } } },
+          scales: { x: { min: 0, max: 100, title: { display: true, text: "Composite score (hours / realization / peer headroom)" } },
+            y: { ...pct, title: { display: true, text: "2027 increase %" } } } }} height={320} />
       </Card>
     </div>
   );
@@ -1298,15 +1421,16 @@ function IntlTab({ intl, setIntl, logEvent }) {
     const rows = INTL_TKS.filter((t) => t.office === o.id).map((t) => {
       const ov = intl.marks[t.id] || {};
       const hp = ov.hp ?? t.hp, mp = ov.mp ?? t.mp, wantDual = ov.dual ?? t.dual;
+      const hpPp = ov.hpPp ?? intl.hpBonus, mpPp = ov.mpPp ?? intl.mpBonus;
       let inc = intl.inc[t.title] ?? 5;
-      if (hp && t.title === "Associate") inc += intl.hpBonus;
-      if (mp && t.title !== "Associate") inc += intl.mpBonus;
+      if (hp && t.title === "Associate") inc += hpPp;
+      if (mp && t.title !== "Associate") inc += mpPp;
       const r27 = round5(t.rate2026 * (1 + inc / 100));
       const dual = wantDual && t.title === "Partner";
       const dualRate = dual ? round5(r27 * (1 - intl.dualDisc / 100)) : null;
       const eff27 = dual ? r27 * (1 - intl.dualShare / 100) + dualRate * (intl.dualShare / 100) : r27;
       const med27 = INTL_PEERS[o.id].stats[cohOf(t)].p50 * (1 + intl.peerMove / 100);
-      return { ...t, hp, mp, dual, inc: (r27 / t.rate2026 - 1) * 100, r27, dualRate, eff27,
+      return { ...t, hp, mp, dual, hpPp, mpPp, inc: (r27 / t.rate2026 - 1) * 100, r27, dualRate, eff27,
         med27, vsMed: (r27 / med27 - 1) * 100 };
     });
     const H = rows.reduce((a, r) => a + r.hours, 0) || 1;
@@ -1342,6 +1466,9 @@ function IntlTab({ intl, setIntl, logEvent }) {
     setIntl({ ...intl, marks: { ...intl.marks, [t.id]: { ...(intl.marks[t.id] || {}), [key]: val } } });
     logEvent("Intl: " + (val ? "marked " : "cleared ") + t.name + " — " + label);
   };
+  const setPp = (t, key, v) => setIntl({ ...intl, marks: { ...intl.marks,
+    [t.id]: { ...(intl.marks[t.id] || {}), [key]: v === "" ? undefined : +v } } });
+  const ppIn = { width: 52, padding: "2px 4px", fontSize: 11 };
   const sl = (val, set, label, min, max, step, sfx) => (
     <div className="ctl" key={label}>
       <div className="crow"><span>{label}</span><b>{val}{sfx}</b></div>
@@ -1382,10 +1509,10 @@ function IntlTab({ intl, setIntl, logEvent }) {
             {sl(intl.inc.Paralegal, (v) => setC({ inc: { ...intl.inc, Paralegal: v } }), "Paralegals", 0, 10, 0.5, "%")}
             {sl(intl.peerMove, (v) => setC({ peerMove: v }), "Local peer 2027 move", 2, 10, 0.5, "%")}
           </Card>
-          <Card title="Performance & premium levers" sub="applied per timekeeper via the toggles at right">
-            {sl(intl.hpBonus, (v) => setC({ hpBonus: v }), "High-performer uplift — associates", 0, 8, 0.5, " pp")}
-            {sl(intl.mpBonus, (v) => setC({ mpBonus: v }), "Market premium — partners & others", 0, 8, 0.5, " pp")}
-            <p className="snote">High performers take the associate scale move plus the uplift. Market premium recognizes timekeepers who clear the local market on demand — partners, counsel or paralegals.</p>
+          <Card title="Performance & premium levers" sub="defaults only — each flagged timekeeper's premium is set in the table">
+            {sl(intl.hpBonus, (v) => setC({ hpBonus: v }), "Default high-performer uplift — associates", 0, 8, 0.5, " pp")}
+            {sl(intl.mpBonus, (v) => setC({ mpBonus: v }), "Default market premium — partners & others", 0, 8, 0.5, " pp")}
+            <p className="snote">Ticking HP or MP seeds the timekeeper with the default; edit the pp value next to the tick to set a timekeeper-specific premium. Premiums stack on the title move.</p>
           </Card>
           <Card title="Dual-track rate system" sub="standard rate + reduced counseling / prosecution rate">
             {sl(intl.dualDisc, (v) => setC({ dualDisc: v }), "Counseling / prosecution discount", 5, 40, 1, "%")}
@@ -1403,9 +1530,9 @@ function IntlTab({ intl, setIntl, logEvent }) {
                   <td>{p.avg26 ? fC(cvv(p.avg26, lc)) : "–"}</td><td className="strong">{p.avg27 ? fC(cvv(p.avg27, lc)) : "–"}</td>
                   <td className={p.vs == null ? "dim" : p.vs >= 0 ? "pos-t" : "neg-t"}>{p.vs != null ? (p.vs >= 0 ? "+" : "") + fmtPct(p.vs) : "–"}</td></tr>))}</tbody></table>
           </Card>
-          <Card title={"Timekeepers & recommendation — " + cur.o.name} sub="HP = high performer (associates) · MP = market premium · Dual = dual-track (partners)">
+          <Card title={"Timekeepers & recommendation — " + cur.o.name} sub="HP = high performer (associates) · MP = market premium · premiums in pp are per-timekeeper · Dual = dual-track (partners)">
             <div className="twrap" style={{ maxHeight: 520 }}><table className="mini">
-              <thead><tr><th>Timekeeper</th><th>Title</th><th style={{ textAlign: "left" }}>Practice</th><th>T12M</th><th>Real%</th><th>'26</th><th>Inc%</th><th>'27 std</th><th>'27 couns./pros.</th><th>vs med '27E</th><th>HP</th><th>MP</th><th>Dual</th></tr></thead>
+              <thead><tr><th>Timekeeper</th><th>Title</th><th style={{ textAlign: "left" }}>Practice</th><th>T12M</th><th>Real%</th><th>'26</th><th>Inc%</th><th>'27 std</th><th>'27 couns./pros.</th><th>vs med '27E</th><th>HP +pp</th><th>MP +pp</th><th>Dual</th></tr></thead>
               <tbody>{cur.rows.map((r) => (
                 <tr key={r.id} style={{ cursor: "default" }}>
                   <td className="tname">{r.name}</td>
@@ -1418,8 +1545,18 @@ function IntlTab({ intl, setIntl, logEvent }) {
                   <td className="strong">{fC(cvv(r.r27, lc))}</td>
                   <td>{r.dualRate ? <span className="gold-t">{fC(cvv(r.dualRate, lc))}</span> : <span className="dim">—</span>}</td>
                   <td className={r.vsMed >= 0 ? "pos-t" : "neg-t"}>{r.vsMed >= 0 ? "+" : ""}{fmtPct(r.vsMed)}</td>
-                  <td>{r.title === "Associate" ? <input type="checkbox" checked={r.hp} aria-label="High performer" onChange={() => mark(r, "hp", "high performer")} /> : <span className="dim">·</span>}</td>
-                  <td>{r.title !== "Associate" ? <input type="checkbox" checked={r.mp} aria-label="Market premium" onChange={() => mark(r, "mp", "market premium")} /> : <span className="dim">·</span>}</td>
+                  <td>{r.title === "Associate" ? (
+                    <span style={{ display: "inline-flex", gap: 4, alignItems: "center" }}>
+                      <input type="checkbox" checked={r.hp} aria-label="High performer" onChange={() => mark(r, "hp", "high performer")} />
+                      {r.hp && <input type="number" step="0.5" min="0" max="12" value={r.hpPp} style={ppIn}
+                        aria-label="High-performer premium (pp)" onChange={(e) => setPp(r, "hpPp", e.target.value)} />}
+                    </span>) : <span className="dim">·</span>}</td>
+                  <td>{r.title !== "Associate" ? (
+                    <span style={{ display: "inline-flex", gap: 4, alignItems: "center" }}>
+                      <input type="checkbox" checked={r.mp} aria-label="Market premium" onChange={() => mark(r, "mp", "market premium")} />
+                      {r.mp && <input type="number" step="0.5" min="0" max="12" value={r.mpPp} style={ppIn}
+                        aria-label="Market premium (pp)" onChange={(e) => setPp(r, "mpPp", e.target.value)} />}
+                    </span>) : <span className="dim">·</span>}</td>
                   <td>{r.title === "Partner" ? <input type="checkbox" checked={r.dual} aria-label="Dual track" onChange={() => mark(r, "dual", "dual-track")} /> : <span className="dim">·</span>}</td></tr>))}</tbody>
             </table></div>
           </Card>
@@ -1771,7 +1908,7 @@ function App() {
         {tab === "Rate Model" && <RatesTab M={M} cfg={cfg} setCfg={setCfg} overrides={overrides} setOverrides={setOverrides} scenarios={scenarios} saveScenario={saveScenario} scenario={scenario} statuses={statuses} setStatus={setStatus} />}
         {tab === "Peer Panel" && <PeerTab M={M} cfg={cfg} overrides={overrides} tks={tks} selectedPeers={selectedPeers} setSelectedPeers={setSelectedPeers} showReco={showReco} setShowReco={setShowReco} />}
         {tab === "Risk & QC" && <RiskTab M={M} MC={MC} cfg={cfg} statuses={statuses} setStatus={setStatus} bulkApprove={bulkApprove} />}
-        {tab === "Trends" && <TrendsTab M={M} />}
+        {tab === "Trends" && <TrendsTab M={M} cfg={cfg} />}
         {tab === "International" && <IntlTab intl={intl} setIntl={setIntl} logEvent={logEvent} />}
         {tab === "Data" && <DataTab tks={tks} setTks={setTks} dataSource={dataSource} setDataSource={setDataSource} exportSchedule={exportSchedule} auditLog={auditLog} exportAudit={exportAudit} logEvent={logEvent} />}
         {tab === "Mgmt Report" && <MgmtReportTab M={M} MC={MC} cfg={cfg} scenario={scenario} dataSource={dataSource} />}
