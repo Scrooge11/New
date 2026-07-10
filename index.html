@@ -1188,6 +1188,264 @@ function MemoTab({ M, cfg, scenario, MC, statuses }) {
 }
 
 
+/* ---------- INTERNATIONAL OFFICES ---------- */
+const INTL_FX = { USD: 1, EUR: 1.09, GBP: 1.27 }; // USD per unit — committee planning rates
+const CCY_SYM = { USD: "$", EUR: "€", GBP: "£" };
+const INTL_OFFICES = [
+  { id: "LON", name: "London", ccy: "GBP", focus: "Disputes · Corporate / PE · Finance",
+    base: { Partner: 950, Counsel: 720, ASr: 610, AJr: 420, Para: 260 } },
+  { id: "MUC", name: "Munich", ccy: "EUR", focus: "Patent prosecution · IP litigation · Licensing",
+    base: { Partner: 620, Counsel: 480, ASr: 400, AJr: 285, Para: 180 } },
+  { id: "TLV", name: "Israel (Tel Aviv)", ccy: "USD", focus: "Patent prosecution · Tech transactions · Venture",
+    base: { Partner: 640, Counsel: 500, ASr: 410, AJr: 290, Para: 170 } },
+];
+const INTL_COHORTS = ["Partner", "Counsel", "ASr", "AJr", "Para"];
+const INTL_COHORT_LBL = { Partner: "Partners", Counsel: "Counsel", ASr: "Associates 5–8", AJr: "Associates 1–4", Para: "Paralegals" };
+const INTL_PEER_DEFS = {
+  LON: [["Ashcombe & Vane", 1.16], ["Bellchambers LLP", 1.07], ["Cheyne Row Partners", 1.00], ["Doverfield & Marsh", 0.93], ["Farringdon Law", 0.88], ["Greystoke & Co", 1.11]],
+  MUC: [["Adler & Brandt", 1.13], ["Bergmann Rechtsanwälte", 1.05], ["Colonia IP", 0.97], ["Drachenfels Partner", 0.90], ["Elbe & Isar", 1.07]],
+  TLV: [["Arad & Shavit", 1.11], ["Ben-Ami Group", 1.02], ["Carmel IP Law", 0.95], ["Dagan & Partners", 0.88], ["Eshkol Legal", 1.05]],
+};
+const INTL_PEERS = (() => {
+  const r = mulberry32(60601); const IR = (lo, hi) => lo + r() * (hi - lo);
+  const out = {};
+  INTL_OFFICES.forEach((o) => {
+    const firms = INTL_PEER_DEFS[o.id].map(([name, mult]) => {
+      const rates = {}; INTL_COHORTS.forEach((c) => { rates[c] = round5(o.base[c] * mult * IR(0.97, 1.03)); });
+      return { name, rates };
+    });
+    const stats = {};
+    INTL_COHORTS.forEach((c) => { const xs = firms.map((f) => f.rates[c]);
+      stats[c] = { p25: pctile(xs, .25), p50: pctile(xs, .5), p75: pctile(xs, .75) }; });
+    out[o.id] = { firms, stats };
+  });
+  return out;
+})();
+/* [name, title, class, practice, highPerformer, marketPremium, dualTrack] */
+const INTL_TK_DEFS = {
+  LON: [
+    ["N. Whitcombe", "Partner", null, "Disputes", 0, 0, 0], ["E. Fairhurst", "Partner", null, "Corporate / PE", 0, 1, 0],
+    ["J. Pemberton", "Partner", null, "Finance", 0, 0, 0], ["A. Chetwynd", "Partner", null, "Disputes", 0, 0, 1],
+    ["R. Osgood", "Partner", null, "Competition", 0, 1, 0],
+    ["M. Attwater", "Counsel", null, "Disputes", 0, 0, 0], ["S. Brockhurst", "Counsel", null, "Finance", 0, 1, 0],
+    ["T. Colefax", "Associate", 7, "Corporate / PE", 1, 0, 0], ["H. Danvers", "Associate", 6, "Disputes", 0, 0, 0],
+    ["P. Ellery", "Associate", 5, "Finance", 1, 0, 0], ["L. Farlow", "Associate", 4, "Competition", 0, 0, 0],
+    ["C. Grantley", "Associate", 3, "Corporate / PE", 0, 0, 0], ["O. Havisham", "Associate", 2, "Disputes", 0, 0, 0],
+    ["B. Ingledew", "Associate", 1, "Finance", 0, 0, 0],
+    ["D. Josling", "Paralegal", null, "Disputes", 0, 0, 0], ["G. Kirkby", "Paralegal", null, "Corporate / PE", 0, 0, 0],
+  ],
+  MUC: [
+    ["K. Brandmeier", "Partner", null, "Patent Prosecution", 0, 1, 1], ["S. Vogelsang", "Partner", null, "IP Litigation", 0, 0, 0],
+    ["M. Reitherman", "Partner", null, "Patent Prosecution", 0, 0, 1], ["A. Lindenthal", "Partner", null, "Licensing", 0, 0, 0],
+    ["J. Falkenrath", "Partner", null, "Patent Prosecution", 0, 0, 1],
+    ["U. Steinbrück", "Counsel", null, "Patent Prosecution", 0, 1, 0], ["C. Wolferts", "Counsel", null, "IP Litigation", 0, 0, 0],
+    ["F. Achterberg", "Associate", 8, "Patent Prosecution", 1, 0, 0], ["L. Bernau", "Associate", 6, "IP Litigation", 0, 0, 0],
+    ["T. Dallmayr", "Associate", 5, "Patent Prosecution", 1, 0, 0], ["N. Eichhorn", "Associate", 4, "Licensing", 0, 0, 0],
+    ["R. Grunewald", "Associate", 3, "Patent Prosecution", 0, 0, 0], ["P. Hasselbach", "Associate", 2, "IP Litigation", 0, 0, 0],
+    ["E. Kaltenbach", "Associate", 1, "Patent Prosecution", 0, 0, 0],
+    ["B. Mertesacker", "Paralegal", null, "Patent Prosecution", 0, 0, 0], ["H. Neuhaus", "Paralegal", null, "Patent Prosecution", 0, 0, 0],
+  ],
+  TLV: [
+    ["D. Peretz", "Partner", null, "Patent Prosecution", 0, 1, 1], ["Y. Alon", "Partner", null, "Tech Transactions", 0, 0, 0],
+    ["T. Ben-Zvi", "Partner", null, "Patent Prosecution", 0, 0, 1], ["M. Shani", "Partner", null, "Venture / Growth", 0, 1, 0],
+    ["R. Golan", "Partner", null, "IP Litigation", 0, 0, 0],
+    ["N. Harel", "Counsel", null, "Patent Prosecution", 0, 0, 0], ["O. Feldman", "Counsel", null, "Tech Transactions", 0, 0, 0],
+    ["A. Katzir", "Associate", 7, "Patent Prosecution", 1, 0, 0], ["S. Livnat", "Associate", 6, "Tech Transactions", 0, 0, 0],
+    ["E. Mizrahi", "Associate", 5, "IP Litigation", 0, 0, 0], ["G. Navon", "Associate", 4, "Patent Prosecution", 1, 0, 0],
+    ["L. Oren", "Associate", 3, "Venture / Growth", 0, 0, 0], ["B. Raviv", "Associate", 2, "Patent Prosecution", 0, 0, 0],
+    ["K. Segal", "Associate", 1, "Tech Transactions", 0, 0, 0],
+    ["I. Tal", "Paralegal", null, "Patent Prosecution", 0, 0, 0], ["U. Weiss", "Paralegal", null, "Patent Prosecution", 0, 0, 0],
+  ],
+};
+const INTL_TKS = (() => {
+  const r = mulberry32(31415); const IR = (lo, hi) => lo + r() * (hi - lo);
+  const out = [];
+  INTL_OFFICES.forEach((o) => {
+    INTL_TK_DEFS[o.id].forEach(([name, title, cls, practice, hp, mp, dual], i) => {
+      let rate;
+      if (title === "Partner") rate = o.base.Partner * IR(0.90, 1.25);
+      else if (title === "Counsel") rate = o.base.Counsel * IR(0.92, 1.12);
+      else if (title === "Associate") rate = (o.base.AJr + (o.base.ASr - o.base.AJr) * (cls - 2.5) / 4) * IR(0.98, 1.02);
+      else rate = o.base.Para * IR(0.92, 1.10);
+      out.push({ id: "x" + o.id + i, office: o.id, name, title, cls, practice,
+        rate2026: round5(rate), hours: Math.round(IR(1250, 2100)), real: IR(0.82, 0.96),
+        hp: !!hp, mp: !!mp, dual: !!dual });
+    });
+  });
+  return out;
+})();
+/* fixed-fee schedules (MOCK — replace with client-agreement extract) */
+const FIXED_FEES = [
+  { client: "Global Motors AG", office: "MUC", item: "EP patent application — draft & file", fee: 8500, vol: 140, status: "Locked — LTA to Q3 '27", prop: 0 },
+  { client: "Helvetia Pharma", office: "MUC", item: "EPO office action response", fee: 2900, vol: 420, status: "Renegotiable Jan '27", prop: 4.5 },
+  { client: "Bayerische EnergieWerke", office: "MUC", item: "Trademark renewal portfolio (per mark)", fee: 450, vol: 900, status: "Renegotiable Jan '27", prop: 5 },
+  { client: "Thames Insurance Group", office: "LON", item: "Commercial lease review (standard form)", fee: 1850, vol: 210, status: "Renegotiable Apr '27", prop: 5 },
+  { client: "Crown & Anchor Hotels", office: "LON", item: "Employment tribunal — staged fixed fees", fee: 12500, vol: 18, status: "Locked — panel terms to '28", prop: 0 },
+  { client: "Ironclad Semiconductor", office: "TLV", item: "US utility filing — prep & file", fee: 9800, vol: 95, status: "Renegotiable Jan '27", prop: 6 },
+  { client: "Sabra Medical Devices", office: "TLV", item: "PCT national phase entry (per country)", fee: 3600, vol: 160, status: "Locked — MSA to Jul '27", prop: 0 },
+  { client: "Negev Agritech", office: "TLV", item: "IL prosecution bundle (per family / yr)", fee: 5200, vol: 60, status: "Renegotiable Mar '27", prop: 5 },
+];
+
+function IntlTab({ intl, setIntl, logEvent }) {
+  const D = intl.ccy;
+  const cvv = (n, from) => n * INTL_FX[from] / INTL_FX[D];
+  const fC = (n) => CCY_SYM[D] + Math.round(n).toLocaleString("en-US");
+  const fCM = (n) => CCY_SYM[D] + (n / 1e6).toFixed(2) + "M";
+  const cohOf = (t) => t.title === "Partner" ? "Partner" : t.title === "Counsel" ? "Counsel"
+    : t.title === "Paralegal" ? "Para" : (t.cls >= 5 ? "ASr" : "AJr");
+
+  const models = useMemo(() => INTL_OFFICES.map((o) => {
+    const rows = INTL_TKS.filter((t) => t.office === o.id).map((t) => {
+      const ov = intl.marks[t.id] || {};
+      const hp = ov.hp ?? t.hp, mp = ov.mp ?? t.mp, wantDual = ov.dual ?? t.dual;
+      let inc = intl.inc[t.title] ?? 5;
+      if (hp && t.title === "Associate") inc += intl.hpBonus;
+      if (mp && t.title !== "Associate") inc += intl.mpBonus;
+      const r27 = round5(t.rate2026 * (1 + inc / 100));
+      const dual = wantDual && t.title === "Partner";
+      const dualRate = dual ? round5(r27 * (1 - intl.dualDisc / 100)) : null;
+      const eff27 = dual ? r27 * (1 - intl.dualShare / 100) + dualRate * (intl.dualShare / 100) : r27;
+      const med27 = INTL_PEERS[o.id].stats[cohOf(t)].p50 * (1 + intl.peerMove / 100);
+      return { ...t, hp, mp, dual, inc: (r27 / t.rate2026 - 1) * 100, r27, dualRate, eff27,
+        med27, vsMed: (r27 / med27 - 1) * 100 };
+    });
+    const H = rows.reduce((a, r) => a + r.hours, 0) || 1;
+    const b26 = rows.reduce((a, r) => a + r.rate2026 * r.hours, 0) / H;
+    const b27 = rows.reduce((a, r) => a + r.eff27 * r.hours, 0) / H;
+    return { o, rows, H, b26, b27, inc: (b27 / b26 - 1) * 100,
+      uplift: rows.reduce((a, r) => a + r.hours * (r.eff27 - r.rate2026) * r.real, 0),
+      hp: rows.filter((r) => r.hp && r.title === "Associate").length,
+      mp: rows.filter((r) => r.mp && r.title !== "Associate").length,
+      dual: rows.filter((r) => r.dual).length,
+      above: rows.filter((r) => r.vsMed > 0).length };
+  }), [intl]);
+  const cur = models.find((m) => m.o.id === intl.office) || models[0];
+  const lc = cur.o.ccy;
+
+  const peerRows = useMemo(() => INTL_COHORTS.map((c) => {
+    const s = INTL_PEERS[cur.o.id].stats[c];
+    const g = cur.rows.filter((r) => cohOf(r) === c);
+    const avg26 = g.length ? g.reduce((a, r) => a + r.rate2026, 0) / g.length : null;
+    const avg27 = g.length ? g.reduce((a, r) => a + r.r27, 0) / g.length : null;
+    const med27 = s.p50 * (1 + intl.peerMove / 100);
+    return { c, ...s, med27, avg26, avg27, vs: avg27 ? (avg27 / med27 - 1) * 100 : null };
+  }), [cur, intl.peerMove]);
+
+  const ff = FIXED_FEES.map((f) => ({ ...f, ccy: INTL_OFFICES.find((o) => o.id === f.office).ccy }));
+  const ffTot = ff.reduce((a, f) => a + cvv(f.fee * f.vol, f.ccy), 0);
+  const ffLocked = ff.filter((f) => f.prop === 0).reduce((a, f) => a + cvv(f.fee * f.vol, f.ccy), 0);
+  const ffWtd = ff.reduce((a, f) => a + f.prop * cvv(f.fee * f.vol, f.ccy), 0) / (ffTot || 1);
+
+  const setC = (patch, log) => { setIntl({ ...intl, ...patch }); if (log) logEvent(log); };
+  const mark = (t, key, label) => {
+    const val = !((intl.marks[t.id] || {})[key] ?? t[key]);
+    setIntl({ ...intl, marks: { ...intl.marks, [t.id]: { ...(intl.marks[t.id] || {}), [key]: val } } });
+    logEvent("Intl: " + (val ? "marked " : "cleared ") + t.name + " — " + label);
+  };
+  const sl = (val, set, label, min, max, step, sfx) => (
+    <div className="ctl" key={label}>
+      <div className="crow"><span>{label}</span><b>{val}{sfx}</b></div>
+      <input type="range" min={min} max={max} step={step} value={val} aria-label={label} onChange={(e) => set(+e.target.value)} />
+    </div>);
+
+  return (
+    <div className="stack">
+      <Card title="International offices — 2027 rate planning" sub="London · Munich · Israel — local peer panels, currency-aware economics; click a row to open the office"
+        right={<div className="segbtns">{["USD", "EUR", "GBP"].map((c) => (
+          <button key={c} className={"segbtn" + (D === c ? " on" : "")} onClick={() => setC({ ccy: c }, "Intl: display currency set to " + c)}>{CCY_SYM[c]} {c}</button>))}</div>}>
+        <p className="snote" style={{ marginTop: 0, marginBottom: 10 }}>Planning FX: £1 = $1.27 · €1 = $1.09 (committee planning rates — refresh at adoption). Offices bill in local currency; every figure below is shown in {D}.</p>
+        <table className="mini"><thead><tr><th>Office</th><th>Bills in</th><th>TKs</th><th>T12M hrs</th><th>Blended '26</th><th>Blended '27</th><th>Wtd inc</th><th>HP assoc</th><th>Mkt premium</th><th>Dual-track</th><th>Full-yr uplift</th></tr></thead>
+          <tbody>{models.map((m) => (
+            <tr key={m.o.id} className={m.o.id === cur.o.id ? "hl" : ""} style={{ cursor: "pointer" }} onClick={() => setC({ office: m.o.id })}>
+              <td className="tname">{m.o.name} <span className="dim">{m.o.focus}</span></td>
+              <td>{CCY_SYM[m.o.ccy]} {m.o.ccy}</td><td>{m.rows.length}</td><td>{m.H.toLocaleString()}</td>
+              <td>{fC(cvv(m.b26, m.o.ccy))}</td><td className="strong">{fC(cvv(m.b27, m.o.ccy))}</td>
+              <td className="pos-t">+{fmtPct(m.inc)}</td><td>{m.hp}</td><td>{m.mp}</td><td>{m.dual}</td>
+              <td className="strong">{fCM(cvv(m.uplift, m.o.ccy))}</td></tr>))}</tbody></table>
+      </Card>
+
+      <div className="grid g4">
+        <Card><Stat label={cur.o.name + " · blended 2027"} value={fC(cvv(cur.b27, lc))} delta={<Delta v={cur.inc} />}
+          note={fC(cvv(cur.b26, lc)) + " → " + fC(cvv(cur.b27, lc)) + " hours-weighted (effective, incl. dual-track mix)"} /></Card>
+        <Card><Stat label="Full-year uplift" value={fCM(cvv(cur.uplift, lc))} note={"at realization · billed in " + lc + ", shown in " + D} /></Card>
+        <Card><Stat label="Above local median '27E" value={cur.above + " / " + cur.rows.length} note={INTL_PEERS[cur.o.id].firms.length + "-firm " + cur.o.name + " panel · peers move " + fmtPct(intl.peerMove, 1)} /></Card>
+        <Card><Stat label="Dual-track partners" value={cur.dual + " / " + cur.rows.filter((r) => r.title === "Partner").length}
+          note={"counseling / prosecution rate at −" + intl.dualDisc + "% · " + intl.dualShare + "% of their hours"} /></Card>
+      </div>
+
+      <div className="grid g32" style={{ alignItems: "start" }}>
+        <div className="stack">
+          <Card title="Increase policy — international" sub="base move by title · applied in local currency">
+            {sl(intl.inc.Partner, (v) => setC({ inc: { ...intl.inc, Partner: v } }), "Partners", 0, 14, 0.5, "%")}
+            {sl(intl.inc.Counsel, (v) => setC({ inc: { ...intl.inc, Counsel: v } }), "Counsel", 0, 14, 0.5, "%")}
+            {sl(intl.inc.Associate, (v) => setC({ inc: { ...intl.inc, Associate: v } }), "Associates (scale)", 0, 14, 0.5, "%")}
+            {sl(intl.inc.Paralegal, (v) => setC({ inc: { ...intl.inc, Paralegal: v } }), "Paralegals", 0, 10, 0.5, "%")}
+            {sl(intl.peerMove, (v) => setC({ peerMove: v }), "Local peer 2027 move", 2, 10, 0.5, "%")}
+          </Card>
+          <Card title="Performance & premium levers" sub="applied per timekeeper via the toggles at right">
+            {sl(intl.hpBonus, (v) => setC({ hpBonus: v }), "High-performer uplift — associates", 0, 8, 0.5, " pp")}
+            {sl(intl.mpBonus, (v) => setC({ mpBonus: v }), "Market premium — partners & others", 0, 8, 0.5, " pp")}
+            <p className="snote">High performers take the associate scale move plus the uplift. Market premium recognizes timekeepers who clear the local market on demand — partners, counsel or paralegals.</p>
+          </Card>
+          <Card title="Dual-track rate system" sub="standard rate + reduced counseling / prosecution rate">
+            {sl(intl.dualDisc, (v) => setC({ dualDisc: v }), "Counseling / prosecution discount", 5, 40, 1, "%")}
+            {sl(intl.dualShare, (v) => setC({ dualShare: v }), "Dual-track hours at reduced rate", 10, 80, 5, "%")}
+            <p className="snote">Dual-track partners hold a full standard rate for disputes and advisory work and bill routine counseling / prosecution at the discounted rate. Office economics above blend the two by the hours share.</p>
+          </Card>
+        </div>
+        <div className="stack">
+          <Card title={"Peer comparison — " + cur.o.name} sub={INTL_PEERS[cur.o.id].firms.map((f) => f.name).join(" · ") + " · shown in " + D}>
+            <table><thead><tr><th>Cohort</th><th>P25</th><th>Median</th><th>P75</th><th>Median '27E</th><th>Firm avg '26</th><th>Reco '27</th><th>vs med '27E</th></tr></thead>
+              <tbody>{peerRows.map((p) => (
+                <tr key={p.c} style={{ cursor: "default" }}>
+                  <td className="tname">{INTL_COHORT_LBL[p.c]}</td>
+                  <td>{fC(cvv(p.p25, lc))}</td><td className="gold-t">{fC(cvv(p.p50, lc))}</td><td>{fC(cvv(p.p75, lc))}</td><td>{fC(cvv(p.med27, lc))}</td>
+                  <td>{p.avg26 ? fC(cvv(p.avg26, lc)) : "–"}</td><td className="strong">{p.avg27 ? fC(cvv(p.avg27, lc)) : "–"}</td>
+                  <td className={p.vs == null ? "dim" : p.vs >= 0 ? "pos-t" : "neg-t"}>{p.vs != null ? (p.vs >= 0 ? "+" : "") + fmtPct(p.vs) : "–"}</td></tr>))}</tbody></table>
+          </Card>
+          <Card title={"Timekeepers & recommendation — " + cur.o.name} sub="HP = high performer (associates) · MP = market premium · Dual = dual-track (partners)">
+            <div className="twrap" style={{ maxHeight: 520 }}><table className="mini">
+              <thead><tr><th>Timekeeper</th><th>Title</th><th style={{ textAlign: "left" }}>Practice</th><th>T12M</th><th>Real%</th><th>'26</th><th>Inc%</th><th>'27 std</th><th>'27 couns./pros.</th><th>vs med '27E</th><th>HP</th><th>MP</th><th>Dual</th></tr></thead>
+              <tbody>{cur.rows.map((r) => (
+                <tr key={r.id} style={{ cursor: "default" }}>
+                  <td className="tname">{r.name}</td>
+                  <td>{r.title}{r.cls ? <span className="dim"> C{r.cls}</span> : ""}</td>
+                  <td className="dim" style={{ textAlign: "left" }}>{r.practice}</td>
+                  <td>{r.hours.toLocaleString()}</td>
+                  <td className={r.real < 0.85 ? "warn-t" : ""}>{(r.real * 100).toFixed(1)}</td>
+                  <td>{fC(cvv(r.rate2026, lc))}</td>
+                  <td className="pos-t">+{fmtPct(r.inc)}</td>
+                  <td className="strong">{fC(cvv(r.r27, lc))}</td>
+                  <td>{r.dualRate ? <span className="gold-t">{fC(cvv(r.dualRate, lc))}</span> : <span className="dim">—</span>}</td>
+                  <td className={r.vsMed >= 0 ? "pos-t" : "neg-t"}>{r.vsMed >= 0 ? "+" : ""}{fmtPct(r.vsMed)}</td>
+                  <td>{r.title === "Associate" ? <input type="checkbox" checked={r.hp} aria-label="High performer" onChange={() => mark(r, "hp", "high performer")} /> : <span className="dim">·</span>}</td>
+                  <td>{r.title !== "Associate" ? <input type="checkbox" checked={r.mp} aria-label="Market premium" onChange={() => mark(r, "mp", "market premium")} /> : <span className="dim">·</span>}</td>
+                  <td>{r.title === "Partner" ? <input type="checkbox" checked={r.dual} aria-label="Dual track" onChange={() => mark(r, "dual", "dual-track")} /> : <span className="dim">·</span>}</td></tr>))}</tbody>
+            </table></div>
+          </Card>
+        </div>
+      </div>
+
+      <Card title="Existing fixed-fee schedules" sub="flat-fee arrangements sit outside the hourly schedule — excluded from the blended-rate statistics above">
+        <p className="snote" style={{ marginTop: 0 }}>Annual fixed-fee book: <b>{fCM(ffTot)}</b> across {ff.length} schedules · <b>{fmtPct(ffLocked / (ffTot || 1) * 100, 0)}</b> is contractually locked through the 2027 cycle · weighted proposed change on the renegotiable balance yields <b>+{fmtPct(ffWtd)}</b> across the book. Recommendation: hold locked schedules to term, open renegotiable schedules alongside the January rate letters, and index new fixed-fee quotes to the 2027 hourly schedule.</p>
+        <div className="twrap" style={{ maxHeight: "none" }}><table className="mini">
+          <thead><tr><th>Client</th><th>Office</th><th style={{ textAlign: "left" }}>Schedule item</th><th>Unit fee '26</th><th>Vol / yr</th><th>Annual fees</th><th style={{ textAlign: "left" }}>Status</th><th>Proposed '27</th><th>Change</th></tr></thead>
+          <tbody>{ff.map((f) => (
+            <tr key={f.client + f.item} style={{ cursor: "default" }}>
+              <td className="tname">{f.client}</td>
+              <td>{INTL_OFFICES.find((o) => o.id === f.office).name.split(" ")[0]}</td>
+              <td className="dim" style={{ textAlign: "left" }}>{f.item}</td>
+              <td>{fC(cvv(f.fee, f.ccy))}</td><td>{f.vol.toLocaleString()}</td><td className="strong">{fC(cvv(f.fee * f.vol, f.ccy))}</td>
+              <td style={{ textAlign: "left" }} className={f.prop === 0 ? "warn-t" : "pos-t"}>{f.status}</td>
+              <td>{fC(cvv(f.fee * (1 + f.prop / 100), f.ccy))}</td>
+              <td className={f.prop > 0 ? "pos-t" : "dim"}>{f.prop > 0 ? "+" + fmtPct(f.prop) : "held"}</td></tr>))}</tbody>
+        </table></div>
+        <p className="snote">Fixed-fee values are placeholders pending the client-agreement extract. Locked schedules are shown at their current fee; proposed figures apply only where the agreement reopens before or during 2027.</p>
+      </Card>
+    </div>
+  );
+}
+
 /* ---------- MANAGEMENT REPORT ---------- */
 const RPT_GROUPS = [
   { label: "Share Partner — Litigation", coh: "PtrLit", test: (r) => r.title === "Partner" && r.ptrType === "Share" && r.segment === "Litigation" },
@@ -1424,7 +1682,7 @@ const PRESETS = {
   Base: { floorPct: 2, capPct: 12, holdBelow: 30, assocScale: 8, peerInfl: 7, dragBps: 15, capShare: 35, capLevel: 4, velocity: 70, adj: { PtrLit: 0, PtrNonLit: 0, Counsel: 0, Paralegal: 0 } },
   Aggressive: { floorPct: 3, capPct: 14, holdBelow: 25, assocScale: 10, peerInfl: 8, dragBps: 10, capShare: 30, capLevel: 4.5, velocity: 78, adj: { PtrLit: 0.5, PtrNonLit: 0.5, Counsel: 0, Paralegal: 0 } },
 };
-const TABS = ["Overview", "Rate Model", "Peer Panel", "Risk & QC", "Trends", "Data", "Mgmt Report", "Memo"];
+const TABS = ["Overview", "Rate Model", "Peer Panel", "Risk & QC", "Trends", "International", "Data", "Mgmt Report", "Memo"];
 const now = () => new Date().toLocaleTimeString("en-US", { hour12: false });
 
 function App() {
@@ -1439,6 +1697,9 @@ function App() {
   const [scenarios, setScenarios] = useState({});
   const [statuses, setStatuses] = useState({});
   const [auditLog, setAuditLog] = useState([]);
+  const [intl, setIntl] = useState({ ccy: "USD", office: "LON", peerMove: 5,
+    inc: { Partner: 6, Counsel: 5.5, Associate: 8, Paralegal: 4 },
+    hpBonus: 3, mpBonus: 3, dualDisc: 20, dualShare: 40, marks: {} });
 
   const logEvent = (msg) => setAuditLog((l) => [...l.slice(-199), { t: now(), msg }]);
 
@@ -1511,6 +1772,7 @@ function App() {
         {tab === "Peer Panel" && <PeerTab M={M} cfg={cfg} overrides={overrides} tks={tks} selectedPeers={selectedPeers} setSelectedPeers={setSelectedPeers} showReco={showReco} setShowReco={setShowReco} />}
         {tab === "Risk & QC" && <RiskTab M={M} MC={MC} cfg={cfg} statuses={statuses} setStatus={setStatus} bulkApprove={bulkApprove} />}
         {tab === "Trends" && <TrendsTab M={M} />}
+        {tab === "International" && <IntlTab intl={intl} setIntl={setIntl} logEvent={logEvent} />}
         {tab === "Data" && <DataTab tks={tks} setTks={setTks} dataSource={dataSource} setDataSource={setDataSource} exportSchedule={exportSchedule} auditLog={auditLog} exportAudit={exportAudit} logEvent={logEvent} />}
         {tab === "Mgmt Report" && <MgmtReportTab M={M} MC={MC} cfg={cfg} scenario={scenario} dataSource={dataSource} />}
         {tab === "Memo" && <MemoTab M={M} cfg={cfg} scenario={scenario} MC={MC} statuses={statuses} />}
