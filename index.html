@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian &amp; Cole LLP — 2027 Rate Committee Console</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+:root{--bg:#F4F6F3;--card:#FFFFFF;--line:#DFE6DF;--line2:#C8D4C9;--ink:#17251F;--tx:#2C3A32;--dim:#6C7B70;
+--grn:#14563F;--grn-soft:#E7F0EB;--gold:#A87F2E;--gold-soft:#F5EEDF;--pos:#0E7C4F;--neg:#C23934;--warn:#B7791F}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'IBM Plex Sans',sans-serif;font-size:13.5px;-webkit-font-smoothing:antialiased;
+font-variant-numeric:tabular-nums}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+input,select{font-family:inherit;background:#fff;border:1px solid var(--line2);color:var(--ink);padding:6px 9px;font-size:13px;border-radius:6px}
+input[type=range]{accent-color:var(--grn);padding:0;border:none;background:transparent}
+.page{min-height:100vh;display:flex;flex-direction:column}
+.mast{background:var(--card);border-bottom:1px solid var(--line)}
+.mast-inner{max-width:1300px;margin:0 auto;padding:18px 20px 8px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.firmname{font-family:'Source Serif 4',serif;font-weight:700;font-size:24px;color:var(--ink);letter-spacing:.01em}
+.firmname span{font-weight:500;color:var(--dim);font-size:18px}
+.apptitle{font-size:13px;color:var(--dim);margin-top:2px}
+.badge{display:inline-block;font-size:11px;font-weight:600;border:1px solid var(--line2);border-radius:999px;padding:2px 9px;margin-left:8px;color:var(--dim);vertical-align:1px}
+.badge.gold-b{border-color:#E0CE9E;background:var(--gold-soft);color:var(--gold)}
+.presets{display:flex;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:4px}
+.preset{border-radius:999px;padding:7px 16px;font-size:12.5px;font-weight:600;color:var(--dim)}
+.preset.on{background:var(--grn);color:#fff}
+.preset.custom{background:var(--gold);color:#fff}
+.tabs{max-width:1300px;margin:0 auto;padding:0 20px;display:flex;gap:4px;overflow-x:auto}
+.tabbtn{padding:11px 16px;font-size:13.5px;font-weight:600;color:var(--dim);border-bottom:2.5px solid transparent;white-space:nowrap}
+.tabbtn.on{color:var(--grn);border-bottom-color:var(--grn)}
+.tabbtn:hover{color:var(--ink)}
+.content{max-width:1300px;margin:0 auto;padding:18px 20px 40px;width:100%;flex:1}
+.foot{max-width:1300px;margin:0 auto;padding:14px 20px 26px;font-size:11.5px;color:var(--dim);width:100%}
+.stack{display:flex;flex-direction:column;gap:14px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:1fr 1fr}.g4{grid-template-columns:repeat(4,1fr)}
+.g23{grid-template-columns:1.8fr 1fr}.g32{grid-template-columns:340px 1fr}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 2px rgba(23,37,31,.04)}
+.chead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:14px 16px 0}
+.chead h3{font-family:'Source Serif 4',serif;font-size:16.5px;font-weight:600;color:var(--ink)}
+.csub{font-size:12px;color:var(--dim);margin-top:2px}
+.cbody{padding:14px 16px 16px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.decision{border:1px solid var(--line2);background:linear-gradient(135deg,#FFFFFF 0%,#F6FAF7 100%)}
+.dec-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;align-items:start}
+.dec-big{font-family:'Source Serif 4',serif;font-size:42px;font-weight:700;color:var(--grn);line-height:1.05;margin:6px 0 8px}
+.dec-big span{font-size:16px;font-weight:500;color:var(--dim);font-family:'IBM Plex Sans',sans-serif}
+.dec-line{font-size:14px;color:var(--tx);margin-bottom:4px}
+.dec-line.dim{color:var(--dim);font-size:12.5px}
+.dec-actions{display:flex;flex-direction:column;gap:12px}
+.goal{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px}
+.goalrow{display:flex;gap:8px;margin-top:6px}
+.goalrow input{width:110px}
+.dec-btns{display:flex;flex-direction:column;gap:8px}
+.btn{border:1px solid var(--line2);border-radius:8px;padding:9px 14px;font-size:12.5px;font-weight:600;color:var(--ink);background:#fff}
+.btn:hover{border-color:var(--grn);color:var(--grn)}
+.btn.solid{background:var(--grn);border-color:var(--grn);color:#fff}
+.btn.solid:hover{background:#0F4331;color:#fff}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.btn.gold:hover{background:#8E6A22;color:#fff}
+.stat .slabel,.slabel{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--dim)}
+.srow{display:flex;align-items:baseline;gap:10px;margin-top:4px}
+.sval{font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;color:var(--ink)}
+.delta{font-size:12px;font-weight:700;border-radius:6px;padding:2px 7px}
+.delta.pos{color:var(--pos);background:#E5F3EC}
+.delta.neg{color:var(--neg);background:#F8E9E7}
+.sspark{margin-top:8px}
+.snote{font-size:11.5px;color:var(--dim);margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:12.8px}
+thead th{position:sticky;top:0;background:#F8FAF7;border-bottom:1px solid var(--line2);padding:8px 10px;text-align:right;
+font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);cursor:pointer;white-space:nowrap;z-index:2}
+thead th:first-child,tbody td:first-child{text-align:left}
+thead th.on{color:var(--grn)}
+tbody td{padding:7.5px 10px;border-bottom:1px solid #EDF1EC;text-align:right;white-space:nowrap}
+tbody tr:hover{background:#F4F8F4;cursor:pointer}
+tbody tr.sel{background:var(--grn-soft);box-shadow:inset 3px 0 0 var(--grn)}
+tbody tr.hl{background:var(--gold-soft)}
+table.mini{font-size:12px}
+table.mini thead th{position:static}
+table.mini tbody tr:hover{background:transparent;cursor:default}
+.tname{color:var(--ink);font-weight:600}
+.strong{color:var(--ink);font-weight:700}
+.dim{color:var(--dim);font-weight:400;font-size:11.5px}
+.pos-t{color:var(--pos);font-weight:600}.neg-t{color:var(--neg);font-weight:600}
+.warn-t{color:var(--warn);font-weight:600}.gold-t{color:var(--gold);font-weight:700}
+.twrap{overflow:auto;max-height:560px;border:1px solid var(--line);border-radius:8px}
+.scorebar{display:inline-flex;align-items:center;gap:7px;justify-content:flex-end}
+.sb{width:52px;height:7px;background:#EDF1EC;border-radius:99px;position:relative;display:inline-block;overflow:hidden}
+.sb i{position:absolute;left:0;top:0;bottom:0;background:var(--grn);border-radius:99px}
+.ctl{margin-bottom:12px}
+.crow{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.crow b{color:var(--ink)}
+.ctl input[type=range]{width:100%}
+.selrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.dl{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line);font-size:12.5px}
+.dl span{color:var(--dim)}.dl b{color:var(--ink)}
+.detail{border-left:3px solid var(--grn)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{border:1.5px solid var(--line2);border-radius:999px;padding:6px 13px;font-size:12.5px;color:var(--dim);background:#fff;font-weight:600}
+.chip.on{background:var(--grn-soft)}
+.chip .src{font-size:10px;opacity:.75;font-weight:700;margin-left:3px}
+.chk{font-size:12px;color:var(--dim);display:flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap}
+.notes p{font-size:12.8px;line-height:1.6;margin-bottom:10px}
+.drop{border:1.5px dashed var(--line2);border-radius:10px;padding:34px 18px;text-align:center;cursor:pointer;background:#FBFCFA}
+.drop:hover{border-color:var(--grn)}
+.droptitle{font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;color:var(--grn)}
+.report{margin-top:14px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:#FBFCFA}
+.errline{font-size:12px;color:var(--neg);padding:2px 0}
+.scen-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.memo-actions{display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px;max-width:860px;margin-left:auto;margin-right:auto}
+.memo{background:#FBF9F2;color:#1E2419;font-family:'Source Serif 4',serif;font-size:15px;line-height:1.7;padding:48px 54px;max-width:860px;margin:0 auto;border:1px solid #E0DAC6;border-radius:4px;box-shadow:0 14px 40px rgba(23,37,31,.10)}
+.memo .mh{font-family:'IBM Plex Sans',sans-serif;font-size:12.5px;border-bottom:2px solid #1E2419;padding-bottom:12px;margin-bottom:22px}
+.memo .mh div{display:flex;gap:10px;padding:2px 0}.memo .mh .k{width:64px;font-weight:700}
+.memo h2{font-family:'IBM Plex Sans',sans-serif;text-transform:uppercase;letter-spacing:.09em;font-size:13.5px;font-weight:700;margin:26px 0 8px;border-bottom:1px solid #CFC8B0;padding-bottom:5px;color:#2E3A2F}
+.memo p{margin-bottom:12px}
+.memo table{font-family:'IBM Plex Sans',sans-serif;font-size:12px;margin:10px 0 16px}
+.memo thead th{position:static;background:#EFEADA;color:#3A3627;border-bottom:1.5px solid #1E2419;cursor:default}
+.memo tbody td{border-bottom:1px solid #DDD6C0;color:#1E2419}
+.memo tbody tr:hover{background:transparent;cursor:default}
+.memo .chartbox{background:#fff;border:1px solid #D8D2BC;border-radius:4px;padding:12px;margin:12px 0}
+.memo .cap-t{font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:#6B6550;margin-top:6px;text-align:center}
+@media (max-width:1020px){.g2,.g4,.g23,.g32,.dec-grid{grid-template-columns:1fr}.memo{padding:28px 22px}}
+@media print{body{background:#fff}.noprint,.mast,.foot{display:none!important}.memo{box-shadow:none;border:none;max-width:100%}.content{padding:0}}
+
+/* v4 additions */
+.conf{display:inline-block;background:var(--grn-soft);border:1px solid #C6DACF;border-radius:8px;padding:4px 10px;font-size:12px;color:var(--grn);font-weight:600}
+.segbtns{display:flex;gap:6px;margin-top:4px}
+.segbtn{border:1px solid var(--line2);border-radius:8px;padding:6px 14px;font-size:12.5px;font-weight:700;background:#fff;color:var(--dim)}
+.segbtn.on{background:var(--grn);border-color:var(--grn);color:#fff}
+.statusrow{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.statusrow.tight{margin:0;justify-content:flex-end}
+.stpill{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-radius:999px;padding:3px 10px}
+.stpill.proposed{background:#EEF1EE;color:var(--dim)}
+.stpill.approved{background:#E5F3EC;color:var(--pos)}
+.stpill.review{background:#F8E9E7;color:var(--neg)}
+.stbtn{width:28px;height:28px;border:1px solid var(--line2);border-radius:8px;font-weight:700;color:var(--dim);background:#fff}
+.stbtn.on{background:var(--pos);border-color:var(--pos);color:#fff}
+.stbtn.rev.on{background:var(--neg);border-color:var(--neg)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px;background:#C9D4CB}
+.dot.approved{background:var(--pos)}.dot.review{background:var(--neg)}.dot.flagged{background:var(--warn)}
+.flag{display:inline-block;font-size:10.5px;font-weight:700;background:var(--gold-soft);color:var(--gold);border:1px solid #E4D4A9;border-radius:6px;padding:2px 7px;margin:2px 3px 2px 0}
+.flaglist{margin-top:8px}
+.mcstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.progress{height:10px;background:#EDF1EC;border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--pos);border-radius:99px;transition:width .2s ease}
+.tabcount{display:inline-block;background:var(--warn);color:#fff;font-size:10px;font-weight:700;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:1px}
+table.heat td{text-align:center}
+@media (max-width:1020px){.mcstats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+/* RATE COMMITTEE 2027 — Meridian & Cole LLP
+   AmLaw-100 rate analysis console · light professional theme
+   Globals: React, ReactDOM, Chart, Papa */
+
+const { useState, useMemo, useRef, useEffect } = React;
+
+/* ---------- helpers ---------- */
+function mulberry32(a){return function(){a|=0;a=(a+0x6D2B79F5)|0;let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296}}
+const rand = mulberry32(20270215);
+const R = (lo, hi) => lo + rand() * (hi - lo);
+const pick = (a) => a[Math.floor(rand() * a.length)];
+const round5 = (x) => Math.round(x / 5) * 5;
+const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
+const fmt$ = (n) => "$" + Math.round(n).toLocaleString("en-US");
+const fmtPct = (n, d = 1) => (isFinite(n) ? n.toFixed(d) : "–") + "%";
+const fmtM = (n) => "$" + (n / 1e6).toFixed(2) + "M";
+const pctile = (arr, q) => { const s = [...arr].sort((a, b) => a - b); if (!s.length) return 0;
+  const p = (s.length - 1) * q, lo = Math.floor(p), hi = Math.ceil(p); return s[lo] + (s[hi] - s[lo]) * (p - lo); };
+
+const YEARS = [2022, 2023, 2024, 2025, 2026];
+const PRACTICES_LIT = ["Commercial Litigation", "Product Liability", "White Collar", "IP Litigation"];
+const PRACTICES_NONLIT = ["M&A / PE", "Capital Markets", "Restructuring", "Real Estate", "Tax", "Labor & Emp"];
+const ASSOC_LADDER_2026 = [0, 595, 650, 710, 775, 845, 915, 975, 1025];
+
+const COHORTS = ["A1","A2","A3","A4","A5","A6","A7","A8","Counsel","Paralegal","PtrNonLit","PtrLit"];
+const COHORT_LBL = { A1:"A1",A2:"A2",A3:"A3",A4:"A4",A5:"A5",A6:"A6",A7:"A7",A8:"A8",
+  Counsel:"Counsel", Paralegal:"Paralegal", PtrNonLit:"Ptr Non-Lit", PtrLit:"Ptr Lit" };
+const cohortOf = (t) => t.title === "Associate" ? "A" + t.cls :
+  t.title === "Partner" ? (t.segment === "Litigation" ? "PtrLit" : "PtrNonLit") : t.title;
+
+/* ---------- peer panel (MOCK — replace with BRASS / Valeo extracts) ---------- */
+const PEER_BASE = { A1:615,A2:670,A3:730,A4:800,A5:870,A6:940,A7:1000,A8:1055,
+  Counsel:995, Paralegal:390, PtrNonLit:1385, PtrLit:1290 };
+const PEER_FIRM_DEFS = [
+  ["Ashworth & Calder", 1.22, "Valeo"], ["Blackwell Reed", 1.14, "BRASS"],
+  ["Crandall & Moss", 1.08, "Valeo"], ["Davenport Hale", 1.04, "BRASS"],
+  ["Ellison Marsh", 1.00, "Valeo"], ["Fairbank Whitlow", 0.97, "BRASS"],
+  ["Grantham Pierce", 0.94, "Valeo"], ["Holloway & Trent", 0.91, "BRASS"],
+  ["Ingram Roth", 0.88, "Valeo"], ["Kestrel Vance", 1.18, "BRASS"],
+];
+const PEER_FIRMS = PEER_FIRM_DEFS.map(([name, mult, src], i) => {
+  const rates = {}; COHORTS.forEach((c) => { rates[c] = round5(PEER_BASE[c] * mult * R(0.985, 1.015)); });
+  return { id: "pf" + i, name, src, mult, rates,
+    incHist: [R(4.4,5.8), R(5.2,6.8), R(6.6,8.2), R(6.0,7.6)].map((x) => +x.toFixed(1)) };
+});
+
+/* ---------- mock timekeepers ---------- */
+const FIRST = ["J.","M.","A.","R.","S.","D.","K.","L.","T.","C.","E.","P.","N.","G.","B.","V.","H.","W."];
+const LAST = ["Alvarez","Brennan","Castellano","Donovan","Egerton","Farrell","Grieco","Halloran","Iverson","Jankowski","Kessler","Lombardi","Marchetti","Novak","O'Rourke","Pellegrini","Quintana","Rossi","Sutherland","Takahashi","Ulrich","Vance","Whitfield","Yates","Zamora","Ashford","Bellamy","Colombo","DeSantis","Esposito","Ferraro","Gallo","Huang","Ianelli","Jefferies","Katz","Lindqvist","Moreau","Nakamura","Okafor","Petrov","Reyes","Salerno","Tran","Underwood","Villanueva","Winslow","Xu","Yusuf","Ziegler","Abbott","Beaumont","Carver","Delgado","Emerson","Foster"];
+
+function genHistory(rate2026, incAvg) {
+  const rates = {}; let r = rate2026;
+  for (let i = YEARS.length - 1; i >= 0; i--) { rates[YEARS[i]] = round5(r); r = r / (1 + incAvg + R(-0.015, 0.015)); }
+  return rates;
+}
+function finishTk(t) {
+  t.realHist = {}; t.hoursHist = {};
+  YEARS.forEach((yr, i) => { const d = YEARS.length - 1 - i;
+    t.realHist[yr] = clamp(t.real + d * R(-0.012, 0.004), 0.76, 0.985);
+    t.hoursHist[yr] = Math.round(clamp(t.hours + d * R(-90, 40), 1050, 2400)); });
+  return t;
+}
+function makeMockTimekeepers() {
+  const tks = []; let id = 1; const used = new Set();
+  const nm = () => { let n; do { n = pick(FIRST) + " " + pick(LAST); } while (used.has(n)); used.add(n); return n; };
+  for (let i = 0; i < 14; i++) tks.push(finishTk({ id: id++, name: nm(), title: "Partner", segment: "Litigation",
+    cls: null, practice: PRACTICES_LIT[i % 4], rate2026: round5(R(1050, 1520)), hours: Math.round(R(1350, 2150)), real: R(0.82, 0.965) }));
+  for (let i = 0; i < 12; i++) tks.push(finishTk({ id: id++, name: nm(), title: "Partner", segment: "Non-Litigation",
+    cls: null, practice: PRACTICES_NONLIT[i % 6], rate2026: round5(R(1120, 1640)), hours: Math.round(R(1300, 2100)), real: R(0.83, 0.97) }));
+  for (let i = 0; i < 8; i++) tks.push(finishTk({ id: id++, name: nm(), title: "Counsel",
+    segment: i % 2 ? "Litigation" : "Non-Litigation", cls: null,
+    practice: i % 2 ? PRACTICES_LIT[i % 4] : PRACTICES_NONLIT[i % 6],
+    rate2026: round5(R(860, 1060)), hours: Math.round(R(1400, 2050)), real: R(0.83, 0.95) }));
+  for (let c = 1; c <= 8; c++) for (let i = 0; i < 4; i++) tks.push(finishTk({ id: id++, name: nm(), title: "Associate",
+    segment: i % 2 ? "Litigation" : "Non-Litigation", cls: c,
+    practice: i % 2 ? PRACTICES_LIT[(c + i) % 4] : PRACTICES_NONLIT[(c + i) % 6],
+    rate2026: ASSOC_LADDER_2026[c], hours: Math.round(R(1500, 2250)), real: R(0.80, 0.94) }));
+  for (let i = 0; i < 8; i++) tks.push(finishTk({ id: id++, name: nm(), title: "Paralegal",
+    segment: i % 2 ? "Litigation" : "Non-Litigation", cls: null,
+    practice: i % 2 ? PRACTICES_LIT[i % 4] : PRACTICES_NONLIT[i % 6],
+    rate2026: round5(R(295, 425)), hours: Math.round(R(1300, 1950)), real: R(0.86, 0.97) }));
+  tks.forEach((t) => { t.rates = genHistory(t.rate2026, t.title === "Associate" ? 0.08 : R(0.045, 0.075)); });
+  return tks;
+}
+const MOCK_TKS = makeMockTimekeepers();
+
+/* ---------- engine (pure — reusable for scenarios & sensitivity) ---------- */
+function buildPeerStats(selectedIds, peerInfl) {
+  const sel = PEER_FIRMS.filter((f) => selectedIds.has(f.id));
+  const stats = {};
+  COHORTS.forEach((c) => { const xs = sel.map((f) => f.rates[c]);
+    stats[c] = { p25: pctile(xs, .25), p50: pctile(xs, .5), p75: pctile(xs, .75), p90: pctile(xs, .9),
+      p50_27: pctile(xs, .5) * (1 + peerInfl / 100), n: xs.length }; });
+  const incAvg = [0,1,2,3].map((i) => sel.length ? sel.reduce((a, f) => a + f.incHist[i], 0) / sel.length : 0);
+  return { stats, incAvg, firms: sel };
+}
+
+function baseIncFor(t, cfg, peer) {
+  const coh = cohortOf(t);
+  const ps = peer.stats[coh]; const med27 = ps.p50_27 || 1;
+  const hoursNorm = clamp((t.hours - 1300) / 850, 0, 1);
+  const realNorm = clamp((t.real - 0.80) / 0.16, 0, 1);
+  const headroom = clamp((med27 - t.rate2026) / (0.22 * med27), 0, 1);
+  const wSum = cfg.wHours + cfg.wReal + cfg.wPeer || 1;
+  const score = Math.round(100 * (cfg.wHours * hoursNorm + cfg.wReal * realNorm + cfg.wPeer * headroom) / wSum);
+  let inc, mode = "scored";
+  if (t.title === "Associate") { mode = "scale"; inc = cfg.assocScale; }
+  else {
+    const cap = t.title === "Paralegal" ? cfg.capPct * 0.6 : cfg.capPct;
+    if (score < cfg.holdBelow) { inc = cfg.floorPct * 0.5; mode = "hold"; }
+    else inc = cfg.floorPct + (cap - cfg.floorPct) * Math.pow(score / 100, 0.9);
+    const k = t.title === "Partner" ? (t.segment === "Litigation" ? "PtrLit" : "PtrNonLit") : t.title;
+    inc = clamp(inc + (cfg.adj[k] || 0), 0, cfg.capPct + 4);
+  }
+  return { coh, score, inc, mode, med27, ps };
+}
+
+
+/* ---------- engine v4: effective economics, velocity, rounding, flags ---------- */
+const roundStep = (x, step) => Math.round(x / step) * step;
+
+function computeModel(tks, cfg, overrides, selectedPeers) {
+  const peer = buildPeerStats(selectedPeers, cfg.peerInfl);
+  const bases = tks.map((t) => ({ t, b: baseIncFor(t, cfg, peer) }));
+  const H = tks.reduce((a, t) => a + t.hours, 0) || 1;
+  const cs = cfg.capShare / 100, vel = cfg.velocity / 100;
+
+  const rowsFor = (mult) => bases.map(({ t, b }) => {
+    const ov = overrides[t.id];
+    let inc, mode = b.mode;
+    if (ov != null && t.title !== "Associate") { inc = ov; mode = "override"; }
+    else inc = clamp(b.inc * mult, 0, (t.title === "Associate" ? cfg.assocScale * 2.2 : cfg.capPct + 4));
+    const rate2027 = roundStep(t.rate2026 * (1 + inc / 100), cfg.roundTo);
+    const incStd = (rate2027 / t.rate2026 - 1) * 100;
+    const incEff = incStd * (1 - cs) + Math.min(incStd, cfg.capLevel) * cs;
+    const effRate27 = t.rate2026 * (1 + incEff / 100);
+    return { ...t, cohort: b.coh, score: b.score, mode, rate2027, effRate27,
+      incPct: incStd, incEff, peerP50: b.ps.p50, peerMed27: round5(b.med27), p90_27: b.ps.p90 * (1 + cfg.peerInfl / 100),
+      vsPeer27: (rate2027 / b.med27 - 1) * 100 };
+  });
+  const blendedOf = (rows) => {
+    const b26 = rows.reduce((a, r) => a + r.rate2026 * r.hours, 0) / H;
+    const b27 = rows.reduce((a, r) => a + r.rate2027 * r.hours, 0) / H;
+    return { b26, b27, inc: (b27 / b26 - 1) * 100 };
+  };
+
+  let goalMult = 1, goalNote = null;
+  if (cfg.goalTarget > 0) {
+    let lo = 0, hi = 3;
+    for (let i = 0; i < 42; i++) { const mid = (lo + hi) / 2;
+      if (blendedOf(rowsFor(mid)).inc < cfg.goalTarget) lo = mid; else hi = mid; }
+    goalMult = (lo + hi) / 2;
+    const achieved = blendedOf(rowsFor(goalMult)).inc;
+    if (Math.abs(achieved - cfg.goalTarget) > 0.15) goalNote = "target constrained by caps/overrides — achieved " + fmtPct(achieved);
+  }
+  const rows = rowsFor(goalMult);
+  const { b26: blended26, b27: blended27, inc: blendedInc } = blendedOf(rows);
+  const effBlended27 = rows.reduce((a, r) => a + r.effRate27 * r.hours, 0) / H;
+  const effBlendedInc = (effBlended27 / blended26 - 1) * 100;
+
+  const grossStd = rows.reduce((a, r) => a + r.hours * (r.rate2027 - r.rate2026) * r.real, 0);
+  const grossEff = rows.reduce((a, r) => a + r.hours * (r.effRate27 - r.rate2026) * r.real, 0);
+  const capLeak = grossStd - grossEff;
+  const carryover = grossEff * (1 - vel);
+  const year1Gross = grossEff * vel;
+  const R27H = rows.reduce((a, r) => a + r.hours * r.effRate27, 0);
+  const erosion = Math.max(0, effBlendedInc - cfg.peerInfl) * (cfg.dragBps / 10000);
+  const drag = R27H * erosion * vel;
+  const net = year1Gross - drag;
+
+  const holds = rows.filter((r) => r.mode === "hold");
+  const ovr = rows.filter((r) => r.mode === "override");
+  const abovePeer = rows.filter((r) => r.vsPeer27 > 0).length;
+
+  /* QC flags */
+  rows.forEach((r) => {
+    const f = [];
+    if (r.rate2027 > r.p90_27) f.push("Above panel P90");
+    if (r.incPct >= 6 && r.real < 0.85) f.push("High increase / soft realization");
+    if (r.vsPeer27 < -12) f.push("Under-market — headroom unused");
+    if (r.mode === "override") f.push("Manual override");
+    if (r.mode === "hold") f.push("Held below score threshold");
+    r.flags = f;
+  });
+  const flagged = rows.filter((r) => r.flags.length);
+
+  const segDefs = [["PtrLit","Partners — Litigation"],["PtrNonLit","Partners — Non-Lit"],["Counsel","Counsel"],["Associate","Associates (scale)"],["Paralegal","Paralegals"]];
+  const bySegment = segDefs.map(([k, label]) => {
+    const g = rows.filter((r) => k === "Associate" ? r.title === "Associate" : k === "Counsel" ? r.title === "Counsel"
+      : k === "Paralegal" ? r.title === "Paralegal" : r.cohort === k);
+    const gh = g.reduce((a, r) => a + r.hours, 0) || 1;
+    return { key: k, label, n: g.length,
+      avg26: g.reduce((a, r) => a + r.rate2026, 0) / (g.length || 1),
+      avg27: g.reduce((a, r) => a + r.rate2027, 0) / (g.length || 1),
+      inc: g.reduce((a, r) => a + r.incPct * r.hours, 0) / gh,
+      incEff: g.reduce((a, r) => a + r.incEff * r.hours, 0) / gh,
+      uplift: g.reduce((a, r) => a + r.hours * (r.effRate27 - r.rate2026) * r.real, 0),
+      real: g.reduce((a, r) => a + r.real * r.hours, 0) / gh,
+      hrs: gh / (g.length || 1) };
+  });
+
+  const trend = YEARS.map((yr) => ({ yr,
+    avgRate: Math.round(tks.reduce((a, t) => a + (t.rates[yr] || t.rate2026), 0) / (tks.length || 1)),
+    real: +(tks.reduce((a, t) => a + (t.realHist[yr] || t.real), 0) / (tks.length || 1) * 100).toFixed(1),
+    hours: Math.round(tks.reduce((a, t) => a + (t.hoursHist[yr] || t.hours), 0) / (tks.length || 1)) }));
+  const trendInc = YEARS.slice(1).map((yr, i) => ({ yr,
+    firm: +((trend[i + 1].avgRate / trend[i].avgRate - 1) * 100).toFixed(1), peer: +peer.incAvg[i].toFixed(1) }));
+  trendInc.push({ yr: 2027, firm: +blendedInc.toFixed(1), peer: cfg.peerInfl });
+
+  const firmCohort26 = {}, firmCohort27 = {};
+  COHORTS.forEach((c) => { const g = rows.filter((r) => r.cohort === c);
+    firmCohort26[c] = g.length ? g.reduce((a, r) => a + r.rate2026, 0) / g.length : null;
+    firmCohort27[c] = g.length ? g.reduce((a, r) => a + r.rate2027, 0) / g.length : null; });
+
+  const ladder = [];
+  for (let c = 1; c <= 8; c++) { const ps = peer.stats["A" + c];
+    ladder.push({ cls: "C" + c, p25: ps.p25, p50: ps.p50, p75: ps.p75, p50_27: round5(ps.p50_27),
+      firm26: firmCohort26["A" + c], firm27: firmCohort27["A" + c] }); }
+
+  const baseRev = rows.reduce((a, r) => a + r.hours * r.rate2026 * r.real, 0);
+  return { rows, peer, blended26, blended27, blendedInc, effBlendedInc, grossStd, grossEff, capLeak,
+    carryover, year1Gross, drag, net, erosion, R27H, holds, ovr, abovePeer, flagged, bySegment, trend, trendInc,
+    firmCohort26, firmCohort27, ladder, headcount: rows.length, baseRev, goalMult, goalNote };
+}
+
+/* ---------- Monte Carlo (seeded, reproducible) ---------- */
+function runMonteCarlo(M, cfg, N = 2500) {
+  const rng = mulberry32(424242);
+  const norm = () => { let u = 0, v = 0; while (!u) u = rng(); while (!v) v = rng();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  const nets = new Array(N);
+  const avgReal = 0.88;
+  for (let i = 0; i < N; i++) {
+    const peerI = cfg.peerInfl + norm() * 1.0;
+    const dragI = Math.max(0, cfg.dragBps + norm() * (cfg.dragBps * 0.4 + 3));
+    const velI = clamp(cfg.velocity + norm() * 6, 30, 100) / 100;
+    const hoursF = 1 + norm() * 0.03;
+    const realShift = norm() * 0.006;
+    const erosionI = Math.max(0, M.effBlendedInc - peerI) * (dragI / 10000);
+    const g = M.grossEff * hoursF * (1 + realShift / avgReal);
+    nets[i] = g * velI - M.R27H * hoursF * erosionI * velI;
+  }
+  nets.sort((a, b) => a - b);
+  const q = (p) => nets[Math.floor(p * (N - 1))];
+  const mean = nets.reduce((a, b) => a + b, 0) / N;
+  const bins = 22, lo = nets[0], hi = nets[N - 1], w = (hi - lo) / bins || 1;
+  const hist = new Array(bins).fill(0);
+  nets.forEach((v) => hist[Math.min(bins - 1, Math.floor((v - lo) / w))]++);
+  return { p10: q(.10), p50: q(.50), p90: q(.90), mean, probPos: nets.filter((v) => v > 0).length / N,
+    hist, lo, w, N };
+}
+
+/* ---------- assumption register ---------- */
+function assumptions(M, cfg) {
+  return [
+    { k: "Peer 2027 rate move", v: fmtPct(cfg.peerInfl, 1), src: "Management estimate; BRASS trend" },
+    { k: "Peer benchmark panel", v: M.peer.firms.length + " firms", src: "PwC BRASS + Valeo (placeholders)" },
+    { k: "Realization drag", v: cfg.dragBps + " bps / pp above peer", src: "Pricing analysis of prior cycles" },
+    { k: "Book under rate caps", v: fmtPct(cfg.capShare, 0) + " at avg " + fmtPct(cfg.capLevel, 1) + " cap", src: "Client agreements database" },
+    { k: "Year-1 repricing velocity", v: fmtPct(cfg.velocity, 0) + " of hours", src: "Matter turnover analysis" },
+    { k: "Scored floor / cap / hold", v: fmtPct(cfg.floorPct,1) + " / " + fmtPct(cfg.capPct,1) + " / <" + cfg.holdBelow, src: "Committee policy" },
+    { k: "Associate scale move", v: fmtPct(cfg.assocScale, 1), src: "Recruiting market parity" },
+    { k: "Rate rounding", v: "nearest $" + cfg.roundTo, src: "Rate schedule policy" },
+    { k: "Score weights (hrs/real/peer)", v: [cfg.wHours, cfg.wReal, cfg.wPeer].map((w) => (w*100).toFixed(0) + "%").join(" / "), src: "Committee policy" },
+  ];
+}
+/* ---------- Chart.js setup (light theme) ---------- */
+const PAL = ["#14563F","#A87F2E","#3E7CB1","#C23934","#7A5CA8","#2E8B72","#B15C8E","#6B8E23","#C08A3E","#4C6E91"];
+Chart.defaults.color = "#5B6B60";
+Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.borderColor = "#E3E9E2";
+
+function ChartBox({ type, data, options, height = 260 }) {
+  const ref = useRef(null), inst = useRef(null);
+  useEffect(() => {
+    if (inst.current) inst.current.destroy();
+    inst.current = new Chart(ref.current, { type, data, options: { responsive: true, maintainAspectRatio: false, ...options } });
+    return () => { if (inst.current) { inst.current.destroy(); inst.current = null; } };
+  }, [data, options, type]);
+  return <div style={{ height }}><canvas ref={ref} /></div>;
+}
+const legend = (pos = "bottom") => ({ legend: { position: pos, labels: { boxWidth: 10, boxHeight: 10, padding: 10, usePointStyle: true } } });
+const money = { ticks: { callback: (v) => "$" + v.toLocaleString() } };
+const pct = { ticks: { callback: (v) => v + "%" } };
+
+/* ---------- UI primitives ---------- */
+function Card({ title, sub, right, children, style, className }) {
+  return (
+    <section className={"card " + (className || "")} style={style}>
+      {(title || right) && <header className="chead"><div><h3>{title}</h3>{sub && <p className="csub">{sub}</p>}</div>{right}</header>}
+      <div className="cbody">{children}</div>
+    </section>
+  );
+}
+function Delta({ v, suffix = "%", flip = false }) {
+  const pos = flip ? v < 0 : v >= 0;
+  return <span className={"delta " + (pos ? "pos" : "neg")}>{pos ? "▲" : "▼"} {Math.abs(v).toFixed(1)}{suffix}</span>;
+}
+function Stat({ label, value, delta, note, spark }) {
+  return (
+    <div className="stat">
+      <div className="slabel">{label}</div>
+      <div className="srow"><span className="sval">{value}</span>{delta}</div>
+      {spark && <div className="sspark">{spark}</div>}
+      {note && <div className="snote">{note}</div>}
+    </div>
+  );
+}
+function Spark({ pts, color = "#14563F", fmt }) {
+  const data = useMemo(() => ({ labels: pts.map((p) => p.yr),
+    datasets: [{ data: pts.map((p) => p.v), borderColor: color, borderWidth: 1.6, pointRadius: 0, tension: .35,
+      fill: true, backgroundColor: (ctx) => { const g = ctx.chart.ctx.createLinearGradient(0,0,0,44);
+        g.addColorStop(0, color + "33"); g.addColorStop(1, color + "00"); return g; } }] }), [pts, color]);
+  const options = useMemo(() => ({ plugins: { legend: { display: false },
+    tooltip: { callbacks: { label: (c) => fmt ? fmt(c.parsed.y) : c.parsed.y } } },
+    scales: { x: { display: false }, y: { display: false } } }), [fmt]);
+  return <ChartBox type="line" data={data} options={options} height={44} />;
+}
+
+/* ---------- OVERVIEW ---------- */
+function OverviewTab({ M, MC, cfg, setCfg, scenario, exportSchedule, goMemo }) {
+  const [goalInput, setGoalInput] = useState(cfg.goalTarget || "");
+  const ladderData = useMemo(() => ({ labels: M.ladder.map((l) => l.cls),
+    datasets: [
+      { label: "Panel P25", data: M.ladder.map((l) => Math.round(l.p25)), borderColor: "transparent", pointRadius: 0, fill: false },
+      { label: "Panel P25–P75", data: M.ladder.map((l) => Math.round(l.p75)), borderColor: "transparent", pointRadius: 0, fill: "-1", backgroundColor: "rgba(20,86,63,.14)" },
+      { label: "Panel median '26", data: M.ladder.map((l) => Math.round(l.p50)), borderColor: "#A87F2E", borderDash: [5,3], pointRadius: 0, borderWidth: 1.6, fill: false },
+      { label: "Firm scale '26", data: M.ladder.map((l) => l.firm26 && Math.round(l.firm26)), borderColor: "#9AAA9E", borderWidth: 1.6, pointRadius: 2, fill: false },
+      { label: "Recommended '27", data: M.ladder.map((l) => l.firm27 && Math.round(l.firm27)), borderColor: "#14563F", borderWidth: 2.6, pointRadius: 3, fill: false },
+    ] }), [M]);
+  const bridge = useMemo(() => {
+    const steps = [{ label: "2026 revenue", y: [0, M.baseRev] }];
+    let run = M.baseRev;
+    M.bySegment.forEach((s) => { steps.push({ label: s.label.replace("Partners — ", "Ptr "), y: [run, run + s.uplift] }); run += s.uplift; });
+    if (M.carryover > 0) { steps.push({ label: "Carryover (legacy rates)", y: [run - M.carryover, run] }); run -= M.carryover; }
+    if (M.drag > 0) { steps.push({ label: "Realization drag", y: [run - M.drag, run] }); run -= M.drag; }
+    steps.push({ label: "2027 net (yr-1)", y: [0, run] });
+    return { labels: steps.map((s) => s.label),
+      datasets: [{ data: steps.map((s) => s.y.map((v) => +(v / 1e6).toFixed(2))),
+        backgroundColor: steps.map((s, i) => i === 0 ? "#9AAA9E" : i === steps.length - 1 ? "#14563F"
+          : s.label === "Realization drag" ? "#C23934" : s.label.startsWith("Carryover") ? "#B7791F" : "#2E8B72"), borderRadius: 3, borderSkipped: false }] };
+  }, [M]);
+  const distData = useMemo(() => {
+    const bins = [[0,2],[2,4],[4,6],[6,8],[8,10],[10,14]];
+    return { labels: bins.map(([a,b]) => `${a}–${b}%`),
+      datasets: [{ data: bins.map(([a,b]) => M.rows.filter((r) => r.incPct >= a && r.incPct < b).length),
+        backgroundColor: bins.map((_, i) => i === 0 ? "#B7791F" : `rgba(20,86,63,${.35 + i * .12})`), borderRadius: 3 }] };
+  }, [M]);
+
+  return (
+    <div className="stack">
+      <Card className="decision">
+        <div className="dec-grid">
+          <div>
+            <div className="eyebrow">Recommendation — {scenario} scenario</div>
+            <div className="dec-big">+{fmtPct(M.blendedInc)} <span>standard · </span>+{fmtPct(M.effBlendedInc)} <span>effective after client caps</span></div>
+            <p className="dec-line">{fmt$(M.blended26)} → <b>{fmt$(M.blended27)}</b> hours-weighted · full-year effective uplift <b>{fmtM(M.grossEff)}</b> · year-1 net after carryover &amp; drag <b className="pos-t">{fmtM(M.net)}</b></p>
+            <p className="dec-line dim">{M.abovePeer}/{M.headcount} above panel median '27E · {M.holds.length} holds · {M.ovr.length} overrides · {M.flagged.length} QC flags{M.goalNote ? " · " + M.goalNote : ""}</p>
+            {MC && <p className="dec-line"><span className="conf">Monte Carlo ({MC.N.toLocaleString()} runs): 90% confidence year-1 net ≥ <b>{fmtM(MC.p10)}</b> · median {fmtM(MC.p50)} · P(net &gt; 0) {(MC.probPos*100).toFixed(1)}%</span></p>}
+          </div>
+          <div className="dec-actions">
+            <div className="goal">
+              <label className="slabel" htmlFor="goal">Goal seek — target blended %</label>
+              <div className="goalrow">
+                <input id="goal" type="number" step="0.1" min="0" max="15" value={goalInput}
+                  placeholder="e.g. 7.5" onChange={(e) => setGoalInput(e.target.value)} />
+                <button className="btn solid" onClick={() => setCfg({ ...cfg, goalTarget: parseFloat(goalInput) || 0 })}>Solve</button>
+                {cfg.goalTarget > 0 && <button className="btn" onClick={() => { setGoalInput(""); setCfg({ ...cfg, goalTarget: 0 }); }}>Clear</button>}
+              </div>
+              {cfg.goalTarget > 0 && <div className="snote">scored increases scaled ×{M.goalMult.toFixed(2)} to hit target</div>}
+            </div>
+            <div className="dec-btns">
+              <button className="btn" onClick={exportSchedule}>Export rate schedule (CSV)</button>
+              <button className="btn gold" onClick={goMemo}>Open committee memo →</button>
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      <div className="grid g4">
+        <Card><Stat label="Blended rate 2027" value={fmt$(M.blended27)} delta={<Delta v={M.blendedInc} />}
+          spark={<Spark pts={[...M.trend.map((t) => ({ yr: t.yr, v: t.avgRate })), { yr: 2027, v: Math.round(M.blended27) }]} fmt={fmt$} />} /></Card>
+        <Card><Stat label="Full-year uplift · std vs effective" value={fmtM(M.grossEff)} delta={<Delta v={-M.capLeak/1e6} suffix="M caps" flip />}
+          note={`${fmtM(M.grossStd)} at rack less ${fmtM(M.capLeak)} client-cap leakage`} /></Card>
+        <Card><Stat label="Year-1 net uplift" value={fmtM(M.net)} delta={<Delta v={-(M.carryover+M.drag)/1e6} suffix="M" flip />}
+          note={`${fmtPct(cfg.velocity,0)} repricing velocity · ${cfg.dragBps} bps drag`} /></Card>
+        <Card><Stat label="Above panel median '27E" value={M.abovePeer + " / " + M.headcount} note={M.peer.firms.length + "-firm panel · BRASS + Valeo"} /></Card>
+      </div>
+
+      <div className="grid g23">
+        <Card title="Associate scale vs peer panel" sub="shaded band = panel P25–P75 · recomputed from your firm selections">
+          <ChartBox type="line" data={ladderData} options={{ ...legend(), scales: { y: money } }} height={290} />
+        </Card>
+        <Card title="Increase distribution" sub={M.headcount + " timekeepers"}>
+          <ChartBox type="bar" data={distData} options={{ plugins: { legend: { display: false } } }} height={290} />
+        </Card>
+      </div>
+
+      <div className="grid g23">
+        <Card title="Revenue bridge — 2026 → 2027 year-1" sub="effective uplift by segment, less legacy-rate carryover and realization drag ($M)">
+          <ChartBox type="bar" data={bridge} options={{ plugins: { legend: { display: false },
+            tooltip: { callbacks: { label: (c) => "$" + (c.raw[1] - c.raw[0]).toFixed(2) + "M" } } },
+            scales: { y: { ticks: { callback: (v) => "$" + v + "M" } } } }} height={280} />
+        </Card>
+        <Card title="Segment schedule" sub="avg standard rates">
+          <table><thead><tr><th>Segment</th><th>N</th><th>'26</th><th>'27</th><th>Inc</th></tr></thead>
+            <tbody>{M.bySegment.map((s) => (
+              <tr key={s.key}><td className="tname">{s.label}</td><td>{s.n}</td><td>{fmt$(s.avg26)}</td>
+                <td className="strong">{fmt$(s.avg27)}</td><td className="pos-t">+{fmtPct(s.inc)}</td></tr>))}</tbody></table>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- RATE MODEL ---------- */
+function RatesTab({ M, cfg, setCfg, overrides, setOverrides, scenarios, saveScenario, scenario, statuses, setStatus }) {
+  const [seg, setSeg] = useState("All");
+  const [title, setTitle] = useState("All");
+  const [q, setQ] = useState("");
+  const [sort, setSort] = useState({ k: "score", dir: -1 });
+  const [selId, setSelId] = useState(null);
+
+  const rows = useMemo(() => {
+    let r = M.rows;
+    if (seg !== "All") r = r.filter((x) => x.segment === seg);
+    if (title !== "All") r = r.filter((x) => x.title === title);
+    if (q) r = r.filter((x) => x.name.toLowerCase().includes(q.toLowerCase()) || (x.practice || "").toLowerCase().includes(q.toLowerCase()));
+    return [...r].sort((a, b) => ((a[sort.k] ?? 0) > (b[sort.k] ?? 0) ? 1 : -1) * sort.dir);
+  }, [M, seg, title, q, sort]);
+
+  const sel = M.rows.find((r) => r.id === selId);
+  const th = (k, label) => (
+    <th className={sort.k === k ? "on" : ""} onClick={() => setSort((s) => ({ k, dir: s.k === k ? -s.dir : -1 }))}>
+      {label}{sort.k === k ? (sort.dir < 0 ? " ↓" : " ↑") : ""}</th>);
+  const slider = (key, label, min, max, step, fmt, group) => (
+    <div className="ctl" key={key}>
+      <div className="crow"><span>{label}</span><b>{fmt(group ? cfg.adj[key] : cfg[key])}</b></div>
+      <input type="range" min={min} max={max} step={step} value={group ? cfg.adj[key] : cfg[key]} aria-label={label}
+        onChange={(e) => setCfg(group ? { ...cfg, adj: { ...cfg.adj, [key]: +e.target.value } } : { ...cfg, [key]: +e.target.value })} />
+    </div>);
+  const pp = (v) => (v >= 0 ? "+" : "") + v.toFixed(1) + " pp";
+
+  return (
+    <div className="grid g32" style={{ alignItems: "start" }}>
+      <div className="stack">
+        <Card title="Scoring levers" sub="composite score → increase %">
+          {slider("wHours", "Weight · T12M hours", 0, 1, 0.05, (v) => (v * 100).toFixed(0) + "%")}
+          {slider("wReal", "Weight · realization", 0, 1, 0.05, (v) => (v * 100).toFixed(0) + "%")}
+          {slider("wPeer", "Weight · peer headroom", 0, 1, 0.05, (v) => (v * 100).toFixed(0) + "%")}
+          {slider("floorPct", "Scored floor", 0, 6, 0.5, (v) => v + "%")}
+          {slider("capPct", "Scored cap", 6, 15, 0.5, (v) => v + "%")}
+          {slider("holdBelow", "Hold below score", 0, 60, 5, (v) => "" + v)}
+        </Card>
+        <Card title="Increase policy" sub="segment adjusters, post-score">
+          {slider("assocScale", "Associate scale move", 0, 14, 0.5, (v) => v + "%")}
+          {slider("PtrLit", "Partners — Litigation", -3, 3, 0.5, pp, true)}
+          {slider("PtrNonLit", "Partners — Non-Lit", -3, 3, 0.5, pp, true)}
+          {slider("Counsel", "Counsel", -3, 3, 0.5, pp, true)}
+          {slider("Paralegal", "Paralegals", -3, 3, 0.5, pp, true)}
+        </Card>
+        <Card title="Market & client economics">
+          {slider("peerInfl", "Peer 2027 move assumption", 3, 12, 0.5, (v) => v + "%")}
+          {slider("dragBps", "Realization drag (bps / pp above peer)", 0, 40, 5, (v) => v + " bps")}
+          {slider("capShare", "Book under client rate caps", 0, 80, 5, (v) => v + "%")}
+          {slider("capLevel", "Average negotiated cap", 0, 8, 0.5, (v) => v + "%")}
+          {slider("velocity", "Year-1 repricing velocity", 40, 100, 5, (v) => v + "%")}
+          <div className="crow" style={{marginTop:4}}><span>Rate rounding</span></div>
+          <div className="segbtns">{[5,10,25].map((s) => (
+            <button key={s} className={"segbtn" + (cfg.roundTo === s ? " on" : "")} onClick={() => setCfg({ ...cfg, roundTo: s })}>${s}</button>))}</div>
+        </Card>
+        <Card title="Scenarios" sub="save the current lever set, then compare">
+          <div className="scen-btns">
+            <button className="btn" onClick={() => saveScenario("A")}>Save as A</button>
+            <button className="btn" onClick={() => saveScenario("B")}>Save as B</button>
+          </div>
+          {(scenarios.A || scenarios.B) && (
+            <table className="mini"><thead><tr><th></th><th>Blended</th><th>Gross</th><th>Net</th><th>Holds</th></tr></thead>
+              <tbody>
+                {["A","B"].map((k) => scenarios[k] && (
+                  <tr key={k}><td className="tname">Scenario {k} <span className="dim">({scenarios[k].name})</span></td>
+                    <td>+{fmtPct(scenarios[k].inc)}</td><td>{fmtM(scenarios[k].gross)}</td><td>{fmtM(scenarios[k].net)}</td><td>{scenarios[k].holds}</td></tr>))}
+                <tr><td className="tname">Current <span className="dim">({scenario})</span></td>
+                  <td className="strong">+{fmtPct(M.blendedInc)}</td><td className="strong">{fmtM(M.gross)}</td><td className="strong">{fmtM(M.net)}</td><td>{M.holds.length}</td></tr>
+              </tbody></table>)}
+        </Card>
+        {sel && (
+          <Card title={sel.name} sub={sel.title + (sel.cls ? " · Class " + sel.cls : "") + " · " + sel.segment + " · " + sel.practice} className="detail">
+            <div className="dl"><span>2026 standard</span><b>{fmt$(sel.rate2026)}</b></div>
+            <div className="dl"><span>2027 recommended</span><b className="pos-t">{fmt$(sel.rate2027)} (+{fmtPct(sel.incPct)})</b></div>
+            <div className="dl"><span>Score / basis</span><b>{sel.score}/100 · {sel.mode}</b></div>
+            <div className="dl"><span>T12M hours · realization</span><b>{sel.hours.toLocaleString()} · {fmtPct(sel.real * 100)}</b></div>
+            <div className="dl"><span>Panel median '27E</span><b>{fmt$(sel.peerMed27)} ({sel.vsPeer27 >= 0 ? "+" : ""}{fmtPct(sel.vsPeer27)})</b></div>
+            <div className="slabel" style={{ marginTop: 10 }}>Rate history</div>
+            <Spark pts={YEARS.map((yr) => ({ yr, v: sel.rates[yr] }))} fmt={fmt$} />
+            <div className="slabel">Realization %</div>
+            <Spark pts={YEARS.map((yr) => ({ yr, v: +(sel.realHist[yr] * 100).toFixed(1) }))} color="#A87F2E" fmt={(v) => v + "%"} />
+            <div className="slabel">Billable hours</div>
+            <Spark pts={YEARS.map((yr) => ({ yr, v: sel.hoursHist[yr] }))} color="#3E7CB1" />
+            <div className="statusrow">
+              <span className={"stpill " + (statuses[sel.id] || "proposed")}>{(statuses[sel.id] || "proposed").replace("review","needs review")}</span>
+              <button className="btn" onClick={() => setStatus(sel.id, "approved", sel.name)}>Approve</button>
+              <button className="btn" onClick={() => setStatus(sel.id, "review", sel.name)}>Needs review</button>
+            </div>
+            {sel.flags.length > 0 && <div className="flaglist">{sel.flags.map((f) => <span key={f} className="flag">{f}</span>)}</div>}
+            {sel.title !== "Associate" && (
+              <div style={{ marginTop: 10 }}>
+                <div className="slabel">Override increase %</div>
+                <div className="goalrow">
+                  <input type="number" step="0.5" min="0" max="20" style={{ width: 90 }}
+                    value={overrides[sel.id] ?? ""} placeholder={sel.incPct.toFixed(1)}
+                    onChange={(e) => { const v = e.target.value;
+                      setOverrides((o) => { const n = { ...o }; if (v === "") delete n[sel.id]; else n[sel.id] = +v; return n; }); }} />
+                  {overrides[sel.id] != null &&
+                    <button className="btn" onClick={() => setOverrides((o) => { const n = { ...o }; delete n[sel.id]; return n; })}>Clear</button>}
+                </div>
+              </div>)}
+          </Card>)}
+      </div>
+
+      <Card title="Timekeeper rate model" sub={rows.length + " shown · click a row for detail and override"}>
+        <div className="selrow">
+          <select value={seg} onChange={(e) => setSeg(e.target.value)} aria-label="Segment">
+            <option>All</option><option>Litigation</option><option>Non-Litigation</option></select>
+          <select value={title} onChange={(e) => setTitle(e.target.value)} aria-label="Title">
+            <option>All</option><option>Partner</option><option>Counsel</option><option>Associate</option><option>Paralegal</option></select>
+          <input type="text" placeholder="Search name or practice…" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search" />
+        </div>
+        <div className="twrap"><table>
+          <thead><tr>{th("name","Timekeeper")}{th("title","Title")}{th("segment","Seg")}{th("hours","T12M")}{th("real","Real%")}
+            {th("score","Score")}{th("rate2026","'26")}{th("incPct","Inc%")}{th("rate2027","'27 Reco")}{th("vsPeer27","vs Panel")}</tr></thead>
+          <tbody>{rows.map((r) => (
+            <tr key={r.id} className={r.id === selId ? "sel" : ""} onClick={() => setSelId(r.id === selId ? null : r.id)}>
+              <td className="tname"><span className={"dot " + (statuses[r.id] || (r.flags.length ? "flagged" : "proposed"))}></span>{r.name}{r.mode === "override" && <span className="gold-t"> *</span>}</td>
+              <td>{r.title}{r.cls ? <span className="dim"> C{r.cls}</span> : ""}</td>
+              <td className="dim">{r.segment === "Litigation" ? "Lit" : "N-Lit"}</td>
+              <td>{r.hours.toLocaleString()}</td>
+              <td className={r.real < 0.85 ? "warn-t" : ""}>{(r.real * 100).toFixed(1)}</td>
+              <td><span className="scorebar"><span className="sb"><i style={{ width: r.score + "%" }} /></span>{r.score}</span></td>
+              <td>{fmt$(r.rate2026)}</td>
+              <td className="pos-t">+{fmtPct(r.incPct)}</td>
+              <td className="strong">{fmt$(r.rate2027)}</td>
+              <td className={r.vsPeer27 > 5 ? "warn-t" : r.vsPeer27 < -8 ? "neg-t" : ""}>{r.vsPeer27 >= 0 ? "+" : ""}{fmtPct(r.vsPeer27)}</td>
+            </tr>))}</tbody>
+        </table></div>
+      </Card>
+    </div>
+  );
+}
+
+/* ---------- PEER PANEL ---------- */
+function PeerTab({ M, cfg, overrides, tks, selectedPeers, setSelectedPeers, showReco, setShowReco }) {
+  const toggle = (id) => setSelectedPeers((s) => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  const chartData = useMemo(() => {
+    const labels = COHORTS.map((c) => COHORT_LBL[c]);
+    const ds = M.peer.firms.map((f) => ({ label: f.name + " · " + f.src, data: COHORTS.map((c) => f.rates[c]),
+      borderColor: PAL[PEER_FIRMS.indexOf(f) % PAL.length], borderWidth: 1.3, pointRadius: 2, fill: false, tension: .15 }));
+    ds.push({ label: "Meridian & Cole '26", data: COHORTS.map((c) => M.firmCohort26[c] && Math.round(M.firmCohort26[c])),
+      borderColor: "#17251F", borderWidth: 2.8, pointRadius: 3, fill: false });
+    if (showReco) ds.push({ label: "Recommended '27", data: COHORTS.map((c) => M.firmCohort27[c] && Math.round(M.firmCohort27[c])),
+      borderColor: "#14563F", borderWidth: 2.8, borderDash: [7,4], pointRadius: 3, fill: false });
+    return { labels, datasets: ds };
+  }, [M, showReco]);
+
+  const sensitivity = useMemo(() => {
+    const variants = [
+      ["Current panel", new Set([...selectedPeers])],
+      ["All 10 firms", new Set(PEER_FIRMS.map((f) => f.id))],
+      ["BRASS only", new Set(PEER_FIRMS.filter((f) => f.src === "BRASS").map((f) => f.id))],
+      ["Valeo only", new Set(PEER_FIRMS.filter((f) => f.src === "Valeo").map((f) => f.id))],
+      ["Ex top-2 rate firms", new Set(PEER_FIRMS.filter((f) => f.mult < 1.14).map((f) => f.id))],
+    ];
+    return variants.map(([name, ids]) => {
+      const m = computeModel(tks, cfg, overrides, ids);
+      return { name, n: ids.size, ptrLitMed: m.peer.stats.PtrLit.p50, inc: m.blendedInc, net: m.net, above: m.abovePeer };
+    });
+  }, [tks, cfg, overrides, selectedPeers]);
+
+  return (
+    <div className="stack">
+      <Card title="Peer panel — add / remove firms" sub="selections drive quartiles, scoring headroom, trends and the memo"
+        right={<label className="chk"><input type="checkbox" checked={showReco} onChange={(e) => setShowReco(e.target.checked)} /> overlay '27 reco</label>}>
+        <div className="chips">
+          {PEER_FIRMS.map((f, i) => (
+            <button key={f.id} className={"chip" + (selectedPeers.has(f.id) ? " on" : "")} onClick={() => toggle(f.id)}
+              style={selectedPeers.has(f.id) ? { borderColor: PAL[i % PAL.length], color: PAL[i % PAL.length] } : null}>
+              {selectedPeers.has(f.id) ? "✓" : "+"} {f.name} <span className="src">{f.src}</span></button>))}
+        </div>
+        <ChartBox type="line" data={chartData} options={{ ...legend(), scales: { y: money } }} height={390} />
+      </Card>
+      <Card title="Competitive positioning heatmap" sub="green = favorable · red = attention · columns are independent scales">
+        <HeatTable M={M} />
+      </Card>
+      <div className="grid g2">
+        <Card title="Panel quartiles by cohort" sub={M.peer.firms.length + " selected firms · 2026 standard rates"}>
+          <div className="twrap" style={{ maxHeight: 420 }}><table>
+            <thead><tr><th>Cohort</th><th>P25</th><th>Median</th><th>P75</th><th>P90</th><th>Firm '26</th><th>Reco '27</th></tr></thead>
+            <tbody>{COHORTS.map((c) => { const s = M.peer.stats[c]; return (
+              <tr key={c} style={{ cursor: "default" }}>
+                <td className="tname">{COHORT_LBL[c]}</td><td>{fmt$(s.p25)}</td>
+                <td className="gold-t">{fmt$(s.p50)}</td><td>{fmt$(s.p75)}</td><td className="dim">{fmt$(s.p90)}</td>
+                <td>{M.firmCohort26[c] ? fmt$(M.firmCohort26[c]) : "–"}</td>
+                <td className="strong pos-t">{M.firmCohort27[c] ? fmt$(M.firmCohort27[c]) : "–"}</td></tr>); })}</tbody>
+          </table></div>
+        </Card>
+        <div className="stack">
+          <Card title="Panel sensitivity" sub="same levers, different panels — how fragile is the recommendation?">
+            <table className="mini"><thead><tr><th>Panel</th><th>N</th><th>Ptr-Lit med</th><th>Blended</th><th>Net uplift</th><th>&gt;Med</th></tr></thead>
+              <tbody>{sensitivity.map((s, i) => (
+                <tr key={s.name} className={i === 0 ? "hl" : ""}>
+                  <td className="tname">{s.name}</td><td>{s.n}</td><td>{fmt$(s.ptrLitMed)}</td>
+                  <td>+{fmtPct(s.inc)}</td><td>{fmtM(s.net)}</td><td>{s.above}/{M.headcount}</td></tr>))}</tbody></table>
+          </Card>
+          <Card title="Source notes">
+            <div className="notes">
+              <p><b>BRASS</b> — PwC Billing Rate & Associate Salary Survey, confidential composite. Placeholder values shown; load the current-cycle extract before circulation.</p>
+              <p><b>Valeo</b> — publicly filed rates (fee applications, bankruptcy dockets). Filed rates skew litigation/restructuring; read Non-Lit cohorts with that bias in mind — the sensitivity table above quantifies it.</p>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+/* ---------- heatmap ---------- */
+function heatColor(v, lo, hi, invert) {
+  let t = clamp((v - lo) / (hi - lo || 1), 0, 1);
+  if (invert) t = 1 - t;
+  // red -> pale -> green
+  const r = t < .5 ? 214 : Math.round(214 - (t - .5) * 2 * 174);
+  const g = t < .5 ? Math.round(120 + t * 2 * 100) : 220;
+  const b = t < .5 ? 110 : Math.round(110 + (t - .5) * 2 * 40);
+  return `rgba(${t < .5 ? 214 : 40 + (1 - t) * 120},${t < .5 ? 100 + t * 190 : 150},${90},${0.16 + 0.22 * Math.abs(t - .5) * 2})`;
+}
+function HeatTable({ M }) {
+  const rows = COHORTS.map((c) => {
+    const g = M.rows.filter((r) => r.cohort === c);
+    if (!g.length) return null;
+    const gh = g.reduce((a, r) => a + r.hours, 0);
+    const s = M.peer.stats[c];
+    return { c, vs26: (M.firmCohort26[c] / s.p50 - 1) * 100,
+      vs27: (M.firmCohort27[c] / (s.p50_27 || 1) - 1) * 100,
+      real: g.reduce((a, r) => a + r.real * r.hours, 0) / gh * 100,
+      hrs: gh / g.length,
+      inc: g.reduce((a, r) => a + r.incPct * r.hours, 0) / gh };
+  }).filter(Boolean);
+  const cell = (v, lo, hi, fmt, invert) => (
+    <td style={{ background: heatColor(v, lo, hi, invert), fontWeight: 600 }}>{fmt(v)}</td>);
+  return (
+    <div className="twrap" style={{ maxHeight: "none" }}><table className="mini heat">
+      <thead><tr><th>Cohort</th><th>'26 vs panel med</th><th>'27 reco vs med '27E</th><th>Realization</th><th>Avg T12M hrs</th><th>Wtd increase</th></tr></thead>
+      <tbody>{rows.map((r) => (
+        <tr key={r.c} style={{ cursor: "default" }}>
+          <td className="tname">{COHORT_LBL[r.c]}</td>
+          {cell(r.vs26, -15, 15, (v) => (v >= 0 ? "+" : "") + fmtPct(v))}
+          {cell(r.vs27, -15, 15, (v) => (v >= 0 ? "+" : "") + fmtPct(v))}
+          {cell(r.real, 82, 96, (v) => fmtPct(v))}
+          {cell(r.hrs, 1350, 2100, (v) => Math.round(v).toLocaleString())}
+          {cell(r.inc, 2, 11, (v) => "+" + fmtPct(v))}
+        </tr>))}</tbody>
+    </table></div>
+  );
+}
+
+/* ---------- RISK & QC ---------- */
+function RiskTab({ M, MC, cfg, statuses, setStatus, bulkApprove }) {
+  const histData = useMemo(() => MC && ({
+    labels: MC.hist.map((_, i) => "$" + ((MC.lo + i * MC.w) / 1e6).toFixed(1) + "M"),
+    datasets: [{ data: MC.hist, backgroundColor: MC.hist.map((_, i) =>
+      (MC.lo + (i + .5) * MC.w) < 0 ? "#C23934" : "rgba(20,86,63,.7)"), borderRadius: 2 }] }), [MC]);
+  const approved = M.rows.filter((r) => statuses[r.id] === "approved").length;
+  const needsRev = M.rows.filter((r) => statuses[r.id] === "review").length;
+  const reg = assumptions(M, cfg);
+  return (
+    <div className="stack">
+      <div className="grid g23">
+        <Card title="Monte Carlo — year-1 net uplift" sub={MC ? MC.N.toLocaleString() + " simulations · peer move, drag, velocity, hours & realization uncertainty · seeded (reproducible)" : ""}>
+          {MC && <>
+            <div className="mcstats">
+              <Stat label="P10 (conservative)" value={fmtM(MC.p10)} />
+              <Stat label="Median" value={fmtM(MC.p50)} />
+              <Stat label="P90 (upside)" value={fmtM(MC.p90)} />
+              <Stat label="P(net > 0)" value={(MC.probPos * 100).toFixed(1) + "%"} />
+            </div>
+            <ChartBox type="bar" data={histData} options={{ plugins: { legend: { display: false } },
+              scales: { x: { ticks: { maxTicksLimit: 8 } }, y: { display: false } } }} height={200} />
+            <p className="snote">Committee language: "Under 2,500 simulated market scenarios, the schedule produces positive year-1 net uplift in {(MC.probPos * 100).toFixed(1)}% of cases, with 90% confidence of at least {fmtM(MC.p10)}."</p>
+          </>}
+        </Card>
+        <Card title="Approval progress" sub="committee sign-off tracker">
+          <div className="progress"><i style={{ width: (approved / M.headcount * 100) + "%" }} /></div>
+          <div className="snote">{approved} approved · {needsRev} need review · {M.headcount - approved - needsRev} proposed</div>
+          <div className="scen-btns" style={{ marginTop: 12 }}>
+            <button className="btn solid" onClick={bulkApprove}>Approve all unflagged</button>
+          </div>
+          <div className="notes" style={{ marginTop: 10 }}>
+            <p>Flags below are the exceptions worth committee minutes. Everything unflagged follows the approved methodology mechanically — approve in bulk and spend the meeting on the flags.</p>
+          </div>
+        </Card>
+      </div>
+      <Card title={"QC flags — " + M.flagged.length + " timekeepers"} sub="auto-generated exceptions · click status to resolve">
+        <div className="twrap" style={{ maxHeight: 420 }}><table>
+          <thead><tr><th>Timekeeper</th><th>Cohort</th><th>'26</th><th>'27 Reco</th><th>Inc%</th><th>Flags</th><th>Status</th></tr></thead>
+          <tbody>{M.flagged.map((r) => (
+            <tr key={r.id} style={{ cursor: "default" }}>
+              <td className="tname">{r.name}</td><td>{COHORT_LBL[r.cohort]}</td>
+              <td>{fmt$(r.rate2026)}</td><td className="strong">{fmt$(r.rate2027)}</td><td>+{fmtPct(r.incPct)}</td>
+              <td style={{ textAlign: "left" }}>{r.flags.map((f) => <span key={f} className="flag">{f}</span>)}</td>
+              <td><div className="statusrow tight">
+                <button className={"stbtn" + (statuses[r.id] === "approved" ? " on" : "")} onClick={() => setStatus(r.id, "approved", r.name)}>✓</button>
+                <button className={"stbtn rev" + (statuses[r.id] === "review" ? " on" : "")} onClick={() => setStatus(r.id, "review", r.name)}>?</button>
+              </div></td>
+            </tr>))}</tbody>
+        </table></div>
+      </Card>
+      <Card title="Assumption register" sub="every number the committee is being asked to accept, with its source">
+        <table className="mini"><thead><tr><th>Assumption</th><th>Value</th><th>Source / owner</th></tr></thead>
+          <tbody>{reg.map((a) => (
+            <tr key={a.k} style={{ cursor: "default" }}><td className="tname">{a.k}</td><td className="strong">{a.v}</td><td className="dim" style={{ textAlign: "right" }}>{a.src}</td></tr>))}</tbody></table>
+      </Card>
+    </div>
+  );
+}
+/* ---------- TRENDS ---------- */
+function TrendsTab({ M }) {
+  const rateData = useMemo(() => ({ labels: [...M.trend.map((t) => t.yr), 2027],
+    datasets: [{ label: "Avg standard rate", data: [...M.trend.map((t) => t.avgRate), Math.round(M.blended27)],
+      borderColor: "#14563F", borderWidth: 2.2, pointRadius: 3, fill: false,
+      segment: { borderDash: (c) => c.p1DataIndex === M.trend.length ? [6,4] : undefined } }] }), [M]);
+  const incData = useMemo(() => ({ labels: M.trendInc.map((t) => t.yr),
+    datasets: [
+      { type: "bar", label: "Peer panel", data: M.trendInc.map((t) => t.peer), backgroundColor: "rgba(168,127,46,.55)", borderRadius: 3 },
+      { type: "line", label: "Firm", data: M.trendInc.map((t) => t.firm), borderColor: "#14563F", borderWidth: 2.2, pointRadius: 3, fill: false }] }), [M]);
+  const realData = useMemo(() => ({ labels: M.trend.map((t) => t.yr),
+    datasets: [{ label: "Realization", data: M.trend.map((t) => t.real), borderColor: "#A87F2E", borderWidth: 2.2, pointRadius: 3, fill: false }] }), [M]);
+  const hrsData = useMemo(() => ({ labels: M.trend.map((t) => t.yr),
+    datasets: [{ label: "Avg billable hours", data: M.trend.map((t) => t.hours), backgroundColor: "rgba(20,86,63,.55)", borderRadius: 3 }] }), [M]);
+  const scatterData = useMemo(() => ({ datasets: [{ label: "Scored timekeepers",
+    data: M.rows.filter((r) => r.title !== "Associate").map((r) => ({ x: r.score, y: +r.incPct.toFixed(2) })),
+    pointBackgroundColor: M.rows.filter((r) => r.title !== "Associate").map((r) =>
+      r.mode === "hold" ? "#B7791F" : r.mode === "override" ? "#C23934" : "#14563F"), pointRadius: 3.5 }] }), [M]);
+  return (
+    <div className="stack">
+      <div className="grid g2">
+        <Card title="Average standard rate" sub="2022–2026 actual · 2027 recommended (dashed)"><ChartBox type="line" data={rateData} options={{ plugins: { legend: { display: false } }, scales: { y: money } }} height={230} /></Card>
+        <Card title="Rate increase % — firm vs peer panel" sub="2027 = live recommendation vs assumption"><ChartBox type="bar" data={incData} options={{ ...legend(), scales: { y: pct } }} height={230} /></Card>
+      </div>
+      <div className="grid g2">
+        <Card title="Realization — firm average" sub="collected / standard"><ChartBox type="line" data={realData} options={{ plugins: { legend: { display: false } }, scales: { y: { ...pct, suggestedMin: 84, suggestedMax: 92 } } }} height={230} /></Card>
+        <Card title="Average billable hours" sub="per timekeeper, annualized"><ChartBox type="bar" data={hrsData} options={{ plugins: { legend: { display: false } }, scales: { y: { suggestedMin: 1500 } } }} height={230} /></Card>
+      </div>
+      <Card title="Score → increase mapping" sub="green = scored · gold = hold · red = override">
+        <ChartBox type="scatter" data={scatterData} options={{ plugins: { legend: { display: false } },
+          scales: { x: { min: 0, max: 100, title: { display: true, text: "Composite score" } }, y: pct } }} height={250} />
+      </Card>
+    </div>
+  );
+}
+
+/* ---------- DATA ---------- */
+const CSV_TEMPLATE = `name,title,segment,class,practice,rate_2026,hours_t12m,realization_pct,rate_2025,rate_2024,rate_2023
+J. Example,Partner,Litigation,,Commercial Litigation,1250,1875,91.2,1175,1105,1040
+A. Example,Associate,Non-Litigation,4,M&A / PE,775,2050,86.5,,,
+P. Example,Paralegal,Litigation,,Product Liability,365,1650,94.0,,,`;
+
+function parseCsvRows(results) {
+  const errors = []; const tks = []; let id = 1;
+  const T = (s) => (s || "").toString().trim();
+  results.data.forEach((row, i) => {
+    const line = i + 2, name = T(row.name), title = T(row.title);
+    if (!name && !title) return;
+    if (!["Partner","Counsel","Associate","Paralegal"].includes(title)) { errors.push(`Row ${line}: unknown title "${title}"`); return; }
+    let segment = /^lit/i.test(T(row.segment)) ? "Litigation" : "Non-Litigation";
+    let cls = null;
+    if (title === "Associate") { cls = parseInt(row.class, 10);
+      if (!(cls >= 1 && cls <= 8)) { errors.push(`Row ${line}: associate class must be 1–8`); return; } }
+    const rate2026 = parseFloat(row.rate_2026), hours = parseFloat(row.hours_t12m);
+    let real = parseFloat(row.realization_pct);
+    if (!(rate2026 > 0)) { errors.push(`Row ${line}: rate_2026 missing/invalid`); return; }
+    if (!(hours > 0)) { errors.push(`Row ${line}: hours_t12m missing/invalid`); return; }
+    if (!(real > 0)) { errors.push(`Row ${line}: realization_pct missing/invalid`); return; }
+    if (real > 1.5) real = real / 100;
+    const t = { id: id++, name, title, segment, cls, practice: T(row.practice) || "—",
+      rate2026: round5(rate2026), hours: Math.round(hours), real: clamp(real, 0.5, 1.05), rates: {} };
+    const hist = { 2026: round5(rate2026) };
+    [["rate_2025",2025],["rate_2024",2024],["rate_2023",2023]].forEach(([k, yr]) => { const v = parseFloat(row[k]); if (v > 0) hist[yr] = round5(v); });
+    let last = hist[2026];
+    for (let yr = 2025; yr >= 2022; yr--) { if (!hist[yr]) hist[yr] = round5(last / 1.06); last = hist[yr]; }
+    t.rates = hist; finishTk(t); tks.push(t);
+  });
+  return { tks, errors };
+}
+
+function DataTab({ tks, setTks, dataSource, setDataSource, exportSchedule, auditLog, exportAudit, logEvent }) {
+  const [report, setReport] = useState(null);
+  const fileRef = useRef(null);
+  const onFile = (file) => {
+    if (!file) return;
+    Papa.parse(file, { header: true, skipEmptyLines: true, complete: (res) => {
+      const { tks: parsed, errors } = parseCsvRows(res);
+      if (parsed.length) { setTks(parsed); setDataSource(file.name); logEvent("Loaded " + parsed.length + " timekeepers from " + file.name + (errors.length ? " (" + errors.length + " rows skipped)" : "")); }
+      setReport({ loaded: parsed.length, skipped: errors.length, errors: errors.slice(0, 12), file: file.name });
+    }, error: (e) => setReport({ loaded: 0, skipped: 0, errors: ["Parse failure: " + e.message], file: file.name }) });
+  };
+  const downloadTemplate = () => {
+    const url = URL.createObjectURL(new Blob([CSV_TEMPLATE], { type: "text/csv" }));
+    const a = document.createElement("a"); a.href = url; a.download = "timekeeper_template.csv"; a.click(); URL.revokeObjectURL(url);
+  };
+  return (
+    <div className="grid g2" style={{ alignItems: "start" }}>
+      <Card title="Mass timekeeper load" sub="CSV · headers per template · nothing leaves the browser">
+        <div className="drop" onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => { e.preventDefault(); onFile(e.dataTransfer.files[0]); }}
+          onClick={() => fileRef.current && fileRef.current.click()}>
+          <div className="droptitle">Drop timekeeper CSV here</div>
+          <div className="snote">or click to browse · current source: <b>{dataSource}</b> · {tks.length} timekeepers</div>
+          <input ref={fileRef} type="file" accept=".csv" style={{ display: "none" }} onChange={(e) => onFile(e.target.files[0])} />
+        </div>
+        <div className="scen-btns" style={{ marginTop: 12 }}>
+          <button className="btn" onClick={downloadTemplate}>Download CSV template</button>
+          <button className="btn" onClick={exportSchedule}>Export current schedule</button>
+          <button className="btn gold" onClick={() => { setTks(MOCK_TKS); setDataSource("Mock data"); setReport(null); }}>Reset to mock</button>
+        </div>
+        {report && (
+          <div className="report">
+            <div className="dl"><span>File</span><b>{report.file}</b></div>
+            <div className="dl"><span>Rows loaded</span><b className="pos-t">{report.loaded}</b></div>
+            <div className="dl"><span>Rows skipped</span><b className={report.skipped ? "neg-t" : "pos-t"}>{report.skipped}</b></div>
+            {report.errors.map((e, i) => <div key={i} className="errline">{e}</div>)}
+          </div>)}
+      </Card>
+      <div className="stack">
+      <Card title="Audit log" sub="material actions this session · exportable for the committee record"
+        right={<button className="btn" onClick={exportAudit}>Export log</button>}>
+        <div className="twrap" style={{ maxHeight: 260 }}><table className="mini">
+          <thead><tr><th>Time</th><th style={{textAlign:"left"}}>Action</th></tr></thead>
+          <tbody>{auditLog.length === 0 ? <tr><td colSpan={2} className="dim" style={{textAlign:"left"}}>No actions logged yet — preset changes, goal seeks, overrides, panel edits, data loads and approvals appear here.</td></tr>
+            : [...auditLog].reverse().map((e, i) => (
+            <tr key={i} style={{cursor:"default"}}><td className="dim" style={{whiteSpace:"nowrap"}}>{e.t}</td><td style={{textAlign:"left"}}>{e.msg}</td></tr>))}</tbody>
+        </table></div>
+      </Card>
+      <Card title="Load specification" sub="hand this to finance / IT">
+        <div className="notes">
+          <p><b>Required:</b> name · title (Partner / Counsel / Associate / Paralegal) · segment (Litigation / Non-Litigation) · class (1–8, associates only) · practice · rate_2026 · hours_t12m · realization_pct (accepts 91.2 or 0.912).</p>
+          <p><b>Optional:</b> rate_2025 / rate_2024 / rate_2023 for true YoY lines; missing years back-fill at an assumed 6% walk-back.</p>
+          <p><b>Behavior:</b> rates round to nearest $5 on load; failing rows are skipped and itemized by line number — nothing silently mangles. All processing is in-browser; safe for confidential extracts on a firm machine.</p>
+        </div>
+      </Card>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- MEMO ---------- */
+function memoText(M, cfg, scenario, MC, approvedCount) {
+  const top = [...M.bySegment].sort((a, b) => b.uplift - a.uplift)[0];
+  const panel = M.peer.firms.map((f) => f.name + " [" + f.src + "]").join(", ");
+  return `MEMORANDUM
+
+TO:       Executive Committee
+FROM:     Office of the CFO — Pricing & Rates
+DATE:     ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+RE:       Recommended 2027 Standard Rate Structure (${scenario} scenario)
+
+EXECUTIVE SUMMARY
+
+We recommend a 2027 standard rate schedule producing a blended rack-rate increase of ${fmtPct(M.blendedInc)} and an effective increase of ${fmtPct(M.effBlendedInc)} after client rate caps (${fmtPct(cfg.capShare,0)} of the book capped at an average ${fmtPct(cfg.capLevel,1)}). The hours-weighted blended rate moves from ${fmt$(M.blended26)} to ${fmt$(M.blended27)}. Full-year effective uplift is ${fmtM(M.grossEff)} (${fmtM(M.capLeak)} of rack value is ceded to existing caps); applying a ${fmtPct(cfg.velocity,0)} year-1 repricing velocity and a realization drag of ${cfg.dragBps} bps per point above the assumed peer move, the recommendation delivers ${fmtM(M.net)} of year-1 net uplift. Following the increase, ${M.abovePeer} of ${M.headcount} timekeepers sit above the projected 2027 panel median (peers assumed to move ${fmtPct(cfg.peerInfl, 1)}).${cfg.goalTarget > 0 ? " The schedule was solved to a target blended move of " + fmtPct(cfg.goalTarget, 1) + " (scored increases scaled ×" + M.goalMult.toFixed(2) + ")." : ""}
+
+PEER PANEL & SOURCES
+
+Benchmarks draw on the PwC BRASS Survey (confidential composite) and Valeo Partners (publicly filed rate data), assembled into a ${M.peer.firms.length}-firm panel: ${panel}. Panel quartiles are computed live from the selected firms, and litigation and non-litigation partners are benchmarked separately to control for the filed-rate skew in Valeo data. Sensitivity testing across alternative panels (all firms, BRASS-only, Valeo-only, excluding the two highest-rate firms) is summarized in the console and does not change the direction of this recommendation.
+
+METHODOLOGY
+
+Partners (litigation and non-litigation), counsel, and paralegals are individually scored on a composite of trailing-twelve-month billable hours (${(cfg.wHours * 100).toFixed(0)}%), realization (${(cfg.wReal * 100).toFixed(0)}%), and headroom to the projected 2027 panel median (${(cfg.wPeer * 100).toFixed(0)}%). Scores map to increases between ${fmtPct(cfg.floorPct, 1)} and ${fmtPct(cfg.capPct, 1)}; scores below ${cfg.holdBelow} are held at a token ${fmtPct(cfg.floorPct * 0.5, 2)}. Segment adjusters this cycle: Litigation partners ${cfg.adj.PtrLit >= 0 ? "+" : ""}${cfg.adj.PtrLit.toFixed(1)} pp, Non-Litigation partners ${cfg.adj.PtrNonLit >= 0 ? "+" : ""}${cfg.adj.PtrNonLit.toFixed(1)} pp. Associates move on the class-year scale at a uniform ${fmtPct(cfg.assocScale, 1)}, preserving internal equity and recruiting parity. Rates round to the nearest $5.
+
+KEY OBSERVATIONS
+
+1. The largest dollar uplift sits in ${top.label} (${fmtM(top.uplift)}), where realization supports the move.
+2. ${M.holds.length} timekeeper(s) are held below threshold${M.holds.length ? " (" + M.holds.slice(0, 4).map((h) => h.name).join(", ") + (M.holds.length > 4 ? ", et al." : "") + ")" : ""}; we recommend utilization plans rather than masking these inside a uniform increase.
+3. ${M.ovr.length} manual override(s) are reflected in all totals${M.ovr.length ? " (" + M.ovr.map((o) => o.name).join(", ") + ")" : ""}.
+4. The economics deliberately net out realization risk: every point of effective increase above the peer move is assumed to erode realization by ${cfg.dragBps} bps, and the recommendation remains accretive under that assumption.
+5. Risk analysis: across ${MC ? MC.N.toLocaleString() : "2,500"} simulated market scenarios (peer move, drag, repricing velocity, hours and realization variance), the schedule produces positive year-1 net uplift in ${MC ? (MC.probPos*100).toFixed(1) : "—"}% of cases, with 90% confidence of at least ${MC ? fmtM(MC.p10) : "—"} and a median of ${MC ? fmtM(MC.p50) : "—"}.
+6. Governance: ${M.flagged.length} timekeeper(s) carry QC flags for committee attention; ${approvedCount} of ${M.headcount} recommendations are marked approved in the console at the time of this memo. The full assumption register appears as Appendix 1.
+
+RECOMMENDATION
+
+Approve the 2027 standard rate schedule as modeled, effective January 1, 2027, with client-level exceptions managed through the rate-agreement workflow. Pricing will monitor Q1 realization against the new schedule and report variances exceeding 200 bps to this committee.`;
+}
+
+function MemoTab({ M, cfg, scenario, MC, statuses }) {
+  const [copied, setCopied] = useState(false);
+  const approvedCount = M.rows.filter((r) => statuses[r.id] === "approved").length;
+  const text = useMemo(() => memoText(M, cfg, scenario, MC, approvedCount), [M, cfg, scenario, MC, approvedCount]);
+  const copy = async () => { try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch (e) {} };
+  const paras = text.split("\n\n");
+  const memoAx = { ticks: { color: "#5A5443" }, grid: { color: "#E4DFCE" } };
+  const exA = useMemo(() => ({ labels: M.ladder.map((l) => l.cls),
+    datasets: [
+      { label: "Panel P25", data: M.ladder.map((l) => Math.round(l.p25)), borderColor: "transparent", pointRadius: 0, fill: false },
+      { label: "Panel P25–P75", data: M.ladder.map((l) => Math.round(l.p75)), borderColor: "transparent", pointRadius: 0, fill: "-1", backgroundColor: "rgba(20,86,63,.16)" },
+      { label: "Panel median '26", data: M.ladder.map((l) => Math.round(l.p50)), borderColor: "#A87F2E", borderDash: [5,3], pointRadius: 0, borderWidth: 1.5, fill: false },
+      { label: "Recommended '27", data: M.ladder.map((l) => l.firm27 && Math.round(l.firm27)), borderColor: "#14563F", borderWidth: 2.2, pointRadius: 3, fill: false }] }), [M]);
+  const exB = useMemo(() => {
+    const steps = [{ label: "2026 rev", y: [0, M.baseRev] }]; let run = M.baseRev;
+    M.bySegment.forEach((s) => { steps.push({ label: s.label.replace("Partners — ", "Ptr "), y: [run, run + s.uplift] }); run += s.uplift; });
+    if (M.drag > 0) steps.push({ label: "Real. drag", y: [run - M.drag, run] });
+    steps.push({ label: "2027 net", y: [0, M.baseRev + M.net] });
+    return { labels: steps.map((s) => s.label),
+      datasets: [{ data: steps.map((s) => s.y.map((v) => +(v / 1e6).toFixed(2))),
+        backgroundColor: steps.map((s, i) => i === 0 ? "#B9B29C" : i === steps.length - 1 ? "#14563F" : s.label === "Real. drag" ? "#C23934" : "#2E8B72"),
+        borderRadius: 2, borderSkipped: false }] };
+  }, [M]);
+  return (
+    <div>
+      <div className="noprint memo-actions">
+        <button className="btn" onClick={copy}>{copied ? "✓ Copied" : "Copy memo text"}</button>
+        <button className="btn gold" onClick={() => window.print()}>Print / PDF</button>
+      </div>
+      <div className="memo">
+        <div className="mh">
+          <div><span className="k">TO:</span><span>Executive Committee</span></div>
+          <div><span className="k">FROM:</span><span>Office of the CFO — Pricing & Rates</span></div>
+          <div><span className="k">DATE:</span><span>{new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span></div>
+          <div><span className="k">RE:</span><span><b>Recommended 2027 Standard Rate Structure — {scenario} scenario</b></span></div>
+        </div>
+        {paras.slice(1).map((p, i) => {
+          const isHead = /^[A-Z\s&]+$/.test(p.trim()) && p.trim().length < 44;
+          return isHead ? <h2 key={i}>{p.trim()}</h2> : <p key={i}>{p}</p>;
+        })}
+        <h2>Exhibit A — Associate Scale vs Peer Panel</h2>
+        <div className="chartbox">
+          <ChartBox type="line" data={exA} options={{ ...legend(), scales: { y: { ...money, ...memoAx }, x: memoAx } }} height={230} />
+          <div className="cap-t">Recommended 2027 scale against panel P25–P75 ({M.peer.firms.length}-firm panel, BRASS + Valeo).</div>
+        </div>
+        <h2>Exhibit B — Revenue Bridge ($M)</h2>
+        <div className="chartbox">
+          <ChartBox type="bar" data={exB} options={{ plugins: { legend: { display: false },
+            tooltip: { callbacks: { label: (c) => "$" + (c.raw[1] - c.raw[0]).toFixed(2) + "M" } } },
+            scales: { y: { ticks: { callback: (v) => "$" + v + "M" }, ...memoAx }, x: memoAx } }} height={210} />
+          <div className="cap-t">2026 revenue to 2027 net: segment uplift at realization, less modeled realization drag.</div>
+        </div>
+        <h2>Exhibit C — Segment Schedule (standard vs effective)</h2>
+        <table><thead><tr><th>Segment</th><th>N</th><th>Avg '26</th><th>Avg '27</th><th>Inc std/eff</th><th>Eff uplift</th></tr></thead>
+          <tbody>{M.bySegment.map((s) => (
+            <tr key={s.key}><td>{s.label}</td><td>{s.n}</td><td>{fmt$(s.avg26)}</td><td><b>{fmt$(s.avg27)}</b></td><td>+{fmtPct(s.inc)} / +{fmtPct(s.incEff)}</td><td>{fmtM(s.uplift)}</td></tr>))}</tbody></table>
+        <h2>Appendix 1 — Assumption Register</h2>
+        <table><thead><tr><th>Assumption</th><th>Value</th><th>Source</th></tr></thead>
+          <tbody>{assumptions(M, cfg).map((a) => (
+            <tr key={a.k}><td>{a.k}</td><td><b>{a.v}</b></td><td>{a.src}</td></tr>))}</tbody></table>
+      </div>
+    </div>
+  );
+}
+
+
+/* ---------- shell v4 ---------- */
+const PRESETS = {
+  Conservative: { floorPct: 1.5, capPct: 8, holdBelow: 35, assocScale: 6, peerInfl: 6, dragBps: 25, capShare: 45, capLevel: 3.5, velocity: 60, adj: { PtrLit: 0, PtrNonLit: 0, Counsel: 0, Paralegal: 0 } },
+  Base: { floorPct: 2, capPct: 12, holdBelow: 30, assocScale: 8, peerInfl: 7, dragBps: 15, capShare: 35, capLevel: 4, velocity: 70, adj: { PtrLit: 0, PtrNonLit: 0, Counsel: 0, Paralegal: 0 } },
+  Aggressive: { floorPct: 3, capPct: 14, holdBelow: 25, assocScale: 10, peerInfl: 8, dragBps: 10, capShare: 30, capLevel: 4.5, velocity: 78, adj: { PtrLit: 0.5, PtrNonLit: 0.5, Counsel: 0, Paralegal: 0 } },
+};
+const TABS = ["Overview", "Rate Model", "Peer Panel", "Risk & QC", "Trends", "Data", "Memo"];
+const now = () => new Date().toLocaleTimeString("en-US", { hour12: false });
+
+function App() {
+  const [tab, setTab] = useState("Overview");
+  const [tks, setTks] = useState(MOCK_TKS);
+  const [dataSource, setDataSource] = useState("Mock data");
+  const [scenario, setScenario] = useState("Base");
+  const [cfg, setCfgRaw] = useState({ wHours: .4, wReal: .4, wPeer: .2, goalTarget: 0, roundTo: 5, ...PRESETS.Base });
+  const [overrides, setOverridesRaw] = useState({});
+  const [selectedPeers, setSelectedPeersRaw] = useState(new Set(PEER_FIRMS.slice(0, 8).map((f) => f.id)));
+  const [showReco, setShowReco] = useState(true);
+  const [scenarios, setScenarios] = useState({});
+  const [statuses, setStatuses] = useState({});
+  const [auditLog, setAuditLog] = useState([]);
+
+  const logEvent = (msg) => setAuditLog((l) => [...l.slice(-199), { t: now(), msg }]);
+
+  const setCfg = (c) => {
+    if (c.goalTarget !== cfg.goalTarget) logEvent(c.goalTarget > 0 ? "Goal seek set to " + c.goalTarget + "%" : "Goal seek cleared");
+    if (c.roundTo !== cfg.roundTo) logEvent("Rounding policy set to nearest $" + c.roundTo);
+    setCfgRaw(c); setScenario("Custom");
+  };
+  const applyPreset = (name) => { setCfgRaw((c) => ({ ...c, ...PRESETS[name], goalTarget: 0 })); setScenario(name); logEvent("Applied " + name + " preset"); };
+  const setOverrides = (fn) => setOverridesRaw((o) => { const n = typeof fn === "function" ? fn(o) : fn; return n; });
+  const setSelectedPeers = (fn) => setSelectedPeersRaw((s) => {
+    const n = typeof fn === "function" ? fn(s) : fn;
+    const added = [...n].filter((x) => !s.has(x)), removed = [...s].filter((x) => !n.has(x));
+    [...added, ...removed].forEach((id) => { const f = PEER_FIRMS.find((p) => p.id === id);
+      if (f) logEvent((added.includes(id) ? "Added " : "Removed ") + f.name + " " + (added.includes(id) ? "to" : "from") + " peer panel"); });
+    return n;
+  });
+  const setStatus = (id, st, name) => { setStatuses((s) => ({ ...s, [id]: st })); logEvent((st === "approved" ? "Approved " : "Flagged for review: ") + name); };
+
+  const M = useMemo(() => computeModel(tks, cfg, overrides, selectedPeers), [tks, cfg, overrides, selectedPeers]);
+  const MC = useMemo(() => runMonteCarlo(M, cfg), [M, cfg]);
+
+  const bulkApprove = () => {
+    const targets = M.rows.filter((r) => !r.flags.length && statuses[r.id] !== "approved");
+    setStatuses((s) => { const n = { ...s }; targets.forEach((r) => { n[r.id] = "approved"; }); return n; });
+    logEvent("Bulk-approved " + targets.length + " unflagged timekeepers");
+  };
+  const saveScenario = (slot) => { setScenarios((s) => ({ ...s,
+    [slot]: { name: scenario, inc: M.blendedInc, gross: M.grossEff, net: M.net, holds: M.holds.length } }));
+    logEvent("Saved current levers as Scenario " + slot); };
+
+  const exportSchedule = () => {
+    const head = "name,title,segment,class,practice,rate_2026,score,basis,increase_pct,rate_2027,effective_increase_pct,vs_panel_median_2027e_pct,flags,status\n";
+    const body = M.rows.map((r) => [r.name, r.title, r.segment, r.cls || "", '"' + r.practice + '"',
+      r.rate2026, r.score, r.mode, r.incPct.toFixed(2), r.rate2027, r.incEff.toFixed(2), r.vsPeer27.toFixed(2),
+      '"' + r.flags.join("; ") + '"', statuses[r.id] || "proposed"].join(",")).join("\n");
+    const url = URL.createObjectURL(new Blob([head + body], { type: "text/csv" }));
+    const a = document.createElement("a"); a.href = url; a.download = "rate_schedule_2027.csv"; a.click(); URL.revokeObjectURL(url);
+    logEvent("Exported rate schedule CSV (" + M.rows.length + " rows)");
+  };
+  const exportAudit = () => {
+    const body = "time,action\n" + auditLog.map((e) => e.t + ',"' + e.msg.replace(/"/g, '""') + '"').join("\n");
+    const url = URL.createObjectURL(new Blob([body], { type: "text/csv" }));
+    const a = document.createElement("a"); a.href = url; a.download = "rate_committee_audit_log.csv"; a.click(); URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="page">
+      <header className="mast noprint">
+        <div className="mast-inner">
+          <div>
+            <div className="firmname">Meridian &amp; Cole <span>LLP</span></div>
+            <div className="apptitle">2027 Rate Committee Console <span className="badge">{dataSource}</span> <span className="badge gold-b">BRASS + Valeo panel</span> <span className="badge">MC risk: on</span></div>
+          </div>
+          <div className="presets" role="group" aria-label="Scenario">
+            {Object.keys(PRESETS).map((p) => (
+              <button key={p} className={"preset" + (scenario === p ? " on" : "")} onClick={() => applyPreset(p)}>{p}</button>))}
+            {scenario === "Custom" && <span className="preset on custom">Custom</span>}
+          </div>
+        </div>
+        <nav className="tabs" role="tablist">
+          {TABS.map((t) => (
+            <button key={t} role="tab" aria-selected={tab === t} className={"tabbtn" + (tab === t ? " on" : "")} onClick={() => setTab(t)}>
+              {t}{t === "Risk & QC" && M.flagged.length > 0 && <span className="tabcount">{M.flagged.length}</span>}</button>))}
+        </nav>
+      </header>
+      <main className="content">
+        {tab === "Overview" && <OverviewTab M={M} MC={MC} cfg={cfg} setCfg={setCfg} scenario={scenario} exportSchedule={exportSchedule} goMemo={() => setTab("Memo")} />}
+        {tab === "Rate Model" && <RatesTab M={M} cfg={cfg} setCfg={setCfg} overrides={overrides} setOverrides={setOverrides} scenarios={scenarios} saveScenario={saveScenario} scenario={scenario} statuses={statuses} setStatus={setStatus} />}
+        {tab === "Peer Panel" && <PeerTab M={M} cfg={cfg} overrides={overrides} tks={tks} selectedPeers={selectedPeers} setSelectedPeers={setSelectedPeers} showReco={showReco} setShowReco={setShowReco} />}
+        {tab === "Risk & QC" && <RiskTab M={M} MC={MC} cfg={cfg} statuses={statuses} setStatus={setStatus} bulkApprove={bulkApprove} />}
+        {tab === "Trends" && <TrendsTab M={M} />}
+        {tab === "Data" && <DataTab tks={tks} setTks={setTks} dataSource={dataSource} setDataSource={setDataSource} exportSchedule={exportSchedule} auditLog={auditLog} exportAudit={exportAudit} logEvent={logEvent} />}
+        {tab === "Memo" && <MemoTab M={M} cfg={cfg} scenario={scenario} MC={MC} statuses={statuses} />}
+      </main>
+      <footer className="foot noprint">Peer values are placeholders pending BRASS / Valeo extracts · All computation is in-browser; no data leaves this file · Monte Carlo is seeded for reproducibility.</footer>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>
+</body>
+</html>
