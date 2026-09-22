@@ -1,0 +1,636 @@
+First Name,Last Name,Mailing Address,Mailing Unit,Mailing City,Mailing State,Mailing Zip,Property Address,Property City,Property State,Property Zip,Owner Name On Record,Parcel ID,Contact ID
+Helen,Grant,12 Midland St,,Belmont,MA,02478,12 Midland St,Belmont,MA,02478,GRANT ESTATE OF HELEN P,30-15,hh_3a70bd6dbe
+Isolina,Gianino,4220 Central Sarasota Pkwy 1211,,Sarasota,FL,34238,117-119 Hammond Rd,Belmont,MA,02478,GIANINO LE ETAL ISOLINA,16-28,hh_f272196169
+Corradino,Solimine,9 Simmons Rd,,Nahant,MA,01908,38 Hamilton Rd,Belmont,MA,02478,SOLIMINE EST CORRADINO,22-119,hh_238dd4a846
+Mary,Corwin,4850 Osprey Dr South,Apt 201,St Petersburg,FL,33711,4 Jacob Rd,Belmont,MA,02478,CORWIN TRS LE MARY ELIZABETH & FREDERIC W JR,8-73,hh_81061f5487
+Frederic,Corwin,4850 Osprey Dr South,Apt 201,St Petersburg,FL,33711,4 Jacob Rd,Belmont,MA,02478,CORWIN TRS LE MARY ELIZABETH & FREDERIC W JR,8-73,hh_81061f5487
+Florence,Haase,346 Concord Ave,,Belmont,MA,02478,346R Concord Ave,Belmont,MA,02478,HAASE FLORENCE W ESTATE OF,24-57,hh_85fcf5e330
+Richard,Larson,40 Churchills Lane,,Milton,MA,02186,41-43 Newton St,Belmont,MA,02478,LARSON TRS ETAL RICHARD C,2-131,hh_5a7a23741c
+William,Larson,40 Churchills Lane,,Milton,MA,02186,41-43 Newton St,Belmont,MA,02478,LARSON TRS ETAL RICHARD C,2-131,hh_5a7a23741c
+Mary,Mehrez,C/o Robert Mehrez 132 Albemarle Rd,,Newton,MA,02460,25 Hillcrest Rd,Belmont,MA,02478,MEHREZ ETAL TRS MARY P,18-100,hh_229431508c
+Elizabeth,Minasian,221 Terrace Ave,,Riverside,RI,02915,70 Birch Hill Rd,Belmont,MA,02478,MINASIAN TRS ELIZABETH M,74-27,hh_f7949037de
+Lewis,Palosky,49 Ceres St,,Portsmouth,NH,03801,185 Oakley Rd,Belmont,MA,02478,PALOSKY LEWIS E TR & STEVEN A RESNICK TR,7-38,hh_4c0c2e6ccf
+Steven,Resnick,49 Ceres St,,Portsmouth,NH,03801,185 Oakley Rd,Belmont,MA,02478,PALOSKY LEWIS E TR & STEVEN A RESNICK TR,7-38,hh_4c0c2e6ccf
+Annette,Rapczynski,320 Island Way,Unit 501,Clearwater,FL,33767,26-28 Davis Rd,Belmont,MA,02478,RAPCZYNSKI TRS ANNETTE,27-31,hh_0dd68f5166
+Michael,Stavropoulos,5 Brenton Rd,,Weston,MA,02493,25-27 Woodland St,Belmont,MA,02478,STAVROPOULOS TRS ETAL MICHAEL,30-7,hh_b54454acdc
+Robert,Wright,3 Lakewood Rd,,Windham,NH,03087,37-39 Vincent Ave,Belmont,MA,02478,WRIGHT TRS ROBERT L & NANCY M,13-63,hh_87cb86d022
+Nancy,Wright,3 Lakewood Rd,,Windham,NH,03087,37-39 Vincent Ave,Belmont,MA,02478,WRIGHT TRS ROBERT L & NANCY M,13-63,hh_87cb86d022
+Patricia,Auterio,5 Marshall Rd,,Stoneham,MA,02180,108 Clark St,Belmont,MA,02478,AUTERIO TRS PATRICIA,30-64,hh_6907b8e208
+James,Batmasian,215 N Federal Highway,,Boca Raton,FL,33432,33-35 Winslow Rd,Belmont,MA,02478,BATMASIAN TE JAMES H & MARTA A,12-42,hh_ab9a3e0c37
+Marta,Batmasian,215 N Federal Highway,,Boca Raton,FL,33432,33-35 Winslow Rd,Belmont,MA,02478,BATMASIAN TE JAMES H & MARTA A,12-42,hh_ab9a3e0c37
+Hugo,Camargo,35 Crescent Ave,,Melrose,MA,02176,179 Belmont St Unit 2,Belmont,MA,02478,CAMARGO LE HUGO & ELEANA CAMARGO,1-103-2,hh_fbd3194c7e
+Eleana,Camargo,35 Crescent Ave,,Melrose,MA,02176,179 Belmont St Unit 2,Belmont,MA,02478,CAMARGO LE HUGO & ELEANA CAMARGO,1-103-2,hh_fbd3194c7e
+Anthony,Cardillo,53 Midland Dr,,Waltham,MA,02451,57-59 Grant Ave,Belmont,MA,02478,CARDILLO TR ANTHONY G JR,27-93,hh_eedec0ab87
+Annette,Champion,793 Burton Dr,,Lake Forest,IL,60045,20-22 Barnard Rd,Belmont,MA,02478,CHAMPION TR ANNETTE H,12-180,hh_79af00a797
+Richard,Cooperstein,16350 Ventura Blvd,Ste D248,Encino,CA,91436,40 Woodfall Rd,Belmont,MA,02478,COOPERSTEIN TR RICHARD B AND TRACEY M COOPERSTEIN,73-5,hh_9c44e33ce7
+Tracey,Cooperstein,16350 Ventura Blvd,Ste D248,Encino,CA,91436,40 Woodfall Rd,Belmont,MA,02478,COOPERSTEIN TR RICHARD B AND TRACEY M COOPERSTEIN,73-5,hh_9c44e33ce7
+Joel,Deon,11607 Water Poppy Terr,,Lakewood Ranch,FL,34202,36 Baker St,Belmont,MA,02478,DEON TRS JOEL S,22-71,hh_b82f3d1702
+James,Dibiase,10 Candleberry Lane,,Weston,MA,02493,30-32 Bartlett Ave,Belmont,MA,02478,DIBIASE TR JAMES & ELIZABETH E DIBIASE,13-102,hh_c8ad1734b3
+Elizabeth,Dibiase,10 Candleberry Lane,,Weston,MA,02493,30-32 Bartlett Ave,Belmont,MA,02478,DIBIASE TR JAMES & ELIZABETH E DIBIASE,13-102,hh_c8ad1734b3
+David,Fitzgerald,5960 SW 35th Way,,Gainesville,FL,32608,28-30 Warwick Rd,Belmont,MA,02478,FITZGERALD TR DAVID B,6-96,hh_49e006d574
+Joseph,Freni,5 Kelly Farm Way,,Burlington,MA,01803,9-11 Chestnut St,Belmont,MA,02478,FRENI TE SALVATORE J,15-103,hh_e905896720
+Salvatore,Freni,5 Kelly Farm Way,,Burlington,MA,01803,9-11 Chestnut St,Belmont,MA,02478,FRENI TE SALVATORE J,15-103,hh_e905896720
+Peter,Gaines,P O Box 1036,,Sanibel,FL,33957,216 Slade St,Belmont,MA,02478,GAINES TR PETER M,17-17,hh_b11b5bcfdd
+John,Hall,12 Brenton Road,,West Hartford,CT,06119,10-14 Harding Ave,Belmont,MA,02478,HALL TE JOHN,12-156,hh_83ddf29c2f
+Victoria,Huot,142 Forest St,,Winchester,MA,01890,74-76 Foster Rd,Belmont,MA,02478,HUOT TRS VICTORIA J,10-115,hh_26aee8a463
+Elaine,Jarvis,73 Todd Pond Rd,,Lincoln,MA,01773,25 Warwick Rd,Belmont,MA,02478,JARVIS TR ELAINE C,6-106,hh_87159c0df8
+Zareh,Karapetian,2505 Cross St,,La Crescenta,CA,91214,67R Brookside Ave,Belmont,MA,02478,KARAPETIAN ZAREH,61-16-A,hh_f9f78595fb
+Robt,Rvc,390 Commonwealth Ave Ph1,,Boston,MA,02215,86 Oak Ave,Belmont,MA,02478,KUNG ETAL TR ROBT OF PAUL C K LU 1998 RVC TR,6-221,hh_46e9f4ea76
+Xiucai,Liu,159 Chilton St,,Cambridge,MA,02138,22 Wellesley Rd,Belmont,MA,02478,LIU TR XIUCAI & XIAOWEN MA & CHARLEIE CHI LIU,53-119,hh_9ffa44826a
+Xiaowen,Liu,159 Chilton St,,Cambridge,MA,02138,22 Wellesley Rd,Belmont,MA,02478,LIU TR XIUCAI & XIAOWEN MA & CHARLEIE CHI LIU,53-119,hh_9ffa44826a
+Charleie,Liu,159 Chilton St,,Cambridge,MA,02138,22 Wellesley Rd,Belmont,MA,02478,LIU TR XIUCAI & XIAOWEN MA & CHARLEIE CHI LIU,53-119,hh_9ffa44826a
+Demetrios,Manolis,12720 Wheatgrass Ct,,Parrish,FL,34219,16-18 Skahan Rd,Belmont,MA,02478,MANOLIS TRS DEMETRIOS & VALERIE L,10-44,hh_4dbac1bb1d
+Valerie,Manolis,12720 Wheatgrass Ct,,Parrish,FL,34219,16-18 Skahan Rd,Belmont,MA,02478,MANOLIS TRS DEMETRIOS & VALERIE L,10-44,hh_4dbac1bb1d
+Cerdric,Marsh,PO Box 92,,Wilmot,NH,03287,148-150 Beech St,Belmont,MA,02478,MARSH TRS CEDRIC R AND NANCY M,27-6,hh_6deacaf172
+Nancy,Marsh,PO Box 92,,Wilmot,NH,03287,148-150 Beech St,Belmont,MA,02478,MARSH TRS CEDRIC R AND NANCY M,27-6,hh_6deacaf172
+Abbas,Mirshahi,1152 Lees Crossing Court,,Glen Allen,VA,23059,39-41 Hamilton Rd,Belmont,MA,02478,MIRSHAHI TR ABBAS & PARVIN MIRSHAHI,22-141,hh_ccc3a5e31f
+Parvin,Mirshahi,1152 Lees Crossing Court,,Glen Allen,VA,23059,39-41 Hamilton Rd,Belmont,MA,02478,MIRSHAHI TR ABBAS & PARVIN MIRSHAHI,22-141,hh_ccc3a5e31f
+Garnick,Nshanyan,301 174th St,Unit 304,Sunny Isle Beach,FL,33160,206 Blanchard Rd,Belmont,MA,02478,NSHANYAN TRS GARNICK,22-166,hh_8507c8a804
+Edward,Rynne,547 South Saint Asaph St,,Alexandria,VA,22314,17-19 Cross St,Belmont,MA,02478,RYNNE TRS EDWARD J JR,34-72,hh_3115808ca6
+Joseph,Salfity,25 Wilson Drive,,Carmel,IN,46032,61-63 Lexington St,Belmont,MA,02478,SALFITY TRS JOSEPH J,28-126,hh_c2b816b969
+Joseph,Santangelo,701 Wellman Ave,,N Chelmsford,MA,01863,21 Trowbridge St,Belmont,MA,02478,SANTANGELO TRS JOSEPH R & JOSEPH R JR,22-59,hh_4bd2a89db8
+Joseph,Santangelo,701 Wellman Ave,,N Chelmsford,MA,01863,21 Trowbridge St,Belmont,MA,02478,SANTANGELO TRS JOSEPH R & JOSEPH R JR,22-59,hh_4bd2a89db8
+Joseph,Santangelo,1 Ridge Court,,Harwich,MA,02645,24-26 Baker St,Belmont,MA,02478,SANTANGELO TR JOSEPH R & JOSEPH R JR,22-68,hh_2f92326201
+Joseph,Santangelo,1 Ridge Court,,Harwich,MA,02645,24-26 Baker St,Belmont,MA,02478,SANTANGELO TR JOSEPH R & JOSEPH R JR,22-68,hh_2f92326201
+David,Suh,2001 Harrisburg Pike Apt Ph 202,,Lancaster,PA,17601,562 School St Unit 562,Belmont,MA,02478,SUH TRS DAVID AND ESTHER SUH,2-157-562,hh_aa410d2572
+Esther,Suh,2001 Harrisburg Pike Apt Ph 202,,Lancaster,PA,17601,562 School St Unit 562,Belmont,MA,02478,SUH TRS DAVID AND ESTHER SUH,2-157-562,hh_aa410d2572
+Robert,Travers,105 Lapalma Court,,Venice,FL,34292,65-67 Waverley St,Belmont,MA,02478,TRAVERS TRS ROBERT G,27-67,hh_92f506d69a
+Marilyn,Turnbull,107 Hillside Dr,,Wayland,MA,01778,9-11 Davis Rd,Belmont,MA,02478,TURNBULL TR MARILYN T,27-23,hh_997b3323c4
+Joseph,Vercellone,203 Lake Shore Rd,Unit 3,Brighton,MA,02135,62 Marlboro St,Belmont,MA,02478,VERCELLONE TRS ETAL JOSEPH T,1-164,hh_af3922574f
+Edward,Vincola,PO Box 109,,N Falmouth,MA,02556,22 Lantern Rd,Belmont,MA,02478,VINCOLA TRS EDWARD,74-38,hh_1bdb1d6cff
+Hrachik,Vosghanian,296 Old Billerica Rd,,Bedford,MA,01730,121-123 Beech St,Belmont,MA,02478,VOSGHANIAN LE HRACHIK & TAGOOSH VOSGHANIAN,14-126,hh_28e1272719
+Tagoosh,Vosghanian,296 Old Billerica Rd,,Bedford,MA,01730,121-123 Beech St,Belmont,MA,02478,VOSGHANIAN LE HRACHIK & TAGOOSH VOSGHANIAN,14-126,hh_28e1272719
+Stephen,Walther,27 Wheelers Cove Rd,,Antrim,NH,03440,28-30 Upland Rd,Belmont,MA,02478,WALTHER TRS STEPHEN J & ANN M,26-49,hh_e14a3f3758
+Ann,Walther,27 Wheelers Cove Rd,,Antrim,NH,03440,28-30 Upland Rd,Belmont,MA,02478,WALTHER TRS STEPHEN J & ANN M,26-49,hh_e14a3f3758
+Jeffrey,Werrick,3900 North Ocean Dr 7A,,Lauderdale By The Sea,FL,33308,257 Waverley St,Belmont,MA,02478,WERRICK TR JEFFREY N,25-119,hh_43fe6c2700
+Marc,Wolf,9841 Star Drive,,Huntington Beach,CA,92646,58 Cushing Ave,Belmont,MA,02478,WOLF TR MARC S & ALEXIA A WOLF,6-224,hh_f43db082e1
+Alexia,Wolf,9841 Star Drive,,Huntington Beach,CA,92646,58 Cushing Ave,Belmont,MA,02478,WOLF TR MARC S & ALEXIA A WOLF,6-224,hh_f43db082e1
+Wanyi,Xiang,181 Strathearn Ave,,Richnond Hill Ontario Can,,,144 Channing Rd,Belmont,MA,02478,XIANG TE WANYI,37-1,hh_34d1a4c542
+,9 Sumner Lane Nominee Trust,53 State Street,,Boston,MA,02109,9 Sumner Ln,Belmont,MA,02478,9 SUMNER LANE NOMINEE TRUST,57-18,hh_c6171a625e
+,Azure Hgi Belmont LP Etal,999 Waterside Dr,Suite 2300,Norfolk,VA,23510,375 Acorn Park Dr,Belmont,MA,02478,AZURE HGI BELMONT LP ETAL,40-1,hh_7bc39d43bf
+,Gheridian Beatriz 2020 Irrevocable Trust,60 Hobbs Brook Rd,,Waltham,MA,02451,178-180 Trapelo Rd,Belmont,MA,02478,GHERIDIAN BEATRIZ 2020 IRREVOCABLE TRUST,12-195,hh_9a835c330c
+,Hogan Robert V Family Trust,444 Mt Auburn St Unit,Unit 3,Watertown,MA,02472,58 Payson Rd,Belmont,MA,02478,HOGAN ROBERT V FAMILY TRUST,6-162,hh_b775cd8022
+,Jones Jr Trust John E,5 Quail Ridge Drive,,Acton,MA,01720,12-14 Branchaud Rd,Belmont,MA,02478,JONES JR TRUST JOHN E,6-30,hh_4e7c3f2317
+,Meehan Robert G Sr Revocable Trust,7 Clark Road,,Bedford,MA,01730,14-16 Woodland St,Belmont,MA,02478,MEEHAN ROBERT G SR REVOCABLE TRUST,30-4,hh_927f557d33
+,Orchanian Edward Irrevocable Trust,11 Tudor Street,,Waltham,MA,02451,57 Trapelo Rd,Belmont,MA,02478,ORCHANIAN EDWARD IRREVOCABLE TRUST,5-99,hh_a24433798e
+,Orfan Stavros Revocable Trust,25 Forest St,,Watertown,MA,02472,519 School St,Belmont,MA,02478,ORFAN STAVROS REVOCABLE TRUST,3-17,hh_76df099276
+,Petersen Ulrich Ma Qtip Trust,75 State Street 18th Floor,,Boston,MA,02109,414 Marsh St,Belmont,MA,02478,PETERSEN ULRICH MA QTIP TRUST,68-30,hh_01b42f24e9
+,Stephen J Dahill Revocable Trust,85 East India Row,Apt 33F,Boston,MA,02110,15-17 Payson Rd,Belmont,MA,02478,STEPHEN J DAHILL REVOCABLE TRUST,6-181,hh_2f6ced5b95
+P,Ahigian,2651 Olsen Rd,,Sebastopol,CA,95472,143 Oakley Rd,Belmont,MA,02478,AHIGIAN P SHARON,7-74,hh_4313fd2980
+Habib,Aminipour,17 Main St,Ste 201,Watertown,MA,02472,26-28 Marion Rd Unit 1,Belmont,MA,02478,AMINIPOUR JT HABIB AND SHAHIN,1-112-1,hh_03a81002b9
+Shahin,Aminipour,17 Main St,Ste 201,Watertown,MA,02472,26-28 Marion Rd Unit 1,Belmont,MA,02478,AMINIPOUR JT HABIB AND SHAHIN,1-112-1,hh_03a81002b9
+Arila,Atanassova-Barnes,696 25th Street,,Oakland,CA,94612,43 Lexington St Unit 43,Belmont,MA,02478,ATANASSOVA-BARNES ARILA A,28-129-43,hh_382d005f73
+Ronald,Augusti,19 Crystal Dr,,Hampton Falls,NH,03844,39-41 Hull St,Belmont,MA,02478,AUGUSTI TE RONALD C,14-141,hh_6d8e8aa583
+Matthew,Austin,119 Harvey St,,Cambridge,MA,02140,163-165 Beech St,Belmont,MA,02478,AUSTIN TR MATTHEW CHRISTOPHER & HANGJUE LI,26-167,hh_e1b84c833e
+Hangjue,Austin,119 Harvey St,,Cambridge,MA,02140,163-165 Beech St,Belmont,MA,02478,AUSTIN TR MATTHEW CHRISTOPHER & HANGJUE LI,26-167,hh_e1b84c833e
+Allen,Babroudi,5 Whitcomb Way,,North Reading,MA,01864,407-409 Trapelo Rd,Belmont,MA,02478,BABROUDI TE ALLEN S,27-51,hh_8c9204f7c3
+Varoujan,Badrikian,26 Woodcliff Rd,,Waltham,MA,02452,42-44 Alma Ave,Belmont,MA,02478,BADRIKIAN TR VAROUJAN,13-82,hh_278585dc48
+John,Barbaro,123 Woburn St,,Andover,MA,01810,58-60 Waverley St,Belmont,MA,02478,BARBARO TRS JOHN C,27-121,hh_0a8689b1d2
+Edward,Behie,49 Cottage Cove,,Plymouth,MA,02360,9 Slade St,Belmont,MA,02478,BEHIE TR EDWARD H,12-111,hh_51a44e17be
+Michael,Bennett,11 Dunbarton Rd,,Belmont,MA,02178,100 Lexington St Unit B8,Belmont,MA,02478,BENNETT TRS MICHAEL J & SUSAN D,28-174-B8,hh_54461396f9
+Susan,Bennett,11 Dunbarton Rd,,Belmont,MA,02178,100 Lexington St Unit B8,Belmont,MA,02478,BENNETT TRS MICHAEL J & SUSAN D,28-174-B8,hh_54461396f9
+John,Benson,66 Wolcott St,,Medford,MA,02155,480-482 School St,Belmont,MA,02478,BENSON TR JOHN A & VERA E MOURADIAN,9-244,hh_d94a8fbdd1
+Vera,Mouradian,66 Wolcott St,,Medford,MA,02155,480-482 School St,Belmont,MA,02478,BENSON TR JOHN A & VERA E MOURADIAN,9-244,hh_d94a8fbdd1
+Thomas,Bernardo,68 Donizetti St,,Wellesley,MA,02482,53-55 Bartlett Ave,Belmont,MA,02478,BERNARDO TRS THOMAS J,14-212,hh_d7fa8736b3
+Catherine,Bishop,466 Thelma Dr,,Sunset,LA,70584,89 Bow Rd,Belmont,MA,02478,BISHOP CATHERINE E,19-42,hh_a193827797
+Patricia,Breen,50 Butterfly Ln,,Santa Barbara,CA,93108,88 Beech St,Belmont,MA,02478,BREEN TE PATRICIA M,27-161,hh_b17d4f6764
+Carl,Brinton,401 W End Ave 1bc,,New York,NY,10024,544 Trapelo Rd,Belmont,MA,02478,BRINTON CARL H,33-45,hh_a1675b9c81
+Justin,Buie,7 Quincy St,Unit 1,Somerville,MA,02143,18 Park Rd Unit 1,Belmont,MA,02478,BUIE JUSTIN,2-32-1,hh_2a912d14b7
+Craig,Carrier,68 Bay State Rd,,Arlington,MA,02474,63 Flett Rd Unit 63,Belmont,MA,02478,CARRIER TR CRAIG,14-23-63,hh_31a6cdf75d
+Lucia,Caruso,156 Pigeon Lane,,Waltham,MA,02452,80-82 Grant Ave,Belmont,MA,02478,CARUSO TR LUCIA & GIOVANNI CARUSO,29-86-1,hh_3707198ffb
+Giovanni,Caruso,156 Pigeon Lane,,Waltham,MA,02452,80-82 Grant Ave,Belmont,MA,02478,CARUSO TR LUCIA & GIOVANNI CARUSO,29-86-1,hh_3707198ffb
+Steven,Centrella,112 Sawmill Rd,,N Andover,MA,01845,76-78 Baker St,Belmont,MA,02478,CENTRELLA TR STEVEN M,22-81,hh_f1ee5a7725
+Danielle,Charlot,30 Noel Drive,,Holliston,MA,01746,29 Francis St Unit 29,Belmont,MA,02478,CHARLOT DANIELLE J,14-103-29,hh_b2be5981db
+Dongshu,Chen,300 Allston St,Unit 206,Boston,MA,02135,50 Lexington St,Belmont,MA,02478,CHEN TR DONGSHU & XIAOHONG SU,28-152,hh_cbc2893571
+Xiaohong,Chen,300 Allston St,Unit 206,Boston,MA,02135,50 Lexington St,Belmont,MA,02478,CHEN TR DONGSHU & XIAOHONG SU,28-152,hh_cbc2893571
+Fai,Chin,21 Peabody Road,,Arlington,MA,02476,23-25 Grant Ave,Belmont,MA,02478,CHIN TR FAI JEAN,27-101,hh_8f0effc58e
+Walter,Chrusciel,703 Belmont St,,Belmont,MA,02478,137-143 Belmont St,Belmont,MA,02478,CHRUSCIEL TRS WALTER,1-17,hh_6057a9945a
+Priscilla,Cobb,One Franklin Pierce Dr,,Peabody,MA,01960,56 Dartmouth St,Belmont,MA,02478,COBB LE PRISCILLA,1-140,hh_b5e65907ad
+Carolyn,Cohen,43 Mill St,,Maynard,MA,01754,99 Beech St,Belmont,MA,02478,COHEN LE CAROLYN,14-134,hh_80008a11cf
+Joseph,Colantuoni,1020 N Highland St,Unit 920,Arlington,VA,22201,54-56 Hamilton Rd,Belmont,MA,02478,COLANTUONI JT JOSEPH A,22-123,hh_db701fa1ef
+Mary,Conmay,139 Waverley St,,Belmont,MA,02478,137-139 Waverley St,Belmont,MA,02478,CONMAY MARY PATRICIA EST OF,29-23,hh_1de2f88b03
+Helga,Cosman,872 Concord Ave,,Belmont,MA,02478,303 Mill St,Belmont,MA,02478,COSMAN TRS HELGA,59-9,hh_26f6e2cc05
+Michael,Crugnale,103 Melrose Ave,,Needham,MA,02492,73 Dartmouth St,Belmont,MA,02478,CRUGNALE TE MICHAEL & EMILY CRUGNALE,1-149,hh_20b2ca5977
+Emily,Crugnale,103 Melrose Ave,,Needham,MA,02492,73 Dartmouth St,Belmont,MA,02478,CRUGNALE TE MICHAEL & EMILY CRUGNALE,1-149,hh_20b2ca5977
+Gardner,Cushman,77 Snake Hill Rd,,Belmont,MA,02478,7 Snake Hill Rd,Belmont,MA,02478,CUSHMAN ET AL GARDNER,58-1,hh_e62b51f791
+David,Decter,92 Rockview Street,,Jamaica Plain,MA,02130,3 Carleton Rd,Belmont,MA,02478,DECTER TRS DAVID & RACHAEL M DORR BELIKESID RLTY,6-13,hh_4f7c5d7655
+Rachael,Rlty,92 Rockview Street,,Jamaica Plain,MA,02130,3 Carleton Rd,Belmont,MA,02478,DECTER TRS DAVID & RACHAEL M DORR BELIKESID RLTY,6-13,hh_4f7c5d7655
+Alexander,Demers,2180 Pinecrest Dr,,Altadena,CA,91009,11 Vernon Rd,Belmont,MA,02478,DEMERS TR ALEXANDER,61-111,hh_e8d86321e3
+William,Deorio,4 Commonwealth Ave,,Salisbury,MA,01952,193 Channing Rd,Belmont,MA,02478,DEORIO TR WILLIAM A & MARILYN C DEORIO,37-85,hh_b0d0258c2c
+Marilyn,Deorio,4 Commonwealth Ave,,Salisbury,MA,01952,193 Channing Rd,Belmont,MA,02478,DEORIO TR WILLIAM A & MARILYN C DEORIO,37-85,hh_b0d0258c2c
+George,Diarbakerly,96 Woodfall Rd,,Belmont,MA,02478,75 Woodfall Rd,Belmont,MA,02478,DIARBAKERLY TR GEORGE,73-17,hh_03cc87245f
+Paul,Diliberto,11 Panteline Terr,,Watertown,MA,02472,231 Washington St,Belmont,MA,02478,DILIBERTO TRS PAUL F AND PATRICIA DILIBERTO,9-225,hh_d8ce7ea443
+Patricia,Diliberto,11 Panteline Terr,,Watertown,MA,02472,231 Washington St,Belmont,MA,02478,DILIBERTO TRS PAUL F AND PATRICIA DILIBERTO,9-225,hh_d8ce7ea443
+Pamela,Divris,31 Emerson Rd,,Walpole,MA,02032,14-16 Hull St,Belmont,MA,02478,DIVRIS PAMELA,14-150,hh_0f3ec5fe36
+Barbara,Doe,89 Conant Rd,,Lincoln,MA,01773,47 Cross St,Belmont,MA,02478,DOE BARBARA,34-37,hh_1444c554b5
+Steven,Dostou,55 Waterstone St,Unit 430,Lexington,MA,02421,25 Summit Rd Unit 21,Belmont,MA,02478,DOSTOU TRS STEVEN & MILDRED DOSTOU,59-11-2-21,hh_e00498dd48
+Mildred,Dostou,55 Waterstone St,Unit 430,Lexington,MA,02421,25 Summit Rd Unit 21,Belmont,MA,02478,DOSTOU TRS STEVEN & MILDRED DOSTOU,59-11-2-21,hh_e00498dd48
+John,Duddy,PO Box 8,,Farmington,CT,06034,46 Cushing Ave,Belmont,MA,02478,DUDDY TE JOHN J & MARY I,6-226,hh_6d8c131642
+Mary,Duddy,PO Box 8,,Farmington,CT,06034,46 Cushing Ave,Belmont,MA,02478,DUDDY TE JOHN J & MARY I,6-226,hh_6d8c131642
+Barry,Fenton,13 Freedom Trail,,Norfolk,MA,02056,27-29 King St,Belmont,MA,02478,FENTON TRS BARRY W AND SHARON M,15-118,hh_add1183574
+Sharon,Fenton,13 Freedom Trail,,Norfolk,MA,02056,27-29 King St,Belmont,MA,02478,FENTON TRS BARRY W AND SHARON M,15-118,hh_add1183574
+Jodi,Ferullo,14 Hollace St,,Waltham,MA,02451,755-757 Belmont St,Belmont,MA,02478,FERULLO TR JODI M,13-161,hh_59555a44f3
+Dina,Flood,31 Hickory Hill Rd,,Manchester,MA,01944,7 Concord Ave,Belmont,MA,02478,FLOOD TR DINA M & MARTIN E FLOOD,22-186,hh_6d960f0afb
+Martin,Flood,31 Hickory Hill Rd,,Manchester,MA,01944,7 Concord Ave,Belmont,MA,02478,FLOOD TR DINA M & MARTIN E FLOOD,22-186,hh_6d960f0afb
+Kevin,Foley,67 Leonard St,,Belmont,MA,02478,34-36 Channing Rd,Belmont,MA,02478,FOLEY TRS KEVIN C AND RICHARD G MINTZ,34-114,hh_6c47a60740
+Richard,Mintz,67 Leonard St,,Belmont,MA,02478,34-36 Channing Rd,Belmont,MA,02478,FOLEY TRS KEVIN C AND RICHARD G MINTZ,34-114,hh_6c47a60740
+Joanne,Fray,1620 Massachusetts Ave,,Lexington,MA,02420,51 Winn St,Belmont,MA,02478,FRAY TE JOANNE C,34-85,hh_9320a4b307
+Charles,Gaffney,188 Tilden Rd,,Scituate,MA,02066,10-12 Davis Rd,Belmont,MA,02478,GAFFNEY TR CHARLES L & JOANNE M,27-27,hh_f31374ef1f
+Joanne,Gaffney,188 Tilden Rd,,Scituate,MA,02066,10-12 Davis Rd,Belmont,MA,02478,GAFFNEY TR CHARLES L & JOANNE M,27-27,hh_f31374ef1f
+Clifford,Gardner,326 Bacon St,,Waltham,MA,02451,347-349 Trapelo Rd,Belmont,MA,02478,GARDNER TRS CLIFFORD AND DOROTHY L,14-64,hh_77644abffe
+Dorothy,Gardner,326 Bacon St,,Waltham,MA,02451,347-349 Trapelo Rd,Belmont,MA,02478,GARDNER TRS CLIFFORD AND DOROTHY L,14-64,hh_77644abffe
+Slava,Gaufberg,25 Swan Road,,Winchester,MA,01890,15 Exeter St,Belmont,MA,02478,GAUFBERG SLAVA V,1-12,hh_74a703c541
+Robert,Geary,68 Eastville Avenue,,Vineyard Haven,MA,02568,254 Channing Rd,Belmont,MA,02478,GEARY TR ROBERT R,37-55,hh_628d5893ac
+Ronald,Genovese,10 Agawam Rd,,Acton,MA,01720,42-44 Wiley Rd,Belmont,MA,02478,GENOVESE TRS RONALD F AND LAURIE,26-157,hh_af8f181e44
+Laurie,Genovese,10 Agawam Rd,,Acton,MA,01720,42-44 Wiley Rd,Belmont,MA,02478,GENOVESE TRS RONALD F AND LAURIE,26-157,hh_af8f181e44
+Renee,Georgette,4 Lauricella Ln,,Waltham,MA,02452,14-16 Townsend Rd,Belmont,MA,02478,GEORGETTE TR RENEE & ANDREW WALL & N. MAYNARD,4-10,hh_588a95bc0b
+Andrew,Georgette,4 Lauricella Ln,,Waltham,MA,02452,14-16 Townsend Rd,Belmont,MA,02478,GEORGETTE TR RENEE & ANDREW WALL & N. MAYNARD,4-10,hh_588a95bc0b
+N.,Georgette,4 Lauricella Ln,,Waltham,MA,02452,14-16 Townsend Rd,Belmont,MA,02478,GEORGETTE TR RENEE & ANDREW WALL & N. MAYNARD,4-10,hh_588a95bc0b
+Pamela,Heald,54 Flint Rd,,Acton,MA,01720,8-10 Thomas St,Belmont,MA,02478,HEALD TRS PAMELA J,30-47,hh_c324b84a4e
+Ann,Hession,95 Parkview Rd,,Waltham,MA,02452,33-39 Thayer St,Belmont,MA,02478,HESSION TR ANN LOUISE,28-151,hh_ad96d65068
+Sandra,Hutchison,334 Back Nine Lane,,Sapphire,NC,28774,35 Thayer Rd Unit 35,Belmont,MA,02478,HUTCHISON SANDRA S,33-6-35,hh_07ecdc8116
+Didier,Jacobs,7820 Fairborn Ct,,Derwood,MD,20855,52 Bartlett Ave Unit 1,Belmont,MA,02478,JACOBS DIDIER,13-107-1,hh_f536684d48
+Constantinos,Kefalas,70 Cross Way Place,,Osterville,MA,02655,20-22 Hawthorne St,Belmont,MA,02478,KEFALAS TR CONSTANTINOS P,27-85,hh_bea5f97093
+Denis,Kelleher,1447 Hull St,,Baltimore,MD,21230,92-94 Fairview Ave,Belmont,MA,02478,KELLEHER TR DENIS J,2-127,hh_a4efc4ac94
+Earl,Kinney,5938 47th Ave SW,,Seattle,WA,91836,204 Beech St Unit 204,Belmont,MA,02478,KINNEY EARL E III,29-6-204,hh_ff028f0a45
+Minhaj,Kirmani,28 Stimson Ave,,Lexington,MA,02421,24-26 Maple Terr,Belmont,MA,02478,KIRMANI TE MINHAJ A,27-167,hh_6db685f94c
+Pamela,Kondylis,4 Viking Rd,,Winchester,MA,01890,44-46 Davis Rd,Belmont,MA,02478,KONDYLIS TRS PAMELA T,27-35,hh_803399bf10
+George,Kritikos,185 Edenfield Ave,,Watertown,MA,02472,64-66 Winslow Rd,Belmont,MA,02478,KRITIKOS TR GEORGE K,16-54,hh_ee56d724eb
+Nicholas,Lafauci,50 Moraine St,,Belmont,MA,02478,32-34 Waverley St,Belmont,MA,02478,LAFAUCI LE NICHOLAS,27-114,hh_ee831b2897
+Karin,Laraway,148 Victoria Dr,,Haines City,FL,33844,21-23 Jonathan St,Belmont,MA,02478,LARAWAY TR KARIN,15-138,hh_43bbeb69c4
+Jo-Ann,Larocque,64 Bay State Rd,,Belmont,MA,02478,41-41a Walnut St,Belmont,MA,02478,LAROCQUE LE JO-ANN & ARTHUR G LAROCQUE,14-165,hh_15f8d20a2d
+Arthur,Larocque,64 Bay State Rd,,Belmont,MA,02478,41-41a Walnut St,Belmont,MA,02478,LAROCQUE LE JO-ANN & ARTHUR G LAROCQUE,14-165,hh_15f8d20a2d
+Buoy,Lee,438 Broadway,,Cambridge,MA,02138,29 Wilson Ave,Belmont,MA,02478,LEE BUOY L F,14-53,hh_09055ae9be
+Chian,Lee,838 Cinnabar St,Apt 105,San Jose,CA,95126,97-99 Lexington St,Belmont,MA,02478,LEE CHIAN H,28-53,hh_632646905c
+Xiu,Lin,40 Wiltshire Rd,,Newton,MA,02458,12 Oxford Cir,Belmont,MA,02478,LIN TRS XIU LING,1-201,hh_d78229bacb
+Yanxia,Liu,93 Searle Rd,,West Roxbury,MA,02132,219-221 Beech St,Belmont,MA,02478,LIU TR YANXIA,26-76,hh_befdbcef38
+Jane,Long,6 Balsam Ave,,Brunswick,ME,04011,111-113 Slade St,Belmont,MA,02478,LONG TRS JANE ANN AND LAWRENCE E LONG,16-80,hh_fd1a2967ff
+Lawrence,Long,6 Balsam Ave,,Brunswick,ME,04011,111-113 Slade St,Belmont,MA,02478,LONG TRS JANE ANN AND LAWRENCE E LONG,16-80,hh_fd1a2967ff
+Jane,Macinnes,19842 Via Vista Grande,,Ramona,CA,92065,18-20 Jeanette Ave,Belmont,MA,02478,MACINNES TRS JANE C,13-111,hh_19c44304bd
+Peter,Mancini,4 Essex Rd,,Belmont,MA,02178,17 Marlboro St,Belmont,MA,02478,MANCINI TRS PETER P AND ZENDA M,1-58,hh_c11d6545c5
+Zenda,Mancini,4 Essex Rd,,Belmont,MA,02178,17 Marlboro St,Belmont,MA,02478,MANCINI TRS PETER P AND ZENDA M,1-58,hh_c11d6545c5
+Audrey,Martin,24 Mayfield Rd,,Belmont,MA,02478,40-42 Upland Rd,Belmont,MA,02478,MARTIN TRS AUDREY E,26-52,hh_640436662f
+Peter,Massmanian,14 Green Lane,,Lexington,MA,02421,164 White St,Belmont,MA,02478,MASSMANIAN TR PETER & REBECCA B MASSMANIAN,15-19,hh_60ce6c7ee0
+Rebecca,Massmanian,14 Green Lane,,Lexington,MA,02421,164 White St,Belmont,MA,02478,MASSMANIAN TR PETER & REBECCA B MASSMANIAN,15-19,hh_60ce6c7ee0
+Karen,McLaine,15 Washington Ave,,Arlington,MA,02474,86 Hawthorne St Unit 86,Belmont,MA,02478,MCLAINE KAREN,29-48-A-86,hh_90d557f17d
+Mark,McVay,50 West Summit Dr,,Emerald Hills,CA,94062,109 Brookside Ave,Belmont,MA,02478,MCVAY TR MARK & CHRISTINE MCVAY,61-23,hh_4970d81bff
+Christine,McVay,50 West Summit Dr,,Emerald Hills,CA,94062,109 Brookside Ave,Belmont,MA,02478,MCVAY TR MARK & CHRISTINE MCVAY,61-23,hh_4970d81bff
+James,Meehan,74 Carroll Dr,,Carlisle,MA,01741,178 Orchard St,Belmont,MA,02478,MEEHAN TR JAMES MARTIN,25-11,hh_4230e724e0
+Chantal,Menard,77 Catamount Rd,,Tewksbury,MA,01876,146 Beech St Unit 1,Belmont,MA,02478,MENARD CHANTAL,27-5-1,hh_2e9607badf
+Charles,Millstein,385 Chestnut Hill Ave,Unit 308,Boston,MA,02135,74 Carleton Rd,Belmont,MA,02478,MILLSTEIN TR CHARLES B,6-36,hh_ad45c0a1f4
+Georgio,Minasidis,43 Montfern Ave,,Brighton,MA,02135,53-55 Hull St,Belmont,MA,02478,MINASIDIS GEORGIO,14-138,hh_5b0504eeb1
+Evelyn,Mukjian,2 Boxwood Rd,,Farmington,CT,06032,63 Gilbert Rd,Belmont,MA,02478,MUKJIAN TRS EVELYN V,12-66,hh_e1fd0a197b
+Hovanes,Nshanian,63 Burnham St,,Watertown,MA,02472,63 Burnham St,Belmont,MA,02478,NSHANIAN TE HOVANES,28-35,hh_19d4b869f8
+Deborah,Orourke,31 Montrose St,,Newton,MA,02458,99-101 Slade St,Belmont,MA,02478,OROURKE DEBORAH M,16-83,hh_3cebc14bf0
+John,Otoole,211 Deacon Haynes Rd,,Concord,MA,01742,515 Belmont St,Belmont,MA,02478,OTOOLE TR JOHN J & MARY P & ELIZABETH E,5-134,hh_6e92c33e64
+Mary,Otoole,211 Deacon Haynes Rd,,Concord,MA,01742,515 Belmont St,Belmont,MA,02478,OTOOLE TR JOHN J & MARY P & ELIZABETH E,5-134,hh_6e92c33e64
+Elizabeth,Otoole,211 Deacon Haynes Rd,,Concord,MA,01742,515 Belmont St,Belmont,MA,02478,OTOOLE TR JOHN J & MARY P & ELIZABETH E,5-134,hh_6e92c33e64
+Donald,Pahlm,241 Weston St,,Waltham,MA,02453,22-24 Slade St,Belmont,MA,02478,PAHLM TR DONALD BRUCE,14-4,hh_f12b8ae52e
+Patanjali,Parimi,2500 Capestrano Circle,,Round Rock,TX,78665,51 Moraine St Unit 4,Belmont,MA,02478,PARIMI PATANJALI VENKATA,33-32-4,hh_7eb5ee684c
+Elaine,Patapanian,125 Coolidge Ave,Unit 807,Watertown,MA,02472,52 Stony Brook Rd,Belmont,MA,02478,PATAPANIAN TR ELAINE D,74-53,hh_4657cbd798
+Anne,Penney,9 Carmel St,,Wilmington,MA,01887,137-139 Fairview Ave,Belmont,MA,02478,PENNEY TRS ANNE MARIE,10-3,hh_248e6ce41b
+Richard,Petrasso,39 Parker St,,Lexington,MA,02421,9 Cherry St,Belmont,MA,02478,PETRASSO TR RICHARD & SARA BETH & JULIA C,25-126,hh_110b0c596a
+Sara,Petrasso,39 Parker St,,Lexington,MA,02421,9 Cherry St,Belmont,MA,02478,PETRASSO TR RICHARD & SARA BETH & JULIA C,25-126,hh_110b0c596a
+Julia,Petrasso,39 Parker St,,Lexington,MA,02421,9 Cherry St,Belmont,MA,02478,PETRASSO TR RICHARD & SARA BETH & JULIA C,25-126,hh_110b0c596a
+Marc,Resnick,100 Felton St,Suite 201,Waltham,MA,02453,20 Moraine St Unit 6,Belmont,MA,02478,RESNICK TRS MARC AND PERRY D STOLBERG,33-23-6,hh_66aea5420d
+Perry,Stolberg,100 Felton St,Suite 201,Waltham,MA,02453,20 Moraine St Unit 6,Belmont,MA,02478,RESNICK TRS MARC AND PERRY D STOLBERG,33-23-6,hh_66aea5420d
+Paul,Ristuccia,17230 SE Licorice Way,,Newcastle,WA,98059,85 Walnut St,Belmont,MA,02478,RISTUCCIA PAUL L,15-22,hh_9545fb7b83
+Emmanuelle,Robinson,138 Jordan Rd,,Brookline,MA,02446,96 Oakley Rd,Belmont,MA,02478,ROBINSON TR EMMANUELLE A & RICHARD A ROBINSON,5-17,hh_d1da91e1c6
+Richard,Robinson,138 Jordan Rd,,Brookline,MA,02446,96 Oakley Rd,Belmont,MA,02478,ROBINSON TR EMMANUELLE A & RICHARD A ROBINSON,5-17,hh_d1da91e1c6
+Mary,Woods,266 Main St Bldg 3,Ste 25,Medfield,MA,02052,19-21 Skahan Rd,Belmont,MA,02478,ROOS TR MARY A WOODS,10-75,hh_d18c9331c7
+Charlotte,Rose,5 James Street,,Watertown,MA,02472,77-79 Lexington St,Belmont,MA,02478,ROSE TRS CHARLOTTE M,28-82,hh_bc9f84196d
+Panfilo,Rozzi,87 Clark St,,Belmont,MA,02478,171-173 Beech St,Belmont,MA,02478,ROZZI ETAL TR PANFILO E,26-165,hh_934cdfe8c4
+Leonina,Rozzi,87 Clark St,,Belmont,MA,02478,171-173 Beech St,Belmont,MA,02478,ROZZI ETAL TR PANFILO E,26-165,hh_934cdfe8c4
+Eileen,Ruffing,203 Follen Rd,,Lexington,MA,02421,17-19 Linden Ave,Belmont,MA,02478,RUFFING TR EILEEN A,5-112,hh_d5d5b64f9a
+Pasquale,Rullo,9 Dudley Rd,,Lexington,MA,02421,9-11 Thayer St,Belmont,MA,02478,RULLO TE PASQUALE,28-146,hh_366872421d
+Nancy,Salvato,12 Willow St,,Belmont,MA,02478,25 Linden Ave,Belmont,MA,02478,SALVATO TRS NANCY C,5-105,hh_6081aa23f7
+Gail,Scalese,65 Marianne Rd,,Waltham,MA,02452,52 Burnham St Unit 1,Belmont,MA,02478,SCALESE TRS GAIL M,28-33-1,hh_ff40b13d08
+Richard,Scotti,192 Rutledge Rd,,Belmont,MA,02478,13 Thayer Rd Unit 13,Belmont,MA,02478,SCOTTI LE RICHARD L,33-9-13,hh_1d86fc5a01
+George,Sexeny,44 Island View Rd,,Hyannis,MA,02601,34-36 Winslow Rd,Belmont,MA,02478,SEXENY TR GEORGE,12-57,hh_b614d1f359
+Amir,Shirinian,44 Dorothy Rd,,Newton,MA,02459,53-55 Falmouth St,Belmont,MA,02478,SHIRINIAN TR AMIR & RAHA TAJROBEHKAR,2-42,hh_836220bd59
+Raha,Shirinian,44 Dorothy Rd,,Newton,MA,02459,53-55 Falmouth St,Belmont,MA,02478,SHIRINIAN TR AMIR & RAHA TAJROBEHKAR,2-42,hh_836220bd59
+Charles,Simmons,77 Benjamin Rd,,Belmont,MA,02478,219-221 Belmont St,Belmont,MA,02478,SIMMONS TR CHARLES A & NICOLE SIMMONS,2-28,hh_b9c0ce64aa
+Nicole,Simmons,77 Benjamin Rd,,Belmont,MA,02478,219-221 Belmont St,Belmont,MA,02478,SIMMONS TR CHARLES A & NICOLE SIMMONS,2-28,hh_b9c0ce64aa
+Suzanne,Smith,10887 Hidden Brook Circle,,Colorado Springs,CO,80908,60-62 Foster Rd,Belmont,MA,02478,SMITH SUZANNE WESTLUND,10-112,hh_83c38c33e4
+Aristos,Stefanis,251 Beal Rd,,Waltham,MA,02453,45-47 Chandler St,Belmont,MA,02478,STEFANIS TR ARISTOS P & ELENI A STEFANIS,28-71,hh_7007e20841
+Eleni,Stefanis,251 Beal Rd,,Waltham,MA,02453,45-47 Chandler St,Belmont,MA,02478,STEFANIS TR ARISTOS P & ELENI A STEFANIS,28-71,hh_7007e20841
+John,Stella,153 Russell Ave,,Watertown,MA,02472,131 Trapelo Rd Unit 2,Belmont,MA,02478,STELLA TR JOHN J III & ROBERT H STELLA,12-130-2,hh_867e71cf2c
+Robert,Stella,153 Russell Ave,,Watertown,MA,02472,131 Trapelo Rd Unit 2,Belmont,MA,02478,STELLA TR JOHN J III & ROBERT H STELLA,12-130-2,hh_867e71cf2c
+James,Stutely,7305 SW 109th Ter,,Pinecrest,FL,33156,75-77 White St,Belmont,MA,02478,STUTELY JT JAMES R,28-163,hh_9b14e995a3
+Julie,Sutera,14 Bishops Lane,,Lynnfield,MA,01940,9 Mayfield Rd,Belmont,MA,02478,SUTERA TR JULIE,61-78,hh_d5f54c22fd
+Santosh,Taneja,786 Sequoia Drive,,Sunnyvale,CA,94086,45-47 Slade St,Belmont,MA,02478,TANEJA JT SANTOSH & HEMANT TANEJA,12-102,hh_6cac0b53b3
+Hemant,Taneja,786 Sequoia Drive,,Sunnyvale,CA,94086,45-47 Slade St,Belmont,MA,02478,TANEJA JT SANTOSH & HEMANT TANEJA,12-102,hh_6cac0b53b3
+Yiqiao,Tang,1083 10th Ave NE,,Issaquah,WA,98029,4 Crescent Rd Unit 2,Belmont,MA,02478,TANG TE YIQIAO,10-100-2,hh_4b0a957b2c
+Wilfred,Taylor,162 Dean St,,Belmont,MA,02478,14 Fairview Ave,Belmont,MA,02478,TAYLOR WILFRED J TR,1-168,hh_3b22801041
+James,Tiberii,12 Priscilla Path,,Wayland,MA,01778,41 Barnard Rd,Belmont,MA,02478,TIBERII JT JAMES J,12-169,hh_fc7c80cae3
+Frances,Tobio,6 Worcester Court,,Falmouth,MA,02540,119-121 Waverley St,Belmont,MA,02478,TOBIO TR FRANCES C,29-48,hh_d8fbcda3fd
+Yunjie,Tong,204 Lindberg Ave,,West Lafayette,IN,47906,30 Trowbridge St Unit 2,Belmont,MA,02478,TONG TE YUNJIE,22-28-2,hh_47eda1b815
+Ralph,Tortola,36 Louise Rd,,Belmont,MA,02478,105 Concord Ave,Belmont,MA,02478,TORTOLA LE RALPH R,22-18,hh_9f5412eb18
+Michael,Twomey,7 Seminole Circle,,Andover,MA,01810,45 Hammond Rd,Belmont,MA,02478,TWOMEY TR MICHAEL J,16-46,hh_287523ff7e
+Nicholas,Vastis,40 Maple St,,Belmont,MA,02478,140 Beech St,Belmont,MA,02478,VASTIS LE NICHOLAS P,27-4,hh_e14bd83d5c
+Martha,Vastis,40 Maple St,,Belmont,MA,02478,140 Beech St,Belmont,MA,02478,VASTIS LE NICHOLAS P,27-4,hh_e14bd83d5c
+Andreas,Vastis,40 Maple St,,Belmont,MA,02478,140 Beech St,Belmont,MA,02478,VASTIS LE NICHOLAS P,27-4,hh_e14bd83d5c
+Frederick,Walker,55 Edward Road,,Watertown,MA,02472,117 Pine St,Belmont,MA,02478,WALKER JR TC FREDERICK M & SHERYL F,5-20,hh_8da05ea4de
+Sheryl,Walker,55 Edward Road,,Watertown,MA,02472,117 Pine St,Belmont,MA,02478,WALKER JR TC FREDERICK M & SHERYL F,5-20,hh_8da05ea4de
+Patricia,Wishard,455 Water St,,Framingham,MA,01701,22 Oxford Ave,Belmont,MA,02478,WISHARD TR PATRICIA M & CHRISTINE B MCCARTHY,1-45,hh_b83e943c3f
+Christine,McCarthy,455 Water St,,Framingham,MA,01701,22 Oxford Ave,Belmont,MA,02478,WISHARD TR PATRICIA M & CHRISTINE B MCCARTHY,1-45,hh_b83e943c3f
+Li,Yang,22A Vernon St,,Taunton,MA,02780,265 Washington St,Belmont,MA,02478,YANG LI,9-156,hh_2cc588bef1
+,G Richard Macdonald Family Trust,283 Marsh St,,Belmont,MA,02478,9-11 Holt St,Belmont,MA,02478,G RICHARD MACDONALD FAMILY TRUST,15-211,hh_cc4043a08f
+,Macdonald Mark & Richard Macdonald Family Trust,43 Greeley Circle,,Arlington,MA,02474,15-17 Holden Rd,Belmont,MA,02478,MACDONALD MARK & RICHARD MACDONALD FAMILY TRUST,26-104,hh_ee6d01ffd8
+Thomas,Albanese,101 Trimount Ave,,Waltham,MA,02451,33 Wilson Ave,Belmont,MA,02478,ALBANESE THOMAS S,14-52,hh_002abac53b
+Sophia,Alexandrides,10 Philip Rd,,Belmont,MA,02478,15 Harris St,Belmont,MA,02478,ALEXANDRIDES TR SOPHIA,29-44,hh_5fa6124fcf
+Amir,Anbardar,40 Bigelow Ave,,Watertown,MA,02472,25-27 Payson Rd,Belmont,MA,02478,ANBARDAR TE AMIR R,6-183,hh_3a1055d930
+David,Arslanian,40 Payson Rd,,Belmont,MA,02178,119-121 Lewis Rd,Belmont,MA,02478,ARSLANIAN TE DAVID,3-24,hh_82ea405f08
+Dianne,Aspuru,217 Lower County Rd,,West Harwich,MA,02671,41 Winslow Rd Unit 41,Belmont,MA,02478,ASPURU JT DIANNE L,12-41-41,hh_dc5c6c2ef7
+Nigogos,Atiniz,96 Crestview Rd,,Belmont,MA,02478,17-23 Oxford Cir,Belmont,MA,02478,ATINIZ TR NIGOGOS & NAGEEB DIARBAKERLY,1-26,hh_93063d364f
+Nageeb,Atiniz,96 Crestview Rd,,Belmont,MA,02478,17-23 Oxford Cir,Belmont,MA,02478,ATINIZ TR NIGOGOS & NAGEEB DIARBAKERLY,1-26,hh_93063d364f
+Hilda,Avedissian-Tokatli,79 Lewis Rd,,Belmont,MA,02478,5 York Rd Unit 1,Belmont,MA,02478,AVEDISSIAN-TOKATLI TR HILDA,6-62-1,hh_d7b7c2615c
+Francois,Ayer,37 Dalton Rd,,Belmont,MA,02478,77-79 Creeley Rd,Belmont,MA,02478,AYER TR FRANCIS N & PAULINE AYER,14-15,hh_23a327f83e
+Pauline,Ayer,37 Dalton Rd,,Belmont,MA,02478,77-79 Creeley Rd,Belmont,MA,02478,AYER TR FRANCIS N & PAULINE AYER,14-15,hh_23a327f83e
+Sivapathy,Ayyadurai,69 Snake Hill Rd,,Belmont,MA,02478,4 Merrill Ave,Belmont,MA,02478,AYYADURAI SIVAPATHY,22-169,hh_e5a89bd577
+Danita,Babalas,152 Watson Rd,,Belmont,MA,02478,11-13 Hurd Rd,Belmont,MA,02478,BABALAS DANITA R,7-37,hh_b3455f3124
+Laurence,Backus,20 Bellington St.,,Belmont,MA,02478,29 Bellington St,Belmont,MA,02478,BACKUS TE LAURENCE A,53-28,hh_993888ad7a
+Camille,Baghdady,382 Massachusetts Ave,,Arlington,MA,02474,15-17 Dante Ave,Belmont,MA,02478,BAGHDADY CAMILLE S,27-168,hh_35f6327288
+Shant,Banosian,464 Common St,Unit 282,Belmont,MA,02478,33 Springfield St,Belmont,MA,02478,BANOSIAN SHANT,2-80,hh_33fe9001b7
+Jane,Barrell,61 Lincoln St,,Belmont,MA,02478,316 Orchard St,Belmont,MA,02478,BARRELL TR JANE M & JENNIFER A CAMPBELL,26-1,hh_614ab76449
+Jennifer,Campbell,61 Lincoln St,,Belmont,MA,02478,316 Orchard St,Belmont,MA,02478,BARRELL TR JANE M & JENNIFER A CAMPBELL,26-1,hh_614ab76449
+Vered,Bisker-Leib,109 Prince St,,W. Newton,MA,02465,33 Payson Rd,Belmont,MA,02478,BISKER-LEIB TE VERED,6-185,hh_61adf754da
+John,Bonasera,30 Lions Lane,,Salem,MA,01970,511-513 School St,Belmont,MA,02478,BONASERA TRS JOHN J,3-19,hh_d21e7f3977
+Anthony,Bonfiglio,320 Island Way,Unit 501,Clearwater,FL,33767,23 Harris St,Belmont,MA,02478,BONFIGLIO TC ANTHONY D,29-42,hh_1f9d9d8326
+Sonia,Boyajian,459 Common St,,Belmont,MA,02478,78-80 Gilbert Rd,Belmont,MA,02478,BOYAJIAN TRS SONIA V & PETER BOYAJIAN,12-94,hh_1b0a3fe4dc
+Peter,Boyajian,459 Common St,,Belmont,MA,02478,78-80 Gilbert Rd,Belmont,MA,02478,BOYAJIAN TRS SONIA V & PETER BOYAJIAN,12-94,hh_1b0a3fe4dc
+Mary,Bradley,4 Ettas Way,,Orleans,MA,02653,190 Somerset St,Belmont,MA,02478,BRADLEY MARY ALEN,63-19-1,hh_0fa2604478
+Alan,Breitman,1280 Washington St,Apt 202,Boston,MA,02118,22 Summit Rd Unit 31,Belmont,MA,02478,BREITMAN TRS ALAN G & MARJORIE B ROSS,59-11-2-31,hh_10f2994a5f
+Marjorie,Ross,1280 Washington St,Apt 202,Boston,MA,02118,22 Summit Rd Unit 31,Belmont,MA,02478,BREITMAN TRS ALAN G & MARJORIE B ROSS,59-11-2-31,hh_10f2994a5f
+Richard,Brennan,30 Clarendon Rd,,Belmont,MA,02478,188 Waverley St,Belmont,MA,02478,BRENNAN TRS RICHARD & LOUIS COCONIDES,30-14,hh_7961ec640d
+Louis,Brennan,30 Clarendon Rd,,Belmont,MA,02478,188 Waverley St,Belmont,MA,02478,BRENNAN TRS RICHARD & LOUIS COCONIDES,30-14,hh_7961ec640d
+Michelle,Britt,28 Pierce Rd,,Belmont,MA,02478,18-20 Clarendon Rd,Belmont,MA,02478,BRITT TRS MICHELLE M,10-30,hh_2332b52595
+James,Brown,39 Chester Rd,,Belmont,MA,02478,65 Grove St,Belmont,MA,02478,BROWN TR JAMES G,1-122,hh_eaa4ec1c13
+Samuel,Bruno,71 Salem Rd,,Topsfield,MA,01983,34 Trowbridge St,Belmont,MA,02478,BRUNO TE SAMUEL R,22-29,hh_eea52a8e5d
+John,Burgess,21 Lawrence Ln,,Belmont,MA,02478,101 Hull St,Belmont,MA,02478,BURGESS MARY T,15-11,hh_ec674a321a
+Deann,Burrows-Proeme,25 Spruce St,,Belmont,MA,02478,58 Oakley Rd,Belmont,MA,02478,BURROWS-PROEME TR DEANN B,5-10,hh_c7ef2fd8d6
+William,Carlson,83 Hancock Street,Unit B,Lexington,MA,02420,64-66 Slade St,Belmont,MA,02478,CARLSON TRS WILLIAM E & RIPLEY JOHN CARLSON,14-14,hh_e740bf7872
+Ripley,Carlson,83 Hancock Street,Unit B,Lexington,MA,02420,64-66 Slade St,Belmont,MA,02478,CARLSON TRS WILLIAM E & RIPLEY JOHN CARLSON,14-14,hh_e740bf7872
+Meghan,Carye,35 Hancock Street,,Lexington,MA,02421,23 Kilburn Rd,Belmont,MA,02478,CARYE JT MEGHAN E,25-99-A,hh_71996d44b8
+Meghan,Carye,35 Hancock St,,Lexington,MA,02421,68 Clark St,Belmont,MA,02478,CARYE JT MEGHAN E,25-99-B,hh_2cdfa8b39c
+Rose,Chacran,1010 Memorial Dr,Apt 12A,Cambridge,MA,02138,144 Claflin St,Belmont,MA,02478,CHACRAN TR ROSE M,43-43,hh_5b7ed2223a
+Murat,Chavushian,599 Mt Auburn St,,Watertown,MA,02472,14 Marlboro St,Belmont,MA,02478,CHAVUSHIAN JT MURAT,1-67,hh_e981e50f74
+Bingcan,Chen,111 Marivista Ave,,Waltham,MA,02451,34 Oxford Ave Unit 34,Belmont,MA,02478,CHEN JT BINGCAN,1-48-34,hh_f0a158750e
+David,Chiulli,575 Mountain East Rd,,Peterborough,MA,03458,135 Oliver Rd,Belmont,MA,02478,CHIULLI TE DAVID J,41-41,hh_61003d1496
+George,Christakis,190 Chapman St,,Watertown,MA,02472,61-63 Waverley St,Belmont,MA,02478,CHRISTAKIS GEORGE P,27-68,hh_499930fc81
+Matthew,Christensen,104 Fletcher Rd,,Belmont,MA,02478,96 Fletcher Rd,Belmont,MA,02478,CHRISTENSEN TE MATTHEW,55-28,hh_595c7de044
+John,Conaty,99 Lewis Rd,,Belmont,MA,02478,12 Albert Ave,Belmont,MA,02478,CONATY TE JOHN PYNE,45-8,hh_e6d9b75923
+Louis,Corapi,2 Forest Hill Dr,,Shrewsbury,MA,01545,113-115 Cushing Ave,Belmont,MA,02478,CORAPI TE LOUIS R,4-30,hh_800a534cbf
+Vanessa,Cosco,105 Barbara Rd,,Waltham,MA,02453,112-114 Sycamore St,Belmont,MA,02478,COSCO JT VANESSA & FRANCA R COSCO,28-89,hh_345ec6d21f
+Franca,Cosco,105 Barbara Rd,,Waltham,MA,02453,112-114 Sycamore St,Belmont,MA,02478,COSCO JT VANESSA & FRANCA R COSCO,28-89,hh_345ec6d21f
+Gail,Craffey,27 Stanley Rd,,Belmont,MA,02478,41-43 Lewis Rd,Belmont,MA,02478,CRAFFEY TR GAIL L & EDWARD J CRAFFEY,3-38,hh_6339479da8
+Edward,Craffey,27 Stanley Rd,,Belmont,MA,02478,41-43 Lewis Rd,Belmont,MA,02478,CRAFFEY TR GAIL L & EDWARD J CRAFFEY,3-38,hh_6339479da8
+Cathleen,Croft,6 Brookside Ave,,Winchester,MA,01890,13-15 Jeanette Ave,Belmont,MA,02478,CROFT CATHLEEN S,13-128,hh_ac9143605e
+Peter,Cruza,133 Templeton Parkway,,Watertown,MA,02472,18-20 Jonathan St,Belmont,MA,02478,CRUZA PETER F,13-156,hh_7cdae899e8
+Sandra,Curro,20 School St,,Belmont,MA,02478,346 Waverley St,Belmont,MA,02478,CURRO TR SANDRA A,25-43,hh_03bb39a20c
+Sandra,Curro,20 School Street,,Belmont,MA,02478,316 Waverley St,Belmont,MA,02478,CURRO TR SANDRA,25-39,hh_6ffbdf3c89
+Joseph,Damico,315 Vernon St,,Dedham,MA,02026,37 Wilson Ave Unit 2,Belmont,MA,02478,DAMICO TE JOSEPH A,14-51-2,hh_4b1f52404c
+Karen,Davison,12 Wiley Rd,,Belmont,MA,02478,115-117 Bartlett Ave,Belmont,MA,02478,DAVISON TR KAREN F & EDWARD A DAVISON,15-99,hh_1f0c1927d8
+Edward,Davison,12 Wiley Rd,,Belmont,MA,02478,115-117 Bartlett Ave,Belmont,MA,02478,DAVISON TR KAREN F & EDWARD A DAVISON,15-99,hh_1f0c1927d8
+Glynnis,Doucette,1226 Masonic Ave,,San Francisco,CA,94117,105 Alexander Ave,Belmont,MA,02478,DOUCETTE GLYNNIS,34-57,hh_93b26fddba
+Monique,Doyle,87 Winthrop St,,Medford,MA,02155,184 White St,Belmont,MA,02478,DOYLE MONIQUE,15-77,hh_799f8b1e20
+Gregory,Dulgarian,236 Worthen Rd East,,Lexington,MA,02421,26 Jonathan St Unit 1,Belmont,MA,02478,DULGARIAN TE GREGORY,13-158-1,hh_da01052ecd
+Mimmo,Elia,19 Cumberland Rd,,Belmont,MA,02478,5 A St,Belmont,MA,02478,ELIA TR MIMMO & ERICA ELIA,29-58,hh_e18db62610
+Erica,Elia,19 Cumberland Rd,,Belmont,MA,02478,5 A St,Belmont,MA,02478,ELIA TR MIMMO & ERICA ELIA,29-58,hh_e18db62610
+David,Epstein,200 Locust St Apt 17 Ah North,,Philadelphia,PA,19106,54-56 Pine St,Belmont,MA,02478,EPSTEIN TE DAVID M,5-50,hh_55797bdbc8
+Susan,Faunce,14 Oak Hill Rd,,Waltham,MA,02451,20 Scott Rd,Belmont,MA,02478,FAUNCE SUSAN M,46-64,hh_3e41639ffb
+Frank,Federico,142 Forest St,,Winchester,MA,01890,51-53 Hawthorne St,Belmont,MA,02478,FEDERICO FRANK W,27-41,hh_7888f50d69
+John,Feeley,200 Lewis Road,,Belmont,MA,02478,45 Payson Rd,Belmont,MA,02478,FEELEY JOHN F,6-189,hh_d59fae2986
+Therese,Flynn,11 Orchard Lane,,Lincoln,MA,01773,31-33 Clyde St,Belmont,MA,02478,FLYNN TRS THERESE M AND WILLIAM F FLYNN,20-8,hh_c16c0eb544
+William,Flynn,11 Orchard Lane,,Lincoln,MA,01773,31-33 Clyde St,Belmont,MA,02478,FLYNN TRS THERESE M AND WILLIAM F FLYNN,20-8,hh_c16c0eb544
+Rebecca,Forsythe,8 Fairbanks Rd,,Lexington,MA,02421,50 Cross St,Belmont,MA,02478,FORSYTHE REBECCA C,34-107,hh_61ca2ddbd2
+Martin,Frey,14 Williston Rd,,Belmont,MA,02478,19 Horne Rd,Belmont,MA,02478,FREY TR MARTIN E,12-205,hh_a88ccf16fd
+Michael,Gallagher,PO Box 1095,,Watertown,MA,02472,28 Jeanette Ave,Belmont,MA,02478,GALLAGHER JT MICHAEL,13-114,hh_a286eef010
+Marina,Gianoukos,569 Belmont St,,Belmont,MA,02478,9-11 Jonathan St,Belmont,MA,02478,GIANOUKOS TR MARINA,15-141,hh_9545525dbf
+Anna,Giunta,51 Hamilton Road,,Belmont,MA,02478,55 Hamilton Rd,Belmont,MA,02478,GIUNTA LE ANNA J,22-137,hh_44c20dceab
+Brandon,Grajewski,15634 N 109th Pl,,Scottsdale,AZ,85255,29 Beatrice Cir,Belmont,MA,02478,GRAJEWSKI BRANDON,51-29,hh_fb5d1b5100
+Yevgeniy,Grinberg,62 Davis Rd,,Belmont,MA,02478,46 Trowbridge St Unit 1,Belmont,MA,02478,GRINBERG TE YEVGENIY,22-32-1,hh_314dca983f
+Anne,Habiby,253 N Main St,,Cohasset,MA,02025,15 Woodland St Unit 2,Belmont,MA,02478,HABIBY ANNE S,30-9-2,hh_44d4f42a46
+Jing,He,4967 Donald Ave,,Richmond Hts,OH,44143,27 Gilmore Rd,Belmont,MA,02478,HE TE JING,41-108,hh_549cd49810
+Cammie,Henderson,10 Kilburn Rd,,Belmont,MA,02478,43 Cushing Ave,Belmont,MA,02478,HENDERSON CAMMIE L,5-87,hh_f70b791f59
+Lois,Hertzler,2263 City View Drive,,Cleveland,OH,44113,2 Candleberry Ln Unit 29,Belmont,MA,02478,HERTZLER LOIS A,59-11-2-29,hh_ea32b6b82d
+William,Higgins,252 School St,,Watertown,MA,02472,379-381 Belmont St,Belmont,MA,02478,HIGGINS TE WILLIAM F,3-203,hh_5bc21c2a05
+Marilyn,Horan,9 Edmunds Way,,Belmont,MA,02478,43 Fletcher Rd,Belmont,MA,02478,HORAN TR MARILYN R,48-47,hh_e89c4a9a3f
+Kevin,Hovanesian,27 Baker St,,Belmont,MA,02478,15-17 Baker St,Belmont,MA,02478,HOVANESIAN TR KEVIN,22-106,hh_8571ca7db8
+Yingling,Hsieh,261 Old Billerica Rd,,Bedford,MA,01730,63-65 Hawthorne St,Belmont,MA,02478,HSIEH TE YINGLING,27-38,hh_bc7cd56c26
+Zhennian,Huang,37 Chase St,,Newton,MA,02459,29-31 Jeanette Ave,Belmont,MA,02478,HUANG TE ZHENNIAN,13-124,hh_8844dbaae2
+John,Hugg,307 Pleasant St,,Belmont,MA,02478,63 Simmons Ave,Belmont,MA,02478,HUGG TR JOHN H & IRIS C PONTE,46-33,hh_bde5032c76
+Iris,Ponte,307 Pleasant St,,Belmont,MA,02478,63 Simmons Ave,Belmont,MA,02478,HUGG TR JOHN H & IRIS C PONTE,46-33,hh_bde5032c76
+Simon,Hung,425 Georgiana Dr,,Middletown,DE,19709,174 Beech St,Belmont,MA,02478,HUNG TE SIMON,29-1,hh_357c8cf1c1
+Yongfeng,Jiang,26 Grouse St,,West Roxbury,MA,02132,70-72 Trowbridge St,Belmont,MA,02478,JIANG TE YONGFENG,22-38,hh_0cf8032cb6
+Guandong,Jiao,26 Douglas Rd,,Belmont,MA,02478,33 Gilbert Rd Unit 1,Belmont,MA,02478,JIAO TR GUANDONG & LINGLING SHEN,12-73-1,hh_7cdeedcbee
+Lingling,Jiao,26 Douglas Rd,,Belmont,MA,02478,33 Gilbert Rd Unit 1,Belmont,MA,02478,JIAO TR GUANDONG & LINGLING SHEN,12-73-1,hh_7cdeedcbee
+Marilyn,Kapetanakis,252 Winthrop St,,Medford,MA,02155,115-121 Maple St,Belmont,MA,02478,KAPETANAKIS TR MARILYN M,15-100,hh_d1dfab6946
+Steven,Kapsalis,991 Mass Ave,Suite 14,Cambridge,MA,02138,5 Oxford Ave,Belmont,MA,02478,KAPSALIS STEVEN,1-37,hh_6179b2a462
+Francis,Keating,29 Sunset Rd,,Cambridge,MA,02138,54 Trowbridge St,Belmont,MA,02478,KEATING TRS FRANCIS W IV & JAMES M KEATING,22-34,hh_7078936172
+James,Keating,29 Sunset Rd,,Cambridge,MA,02138,54 Trowbridge St,Belmont,MA,02478,KEATING TRS FRANCIS W IV & JAMES M KEATING,22-34,hh_7078936172
+Steven,Kennedy,54 Palfrey Rd,,Belmont,MA,02478,15 Edgemoor Rd,Belmont,MA,02478,KENNEDY TRS STEVEN F & KENNEDY TRS JUDITH A,23-137,hh_09b91252ed
+Judith,Kennedy,54 Palfrey Rd,,Belmont,MA,02478,15 Edgemoor Rd,Belmont,MA,02478,KENNEDY TRS STEVEN F & KENNEDY TRS JUDITH A,23-137,hh_09b91252ed
+Kathleen,Kenney,307 Ash St,,Reading,MA,01867,578 Trapelo Rd,Belmont,MA,02478,KENNEY KATHLEEN P,33-53,hh_0601e1ac59
+Oksoon,Kim,3 Cart Path Lane,,Lexington,MA,02421,363-365 Trapelo Rd,Belmont,MA,02478,KIM TE OKSOON,27-1,hh_f5dbf2b808
+Madelyn,Kissock,1650 Water Tower Rd,,Berkshire,VT,05450,15 Simmons Ave,Belmont,MA,02478,KISSOCK MADELYN J,46-50,hh_82f93531a9
+Robert,Kuehn,314 Payson Rd,,Belmont,MA,02478,1-3 Chester Rd,Belmont,MA,02478,KUEHN TE ROBERT F,6-127,hh_fe51d94ae2
+Bobby,Kuo,179 Larch Rd,Unit 2,Cambridge,MA,02138,23-25 Leslie Rd,Belmont,MA,02478,KUO BOBBY F,26-91,hh_0dd8372244
+Eunice,Laffey,66 Vernon Rd,,Belmont,MA,02478,25-27 Jeanette Ave,Belmont,MA,02478,LAFFEY TR EUNICE E,13-125,hh_7db25fa8c6
+Eunice,Laffey,66 Vernon Rd,,Belmont,MA,02178,64-66 Dartmouth St,Belmont,MA,02478,LAFFEY TR EUNICE E,1-142,hh_ba5be73f62
+John,Leahy,950 Ponce De Leon Rd,Apt 510,Boca Raton,FL,33432,36-38 Barnard Rd,Belmont,MA,02478,LEAHY TE JOHN PATRICK,12-183,hh_38b4232ed3
+Robert,Lemos,33 Appleton St,,Arlington,MA,02475,16 Ericsson St,Belmont,MA,02478,LEMOS TE ROBERT,1-8,hh_b31de0a532
+Natalie,Lepera,PO Box 2130,,Natick,MA,01760,153-155 Pine St,Belmont,MA,02478,LEPERA TR NATALIE G & ALFRED E LEPERA,6-211,hh_d66b33531d
+Alfred,Lepera,PO Box 2130,,Natick,MA,01760,153-155 Pine St,Belmont,MA,02478,LEPERA TR NATALIE G & ALFRED E LEPERA,6-211,hh_d66b33531d
+Karen,Lilla,355 School Street,,Belmont,MA,02478,27-29 Barnard Rd,Belmont,MA,02478,LILLA TR KAREN E,12-171,hh_44f9f98149
+Manuel,Lopes,24 Whipple St,,Danvers,MA,01923,112-114 Payson Rd,Belmont,MA,02478,LOPES TE MANUEL J,6-151,hh_060f9641e3
+David,Losier,50 Albert Ave,,Belmont,MA,02478,108-110 Gilbert Rd,Belmont,MA,02478,LOSIER TR DAVID & KRISTEN BILODEAU,16-63,hh_35490bf24c
+Kristen,Losier,50 Albert Ave,,Belmont,MA,02478,108-110 Gilbert Rd,Belmont,MA,02478,LOSIER TR DAVID & KRISTEN BILODEAU,16-63,hh_35490bf24c
+Michael,Losier,11 Flintlock Rd,,Lexington,MA,02420,29 Jonathan St,Belmont,MA,02478,LOSIER JT MICHAEL & KIMBERLY WHEELER,15-137,hh_0076a775a7
+Kimberly,Losier,11 Flintlock Rd,,Lexington,MA,02420,29 Jonathan St,Belmont,MA,02478,LOSIER JT MICHAEL & KIMBERLY WHEELER,15-137,hh_0076a775a7
+Paul,Lowry,205 Washington St,,Winchester,MA,01890,105 Beatrice Cir,Belmont,MA,02478,LOWRY JT PAUL,51-35,hh_e8f0b41fe4
+Connor,Maguire,17 Hurley Street,,Belmont,MA,02478,62-64 Palfrey Rd,Belmont,MA,02478,MAGUIRE TE CONNOR T,12-148,hh_c7cf7096cd
+Peter,Maher,64 Maynard St,,Arlington,MA,02474,49 Marlboro St,Belmont,MA,02478,MAHER TE PETER S,1-178,hh_a5b6b57dcf
+N,Mannino,425 Mt Auburn St,,Watertown,MA,02472,9 Oxford Cir,Belmont,MA,02478,MANNINO TRS N JOHN,1-200,hh_7877d2cb97
+Jane,Martin,97 Lewis Road,,Belmont,MA,02478,483 Pleasant St Unit 3,Belmont,MA,02478,MARTIN TRS JANE C & KATHLEEN M CONATY,47-94-3,hh_ca0380969d
+Kathleen,Conaty,97 Lewis Road,,Belmont,MA,02478,483 Pleasant St Unit 3,Belmont,MA,02478,MARTIN TRS JANE C & KATHLEEN M CONATY,47-94-3,hh_ca0380969d
+Scott,Martin,PO Box 331,,Bedford,MA,01730,116-118 White St,Belmont,MA,02478,MARTIN SCOTT J,27-134,hh_15146aab9c
+Nikolaidis,Martinos,510 School St,,Belmont,MA,02478,108-110 Lewis Rd Unit 110,Belmont,MA,02478,MARTINOS TR NIKOLAIDIS LILLIAN,3-65-110,hh_50fce51c5b
+William,McCarriston,15 Baldwin Rd,,Waltham,MA,02454,55-57 Sycamore St,Belmont,MA,02478,MCCARRISTON TR WILLIAM T JR & SUSAN C GILKIE,28-157,hh_efb3ec777b
+Susan,Gilkie,15 Baldwin Rd,,Waltham,MA,02454,55-57 Sycamore St,Belmont,MA,02478,MCCARRISTON TR WILLIAM T JR & SUSAN C GILKIE,28-157,hh_efb3ec777b
+Theresa,Mercandetti,133 Dean St,,Belmont,MA,02478,24-26 Gilbert Rd,Belmont,MA,02478,MERCANDETTI TR THERESA & DANTE MUZZIOLI,12-81,hh_cebf29282e
+Dante,Mercandetti,133 Dean St,,Belmont,MA,02478,24-26 Gilbert Rd,Belmont,MA,02478,MERCANDETTI TR THERESA & DANTE MUZZIOLI,12-81,hh_cebf29282e
+Aram,Miller,18 Clyde Rd,,Watertown,MA,02472,157-159 Trapelo Rd,Belmont,MA,02478,MILLER TRS ARAM,12-125,hh_1bc64e4eb7
+Georgio,Minasidis,43 Montfern Avenue,,Brighton,MA,02135,61-63 Hull St,Belmont,MA,02478,MINASIDIS GEORGIO,14-137,hh_1783da8a14
+Joan,Monahan,4 Dundonald Rd,,Belmont,MA,02478,28-30 Fairview Ave,Belmont,MA,02478,MONAHAN TRS JOAN M,1-145,hh_78fd8f6f8a
+Carol,Morse,10 York Rd,,Belmont,MA,02478,85 Hammond Rd,Belmont,MA,02478,MORSE TRS CAROL A,16-36,hh_5a0530902e
+Carolyn,Mugar,160 Second St,,Cambridge,MA,02142,184 Clifton St,Belmont,MA,02478,MUGAR TR CAROLYN G,52-15,hh_f8eebce4e4
+Kathleen,Mulcahy,P.o. Box 54,,West Hyannisport,MA,02672,12 Stults Rd,Belmont,MA,02478,MULCAHY TRS KATHLEEN F,3-89,hh_5b04836167
+Chris,Niakaros,64 Pond St,,Needham,MA,02492,44-46 Waverley St,Belmont,MA,02478,NIAKAROS CHRIS G,27-117,hh_eaf5eff7c4
+Joseph,Nolan,11 Philip Rd,,Belmont,MA,02478,379 School St,Belmont,MA,02478,NOLAN TR JOSEPH R,8-84,hh_d579267db9
+John,Oloughlin,15 Halifax St,Unit 2,Jamaica Plain,MA,02130,194 Claflin St,Belmont,MA,02478,OLOUGHLIN JOHN E JR,44-104,hh_57b2234361
+James,Otash,58 Tobey Rd,,Belmont,MA,02478,22-24 Marion Rd,Belmont,MA,02478,OTASH TR JAMES A,1-111,hh_c943aae913
+Jeffrey,Pallotta,52 Plain St,,Rehoboth,MA,02769,18-20a Davis St,Belmont,MA,02478,PALLOTTA TRS JEFFREY,28-121,hh_c750060b4f
+Steven,Panosian,12 Hoitt Rd,,Belmont,MA,02478,30-32 Dalton Rd,Belmont,MA,02478,PANOSIAN TR STEVEN M,10-60,hh_37725db164
+Hagop,Papazian,16 Grove Street,,Belmont,MA,02478,15-17 Dalton Rd,Belmont,MA,02478,PAPAZIAN TR HAGOP KRIKOR & VALENTINE PAPAZIAN,10-95,hh_a39b53437b
+Valentine,Papazian,16 Grove Street,,Belmont,MA,02478,15-17 Dalton Rd,Belmont,MA,02478,PAPAZIAN TR HAGOP KRIKOR & VALENTINE PAPAZIAN,10-95,hh_a39b53437b
+Darrell,Penta,149 Trapelo Rd,,Waltham,MA,02452,25-27 Frederick St,Belmont,MA,02478,PENTA TE DARRELL J,13-145,hh_4973d67567
+Joseph,Piccolo,PO Box 324 #5 Windsong Cir,,Pocasset,MA,02559,58 Marlboro St,Belmont,MA,02478,PICCOLO TE JOSEPH W,1-163,hh_8bbf80a6a2
+Vasiliki,Polyhronopoulos,103 Commonwealth Avenue,,Chestnut Hill,MA,02467,523-525 School St,Belmont,MA,02478,POLYHRONOPOULOS TR VASILIKI,3-16,hh_a21f035684
+Charles,Poulakidas,14 Windsor Circle,,Woburn,MA,01801,9 Ericsson St,Belmont,MA,02478,POULAKIDAS CHARLES D,1-2,hh_2af1f470f9
+Brian,Quirk,48 Audrey Rd,,Belmont,MA,02478,25-27 Thayer St,Belmont,MA,02478,QUIRK TRS BRIAN C & ELLEN M,28-149,hh_9d288c503a
+Ellen,Quirk,48 Audrey Rd,,Belmont,MA,02478,25-27 Thayer St,Belmont,MA,02478,QUIRK TRS BRIAN C & ELLEN M,28-149,hh_9d288c503a
+Jocelyn,Record,44 Oak Ave,,Belmont,MA,02478,53-55 Lawndale St,Belmont,MA,02478,RECORD TR JOCELYN D,3-148-A,hh_c1965b7db6
+Dennis,Rocha,67 Sherman Street,,Belmont,MA,02478,33-35 Jeanette Ave,Belmont,MA,02478,ROCHA TRS DENNIS E AND CURTIS CANCIAN,13-123,hh_ff1f643242
+Curtis,Rocha,67 Sherman Street,,Belmont,MA,02478,33-35 Jeanette Ave,Belmont,MA,02478,ROCHA TRS DENNIS E AND CURTIS CANCIAN,13-123,hh_ff1f643242
+Rose,Safer,81 Granite St,,Medfield,MA,02052,104-106 Gilbert Rd,Belmont,MA,02478,SAFER TRS ROSE D,16-62,hh_1ff9ea3cbe
+Tan,Sai,5 Mohawk Dr,,Lexington,MA,02421,218-220 Blanchard Rd Unit 220,Belmont,MA,02478,SAI TE TAN N,22-160-220,hh_76c7726dc3
+Rita,Sawicki,80 Livermore Rd,,Belmont,MA,02478,63-65 Lewis Rd,Belmont,MA,02478,SAWICKI TRS RITA,3-34,hh_db3c6c7e07
+Nancy,Scearbo,15 Regis Rd,,Arlington,MA,02474,43 Baker St,Belmont,MA,02478,SCEARBO TC NANCY J,22-99,hh_51db89a17f
+Penelope,Schafer,3213 Dancy St,,Austin,TX,78722,161 Lewis Rd,Belmont,MA,02478,SCHAFER PENELOPE H,8-15,hh_98dae39392
+Tatiana,Scott,11 Farrwood Dr,,Andover,MA,01810,8-10 Frederick St,Belmont,MA,02478,SCOTT TATIANA,13-133,hh_cf44a7fba4
+Michael,Seraderian,116 Radcliffe Rd,,Belmont,MA,02478,12-14 Worcester St,Belmont,MA,02478,SERADERIAN TR MICHAEL & RITA L SERADERIAN,2-119,hh_7f349cde86
+Rita,Seraderian,116 Radcliffe Rd,,Belmont,MA,02478,12-14 Worcester St,Belmont,MA,02478,SERADERIAN TR MICHAEL & RITA L SERADERIAN,2-119,hh_7f349cde86
+Diane,Sikellis-Barbieri,71 Trapelo Rd,,Belmont,MA,02478,499-501 School St,Belmont,MA,02478,SIKELLIS-BARBIERI TRS DIANE D & ROBERT N SIKELLIS,3-22,hh_f08f6fafad
+Robert,Sikellis,71 Trapelo Rd,,Belmont,MA,02478,499-501 School St,Belmont,MA,02478,SIKELLIS-BARBIERI TRS DIANE D & ROBERT N SIKELLIS,3-22,hh_f08f6fafad
+Mabi,Singh,103 Bartlett Avenue,,Belmont,MA,02478,93-95 Bartlett Ave,Belmont,MA,02478,SINGH JT MABI L,14-203,hh_6009e8f13f
+Herman,Smallcomb,28015 Wellston Dr,,Santa Clarita,CA,91350,25-27 Slade St,Belmont,MA,02478,SMALLCOMB HERMAN CAROL,12-107,hh_420cca418b
+Athanasios,Stamatopoulos,44 Cushing Ave,,Belmont,MA,02478,175-177 Trapelo Rd,Belmont,MA,02478,STAMATOPOULOS TR ATHANASIOS P & VIRGINIA,12-121,hh_0fbd345ae9
+Virginia,Stamatopoulos,44 Cushing Ave,,Belmont,MA,02478,175-177 Trapelo Rd,Belmont,MA,02478,STAMATOPOULOS TR ATHANASIOS P & VIRGINIA,12-121,hh_0fbd345ae9
+Jean,Stokinger,11 Woodside Cir,,Yarmouthport,MA,02675,20 Hammond Rd,Belmont,MA,02478,STOKINGER TR JEAN E,12-4,hh_ea5c2c23e4
+Perry,Stolbery,100 Felton St,Suite 201,Waltham,MA,02453,20 Moraine St Unit 2,Belmont,MA,02478,STOLBERY PERRY D,33-23-2,hh_6fd3f097a7
+Alexander,Stolyarov,112 Keyes Rd,,Westford,MA,01886,62 Channing Rd Unit 62,Belmont,MA,02478,STOLYAROV TE ALEXANDER,34-77-62,hh_12df35e28c
+Craig,Sullivan,8 Lantern Ln,,Lexington,MA,02421,78 Davis Rd Unit 2,Belmont,MA,02478,SULLIVAN CRAIG,29-40-2,hh_1f28af03fc
+Rounieh,Tarabelsi,38 Briarwood Rd,,Waltham,MA,02452,66-68 Palfrey Rd,Belmont,MA,02478,TARABELSI ROUNIEH,12-149,hh_8da2d639a3
+Jefferey,Tarpy,63 Taylor Road,,Belmont,MA,02478,11-13 Harvard Rd,Belmont,MA,02478,TARPY TRS JEFFEREY S AND MARY T TARPY,10-22,hh_9a3ca6a200
+Mary,Tarpy,63 Taylor Road,,Belmont,MA,02478,11-13 Harvard Rd,Belmont,MA,02478,TARPY TRS JEFFEREY S AND MARY T TARPY,10-22,hh_9a3ca6a200
+Mary,Thomajan,233 Rutledge Road,,Belmont,MA,02478,43 Knox St,Belmont,MA,02478,THOMAJAN TR MARY B & CHRISTOPER Z THOMAJAN,53-51,hh_3e952c2cef
+Christoper,Thomajan,233 Rutledge Road,,Belmont,MA,02478,43 Knox St,Belmont,MA,02478,THOMAJAN TR MARY B & CHRISTOPER Z THOMAJAN,53-51,hh_3e952c2cef
+Lois,Titherington,37 Hillcrest Ave,,Cranford,NJ,07016,73-75 Elm St,Belmont,MA,02478,TITHERINGTON LOIS,9-3,hh_73fd213dab
+Guy,Todaro,170 Mallard Way,,Waltham,MA,02452,32-34 Walnut St,Belmont,MA,02478,TODARO TE GUY J,14-187,hh_af3a8319ce
+Julie,Toland,213 Commonwealth Ave,Apt 6,Boston,MA,02116,14-16 Trowbridge St,Belmont,MA,02478,TOLAND JULIE CAROLYN,22-23,hh_d602300df3
+Carl,Tortola,19 Pond View Drive,,Acton,MA,01720,214 Trapelo Rd,Belmont,MA,02478,TORTOLA TE CARL,12-155,hh_7b1a63461d
+Thang,Tram,44 Grant Ave,,Waltham,MA,02453,34-36 Chandler St,Belmont,MA,02478,TRAM TE ETAL TC THANG N & HUA Z QUIN,28-62,hh_14480f5e39
+Hua,Quin,44 Grant Ave,,Waltham,MA,02453,34-36 Chandler St,Belmont,MA,02478,TRAM TE ETAL TC THANG N & HUA Z QUIN,28-62,hh_14480f5e39
+Marta,Valderrama,1305 Campus Dr,,Berkeley,CA,94708,110 Waverley St,Belmont,MA,02478,VALDERRAMA MARTA GONZALEZ,29-89,hh_e04773a0e6
+Seta,Vasilescu,44 Prentiss Ln,,Belmont,MA,02478,40 Prentiss Ln,Belmont,MA,02478,VASILESCU TR SETA & ANA-CRISTINA VASILESCU,48-37,hh_d51abff681
+Ana-Cristina,Vasilescu,44 Prentiss Ln,,Belmont,MA,02478,40 Prentiss Ln,Belmont,MA,02478,VASILESCU TR SETA & ANA-CRISTINA VASILESCU,48-37,hh_d51abff681
+Helena,Zarecki,42 Prospect St,,Belmont,MA,02478,49-51 Bartlett Ave,Belmont,MA,02478,VILLARROEL TRS HELENA A ZARECKI & JULIO VILLARROEL,14-213,hh_dee4b4a55e
+Julio,Villarroel,42 Prospect St,,Belmont,MA,02478,49-51 Bartlett Ave,Belmont,MA,02478,VILLARROEL TRS HELENA A ZARECKI & JULIO VILLARROEL,14-213,hh_dee4b4a55e
+Mary,Vitiello,24 Hurley St,,Belmont,MA,02478,24-26 Lewis Rd,Belmont,MA,02478,VITIELLO TRS MARY A,3-50,hh_1146005d18
+Turkovich,Von,31 Shepard St,,Cambridge,MA,02138,33 Grove St,Belmont,MA,02478,VON TURKOVICH TE RICHARD,1-87,hh_19652b92d1
+Ziqing,Wang,17 Humboldt St,,Waltham,MA,02452,733 Belmont St,Belmont,MA,02478,WANG TE ZIQING,13-142,hh_59faee680e
+Gary,Westermark,1271 2nd Avenue,,San Francisco,CA,94122,101-103 Cushing Ave,Belmont,MA,02478,WESTERMARK TE GARY R,4-33,hh_e22ea07eb0
+Josiah,Wilde,20 Webster St,Apt 209,Brookline,MA,02446,222 Clifton St,Belmont,MA,02478,WILDE JOSIAH,52-18,hh_590ec2341a
+Thomas,Wilson,86 Oxford Ave,,Cambridge,MA,02138,84 Oxford Ave,Belmont,MA,02478,WILSON TC THOMAS W,1-191,hh_06144f584e
+Edward,Wong,374 School St,,Belmont,MA,02478,60-62 Newton St,Belmont,MA,02478,WONG TRS ETAL EDWARD W F & YVONNE K,2-153,hh_c5b36a390b
+Yvonne,Wong,374 School St,,Belmont,MA,02478,60-62 Newton St,Belmont,MA,02478,WONG TRS ETAL EDWARD W F & YVONNE K,2-153,hh_c5b36a390b
+Renee,Wong,82 Baker Street,,Belmont,MA,02478,27 Taylor Rd,Belmont,MA,02478,WONG TR RENEE,21-44,hh_1b9a819111
+Hung,Wu,44 Oak St,,Weston,MA,02493,9-11 Davis St,Belmont,MA,02478,WU TE HUNG HA,28-113,hh_709d9c5149
+Yuhong,Xiang,8 Carlson Way,,Woburn,MA,01801,99 Hull St Unit 2,Belmont,MA,02478,XIANG TE YUHONG,15-41-2,hh_275f63c641
+Chong,Xu,6 Hampton St,,Lexington,MA,02421,80-82 Fairview Ave,Belmont,MA,02478,XU TE CHONG,2-100,hh_998e211cc6
+Raffi,Yardemian,10 Mannix Circle,,Belmont,MA,02478,61-63 Bartlett Ave,Belmont,MA,02478,YARDEMIAN TR RAFFI & CHRISTINE,14-210,hh_286e7fc5c7
+Christine,Yardemian,10 Mannix Circle,,Belmont,MA,02478,61-63 Bartlett Ave,Belmont,MA,02478,YARDEMIAN TR RAFFI & CHRISTINE,14-210,hh_286e7fc5c7
+Diran,Zahigian,42 Amberwood Dr,,Winchester,MA,01890,229-231 Trapelo Rd,Belmont,MA,02478,ZAHIGIAN TR DIRAN S,12-112,hh_d6de601372
+Xianghong,Zhang,348 Biships Forest Drive,,Waltham,MA,02452,26 Gordon Terr Unit 26,Belmont,MA,02478,ZHANG XIANGHONG,30-38-26,hh_48abc8cadf
+Xiaoqi,Zhang,71 Middle St,,Lexington,MA,02421,731 Belmont St,Belmont,MA,02478,ZHANG TE XIAOQI S,13-121,hh_2e0b1a4959
+Gang,Zhao,75 Marsh St,,Belmont,MA,02478,179-181 Beech St,Belmont,MA,02478,ZHAO TE GANG,26-163,hh_495cee498c
+Daisy,Zhu,11 Spotted Turtle Path,,Canton,MA,02021,5 Ripley Rd Unit 1,Belmont,MA,02478,ZHU DAISY,15-200-1,hh_081313d813
+Farah,Abbas,24 Evergreen Way,,Belmont,MA,02478,125 Trapelo Rd Unit 10,Belmont,MA,02478,ABBAS FARAH,12-131-10,hh_29122e1ddf
+Anastas,Angjeli,37 Robbins Rd,,Watertown,MA,02472,58-60 Knowles Rd,Belmont,MA,02478,ANGJELI TE ANASTAS,28-17,hh_9393b24aa9
+Stephanie,Asimakopoulos,31 Hamilton Rd,,Belmont,MA,02478,42-44 Flett Rd,Belmont,MA,02478,ASIMAKOPOULOS STEPHANIE,14-81,hh_c0cd6cedb5
+Angelo,Atsiknoudas,295 Channing Rd,,Belmont,MA,02478,125-127 Belmont St,Belmont,MA,02478,ATSIKNOUDAS TC ANGELO,1-16-A,hh_d3a61d270d
+Samir,Baghdady,168 White Street,,Belmont,MA,02478,92-94 Walnut St,Belmont,MA,02478,BAGHDADY SAMIR S,15-56,hh_92761a06b4
+Natalie,Barmakian,23 Pine Tree Dr,,Worcester,MA,01609,59 Longmeadow Rd,Belmont,MA,02478,BARMAKIAN NATALIE R,73-63,hh_16bd282905
+Seth,Belcher,33 Unity Ave,,Belmont,MA,02478,34-36 Pine St,Belmont,MA,02478,BELCHER TE SETH DAVID & MEG MARIE BELCHER,5-47,hh_5cc42f2b5e
+Meg,Belcher,33 Unity Ave,,Belmont,MA,02478,34-36 Pine St,Belmont,MA,02478,BELCHER TE SETH DAVID & MEG MARIE BELCHER,5-47,hh_5cc42f2b5e
+David,Bloore,37 Hastings Rd,,Belmont,MA,02478,56-58 Newton St,Belmont,MA,02478,BLOORE TRS DAVID G AND SUZANNE W,2-152,hh_c41586bbf9
+Suzanne,Bloore,37 Hastings Rd,,Belmont,MA,02478,56-58 Newton St,Belmont,MA,02478,BLOORE TRS DAVID G AND SUZANNE W,2-152,hh_c41586bbf9
+John,Bolli,36 Deerhaven Rd,,Lincoln,MA,01773,21-23 Springfield St,Belmont,MA,02478,BOLLI JOHN R,2-83,hh_4d06eb3314
+Angelo,Borelli,310 School St,,Belmont,MA,02178,34-36 Slade St,Belmont,MA,02478,BORELLI TRS ANGELO A & ANTONETTA L,14-7,hh_4607d87294
+Antonetta,Borelli,310 School St,,Belmont,MA,02178,34-36 Slade St,Belmont,MA,02478,BORELLI TRS ANGELO A & ANTONETTA L,14-7,hh_4607d87294
+Kimberly,Bronhard,75 Fox Meadow Ln,,Dedham,MA,02026,25 Loring St Unit 1,Belmont,MA,02478,BRONHARD TE KIMBERLY LACY,15-73-1,hh_5dc1b16a76
+Scott,Brown,36 Trapelo Road,,Belmont,MA,02478,491-493 Belmont St,Belmont,MA,02478,BROWN JT SCOTT D,5-140,hh_a7a2a5dc4f
+John,Calabro,86 Beech St,,Belmont,MA,02478,17-19 Worcester St,Belmont,MA,02478,CALABRO TRS JOHN & ANGELA GOODE & JOSEPH CALABRO,2-108,hh_81d45188ee
+Angela,Calabro,86 Beech St,,Belmont,MA,02478,17-19 Worcester St,Belmont,MA,02478,CALABRO TRS JOHN & ANGELA GOODE & JOSEPH CALABRO,2-108,hh_81d45188ee
+Joseph,Calabro,86 Beech St,,Belmont,MA,02478,17-19 Worcester St,Belmont,MA,02478,CALABRO TRS JOHN & ANGELA GOODE & JOSEPH CALABRO,2-108,hh_81d45188ee
+Gerald,Callahan,5 Laverdure Circle,,Framingham,MA,01701,18-20 King St,Belmont,MA,02478,CALLAHAN TE GERALD A JR,15-97,hh_2985a1e332
+Hui,Cao,26 Hamilton Rd,,Belmont,MA,02478,221 Trapelo Rd,Belmont,MA,02478,CAO TE HUI,12-77,hh_291e05f76b
+Susan,Carbone,17 Barnes Pl,,Lexington,MA,02420,51-53 Oxford Ave,Belmont,MA,02478,CARBONE SUSAN A,1-197,hh_c8e74204ae
+Shan,Chen,50 Broadlawn Park Apt,Unit 409,Chestnut Hill,MA,02467,14-16 Vincent Ave,Belmont,MA,02478,CHEN SHAN,13-46,hh_55f79dc1bf
+Louis,Coconides,30 Clarendon Rd,,Belmont,MA,02478,61 Pine St,Belmont,MA,02478,COCONIDES TE LOUIS M,5-29,hh_4da54b7e7f
+Paul,Connor,201 Jason St,,Arlington,MA,02476,9 Spruce St,Belmont,MA,02478,CONNOR TE PAUL A AND KATHERINE M,5-49,hh_bf97eab825
+Katherine,Connor,201 Jason St,,Arlington,MA,02476,9 Spruce St,Belmont,MA,02478,CONNOR TE PAUL A AND KATHERINE M,5-49,hh_bf97eab825
+Dominic,Constantino,52 Little Pond Rd,,Merrimac,MA,01860,40-42 Harding Ave,Belmont,MA,02478,CONSTANTINO DOMINIC J,12-163,hh_290ea6e6f9
+Thomas,Cook,PO Box 379,,Cummaquid,MA,02637,8 Carleton Rd,Belmont,MA,02478,COOK TE THOMAS B,6-114,hh_6e94540dcd
+Ronald,Cruickshank,5A Lancaster St,,Cambridge,MA,02140,60 Claflin St,Belmont,MA,02478,CRUICKSHANK RONALD E,34-102,hh_bcd093f695
+Linda,Dacorta,5 Hardy Street,,South Boston,MA,02127,137 Pine St,Belmont,MA,02478,DACORTA TE LINDA A,6-208,hh_13fae22feb
+Mark,Dandrea,97 Waverley St,,Belmont,MA,02478,76-78 Hawthorne St,Belmont,MA,02478,DANDREA TR MARK M JR,29-53,hh_31777d8d57
+Joanne,Dayton,49 Lakeview Ave,,Waltham,MA,02451,24 Oxford Ave,Belmont,MA,02478,DAYTON TC JOANNE M,1-46,hh_0bfc20dd99
+James,Distefano,11 Jefferson Ave,,Watertown,MA,02472,17 Maple Terr,Belmont,MA,02478,DISTEFANO TE JAMES,27-146,hh_dafad83cc7
+Gayle,Dolan,4 Payson Terr,,Belmont,MA,02478,103-105 Slade St,Belmont,MA,02478,DOLAN TE GAYLE MAGAZZU,16-82,hh_d8a0635f67
+James,Duff,21 Green Street,,Newbury,MA,01951,80 Woodfall Rd,Belmont,MA,02478,DUFF TE JAMES L,73-10,hh_3f5bcdf12b
+Louis,Ferraro,64 Fletcher Rd,,Belmont,MA,02478,10 Trapelo Rd,Belmont,MA,02478,FERRARO TRS LOUIS,5-148-A,hh_ea3e7eafaf
+Claudia,Flett,10 Sharpe Rd,,Belmont,MA,02478,300 Trapelo Rd,Belmont,MA,02478,FLETT TR CLAUDIA S,14-242,hh_81366424cb
+John,Flynn,122 Russell Ave,,Watertown,MA,02472,17 Howard St,Belmont,MA,02478,FLYNN TE JOHN B,18-163,hh_c884c81902
+Suzanne,Flynn,305 Memorial Dr,Apt 6065,Cambridge,MA,02139,55 Chilton St,Belmont,MA,02478,FLYNN TE SUZANNE,44-110,hh_06de25ab15
+Thomas,Franklin,123 Pinehurst Rd,,Belmont,MA,02478,22 Pinehurst Rd,Belmont,MA,02478,FRANKLIN TE THOMAS A,62-4,hh_3e3e85e51d
+Clark,Freiner,43 Holt St,,Watertown,MA,02472,41-43 Holt St,Belmont,MA,02478,FREINER TE CLARK,28-19,hh_560ef3e26f
+Raymond,Garrahan,72 Edward Drive,,Winchester,MA,01870,73-75 Palfrey Rd,Belmont,MA,02478,GARRAHAN RAYMOND,12-50,hh_24483b777d
+Raymond,Garrahan,72 Edward Dr,,Winchester,MA,01890,82-84 Oakley Rd,Belmont,MA,02478,GARRAHAN RAYMOND,5-14,hh_7e7b5b7700
+Steven,Gilman,527 Concord Ave,,Belmont,MA,02478,15 Wellington Ln,Belmont,MA,02478,GILMAN TE STEVEN C,57-14,hh_f45a31646e
+George,Giogas,2 Kelly Drive,,Woburn,MA,01801,144 Sycamore St,Belmont,MA,02478,GIOGAS TE GEORGE,28-96,hh_7cbcc46d92
+Lori,Gross,15 Ericsson St,,Cambridge,MA,02138,15 Ericsson St Unit 2,Belmont,MA,02478,GROSS TE LORI & ROBERT DOUGLAS CAMPBELL,1-1-2,hh_c59367071e
+Robert,Campbell,15 Ericsson St,,Cambridge,MA,02138,15 Ericsson St Unit 2,Belmont,MA,02478,GROSS TE LORI & ROBERT DOUGLAS CAMPBELL,1-1-2,hh_c59367071e
+Martin,Guentert,18 Townsend Rd,,Belmont,MA,02478,26 Townsend Rd,Belmont,MA,02478,GUENTERT TE MARTIN,4-13,hh_00edf4e1fa
+Bo,Guo,83 Claflin St,,Belmont,MA,02147,45-47 Marion Rd Unit 3,Belmont,MA,02478,GUO TE BO,1-89-3,hh_13c5cd791a
+Wei,Guo,170 Tremont Street Apt. 1604,,Boston,MA,02111,73 Marlboro St,Belmont,MA,02478,GUO WEI,1-172,hh_e18ec6f2dd
+Rima,Hand,88 Dalton Road,,Belmont,MA,02478,45 Bacon Rd,Belmont,MA,02478,HAND TE RIMA,9-18,hh_98801582c3
+Susan,Holman,PO Box 380252,,Cambridge,MA,02238,5 Park Rd,Belmont,MA,02478,HOLMAN SUSAN R,2-21,hh_715c6cb08b
+Guohu,Huang,28 Harvard Rd,,Belmont,MA,02478,41 Oxford Ave,Belmont,MA,02478,HUANG TE GUOHU,1-203,hh_c2c4046a58
+Harry,Hull,77 Summer St,,Arlington,MA,02474,169 Dean St,Belmont,MA,02478,HULL HARRY D,37-20-A,hh_f1de4e4379
+Michael,Kanterovich,316 Central St,Suite 1C,Saugus,MA,01906,12 Livermore Rd,Belmont,MA,02478,KANTEROVICH MICHAEL C,9-110,hh_413f2e99b2
+Steven,Kapsalis,991 Mass Avenue,Suite 14,Cambridge,MA,02138,39-41 Upland Rd,Belmont,MA,02478,KAPSALIS STEVEN,26-111,hh_a4ff975b84
+Idella,Karasik,37 Notre Dame Road,,Bedford,MA,01730,33-35 Crescent Rd,Belmont,MA,02478,KARASIK TC IDELLA N & RICHARD P AND,10-124,hh_8031163aec
+Richard,Karasik,37 Notre Dame Road,,Bedford,MA,01730,33-35 Crescent Rd,Belmont,MA,02478,KARASIK TC IDELLA N & RICHARD P AND,10-124,hh_8031163aec
+Salam,Kario,85 Woodfall Rd,,Belmont,MA,02478,535 School St,Belmont,MA,02478,KARIO SALAM,3-13,hh_7490bc1b77
+Martin,Kathrins,7 King St,,Watertown,MA,02472,294 Orchard St,Belmont,MA,02478,KATHRINS TE MARTIN,26-10,hh_7b8cfb7cef
+Steven,Kundrot,44 Hasting Rd,,Belmont,MA,02478,101-103 Fairview Ave,Belmont,MA,02478,KUNDROT TE STEVEN A,10-9,hh_afa8af53b2
+Edward,Kwong,165 Tremont St,Unit 1602,Boston,MA,02111,71 Oxford Ave,Belmont,MA,02478,KWONG TE EDWARD,1-193,hh_4bc05ac755
+Wei,Lai,141 Renfrew St,,Arlington,MA,02476,18 Irving St,Belmont,MA,02478,LAI TE WEI,29-55,hh_794da466ea
+Hana,Laznickova,32 Rockmont St,,Belmont,MA,02478,41 Payson Rd,Belmont,MA,02478,LAZNICKOVA HANA M,6-188,hh_d07f278dd4
+Bejar,Lee,32 Colby St,,Belmont,MA,02478,71-73 Gilbert Rd,Belmont,MA,02478,LEE JT BEJAR,12-64,hh_f81de8a40a
+Jinbo,Lee,10 Orchard Crossing,,Andover,MA,01810,79-81 Beech St,Belmont,MA,02478,LEE TE JINBO,15-6,hh_70d924a737
+Joshua,Lee,25 Park Rd,,Belmont,MA,02478,29 Park Rd,Belmont,MA,02478,LEE TE JOSHUA J,2-15,hh_25159c2b69
+Joanne,Lonergan,56 Village Hill Road,,Belmont,MA,02478,111-113 Fairview Ave,Belmont,MA,02478,LONERGAN TC JOANNE P,10-7,hh_cb1eca6aa5
+Patrick,Lundgren,45-47 Unity Ave,,Belmont,MA,02478,210 Cross St,Belmont,MA,02478,LUNDGREN TC PATRICK F,44-44,hh_f9db15d95d
+Shouqi,Luo,8 Forest Park Dr,,Waltham,MA,02452,28 Trowbridge St Unit 28,Belmont,MA,02478,LUO TE SHOUQI,22-27-28,hh_12be42ccb9
+Sean,Lyons,22 Oldham Road,,Arlington,MA,02476,21-23 Warwick Rd,Belmont,MA,02478,LYONS SEAN,6-105,hh_5facd5d0c8
+Stephen,Lyons,11 Williston Rd,,Belmont,MA,02478,333 Common St,Belmont,MA,02478,LYONS STEPHEN W JR,16-106,hh_73e60ae9d9
+Robert,Maguire,55 Forest Ridge Road,,Weston,MA,02493,43 Marion Rd,Belmont,MA,02478,MAGUIRE ROBERT G,1-90,hh_1e076d8a90
+George,Maloof,3 Schoolhouse Lane,,Lexington,MA,02421,25 York Rd,Belmont,MA,02478,MALOOF TC GEORGE S JR,6-59,hh_80857db6b0
+Theresa,Martin,134 Fulton St,Apt 4,Boston,MA,02109,76-78 Lexington St,Belmont,MA,02478,MARTIN THERESA A,28-172,hh_fc557daf8d
+Emilio,Mauro,21 Mannix Cir,,Belmont,MA,02478,1 Stewart Terr,Belmont,MA,02478,MAURO TE EMILIO E,21-119,hh_d9ea6ecc27
+Frances,Mavodones,1 Woodbine Rd,,Belmont,MA,02478,5 Woodbine Rd,Belmont,MA,02478,MAVODONES TRS ETAL FRANCES P,71-25,hh_57b0c0d385
+Robert,McAuley,1 Banks St,,Somerville,MA,02144,261 Orchard St,Belmont,MA,02478,MCAULEY ROBERT,25-136,hh_346264cfb2
+Joanne,McCabe,52 Summit Rd,Unit 7,Belmont,MA,02478,52 Summit Rd Unit 7,Belmont,MA,02478,MCCABE TR JOANNE M,59-11-2-7,hh_58b5f5337b
+Andrew,McLaughlin,42 Summit Rd,Unit 12,Belmont,MA,02478,42 Summit Rd Unit 12,Belmont,MA,02478,MCLAUGHLIN TR ANDREW P & MARIA MCLAUGHLIN NORTZ,59-11-2-12,hh_70d6c83430
+Maria,Nortz,42 Summit Rd,Unit 12,Belmont,MA,02478,42 Summit Rd Unit 12,Belmont,MA,02478,MCLAUGHLIN TR ANDREW P & MARIA MCLAUGHLIN NORTZ,59-11-2-12,hh_70d6c83430
+Paula,Melanson,49 Dudley Road,Unit 53,Bedford,MA,01730,14-16 Davis St,Belmont,MA,02478,MELANSON JT PAULA A,28-122,hh_43bef2b82c
+Medhat,Migeed,33 Audubon Ln,,Belmont,MA,02478,27 Hermon St,Belmont,MA,02478,MIGEED TR MEDHAT & ALINA MIGEED,53-42,hh_0fe74c85e5
+Alina,Migeed,33 Audubon Ln,,Belmont,MA,02478,27 Hermon St,Belmont,MA,02478,MIGEED TR MEDHAT & ALINA MIGEED,53-42,hh_0fe74c85e5
+Susan,Miller,41 Trapelo Rd,,Belmont,MA,02478,4 Oak Ave,Belmont,MA,02478,MILLER SUSAN A,5-73,hh_d821038e37
+Judith,Mohnkern,9 Horace Road,,Belmont,MA,02478,139 Elm St Unit 1,Belmont,MA,02478,MOHNKERN TRS JUDITH CARTER & ANNE M RENSHAW,9-15-1,hh_1022008fb4
+Anne,Renshaw,9 Horace Road,,Belmont,MA,02478,139 Elm St Unit 1,Belmont,MA,02478,MOHNKERN TRS JUDITH CARTER & ANNE M RENSHAW,9-15-1,hh_1022008fb4
+Thomas,Morabito,237 North Road,,Sudbury,MA,01776,38-40 Flett Rd,Belmont,MA,02478,MORABITO THOMAS P,14-80,hh_93753c43ee
+Walter,Morris,164 Lake St,,Arlington,MA,02474,187 Beech St Unit 1,Belmont,MA,02478,MORRIS TC WALTER J,26-161-1,hh_4e3a377167
+Samer,Mosallam,40 Chandler St,,Belmont,MA,02478,25 Wilson Ave,Belmont,MA,02478,MOSALLAM TE SAMER,14-54,hh_2b2d348e3a
+Dante,Muzzioli,22 Hough Rd,,Belmont,MA,02478,133 Dean St,Belmont,MA,02478,MUZZIOLI DANTE S,37-25,hh_e8f165ccc8
+Frank,Nahigian,60 Goden St,,Belmont,MA,02478,85 Orchard St,Belmont,MA,02478,NAHIGIAN TC FRANK & CATHERINE TAHAJIAN,23-72,hh_18bd08252d
+Catherine,Nahigian,60 Goden St,,Belmont,MA,02478,85 Orchard St,Belmont,MA,02478,NAHIGIAN TC FRANK & CATHERINE TAHAJIAN,23-72,hh_18bd08252d
+Nathaniel,Norton,96 Clark St,,Belmont,MA,02478,98 Clark St,Belmont,MA,02478,NORTON TE NATHANIEL READ IV,30-61,hh_c0d642d928
+William,Oconnell,32 Dean Street,,Belmont,MA,02478,199-201 Trapelo Rd,Belmont,MA,02478,OCONNELL WILLIAM H,12-116,hh_7d226244ca
+Henry,Ogilby,88 Taylor Rd,,Belmont,MA,02478,336 Washington St,Belmont,MA,02478,OGILBY TE HENRY M,21-141-B,hh_bd001bafe1
+Anne,Ogilby,88 Taylor Rd,,Belmont,MA,02478,336 Washington St,Belmont,MA,02478,OGILBY TE HENRY M,21-141-B,hh_bd001bafe1
+Edward,Orchanian,111 Berkley St,,Waltham,MA,02451,58 Dartmouth St,Belmont,MA,02478,ORCHANIAN EDWARD JR,1-141,hh_3e7bd39a62
+George,Pantazopoulos,207 Wollaston Ave,,Arlington,MA,02476,72 Maple St,Belmont,MA,02478,PANTAZOPOULOS TE GEORGE,14-197,hh_30e26fc143
+Demetrios,Papathanasiou,965 Massachusetts Ave,,Arlington,MA,02476,16 Audubon Ln,Belmont,MA,02478,PAPATHANASIOU TE DEMETRIOS,65-15,hh_a6bdf79352
+Pankaj,Patel,14 Langdon Rd,,Wayland,MA,01778,339 Trapelo Rd,Belmont,MA,02478,PATEL TE PANKAJ B,14-67,hh_43a209e40a
+Ann,Pettiglio,10 Holly St,,Watertown,MA,02472,8 Laurel St,Belmont,MA,02478,PETTIGLIO ANN MARIE,15-217,hh_b4d83d51d1
+Michael,Pizzi,84 Payson Rd,,Belmont,MA,02478,579-581 School St,Belmont,MA,02478,PIZZI TC MICHAEL J & TRACY J PIZZI &,3-4,hh_9ed39abbe2
+Tracy,Pizzi,84 Payson Rd,,Belmont,MA,02478,579-581 School St,Belmont,MA,02478,PIZZI TC MICHAEL J & TRACY J PIZZI &,3-4,hh_9ed39abbe2
+Caren,Pizzuto,592 School St,,Belmont,MA,02478,10 Newton St,Belmont,MA,02478,PIZZUTO TE CAREN L,2-143,hh_03384f415b
+Brian,Pomer,15 Essex Rd,,Belmont,MA,02478,40-42 Willow St,Belmont,MA,02478,POMER BRIAN DAVID,5-107,hh_846ee75601
+Edward,Preston,15 Ericsson St,,Cambridge,MA,02138,15 Ericsson St Unit 1,Belmont,MA,02478,PRESTON EDWARD,1-1-1,hh_73c7213a7d
+Robert,Ranieri,12 Cowdrey St,,Stoneham,MA,02180,69-71 Drew Rd,Belmont,MA,02478,RANIERI TE ROBERT J,26-59,hh_d0dcdb3f64
+Judith,Rizzo,6 Lorimer Rd,,Belmont,MA,02478,12 Lorimer Rd,Belmont,MA,02478,RIZZO TR JUDITH R,61-70,hh_f0b40ebdf4
+James,Robbio,4 Bradley Rd,,Arlington,MA,02476,30 Bacon Rd,Belmont,MA,02478,ROBBIO SR JT JAMES T AND JOAN M,9-45,hh_64f0af90a9
+Joan,Robbio,4 Bradley Rd,,Arlington,MA,02476,30 Bacon Rd,Belmont,MA,02478,ROBBIO SR JT JAMES T AND JOAN M,9-45,hh_64f0af90a9
+Panfilo,Rozzi,87 Clark Street,,Belmont,MA,02478,72 Chester Rd,Belmont,MA,02478,ROZZI PANFILO E,6-10,hh_7825dae5da
+Raymond,Russell,180 Newcomb Hill Rd,,Wellfleet,MA,02667,97-99 Cushing Ave,Belmont,MA,02478,RUSSELL TE RAYMOND M,4-34,hh_7fcf57b88f
+James,Savas,25 Oxford Ave,,Belmont,MA,02478,42 Creeley Rd,Belmont,MA,02478,SAVAS TRS JAMES M AND AIDA L SAVAS,26-138,hh_f4b5ccd03c
+Aida,Savas,25 Oxford Ave,,Belmont,MA,02478,42 Creeley Rd,Belmont,MA,02478,SAVAS TRS JAMES M AND AIDA L SAVAS,26-138,hh_f4b5ccd03c
+James,Scarfo,41 Rosedale Rd,,Watertown,MA,02472,159 Alexander Ave,Belmont,MA,02478,SCARFO JAMES J,35-1,hh_eeb66ed450
+Tracy,Schroder,15 Ericsson St,,Cambridge,MA,02138,15 Ericsson St Unit 3,Belmont,MA,02478,SCHRODER TRACY A,1-1-3,hh_19e3dbcbea
+Vatche,Seraderian,245 Common St,,Belmont,MA,02478,247 Common St,Belmont,MA,02478,SERADERIAN TR VATCHE,17-80,hh_160dc0d6d5
+Tamar,Sisitsky,217 Common St,,Belmont,MA,02478,115-117 Sycamore St,Belmont,MA,02478,SISITSKY TAMAR,28-110,hh_39d2cc694f
+David,Soffer,65 Macarthur Rd,,Natick,MA,01760,197 Beech St,Belmont,MA,02478,SOFFER DAVID I,26-159,hh_438243ddbc
+James,Speros,53 Oakley Rd,,Belmont,MA,02478,95 Payson Rd,Belmont,MA,02478,SPEROS TE JAMES,6-199,hh_4f7d1de3f9
+Eleanor,Stroud,120 Loring Ave,,Winchester,MA,02890,52 Becket Rd,Belmont,MA,02478,STROUD ELEANOR,23-150,hh_97f19b9899
+Kerry,Sullivan,300 Lake St,,Belmont,MA,02478,28-30 Ridge Rd,Belmont,MA,02478,SULLIVAN KERRY L,15-134,hh_b520b09033
+Sadredin,Tavana,104 Channing Rd,,Belmont,MA,02478,123 Alexander Ave,Belmont,MA,02478,TAVANA TE SADREDIN,34-53,hh_6284fdd217
+William,Tomford,72 Pinehurst Rd,,Belmont,MA,02478,107 Pinehurst Rd,Belmont,MA,02478,TOMFORD TC WILLIAM W,62-9,hh_77da9fd2dd
+Shushanik,Tonyan,5 Stony Brook Rd,,Belmont,MA,02478,10-12 Hawthorne St,Belmont,MA,02478,TONYAN TRS SHUSHANIK,27-83,hh_e8f3100196
+Anthony,Travia,42 Hamilton Rd,,Belmont,MA,02478,10-12 Hamilton Rd,Belmont,MA,02478,TRAVIA TR ANTHONY,22-113,hh_972cf0e9fe
+David,Vail,97 Shaw Rd,,Belmont,MA,02478,334-336 Trapelo Rd,Belmont,MA,02478,VAIL TE DAVID G,14-178,hh_37609553a9
+Michael,Varsamis,23 Prentice Rd,,Newton,MA,02459,8 Leicester Rd,Belmont,MA,02478,VARSAMIS MICHAEL,46-106,hh_00d332211c
+Panogiotis,Vastis,13 Alma Ave,,Belmont,MA,02478,5-7 Agassiz Ave,Belmont,MA,02478,VASTIS JT PANOGIOTIS,33-19,hh_49c1b06396
+Nandor,Veres,57 Nahant St,,Lynn,MA,01902,25 Scott Rd,Belmont,MA,02478,VERES TE NANDOR,46-54,hh_87a4545754
+Haoran,Wang,38 Slade St,,Belmont,MA,02478,25 Hawthorne St,Belmont,MA,02478,WANG TC HAORAN & PEISHAN XUE,27-47,hh_b0c32fd44a
+Peishan,Wang,38 Slade St,,Belmont,MA,02478,25 Hawthorne St,Belmont,MA,02478,WANG TC HAORAN & PEISHAN XUE,27-47,hh_b0c32fd44a
+Jin,Wang,247 Slade St,,Belmont,MA,02478,9-11 Woodland St,Belmont,MA,02478,WANG TE JIN,30-10,hh_9789d14b5f
+Xingchen,Wang,26 Thomas St,,Belmont,MA,02478,18 Pine St Unit 18,Belmont,MA,02478,WANG XINGCHEN,5-44-18,hh_e098afbe51
+You,Wang san,8 Fieldmont St,,Belmont,MA,02478,2 Village Hill Rd,Belmont,MA,02478,WANG SAN YOU,53-124,hh_c22d015c9f
+Margaret,Whalen,23 Holden Rd,,Belmont,MA,02478,8 Wilson Ave,Belmont,MA,02478,WHALEN TR MARGARET,26-172,hh_0f6eadde94
+Marilyn,White,109 Belmont St,,Cambridge,MA,02138,109 Belmont St,Belmont,MA,02478,WHITE JT MARILYN,1-4-A,hh_38a1ba721c
+Paul,Winters,80 Trapelo Rd,,Belmont,MA,02478,486-488 Common St,Belmont,MA,02478,WINTERS TRS PAUL R & PRISCILLA & MARION,5-126,hh_3fdf3122d5
+Priscilla,Winters,80 Trapelo Rd,,Belmont,MA,02478,486-488 Common St,Belmont,MA,02478,WINTERS TRS PAUL R & PRISCILLA & MARION,5-126,hh_3fdf3122d5
+Marion,Winters,80 Trapelo Rd,,Belmont,MA,02478,486-488 Common St,Belmont,MA,02478,WINTERS TRS PAUL R & PRISCILLA & MARION,5-126,hh_3fdf3122d5
+Paul,Winters,80 Trapelo Road,,Belmont,MA,02178,490-492 Common St,Belmont,MA,02478,WINTERS TRS PAUL R & PRISCILLA & MARION,5-127,hh_9bfcf53945
+Priscilla,Winters,80 Trapelo Road,,Belmont,MA,02178,490-492 Common St,Belmont,MA,02478,WINTERS TRS PAUL R & PRISCILLA & MARION,5-127,hh_9bfcf53945
+Marion,Winters,80 Trapelo Road,,Belmont,MA,02178,490-492 Common St,Belmont,MA,02478,WINTERS TRS PAUL R & PRISCILLA & MARION,5-127,hh_9bfcf53945
+Richard,Woo,7 Mead Circle,,Lexington,MA,02420,24-26 Benjamin Rd,Belmont,MA,02478,WOO TE RICHARD Y,26-7,hh_0baf963b14
+Eudoxia,Woodward,400 Atlantic Ave,,Boston,MA,02110,24 Kenmore Rd,Belmont,MA,02478,WOODWARD EUDOXIA,47-55,hh_9bc66dad2b
+Guangxin,Xu,39 Choate Rd,,Belmont,MA,02478,42-48 Grove St Unit 46,Belmont,MA,02478,XU TE GUANGXIN,2-13-46,hh_6a9acaba26
+Samantha,Yeh,28 Duncklee St,,Brighton,MA,02135,29 Whitcomb St,Belmont,MA,02478,YEH TE SAMANTHA,28-1,hh_36b42b40c7
+Patrick,Young,26 Ridge Rd,,Belmont,MA,02478,62 Thomas St,Belmont,MA,02478,YOUNG TC PATRICK J,30-56,hh_1877546651
+William,Young,185 Dudley Street,,Boston,MA,02119,32-34 Marlboro St,Belmont,MA,02478,YOUNG TE WILLIAM F JR & PAMELA G YOUNG,1-72,hh_7ba4a5baeb
+Pamela,Young,185 Dudley Street,,Boston,MA,02119,32-34 Marlboro St,Belmont,MA,02478,YOUNG TE WILLIAM F JR & PAMELA G YOUNG,1-72,hh_7ba4a5baeb
+Alice,Zacarian,12 Elizabeth Rd,,Belmont,MA,02478,112-114 Lewis Rd,Belmont,MA,02478,ZACARIAN TE ALICE L,3-66,hh_c6aedee2b0
+Barbara,Arno,16 Loring St,,Belmont,MA,02478,174-176 White St,Belmont,MA,02478,ARNO BARBARA,15-58,hh_fc98c83bbd
+Kevork,Atinizian,91 Crestview Rd,,Belmont,MA,02478,42 Kenmore Rd,Belmont,MA,02478,ATINIZIAN KEVORK,47-57,hh_39d626341f
+Sami,Badhdady,14 Loring St,,Belmont,MA,02478,79-81 Walnut St,Belmont,MA,02478,BADHDADY TE SAMI S,15-24,hh_092be02b45
+Samir,Baghdady,168 White St,,Belmont,MA,02478,169 White St,Belmont,MA,02478,BAGHDADY TE SAMIR S,15-187,hh_af58e113bd
+Benjamin,Beckman,113 Cushing Ave,,Belmont,MA,02478,28 Randolph St,Belmont,MA,02478,BECKMAN TE BENJAMIN,19-92,hh_d7cae9bcf0
+Michael,Bent,324 Common St,,Belmont,MA,02478,1 York Rd,Belmont,MA,02478,BENT TE MICHAEL J,6-63,hh_2ae4881db3
+Kevin,Borden,150 Fletcher Rd,,Belmont,MA,02478,148 Fletcher Rd,Belmont,MA,02478,BORDEN TE KEVIN,54-20,hh_67434898e9
+Michele,Burns,50 Gilmore Rd,,Belmont,MA,02478,44 Gilmore Rd,Belmont,MA,02478,BURNS MICHELE M,41-139,hh_7dd64eaf49
+Sandra,Courtney,291 Washington St,,Belmont,MA,02478,293 Washington St,Belmont,MA,02478,COURTNEY TE SANDRA,9-151,hh_a6045dccfd
+Mary,Demirjian,28 Payson Terr,,Belmont,MA,02478,22 Payson Terr,Belmont,MA,02478,DEMIRJIAN TR MARY,7-84,hh_0b4f033cbc
+Cosmos,Destefano,160 Waverley St,,Belmont,MA,02478,156 Waverley St,Belmont,MA,02478,DESTEFANO TRS COSMOS AND PAULINE T,29-121,hh_bc11c88f29
+Pauline,Destefano,160 Waverley St,,Belmont,MA,02478,156 Waverley St,Belmont,MA,02478,DESTEFANO TRS COSMOS AND PAULINE T,29-121,hh_bc11c88f29
+Armen,Dohanian,38 Dean St,,Belmont,MA,02478,11-13 Harding Ave,Belmont,MA,02478,DOHANIAN JR ARMEN,13-11,hh_166ff8d092
+Jih,Fan,22 Payson Terr,,Belmont,MA,02478,28 Payson Terr,Belmont,MA,02478,FAN TE JIH CHUNG,7-85,hh_4bc7d2b53d
+Mei,Fan,54 Alma Ave,,Belmont,MA,02478,12 Alma Ave,Belmont,MA,02478,FAN TE MEI JUNG,13-75,hh_ff75989d6f
+Daniel,Gabremicael,85 Birch Hill Rd,,Belmont,MA,02478,25 Cutter St,Belmont,MA,02478,GABREMICAEL DANIEL B,28-23,hh_37be0d78a6
+Markus,Greiner,60 Carleton Rd,,Belmont,MA,02478,69-71 Carleton Rd,Belmont,MA,02478,GREINER TE MARKUS,6-26,hh_43d1f48ffb
+Cornelius,Kelly,48 Bright Rd,,Belmont,MA,02478,72-74 Marlboro St,Belmont,MA,02478,KELLY TE CORNELIUS,1-167,hh_e338e14a8e
+James,Ktona,43 Dalton Road,,Belmont,MA,02478,34-36 Crescent Rd,Belmont,MA,02478,KTONA TE JAMES W,10-105,hh_49c5bd3289
+Yunhong,Li,47 Grant Ave,,Belmont,MA,02478,14-16 Jeanette Ave,Belmont,MA,02478,LI YUNHONG,13-110,hh_57a49e59c1
+Suzanne,Libby,34 Davis Rd,,Belmont,MA,02478,30 Davis Rd,Belmont,MA,02478,LIBBY JT SUZANNE M,27-32,hh_7bb28a7c3c
+Thomas,Lockett,112 Dalton Road,,Belmont,MA,02478,49-51 Worcester St,Belmont,MA,02478,LOCKETT TE THOMAS E,2-102,hh_ce5176967c
+Dennis,Lombardo,209 Trapelo Rd,,Belmont,MA,02478,546 Trapelo Rd,Belmont,MA,02478,LOMBARDO TC DENNIS G,33-46,hh_2bb641fb5c
+Yosry,Mohamed,19 Thomas St,,Belmont,MA,02478,548 Trapelo Rd,Belmont,MA,02478,MOHAMED YOSRY,33-47,hh_4713636fe5
+John,Occhino,18 Hull St,,Belmont,MA,02478,4-6 Chestnut St,Belmont,MA,02478,OCCHINO JOHN,15-80,hh_851471234f
+Leon,Palandjian,120 Juniper Rd,,Belmont,MA,02478,114 Juniper Rd,Belmont,MA,02478,PALANDJIAN LEON,56-14-3,hh_cdf160de39
+Arthur,Palmer,47 Horne Rd,,Belmont,MA,02478,72 Waverley St Unit 1,Belmont,MA,02478,PALMER TE ARTHUR W,27-124-1,hh_0d86c713e9
+Hakop,Papazian,10 Radcliff Road,,Belmont,MA,02478,17-19 Clarendon Rd,Belmont,MA,02478,PAPAZIAN HAKOP,10-55,hh_dcc01c05ca
+Hakop,Papazian,17 Clarendon Rd,,Belmont,MA,02478,60-62 Dalton Rd,Belmont,MA,02478,PAPAZIAN HAKOP,10-67,hh_72a3625b4c
+Marian,Papazian,418 Common St,,Belmont,MA,02478,55 Glenn Rd,Belmont,MA,02478,PAPAZIAN MARIAN Y,21-92,hh_5722d5f7d9
+Carine,Petrossian,20 Rayburn Rd,,Belmont,MA,02478,26 Rayburn Rd,Belmont,MA,02478,PETROSSIAN TR CARINE,70-29,hh_713b4b82c0
+Patrick,Rubeski,133 Dalton Rd,,Belmont,MA,02478,28 Harding Ave Unit 28,Belmont,MA,02478,RUBESKI PATRICK C,12-160-28,hh_f6d1868753
+Nancy,Shotola,93 Farnham St,,Belmont,MA,02478,95 Farnham St,Belmont,MA,02478,SHOTOLA NANCY L,34-29,hh_9c5b40d660
+David,Skolnick,14 Crestview Rd,,Belmont,MA,02478,15-17 Hull St,Belmont,MA,02478,SKOLNICK DAVID C,14-144,hh_6f0df2ff5a
+Charles,Smerlas,28 Winthrop Rdd,,Belmont,MA,02478,28 Winthrop Rd,Belmont,MA,02478,SMERLAS TE CHARLES,17-30,hh_f0182f1c7e
+Dorothy,Stoneman,366 Marsh St,,Belmont,MA,02478,59 Rayburn Rd,Belmont,MA,02478,STONEMAN DOROTHY L,70-37,hh_fe466d8841
+Yinngan,Yueng,27 Dorset Rd,,Belmont,MA,02478,23 Lamoine St,Belmont,MA,02478,YUENG TE YINNGAN,53-14,hh_88618dd17c
+Graham,Allison,63 Pinehurst Rd,,Belmont,MA,02478,57 Pinehurst Rd,Belmont,MA,02478,ALLISON TE GRAHAM T JR,62-16,hh_b57cc4652c
+Rola,Baghdady,14 Loring St,,Belmont,MA,02478,9-11 Loring St,Belmont,MA,02478,BAGHDADY ROLA M,15-75,hh_edd486c262
+Michael,Chang,7 Vernon Rd,,Belmont,MA,02478,3 Vernon Rd,Belmont,MA,02478,CHANG TE MICHAEL,61-110,hh_3145e2efc9
+James,Dow,95 Clifton St,,Belmont,MA,02478,93 Clifton St,Belmont,MA,02478,DOW JR TE JAMES,47-78,hh_b2d2a5ec1b
+Samuel,James,388 Pleasant St,,Belmont,MA,02478,394 Pleasant St,Belmont,MA,02478,JAMES TE SAMUEL R,44-132,hh_34c0f67ae5
+Harvey,Kaufman,641 Pleasant St,,Belmont,MA,02478,645 Pleasant St,Belmont,MA,02478,KAUFMAN TE HARVEY,57-1,hh_cb40d47ce1
+Shib,Misra,18 Russell Terr,,Belmont,MA,02478,19 Russell Terr,Belmont,MA,02478,MISRA TE SHIB PRASAD,15-155-B,hh_fc43077edc
+John,Occhino,18 Hull St,,Belmont,MA,02178,23 Hull St,Belmont,MA,02478,OCCHINO TE JOHN B,14-143,hh_c5c41a2e9a
+Diana,Prach,35 Harriet Ave,,Belmont,MA,02478,33 Harriet Ave,Belmont,MA,02478,PRACH DIANA M,13-35,hh_d40220de8a
+Aram,Tomasian,62 Glenn Rd,,Belmont,MA,02478,60 Glenn Rd,Belmont,MA,02478,TOMASIAN TE ARAM,21-141-E,hh_7aee8e01df

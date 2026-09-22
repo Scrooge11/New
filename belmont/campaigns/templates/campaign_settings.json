@@ -1,0 +1,10 @@
+{
+  "sender_name": "[Your name]",
+  "company": "[Your company, or leave blank]",
+  "phone": "[Your phone]",
+  "email": "[Your email]",
+  "return_address_1": "[Your street address]",
+  "return_address_2": "[City], MA [ZIP]",
+  "closing": "Warm regards,",
+  "letter_date": ""
+}

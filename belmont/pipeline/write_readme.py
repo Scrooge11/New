@@ -35,6 +35,9 @@ parcels, vintage **{s['data_vintage']}** = fiscal year 2024). Everything here is
 | `output/belmont_tax_delinquent_known.csv` | Parcels with a published tax taking on record ({ls['Tax delinquent (known)']} so far, see below). |
 | `output/belmont_all_residential_scored.csv` | Master table: all {s['residential_records_total']} residential-class records with every flag, for your own filtering. |
 | `templates/records_request_treasurer.md` | Ready-to-send public records request for the full tax-title / delinquent list, plus Registry of Deeds search steps. |
+| `campaigns/life_estate/` | Outreach campaign for the {ls['Life-estate watchlist']} life-estate records: `mailing_list.csv` / `.xlsx` (one row per household), `skip_trace_export.csv` (to append phones and emails), `letters_life_estate.docx` (letter 1 merged, one page per household). |
+| `campaigns/likely_inherited/`, `campaigns/estate_heirs/` | The same package for the likely-inherited and estate-owned lists. |
+| `campaigns/templates/`, `campaigns/README.md` | Editable letter, postcard, email and phone-script copy, sender settings, mailing sequence, and the Massachusetts rules that apply. |
 
 Every row carries a `priority_score` (higher = better lead), the owner mailing address (where the tax
 bill goes), the deed book / page, assessed values, and a Google Maps link to the parcel.
@@ -107,6 +110,20 @@ The owner-name field uses Patriot-style codes after the surname, which are decod
 * When the Treasurer's list arrives, drop it into `data/tax_delinquent_known.csv` (same columns) and
   re-run the pipeline; matching parcels are flagged and float to the top.
 
+## Outreach campaigns (Campaign tab in the dashboard)
+
+Owners at the same mailing address are combined into one household, names are parsed from the
+assessor's coded format into a mailing name and salutation ("VASTIS LE NICHOLAS P & MARTHA" becomes
+"Nicholas P. & Martha Vastis" / "Dear Nicholas and Martha Vastis,"), and unit numbers move to a second
+address line for USPS. The dashboard's Campaign tab shows each household with a status (not contacted,
+letter 1 sent, replied, interested, do not contact...), notes, a mailing-list export, and print-ready
+letters merged from editable sender settings; statuses live in the artifact's shared database so phone
+and desktop stay in sync. The assessor data carries no phone numbers or emails: run
+`skip_trace_export.csv` through a skip-tracing service before any call or email campaign, and read
+`campaigns/README.md` for the sequence and the rules (M.G.L. c. 93A, 254 CMR 3, TCPA / Do Not Call,
+CAN-SPAM, elder-protection). A life-estate holder cannot sell without the remaindermen, so every
+template invites the family in.
+
 ## Data vintage and verification
 
 * MassGIS's Belmont file is fiscal 2024 (uploaded February 2024). MassGIS has FY2025-26 data for
@@ -123,7 +140,8 @@ The owner-name field uses Patriot-style codes after the surname, which are decod
 pip install -r belmont/pipeline/requirements.txt
 python belmont/pipeline/fetch_massgis.py     # downloads the newest Belmont package from MassGIS
 python belmont/pipeline/build_lists.py       # rebuilds every CSV, the workbook and summary.json
-python belmont/pipeline/build_page.py        # rebuilds output/belmont_leads.html
+python belmont/pipeline/build_campaign.py    # rebuilds campaigns/ (mailing lists, letters) and output/campaigns.json
+python belmont/pipeline/build_page.py        # rebuilds output/belmont_leads.html (leads + campaign tab)
 python belmont/pipeline/write_readme.py      # refreshes the numbers in this README
 ```
 
