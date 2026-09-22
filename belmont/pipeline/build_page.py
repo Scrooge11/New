@@ -66,22 +66,37 @@ TEMPLATE = r"""<title>Belmont Absentee Owners</title>
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.45;margin:0}
 .wrap{max-width:960px;margin:0 auto;padding-inline:16px;padding-block:0 48px}
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding-block:14px 10px}
-h1{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:1.45rem;margin:0;letter-spacing:-.01em;text-wrap:balance}
-.sub{color:var(--muted);font-size:.86rem;margin-top:2px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding-block:10px 10px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px}
+h1{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:1.3rem;margin:0;letter-spacing:-.01em;text-wrap:balance;line-height:1.2}
+.sub{color:var(--muted);font-size:.82rem;margin-top:2px}
 .count{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
-.controls{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.search{width:100%;padding:10px 12px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:.95rem}
+.fbtn{display:none;align-items:center;gap:6px;min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:.9rem;font-weight:500;cursor:pointer;white-space:nowrap}
+.fbtn[aria-expanded="true"],.fbtn.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.search{width:100%;margin-top:10px;padding:11px 12px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
+.panel{margin-top:12px;display:flex;flex-direction:column;gap:12px}
+.panel-head,.apply{display:none}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 11px;font:inherit;font-size:.82rem;cursor:pointer;line-height:1.2}
+.chip{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 12px;min-height:36px;font:inherit;font-size:.86rem;cursor:pointer;line-height:1.2}
 .chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .chip .n{font-variant-numeric:tabular-nums;opacity:.75;margin-left:4px}
-.selects{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.selects{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 .selects label{display:flex;flex-direction:column;gap:3px;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-select{padding:7px 8px;border:1px solid var(--line-strong);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit;font-size:.88rem}
+select{padding:9px 8px;min-height:40px;border:1px solid var(--line-strong);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
 button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-.legend{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:.78rem;margin-top:10px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:.78rem}
 .legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--sw);margin-right:5px;vertical-align:0}
+.about{color:var(--muted);font-size:.8rem;margin:0;max-width:70ch}
+@media (max-width:699px){
+  .fbtn{display:inline-flex}
+  .panel{display:none;position:fixed;left:0;right:0;top:0;bottom:0;z-index:20;margin:0;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:0 16px calc(env(safe-area-inset-bottom,0px) + 16px)}
+  .panel.open{display:flex}
+  .panel-head{display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1;background:var(--bg);padding-block:calc(env(safe-area-inset-top,0px) + 12px) 10px;margin-inline:-16px;padding-inline:16px;border-bottom:1px solid var(--line)}
+  .panel-head strong{font-size:1.05rem}
+  .close{min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:.9rem;cursor:pointer}
+  .apply{display:block;position:sticky;bottom:0;width:100%;min-height:48px;margin-top:4px;padding:12px;border-radius:10px;border:0;background:var(--accent);color:var(--accent-ink);font:inherit;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:var(--shadow)}
+  html.noscroll,html.noscroll body{overflow:hidden;height:100%}
+}
 main{display:flex;flex-direction:column;gap:10px;margin-top:14px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;box-shadow:var(--shadow)}
 .card.tax{border-color:var(--c-tax);border-width:2px}
@@ -110,22 +125,30 @@ footer a{color:var(--accent)}
 </style>
 <div class="wrap">
 <header class="top">
-  <h1>Belmont Absentee Owners</h1>
-  <div class="sub">Belmont, MA properties whose tax bill is mailed away from the property, plus estate, life-estate and tax-taking records. Assessor extract __VINTAGE__ (fiscal 2024), built __BUILT__. Showing <span class="count" id="shown">0</span> of <span class="count" id="total">0</span> records.</div>
-  <div class="controls">
-    <input class="search" id="q" type="search" placeholder="Search address, owner, mailing address or parcel ID" aria-label="Search" autocomplete="off">
-    <div class="chips" id="views" role="group" aria-label="Quick views"></div>
-    <div class="selects">
-      <label>Owner type<select id="otype"><option value="">All</option></select></label>
-      <label>Property type<select id="ptype"><option value="">All</option></select></label>
-      <label>Where the bill goes<select id="occ"><option value="">All</option></select></label>
-      <label>Sort by<select id="sort"><option value="score">Priority score</option><option value="value">Assessed value</option><option value="years">Years since last transfer</option><option value="addr">Street address</option></select></label>
+  <div class="bar">
+    <div>
+      <h1>Belmont Absentee Owners</h1>
+      <div class="sub">Showing <span class="count" id="shown">0</span> of <span class="count" id="total">0</span> records · <span id="viewname">Non-owner-occupied</span></div>
     </div>
+    <button class="fbtn" id="fbtn" type="button" aria-expanded="false" aria-controls="panel">Filters</button>
+  </div>
+  <input class="search" id="q" type="search" placeholder="Search address, owner, mailing address or parcel ID" aria-label="Search" autocomplete="off">
+</header>
+<section class="panel" id="panel" aria-label="Filters">
+  <div class="panel-head"><strong>Filters</strong><button class="close" id="pclose" type="button">Done</button></div>
+  <div class="chips" id="views" role="group" aria-label="Quick views"></div>
+  <div class="selects">
+    <label>Owner type<select id="otype"><option value="">All</option></select></label>
+    <label>Property type<select id="ptype"><option value="">All</option></select></label>
+    <label>Where the bill goes<select id="occ"><option value="">All</option></select></label>
+    <label>Sort by<select id="sort"><option value="score">Priority score</option><option value="value">Assessed value</option><option value="years">Years since last transfer</option><option value="addr">Street address</option></select></label>
   </div>
   <div class="legend">
     <span style="--sw:var(--c-country)">Out of country</span><span style="--sw:var(--c-state)">Out of state</span><span style="--sw:var(--c-ma)">Elsewhere in MA</span><span style="--sw:var(--c-belmont)">Elsewhere in Belmont</span><span style="--sw:var(--c-unknown)">PO Box / unknown</span><span style="--sw:var(--c-estate)">Owner-occupied estate / life estate</span>
   </div>
-</header>
+  <p class="about">Belmont, MA properties whose tax bill is mailed away from the property, plus estate, life-estate and tax-taking records. Assessor extract __VINTAGE__ (fiscal 2024), built __BUILT__.</p>
+  <button class="apply" id="papply" type="button">Show <span id="pcount">0</span> results</button>
+</section>
 <main id="list" aria-live="polite"></main>
 <footer>
   <p><strong>How occupancy is inferred.</strong> The assessor's owner mailing address (where the tax bill goes) is compared with the property address; a match means owner-occupied. Belmont has no owner-occupancy flag of its own. Ownership is as of the fiscal 2024 extract, the newest Belmont has published to MassGIS; verify in the town's <a href="https://www.belmont-ma.gov/229/Real-Estate-Database">Real Estate Database</a> before outreach.</p>
@@ -239,6 +262,10 @@ footer a{color:var(--accent)}
     Array.prototype.forEach.call(viewsEl.children, function(b){ b.setAttribute('aria-pressed', b.dataset.id===state.view ? 'true' : 'false'); });
     document.getElementById('total').textContent = rows.length.toLocaleString();
     document.getElementById('shown').textContent = out.length.toLocaleString();
+    document.getElementById('pcount').textContent = out.length.toLocaleString();
+    document.getElementById('viewname').textContent = view.label;
+    var active = (state.otype?1:0)+(state.ptype?1:0)+(state.occ?1:0)+(state.view!=='absentee'?1:0);
+    var fb = document.getElementById('fbtn'); fb.textContent = active ? 'Filters · '+active : 'Filters'; fb.classList.toggle('active', active>0);
     var list = document.getElementById('list'); list.textContent='';
     if (!out.length) { list.appendChild(el('div','empty','No records match these filters.')); return; }
     var n = Math.min(out.length, PAGE*state.page);
@@ -247,6 +274,13 @@ footer a{color:var(--accent)}
     list.appendChild(frag);
     if (n < out.length) { var m=el('button','more','Show '+Math.min(PAGE,out.length-n)+' more of '+(out.length-n).toLocaleString()); m.type='button'; m.addEventListener('click', function(){ state.page++; render(); }); list.appendChild(m); }
   }
+  var panel = document.getElementById('panel'), fbtn = document.getElementById('fbtn');
+  function openPanel(){ panel.classList.add('open'); fbtn.setAttribute('aria-expanded','true'); document.documentElement.classList.add('noscroll'); panel.scrollTop = 0; document.getElementById('pclose').focus(); }
+  function closePanel(){ panel.classList.remove('open'); fbtn.setAttribute('aria-expanded','false'); document.documentElement.classList.remove('noscroll'); fbtn.focus(); }
+  fbtn.addEventListener('click', function(){ panel.classList.contains('open') ? closePanel() : openPanel(); });
+  document.getElementById('pclose').addEventListener('click', closePanel);
+  document.getElementById('papply').addEventListener('click', function(){ closePanel(); window.scrollTo(0,0); });
+  document.addEventListener('keydown', function(e){ if (e.key==='Escape' && panel.classList.contains('open')) closePanel(); });
   document.getElementById('q').addEventListener('input', function(e){ state.q=e.target.value; state.page=1; save(); render(); });
   ['otype','ptype','occ','sort'].forEach(function(id){ document.getElementById(id).addEventListener('change', function(e){ state[id]=e.target.value; state.page=1; save(); render(); }); });
   render();
