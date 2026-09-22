@@ -98,6 +98,16 @@ BULKHEAD = Polygon([(5.833,D_MAIN),(11.167,D_MAIN),(11.167,D_MAIN+6.167),(5.833,
 GARAGE_DOORS = [(18.0,27.0),(28.0,37.0)]   # u-ranges of the two 9' doors on the garage front (v=-7.5)
 FRONT_DOOR_U = 14.6                        # approx centre of front door on porch
 ENCLOSED = unary_union([MAIN, GARAGE_PROJ])
+
+# Side roof overhang allowance (owner's rule): 12" eave + 3" clearance = 1'-3" beyond each side wall.
+EAVE_SIDE = 1.25
+
+def with_side_eaves(local_geom, e=EAVE_SIDE):
+    """Extend a local-frame footprint by e on both sides (+/- u only; front/rear unchanged)."""
+    return unary_union([local_geom, translate(local_geom, -e, 0), translate(local_geom, e, 0)])
+
+MAIN_EAVE = with_side_eaves(MAIN)                       # 42'-6" x 45'
+ROOFED_EAVE = with_side_eaves(unary_union([MAIN, GARAGE_PROJ, PORCH]))
 ROOFED = unary_union([MAIN, GARAGE_PROJ, PORCH])
 ALL_PARTS = {"main": MAIN, "garage": GARAGE_PROJ, "porch": PORCH, "deck": DECK, "stair": DECK_STAIR, "bulkhead": BULKHEAD}
 

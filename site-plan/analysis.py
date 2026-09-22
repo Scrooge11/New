@@ -93,6 +93,36 @@ def max_projection(mirror, theta):
         else: lo = mid
     return lo
 
+def max_width_with_eaves(theta, e=G.EAVE_SIDE, depth=G.D_MAIN):
+    """Largest wall-to-wall width W such that a W+2e wide, `depth` deep rectangle fits inside ENV."""
+    lo, hi = 30.0, 45.0
+    for _ in range(30):
+        mid = 0.5*(lo+hi)
+        rect = Polygon([(-e, 0), (mid+e, 0), (mid+e, depth), (-e, depth)])
+        if feasible_T(rect, False, theta).is_empty: hi = mid
+        else: lo = mid
+    return lo
+
+def max_eave_for_width(theta, width=G.W, depth=G.D_MAIN):
+    """Largest side allowance e such that the 40'-wide main body plus e on each side fits inside ENV."""
+    lo, hi = 0.0, 3.0
+    for _ in range(30):
+        mid = 0.5*(lo+hi)
+        rect = Polygon([(-mid, 0), (width+mid, 0), (width+mid, depth), (-mid, depth)])
+        if feasible_T(rect, False, theta).is_empty: hi = mid
+        else: lo = mid
+    return lo
+
+def eave_report(theta):
+    print("="*90)
+    print("SIDE ROOF OVERHANG CHECK: 12\" eave + 3\" margin = %.2f' each side (owner's rule)" % G.EAVE_SIDE)
+    T = feasible_T(G.MAIN_EAVE, False, theta)
+    print("  42'-6\" eave-to-eave rectangle fits inside the 15' side setback lines:", "YES" if not T.is_empty else "NO")
+    print("  max wall-to-wall width with %.2f' each side, parallel to lot: %.2f ft (%s)" % (G.EAVE_SIDE, max_width_with_eaves(theta), "plan is 40'-0\""))
+    print("  max side allowance for a 40'-0\" wide body, parallel to lot: %.2f ft = %.1f in" % (max_eave_for_width(theta), 12*max_eave_for_width(theta)))
+    for th in (-7.0, -6.5, -6.3, -6.0, -5.5, -5.0):
+        print("    theta %.1f: max width w/ eaves %.2f ft, max eave for 40' body %.1f in" % (th, max_width_with_eaves(th), 12*max_eave_for_width(th)))
+
 if __name__ == "__main__":
     theta = G.LOT_TILT
     print("Rotation for 'parallel with the lot' (mean of side lines): %.2f deg clockwise from the ECP sheet's vertical" % (-theta))
@@ -101,6 +131,7 @@ if __name__ == "__main__":
     B = option("B: mirrored (garage WEST), parallel to lot", True, theta)
     option("C: as drawn, square to street (theta=0)", False, 0.0)
     option("D: mirrored, square to street (theta=0)", True, 0.0)
+    eave_report(theta)
     print("="*90)
     print("Rotation scan (main body 40x45 must fit; report N-S slide available):")
     for th10 in range(-90, -30, 5):

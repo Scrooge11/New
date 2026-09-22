@@ -11,7 +11,9 @@ The deliverable is `output/199-Central-St_Proposed-Site-Plan.pdf`: four 18x24 sh
 
 ## Bottom line
 
-1. **Yes, set the house parallel with the side lot lines.** The side lines lean about 6 degrees off square to Central Street, so the strip between the two 15' side setback lines is only ~42.4' wide measured square to the sides. The 40' house clears both side setbacks only when it is rotated to match the sides (6.3 degrees clockwise on the sheet), and then with just 1.0' to spare on each side. Square to the street it is ~1.1' over the side setback line at two opposite corners (Sheet 3).
+1. **Yes, set the house parallel with the side lot lines.** The side lines lean about 6 degrees off square to Central Street, so the strip between the two 15' side setback lines is only ~42.4' wide measured square to the sides. The 40' house clears both side setbacks only when it is rotated to match the sides (6.3 degrees clockwise on the sheet), and then with just 1.0' of wall clearance at the rear corners and 1.3' at the front. Square to the street it is ~1.1' over the side setback line at two opposite corners (Sheet 3).
+
+   **Roof overhang:** with the owner's rule of a 12" side eave plus a 3" margin (1'-3" beyond each side wall), a 40'-wide body does not fit. The eave line lands 3" inside the 15' side setback at both rear corners and clears it by less than an inch at the front corners. The most a 40' body can hold is 12.4" per side. To keep 1'-3" on both sides the main body must be **39'-6" wide** (39.56' is the limit), or the side overhang must drop to about 9" over the rear 37' of the house. Rotation does not help; parallel is already the best angle.
 
 2. **The plan is too deep for this lot in any orientation.** Because the front and rear setback lines are not square to the rotated house, a 40'-wide rectangle can be at most ~46.3' deep inside the envelope. The 45' main body fits with 1.3' of slide. The 7'-6" garage/porch projection cannot be held inside: with the main body pushed back onto the rear setback line the garage bay still sits 4.5' inside the 20' front yard (plan mirrored) or 6.2' (plan as drawn).
 
@@ -38,7 +40,8 @@ Distances are from the proposed structure to the lot lines, in feet. Required: 2
 
 | Element | Option 1: mirrored | Option 2: as drawn | Option 3: mirrored, projections cut |
 |---|---|---|---|
-| Main body 40'x45' | 21.2' street, 16.0'/16.3' W, 16.0'/16.3' E, 23.2'/26.5' rear - **complies** | same - **complies** | same - **complies** |
+| Main body 40'x45' (walls) | 21.2' street, 16.0'/16.3' W, 16.0'/16.3' E, 23.2'/26.5' rear - **complies** | same - **complies** | same - **complies** |
+| Eave line, walls + 1'-3" each side | 14.8'/15.1' W, 14.8'/15.1' E (rear/front corners) - **3" inside side setback at rear corners** | same | same |
 | Garage bay (24' wide) | 15.5' to 18.2' from street - **4.5' inside** | 13.8' to 16.4' - **6.2' inside** | 20.0' to 22.7' - **complies** (3'-0" projection) |
 | Covered porch (16' wide) | 13.8' to 15.5' from street - **6.2' inside** | 16.4' to 18.2' - **3.6' inside** | 20.0' to 21.8' - **complies** (1'-3" roof only) |
 | Rear deck 16'x14' | 10.0' to 11.3' from rear line - **13.2' inside** | 10.3' to 11.5' - **12.9' inside** | 10.0' to 11.3' - **13.2' inside** |
@@ -53,8 +56,22 @@ Largest front projection that still fits, with the main body inside the envelope
 
 * West line S 4-43-20 E and east line S 5-29-50 E lean 6.7 and 5.9 degrees to the east as they run away from Central Street (S 78-35-22 W). The two 15' side setback lines are 42.9' apart along the front setback line and 42.1' apart along the rear one.
 * A 40'-wide house square to the street needs 40' + 45' x tan(6.3 deg) = 45.0' of that strip over its 45' depth. It does not fit. Rotated to match the sides it needs 40.0' and fits with ~1.0' spare per side.
-* Side clearance of ~1.0' means a typical 12"-16" eave lands on or just over the 15' line. Ask the Building Commissioner whether eaves are measured (Sec. 6.2.7 also has a 3' side-yard exception for low, <= 15'-high parts of the principal structure in Residence C; get the exact text). If eaves count, specify ~10" side overhangs.
+* Side clearance of ~1.0' at the rear corners is less than the 1'-3" eave-plus-margin the owner wants. See the roof-overhang section below.
 * The house ends up skewed ~6 degrees to the street. The existing house is square to the street, but it is only 27.5' wide; at 40' the skew is the price of the width, and it is barely perceptible from the road.
+
+## Roof overhang
+
+Rule applied: 12" side eave + 3" margin = 1'-3" beyond each side wall, measured to the 15' side setback lines. The eave line is drawn in purple on Sheets 1, 2 and 4 with its own dimensions.
+
+| | West lot line | East lot line |
+|---|---|---|
+| Eave line at front corners | 15.05' | 15.09' |
+| Eave line at rear corners | 14.76' | 14.79' |
+
+* The envelope narrows toward the rear (the two side lines are not quite parallel), so the walls have 1.3' spare at the front corners but only 1.0' at the rear. With 1'-3" of eave allowance the rear ~37' of eave on each side sits up to 3" inside the setback line.
+* A 40'-0" body can hold at most 12.4" per side here. With 1'-3" per side the body can be at most 39.56' wide. Rotating away from parallel makes it worse at every angle tested.
+* Two ways to comply: narrow the main body to **39'-6"** (6" out of the plan, e.g. the 16' living/dining bay becomes 15'-6"), or keep 40' and hold the side overhang to about **9"** on the rear 37' of the house (a 9" eave plus the 3" margin fits the 1.0' rear clearance exactly, so that is a zero-tolerance answer; 39'-6" is the safer one).
+* Front and rear rake overhangs are not allowed for in these numbers. If the Town also measures the gable-end overhangs, the rear wall would have to come forward another 1'-3" and the depth problem below gets worse by the same amount. Ask the Building Commissioner how eaves are treated and get the text of the 3' side-yard exception in Sec. 6.2.7 (it covers low, <= 15'-high parts of the principal structure in Residence C and may or may not cover eaves).
 
 ## Ways to resolve the depth problem
 
@@ -100,12 +117,12 @@ Links: Zoning Bylaw index <https://concordma.gov/592/Zoning-Bylaws>; Section 6 <
 1. Get the Residence C floor-area-per-acre figure from Table III and run the FAR-GFA worksheet for a 3,387 sf house on 7,511 sf. This decides whether the house shrinks anyway.
 2. Confirm with the Building Commissioner: eaves and bulkheads against setbacks, the 3' side-yard exception in Sec. 6.2.7, and whether a walk-out basement door and an at-grade patio are treated as no-structure.
 3. Ask PLACES Associates to confirm the 23.2' rear line (25% of a 92.8' lot depth) and, if the parallel placement is adopted, to stake the two side setback lines: with 1.0' of spare per side the foundation layout has no tolerance to give.
-4. Send AFAB Sheet 1 and Sheet 4 with the two requests: mirror the plan, and either trim the front projection (garage 3'-0", porch roof 1'-3", rear wall of garage moved ~1'-2") or shorten the main body by 4'-6". Add the walk-out lower level in place of the deck/bulkhead.
+4. Send AFAB Sheet 1 and Sheet 4 with three requests: mirror the plan; narrow the main body to 39'-6" (or hold the side eaves to 9" on the rear 37'); and either trim the front projection (garage 3'-0", porch roof 1'-3", rear wall of garage moved ~1'-2") or shorten the main body by 4'-6". Add the walk-out lower level in place of the deck/bulkhead.
 5. File the Historical Commission demolition-review application and the Tree Permit application early; both run in parallel with design.
 6. If the front projection is to be kept, prepare the ZBA case around the existing 16.6' porch line and bundle it with the Sec. 7.1.5 special permit.
 
 ## How this was produced
 
 * `geometry.py` reads the lot corners from the ECP's vector linework (the six boundary calls close to within 0.05' of the deed/measured distances; the computed lot area is 7,512 sf against the surveyor's 7,511 sf) and builds the setback envelope exactly where the surveyor drew it. The rear setback line as drawn is 0.3' tighter than its 23.2' label, so reported rear distances are referenced to the label.
-* `analysis.py` computes, for a given rotation and mirror, the set of positions in which the 40' x 45' main body sits inside the envelope, and reports distances for every element; it also finds the largest garage/porch projection that fits.
+* `analysis.py` computes, for a given rotation and mirror, the set of positions in which the 40' x 45' main body sits inside the envelope, and reports distances for every element; it also finds the largest garage/porch projection that fits, the widest body that fits with a 1'-3" eave allowance per side, and the largest eave allowance a 40' body can hold.
 * `make_site_plan.py` draws the placements on a copy of the ECP page and writes the PDF and PNG previews. Re-run with `python3 make_site_plan.py` (needs `pymupdf` and `shapely`; set `ECP_PDF` to the path of the ECP file).

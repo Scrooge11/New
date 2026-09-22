@@ -14,7 +14,7 @@ OUT_PDF = os.path.join(OUT_DIR, "199-Central-St_Proposed-Site-Plan.pdf")
 BLUE = (0.05, 0.25, 0.75); BLUE_FILL = (0.62, 0.78, 1.0)
 TAN = (0.75, 0.55, 0.25); TAN_FILL = (0.96, 0.9, 0.75)
 RED = (0.85, 0.05, 0.05); ORANGE = (0.95, 0.5, 0.0); GRAY = (0.45, 0.45, 0.45); DGRAY = (0.25, 0.25, 0.25)
-DRIVE_FILL = (0.82, 0.82, 0.82); WHITE = (1, 1, 1); BLACK = (0, 0, 0); PINK = (1, 0.75, 0.75)
+DRIVE_FILL = (0.82, 0.82, 0.82); WHITE = (1, 1, 1); BLACK = (0, 0, 0); PINK = (1, 0.75, 0.75); PURPLE = (0.5, 0.0, 0.65)
 P = G.ft2pt
 
 # ------------------------------------------------------------------ drawing helpers
@@ -107,7 +107,7 @@ HOUSE_V = None   # unit vector (sheet frame) of the house's front->rear axis, se
 def corner(poly, which):
     """Corner of a placed rectangle in house terms: front = smallest projection on the house's
     front->rear axis (HOUSE_V); west = smaller sheet x within each pair."""
-    cs = list(poly.exterior.coords)[:-1]
+    cs = list(poly.minimum_rotated_rectangle.exterior.coords)[:-1]   # drops collinear vertices left by unions
     vx, vy = HOUSE_V
     cs = sorted(cs, key=lambda c: c[0]*vx + c[1]*vy)
     front, rear = sorted(cs[:2]), sorted(cs[2:])
@@ -167,7 +167,8 @@ STD_LEGEND = [
     ("poly", GRAY, WHITE, "[4 3] 0", "Existing dwelling #199 to be removed"),
     ("line", ORANGE, None, "[7 4] 0", "Setback envelope per ECP (20' front/15' sides/23.2' rear)"),
     ("poly", GRAY, DRIVE_FILL, None, "Proposed driveway / apron (conceptual)"),
-    ("line", RED, None, None, "Distance from proposed structure to lot line (ft)"),
+    ("line", PURPLE, None, "[3 2] 0", "Eave line = side walls + 1'-3\" (12\" overhang + 3\" margin)"),
+    ("line", RED, None, None, "Distance from wall (red) / eave line (purple) to lot line, ft"),
     ("tree", RED, None, None, "Existing tree within 3' of footprint or drive"),
 ]
 
@@ -195,8 +196,15 @@ def mark_trees(page, trees):
         sh.draw_line(c + (-r*0.7, -r*0.7), c + (r*0.7, r*0.7)); sh.draw_line(c + (-r*0.7, r*0.7), c + (r*0.7, -r*0.7)); sh.finish(color=RED, width=1.2)
     sh.commit()
 
-def draw_house(page, parts, enclosed, mirror, theta, tx, ty, garage_proj=G.PROJ, porch_proj=G.PROJ):
+def draw_house(page, parts, enclosed, mirror, theta, tx, ty, garage_proj=G.PROJ, porch_proj=G.PROJ, eave_local=None):
     sh = page.new_shape()
+    if eave_local is not None:
+        draw_poly(sh, G.place(eave_local, mirror, theta, tx, ty), color=PURPLE, width=0.9, dashes="[3 2] 0")
+        sh.commit(); sh = page.new_shape()
+        pt = G.place(Point(-G.EAVE_SIDE - 0.9, 30.0), mirror, theta, tx, ty)
+        text(page, pt.x, pt.y, "EAVE LINE (WALL + 1'-3\")", size=5.5, color=PURPLE, angle=theta + 90, align="center")
+        pt = G.place(Point(G.W + G.EAVE_SIDE + 0.5, 30.0), mirror, theta, tx, ty)
+        text(page, pt.x, pt.y, "EAVE LINE (WALL + 1'-3\")", size=5.5, color=PURPLE, angle=theta - 90, align="center")
     draw_poly(sh, parts["deck"], color=TAN, fill=TAN_FILL, width=1.0, fill_opacity=0.55)
     draw_poly(sh, parts["stair"], color=TAN, fill=TAN_FILL, width=0.8, fill_opacity=0.55)
     draw_poly(sh, parts["bulkhead"], color=DGRAY, fill=WHITE, width=0.9, fill_opacity=0.8)
@@ -233,6 +241,10 @@ def dims_for(page, parts, enclosed_parts=("garage",)):
     d["w_f"] = dim_to_line(page, sh, corner(main, "sw"), "west", (0, 1.5)); d["w_r"] = dim_to_line(page, sh, corner(main, "nw"), "west", (0, 1.5))
     d["e_f"] = dim_to_line(page, sh, corner(main, "se"), "east", (0, 1.5)); d["e_r"] = dim_to_line(page, sh, corner(main, "ne"), "east", (0, 1.5))
     d["r_w"] = dim_to_line(page, sh, corner(main, "nw"), "rear_lower", (-2.5, 0)); d["r_e"] = dim_to_line(page, sh, corner(main, "ne"), "rear_lower", (2.5, 0))
+    if "main_eave" in parts:
+        ev = parts["main_eave"]
+        d["ev_w_f"] = dim_to_line(page, sh, corner(ev, "sw"), "west", (0, -1.7), color=PURPLE); d["ev_w_r"] = dim_to_line(page, sh, corner(ev, "nw"), "west", (0, -1.7), color=PURPLE)
+        d["ev_e_f"] = dim_to_line(page, sh, corner(ev, "se"), "east", (0, -1.7), color=PURPLE); d["ev_e_r"] = dim_to_line(page, sh, corner(ev, "ne"), "east", (0, -1.7), color=PURPLE)
     d["deck_w"] = dim_to_line(page, sh, corner(deck, "nw"), "rear_lower", (-2.5, 0)); d["deck_e"] = dim_to_line(page, sh, corner(deck, "ne"), "rear_lower", (2.5, 0))
     d["bh"] = dim_to_line(page, sh, corner(bh, "nw"), "rear_lower", (-2.5, 0))
     sh.commit(); return d
@@ -263,7 +275,14 @@ def make():
     tx, ty = pick_translation(T, False, theta, G.MAIN, "rear")
     txf, tyf = pick_translation(T, False, theta, G.MAIN, "front"); slide = math.hypot(txf-tx, tyf-ty)
     prot = protected_trees()
-    results = {"theta": theta, "slide": slide, "protected_trees": prot}
+    from analysis import max_width_with_eaves, max_eave_for_width
+    w_max = max_width_with_eaves(theta); e_max = max_eave_for_width(theta)
+    results = {"theta": theta, "slide": slide, "protected_trees": prot, "max_width_with_eaves": w_max, "max_eave_for_40ft": e_max}
+    EAVE_PARAS = lambda d: [
+      "**ROOF OVERHANG (owner's rule: 12\" side eave + 3\" margin = 1'-3\" beyond each side wall)",
+      "Eave line (purple) is %.2f' / %.2f' from the west lot line and %.2f' / %.2f' from the east lot line at the front / rear corners, i.e. %.1f\" INSIDE the 15' side setback at both rear corners and %.1f\" clear at the front corners. The envelope narrows toward the rear, so the rear ~37' of eave sits inside the line." % (d["ev_w_f"], d["ev_w_r"], d["ev_e_f"], d["ev_e_r"], 12*(15-min(d["ev_w_r"], d["ev_e_r"])), 12*(min(d["ev_w_f"], d["ev_e_f"])-15)),
+      "A 40'-0\" body cannot hold 1'-3\" on both sides anywhere on this lot: the most it can hold is %.1f\" per side (rotation does not help; parallel is already the best angle). To keep the rule, narrow the main body to 39'-6\" (max %.2f' wall to wall) or reduce the side overhang to about 9\" on the rear 37' of the house. Front/rear rake overhangs are NOT allowed for here; if the Town measures those too, the main body loses another 1'-3\" of depth at the rear." % (12*e_max, w_max),
+    ]
 
     for sheet_no, (mirror, title, sub) in enumerate([
         (True,  "OPTION 1 - PLAN MIRRORED (GARAGE ON WEST, DRIVEWAY SIDE); HOUSE PARALLEL WITH SIDE LOT LINES",
@@ -273,10 +292,11 @@ def make():
     ], start=1):
         page = sheet_base(doc, src)
         parts = G.placed_parts(mirror, theta, tx, ty); enclosed = G.place(G.ENCLOSED, mirror, theta, tx, ty)
+        parts["main_eave"] = G.place(G.MAIN_EAVE, mirror, theta, tx, ty)
         rep = part_report(parts); drive = driveway_polygon(mirror, theta, tx, ty, G.PROJ)
         fade_existing(page); draw_envelope(page)
         sh = page.new_shape(); draw_poly(sh, drive, color=GRAY, fill=DRIVE_FILL, width=0.8, fill_opacity=0.5); sh.commit()
-        draw_house(page, parts, enclosed, mirror, theta, tx, ty)
+        draw_house(page, parts, enclosed, mirror, theta, tx, ty, eave_local=G.ROOFED_EAVE)
         c = drive.centroid; text(page, c.x, c.y, "PROPOSED DRIVE", size=6, color=DGRAY, align="center")
         footprint = unary_union([parts[k] for k in ("main", "garage", "porch", "deck", "bulkhead")])
         conf = tree_conflicts(footprint, drive); mark_trees(page, conf)
@@ -300,6 +320,8 @@ def make():
           "Bulkhead: %.1f' from rear lot line  -  %.1f' INSIDE the rear setback." % (d["bh"], 23.2-d["bh"]),
           "=> The enclosed house as drawn does NOT fit the envelope in any orientation: a 40'-wide rectangle parallel with the lot can be at most ~46.3' deep here, vs. 52'-6\" for this plan. Sheet 4 shows the largest front projection that fits (3'-0\" with the garage on the west, 1'-3\" with it on the east); the memo lists the relief/redesign options.",
           "",
+        ] + EAVE_PARAS(d) + [
+          "",
           "**SITE, TREES, UTILITIES",
           "Trees within 3' of the footprint or drive (marked X): %s." % (", ".join("%d\"%s" % (t[2], t[3]) for t in conf) if conf else "none"),
           "Protected trees (>= 6\" DBH in the setback strips, Tree Preservation Bylaw): %s." % ", ".join("%d\"%s" % (t[2], t[3]) for t in prot),
@@ -310,14 +332,20 @@ def make():
         ] + ZONING_PARAS + [""] + PERMIT_PARAS + ["", "**Red dimensions are scaled from the ECP linework (+/- 0.3'); verify by field layout before permitting."]
         textbox(page, (972, 700, 1240, 1228), notes, title="NOTES - OPTION %d" % sheet_no, title_size=8.5)
         results[sheet_no] = dict(mirror=mirror, rep=rep, conf=conf, d=d)
+        rep.pop("main_eave", None)
 
     # ---------------- Sheet 3: orientation study ----------------
     page = sheet_base(doc, src); fade_existing(page); draw_envelope(page)
     par = G.place(G.MAIN, False, theta, tx, ty)
     a = 21.55; sq = Polygon([(a, 20), (a+40, 20), (a+40, 65), (a, 65)])
+    par_eave = G.place(G.MAIN_EAVE, False, theta, tx, ty)
     sh = page.new_shape()
     draw_poly(sh, sq, color=RED, fill=PINK, width=1.8, dashes="[6 3] 0", fill_opacity=0.35)
-    draw_poly(sh, par, color=BLUE, fill=BLUE_FILL, width=2.2, fill_opacity=0.35); sh.commit()
+    draw_poly(sh, par, color=BLUE, fill=BLUE_FILL, width=2.2, fill_opacity=0.35)
+    draw_poly(sh, par_eave, color=PURPLE, width=0.9, dashes="[3 2] 0"); sh.commit()
+    sh = page.new_shape()
+    for w, ln in (("nw", "west"), ("ne", "east")): dim_to_line(page, sh, corner(par_eave, w), ln, (0, 3.2), color=PURPLE)
+    sh.commit()
     sh = page.new_shape(); set_house_axis(0.0)
     for w in ("nw", "sw"): dim_to_line(page, sh, corner(sq, w), "west", (0, 1.5))
     for w in ("ne", "se"): dim_to_line(page, sh, corner(sq, w), "east", (0, 1.5))
@@ -329,7 +357,8 @@ def make():
     text(page, 41.6, 38.5, "MAIN BODY 40' x 45' - SQUARE TO STREET", 7, RED, align="center")
     banner(page, "SHEET 3 - ORIENTATION STUDY: PARALLEL WITH THE LOT vs. SQUARE TO CENTRAL STREET",
            "Only the 40' x 45' main body is shown. Blue = rotated 6.3 deg to match the side lot lines (fits). Red dashed = square to the street at its best, balanced position (does not fit). Red = square-to-street distances, blue = parallel distances.")
-    legend(page, [("poly", BLUE, BLUE_FILL, None, "Main body parallel with side lot lines - fits, ~1.0' spare/side"),
+    legend(page, [("poly", BLUE, BLUE_FILL, None, "Main body parallel with side lot lines - walls fit, ~1.0' spare/side"),
+                  ("line", PURPLE, None, "[3 2] 0", "Its eave line (walls + 1'-3\") - 3\" inside the line at rear corners"),
                   ("poly", RED, PINK, "[6 3] 0", "Main body square to Central St - ~1.1' over each side line"),
                   ("line", ORANGE, None, "[7 4] 0", "Setback envelope per ECP"),
                   ("poly", GRAY, WHITE, "[4 3] 0", "Existing dwelling to be removed")])
@@ -346,7 +375,7 @@ def make():
       "",
       "Rotating slightly less than parallel (about 5.5 deg) trades side clearance for ~0.5' more depth - not enough to matter. Exactly parallel is recommended.",
       "",
-      "**EAVES: the spare side clearance is only ~1.0' per side, so a typical 12\"-16\" roof overhang lands on or just over the 15' line. Confirm with the Building Commissioner whether eaves count (Sec. 6.2.7 also contains a 3' side-yard exception for low, <= 15'-high portions of the principal structure in Res. C - get the exact text).",
+      "**EAVES (owner's rule: 12\" overhang + 3\" margin = 1'-3\" per side): the walls have only ~1.0' spare at the rear corners and ~1.3' at the front, so the purple eave line sits about 3\" inside the 15' setback at both rear corners and ~0.6\" clear at the front. The most a 40'-wide body can hold here is %.1f\" per side; with 1'-3\" per side the body can be at most %.2f' wide. Options: narrow the main body to 39'-6\", or hold the side overhang to ~9\" on the rear 37' of the house. Square to the street the eave line would be ~2.3' over each side line. Sec. 6.2.7 also contains a 3' side-yard exception for low, <= 15'-high portions of the principal structure in Res. C - get the exact text; it may cover eaves." % (12*e_max, w_max),
     ]
     textbox(page, (972, 700, 1240, 1228), notes3, title="NOTES - ORIENTATION STUDY", title_size=8.5)
 
@@ -372,7 +401,9 @@ def make():
     sh = page.new_shape(); draw_poly(sh, drive4, color=GRAY, fill=DRIVE_FILL, width=0.8, fill_opacity=0.5); sh.commit()
     ghost = G.place(unary_union([G.GARAGE_PROJ, G.PORCH]), mirror, theta, tx4, ty4)
     sh = page.new_shape(); draw_poly(sh, ghost, color=RED, width=0.9, dashes="[3 3] 0"); sh.commit()
-    draw_house(page, parts4, enclosed4, mirror, theta, tx4, ty4, garage_proj=p_use, porch_proj=pp_use)
+    parts4["main_eave"] = G.place(G.MAIN_EAVE, mirror, theta, tx4, ty4)
+    draw_house(page, parts4, enclosed4, mirror, theta, tx4, ty4, garage_proj=p_use, porch_proj=pp_use,
+               eave_local=G.with_side_eaves(unary_union([G.MAIN, garage4, porch4])))
     c = drive4.centroid; text(page, c.x, c.y - 1, "PROPOSED DRIVE", size=6, color=DGRAY, align="center")
     footprint4 = unary_union([parts4[k] for k in ("main", "garage", "porch", "deck", "bulkhead")])
     conf4 = tree_conflicts(footprint4, drive4); mark_trees(page, conf4)
@@ -397,6 +428,8 @@ def make():
       "Rear deck 16'x14': %.1f' to %.1f' from rear lot line  -  %.1f' INSIDE the rear setback." % (min(d4["deck_w"], d4["deck_e"]), max(d4["deck_w"], d4["deck_e"]), 23.2 - min(d4["deck_w"], d4["deck_e"])),
       "Bulkhead: %.1f' from rear lot line  -  %.1f' INSIDE the rear setback." % (d4["bh"], 23.2 - d4["bh"]),
       "",
+    ] + EAVE_PARAS(d4) + [
+      "",
       "**REAR DECK / BULKHEAD",
       "Because the main body's rear wall sits ON the rear setback line, any attached deck or bulkhead is inside the rear setback, and Sec. 6.2.8 measures the rear yard to any structure attached to the dwelling (only uncovered steps/ramps are exempt). Options: (a) replace the deck with an at-grade patio/terrace reached by uncovered steps; (b) shrink the deck to a landing + steps; (c) ask the ZBA for relief for the deck only; (d) drop the bulkhead: grade at the rear is ~4-5' below the street, so a walk-out basement door in the rear foundation wall (no projection) can replace it, or use an interior basement stair. A 14'-deep first-floor deck here would stand ~5-6' above grade at its rail - a walk-out lower level with a patio may suit the site better anyway.",
       "",
@@ -404,6 +437,7 @@ def make():
       "",
     ] + ZONING_PARAS
     textbox(page, (972, 700, 1240, 1228), notes4, title="NOTES - OPTION 3", title_size=8.5)
+    rep4.pop("main_eave", None)
     results[4] = dict(pmax=pmax, pmax_e=pmax_e, p_use=p_use, porch_max=porch_max, pp_use=pp_use, rep=rep4, d=d4, conf=conf4)
 
     doc.save(OUT_PDF, garbage=3, deflate=True)
