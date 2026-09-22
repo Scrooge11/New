@@ -1,0 +1,113 @@
+{
+  "built": "2026-09-22",
+  "data_vintage": "CY24_FY24",
+  "source": "MassGIS Level 3 standardized assessor parcels, town 026 Belmont",
+  "residential_records_total": 8125,
+  "improved_residential_records": 8030,
+  "improved_residential_excluding_institutional": 8018,
+  "non_owner_occupied": 1648,
+  "occupancy_breakdown": {
+    "owner-occupied (tax bill goes to the property)": 6283,
+    "absentee - owner elsewhere in Belmont": 905,
+    "absentee - elsewhere in MA": 565,
+    "absentee - out of state": 119,
+    "absentee - elsewhere in MA (PO Box)": 42,
+    "unknown - PO Box in Belmont": 42,
+    "owner-occupied (other unit number of same building)": 29,
+    "owner in same building (different unit)": 16,
+    "absentee - out of state (PO Box)": 14,
+    "absentee - out of country": 3
+  },
+  "absentee_by_property_type": {
+    "Single family": {
+      "absentee": 297,
+      "owner_or_unknown": 4237
+    },
+    "Condominium": {
+      "absentee": 578,
+      "owner_or_unknown": 1222
+    },
+    "Two-family": {
+      "absentee": 619,
+      "owner_or_unknown": 857
+    },
+    "Three-family": {
+      "absentee": 96,
+      "owner_or_unknown": 37
+    },
+    "Multiple houses on one parcel": {
+      "absentee": 1,
+      "owner_or_unknown": 4
+    },
+    "Apartments (4-8 units)": {
+      "absentee": 27,
+      "owner_or_unknown": 2
+    },
+    "Apartments (8+ units)": {
+      "absentee": 4,
+      "owner_or_unknown": 0
+    },
+    "Mixed use, mostly residential": {
+      "absentee": 24,
+      "owner_or_unknown": 9
+    },
+    "Mixed use, mostly commercial": {
+      "absentee": 2,
+      "owner_or_unknown": 2
+    }
+  },
+  "list_sizes": {
+    "Non-owner-occupied (all)": 1648,
+    "Likely inherited (absentee)": 537,
+    "Individuals & trusts only": 1018,
+    "Estate & heirs owned": 6,
+    "Out of country": 3,
+    "Out of state": 133,
+    "Elsewhere in MA": 607,
+    "Elsewhere in Belmont": 905,
+    "LLC & corporate owned": 665,
+    "Trust owned (absentee)": 341,
+    "PO Box or unclear": 42,
+    "Life-estate watchlist": 108,
+    "Vacant residential land": 92,
+    "Tax delinquent (known)": 1
+  },
+  "owner_type_breakdown_absentee": {
+    "individual": 655,
+    "LLC / corporate": 630,
+    "trust": 341,
+    "individual (life estate)": 20,
+    "estate / heirs": 2
+  },
+  "top_mailing_states_absentee": {
+    "MA": 1512,
+    "FL": 26,
+    "CA": 24,
+    "NH": 11,
+    "TX": 10,
+    "CT": 8,
+    "VA": 6,
+    "OH": 6,
+    "MD": 5,
+    "ME": 4,
+    "WA": 4,
+    "NY": 4,
+    "AZ": 4,
+    "(blank)": 3,
+    "NC": 3
+  },
+  "largest_absentee_owners": {
+    "OAK REALTY & SERVICE COMPANY LLC": 391,
+    "125 TRAPELO LLC": 26,
+    "BELCP LLC": 9,
+    "KAPSALIS STEVEN": 8,
+    "DLORA LLC": 7,
+    "RPZ REALTY LAND TRUST LLC TRS": 5,
+    "HESSION TR ANN LOUISE": 5,
+    "WINTERS TRS PAUL R & PRISCILLA & MARION": 5,
+    "ROZZI ETAL TRS PANFILO E": 4,
+    "COSMAN TRS HELGA": 4,
+    "KIMIFER PROPERTIES LLC": 4,
+    "RPZ REALTY SERIES LLC": 4
+  }
+}

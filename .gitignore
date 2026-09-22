@@ -1,0 +1,4 @@
+# raw MassGIS downloads are re-fetched by belmont/pipeline/fetch_massgis.py
+belmont/data/raw/
+__pycache__/
+*.pyc
