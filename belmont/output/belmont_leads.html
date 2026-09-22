@@ -96,6 +96,12 @@ main{display:flex;flex-direction:column;gap:10px;margin-top:14px}
 .mailblock{margin-top:8px;padding:8px 10px;border:1px dashed var(--line-strong);border-radius:8px;font-size:.92rem;line-height:1.35;display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
 .mini{flex:none;min-height:32px;padding:4px 10px;border-radius:6px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:.78rem;cursor:pointer}
 .props{margin-top:8px;font-size:.86rem;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.contact{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px;font-size:.9rem;align-items:center}
+.contact a{color:var(--accent);font-weight:500;text-decoration:none}
+.contact a:hover{text-decoration:underline}
+.addcontact{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.addcontact input{padding:8px 10px;border:1px solid var(--line-strong);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px;min-width:0;width:100%}
+.muted{color:var(--muted);font-size:.84rem}
 .props b{color:var(--ink);font-weight:500}
 .ctl{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;margin-top:10px}
 textarea.notes{width:100%;margin-top:8px;min-height:44px;padding:8px 10px;border:1px solid var(--line-strong);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px;resize:vertical}
@@ -185,6 +191,8 @@ footer a{color:var(--accent)}
   </div>
   <label>Letter 1 body<textarea id="s_letter1"></textarea></label>
   <label>Letter 2 body (follow-up)<textarea id="s_letter2"></textarea></label>
+  <label>Import contacts (paste the contents of contacts_appended.csv from merge_contacts.py)<textarea id="s_import" style="min-height:110px" placeholder="contact_id,full_name,phones,emails,do_not_call_phones,sources&#10;hh_f272196169,Isolina Gianino,(617) 555-0100; (617) 555-0101,name@example.com,(617) 555-0101,vendor.csv"></textarea></label>
+  <div class="actions"><button class="btn" id="s_import_btn" type="button">Import contacts into the shared database</button><span class="help">Phones and emails are stored only here, in this page's private database, never in the repository.</span></div>
   <p class="help">Merge fields: {{salutation}} {{contact_name}} {{first_names}} {{property_phrase}} {{property_address}} {{sender_name}} {{company}} {{phone}} {{email}} {{closing}} {{date}}. A line starting with "- " prints as a bullet.</p>
   <div class="actions">
     <button class="btn primary" id="settings-save" type="button">Save</button>
@@ -400,6 +408,17 @@ footer a{color:var(--accent)}
     if (h.out_of_state) badge('Out of state', 'var(--c-state)'); else if (h.absentee) badge('Absentee', 'var(--c-ma)');
     if (h.kind==='organization') badge('Trust / entity', 'var(--c-belmont)');
     if (badges.childNodes.length) c.appendChild(badges);
+    var ct = el('div','contact');
+    (st.phones||[]).forEach(function(p){ var a=el('a',null,p); a.href='tel:'+p.replace(/[^\d+]/g,''); ct.appendChild(a); if ((st.dnc||[]).indexOf(p)>=0) { var b=el('span','badge','Do not call'); b.style.setProperty('--bc','var(--c-tax)'); ct.appendChild(b); } });
+    (st.emails||[]).forEach(function(m){ var a=el('a',null,m); a.href='mailto:'+m; ct.appendChild(a); });
+    if (st.phone) { var pa=el('a',null,st.phone); pa.href='tel:'+st.phone.replace(/[^\d+]/g,''); ct.appendChild(pa); }
+    if (st.email) { var ea=el('a',null,st.email); ea.href='mailto:'+st.email; ct.appendChild(ea); }
+    if (!ct.childNodes.length) ct.appendChild(el('span','muted','No phone or email on file yet'));
+    c.appendChild(ct);
+    var add = el('div','addcontact');
+    var ip = document.createElement('input'); ip.type='tel'; ip.placeholder='Add phone'; ip.dataset.id=h.id; ip.dataset.field='phone'; ip.value=st.phone||''; ip.setAttribute('aria-label','Phone for '+h.contact_name); add.appendChild(ip);
+    var ie = document.createElement('input'); ie.type='email'; ie.placeholder='Add email'; ie.dataset.id=h.id; ie.dataset.field='email'; ie.value=st.email||''; ie.setAttribute('aria-label','Email for '+h.contact_name); add.appendChild(ie);
+    c.appendChild(add);
     var ctl = el('div','ctl');
     var lab = el('label',null,'Status'); var sel = document.createElement('select'); sel.dataset.id = h.id;
     STATUSES.forEach(function(s){ var o=document.createElement('option'); o.value=s; o.textContent=s; sel.appendChild(o); }); sel.value = status; lab.appendChild(sel); ctl.appendChild(lab);
@@ -417,7 +436,7 @@ footer a{color:var(--accent)}
   var pendingRender = false;
   function renderCampaign(){
     var active = document.activeElement;
-    if (active && active.tagName==='TEXTAREA' && $('list').contains(active)) { pendingRender = true; return; }
+    if (active && (active.tagName==='TEXTAREA' || active.tagName==='INPUT') && $('list').contains(active)) { pendingRender = true; return; }
     var c = currentCampaign();
     $('campdesc').textContent = c.description + (store.ready ? (store.local ? ' Statuses save on this device only.' : ' Statuses sync through the shared database.') : ' Connecting to the shared database...');
     var counts = {}; c.households.forEach(function(h){ var s=contactState(h.id).status||'Not contacted'; counts[s]=(counts[s]||0)+1; });
@@ -471,11 +490,12 @@ footer a{color:var(--accent)}
     setTimeout(function(){ window.print(); }, 50);
   }
   function csvFor(list){
-    var cols = ['contact_id','full_name','salutation','first_names','last_name','address_line_1','address_line_2','city','state','zip','property_address','all_property_addresses','status','notes','life_estate','estate','absentee','out_of_state','priority_score','parcel_ids','owner_names_on_record','letter_property_phrase'];
+    var cols = ['contact_id','full_name','salutation','first_names','last_name','address_line_1','address_line_2','city','state','zip','property_address','all_property_addresses','phones','emails','do_not_call_phones','status','notes','life_estate','estate','absentee','out_of_state','priority_score','parcel_ids','owner_names_on_record','letter_property_phrase'];
     var q = function(v){ v = String(v==null?'':v); return /[",\n]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; };
     var lines = [cols.join(',')];
     list.forEach(function(h){ var st=contactState(h.id); var p0=h.properties[0];
-      lines.push([h.id,h.contact_name,h.salutation,h.first_names,h.surname,h.address_line_1,h.address_line_2,h.city,h.state,h.zip,p0.address,h.properties.map(function(p){return p.address;}).join('; '),st.status||'Not contacted',st.notes||'',h.life_estate?'YES':'',h.estate?'YES':'',h.absentee?'YES':'',h.out_of_state?'YES':'',h.priority,h.properties.map(function(p){return p.parcel_id;}).join('; '),h.owner_names_raw.join('; '),h.property_phrase].map(q).join(',')); });
+      var phones=(st.phones||[]).concat(st.phone?[st.phone]:[]).join('; '), emails=(st.emails||[]).concat(st.email?[st.email]:[]).join('; ');
+      lines.push([h.id,h.contact_name,h.salutation,h.first_names,h.surname,h.address_line_1,h.address_line_2,h.city,h.state,h.zip,p0.address,h.properties.map(function(p){return p.address;}).join('; '),phones,emails,(st.dnc||[]).join('; '),st.status||'Not contacted',st.notes||'',h.life_estate?'YES':'',h.estate?'YES':'',h.absentee?'YES':'',h.out_of_state?'YES':'',h.priority,h.properties.map(function(p){return p.parcel_id;}).join('; '),h.owner_names_raw.join('; '),h.property_phrase].map(q).join(',')); });
     return lines.join('\r\n');
   }
   function saveCsv(list){
@@ -510,6 +530,25 @@ footer a{color:var(--accent)}
   $('btn-settings').addEventListener('click', function(){ fillSettings(); $('settings').hidden=false; $('settings').scrollIntoView({block:'start'}); $('s_sender_name').focus(); });
   $('settings-close').addEventListener('click', function(){ $('settings').hidden=true; });
   $('settings-save').addEventListener('click', function(){ var s={}; SKEYS.forEach(function(k){ s[k]=$('s_'+k).value; }); writeSettings(s); $('settings').hidden=true; notice('Sender and letter text saved.'); });
+  $('s_import_btn').addEventListener('click', function(){
+    var text = $('s_import').value.trim(); if (!text) { notice('Paste the CSV first.'); return; }
+    var lines = text.split(/\r?\n/).filter(function(l){ return l.trim(); });
+    function parseLine(l){ var out=[], cur='', q=false; for (var i=0;i<l.length;i++){ var ch=l[i]; if (q) { if (ch==='"' && l[i+1]==='"') { cur+='"'; i++; } else if (ch==='"') q=false; else cur+=ch; } else if (ch==='"') q=true; else if (ch===',') { out.push(cur); cur=''; } else cur+=ch; } out.push(cur); return out; }
+    var head = parseLine(lines[0]).map(function(h){ return h.trim().toLowerCase(); });
+    var ix = {id:head.indexOf('contact_id'), phones:head.indexOf('phones'), emails:head.indexOf('emails'), dnc:head.indexOf('do_not_call_phones')};
+    if (ix.id<0) { notice('The first line must be the header from contacts_appended.csv (contact_id, phones, emails, do_not_call_phones).', 7000); return; }
+    var all = {}; CAMP.campaigns.forEach(function(c){ c.households.forEach(function(h){ all[h.id]=h; }); });
+    var split = function(s){ return (s||'').split(';').map(function(x){ return x.trim(); }).filter(Boolean); };
+    var n = 0, i = 1;
+    (function next(){
+      if (i>=lines.length) { notice('Imported contact details for '+n+' households.'); render(); return; }
+      var f = parseLine(lines[i++]); var h = all[(f[ix.id]||'').trim()];
+      if (!h) return next();
+      var patch = {phones: ix.phones>=0 ? split(f[ix.phones]) : [], emails: ix.emails>=0 ? split(f[ix.emails]) : [], dnc: ix.dnc>=0 ? split(f[ix.dnc]) : []};
+      if (!patch.phones.length && !patch.emails.length) return next();
+      n++; writeContact(h, patch).then(next, next);
+    })();
+  });
   $('settings-reset').addEventListener('click', function(){ $('s_letter1').value = CAMP.templates.letter1; $('s_letter2').value = CAMP.templates.letter2; notice('Letter text reset to the default wording (not saved yet).'); });
 
   /* ---------- events ---------- */
@@ -518,7 +557,13 @@ footer a{color:var(--accent)}
   $('btn-mark').addEventListener('click', markShown);
   var noteTimers = {};
   $('list').addEventListener('change', function(e){
-    var t = e.target; if (t.tagName!=='SELECT' || !t.dataset.id) return;
+    var t = e.target;
+    if (t.tagName==='INPUT' && t.dataset.field && t.dataset.id) {
+      var hh = currentCampaign().households.filter(function(x){ return x.id===t.dataset.id; })[0]; if (!hh) return;
+      var patch = {}; patch[t.dataset.field] = t.value.trim(); if ((contactState(hh.id)[t.dataset.field]||'')!==patch[t.dataset.field]) writeContact(hh, patch);
+      return;
+    }
+    if (t.tagName!=='SELECT' || !t.dataset.id) return;
     var h = currentCampaign().households.filter(function(x){ return x.id===t.dataset.id; })[0]; if (!h) return;
     var now = new Date().toISOString(), patch = {status:t.value, status_at:now}; var st = contactState(h.id);
     if (t.value==='Letter 1 sent' && !st.letter1_at) patch.letter1_at = now;
@@ -532,7 +577,9 @@ footer a{color:var(--accent)}
     noteTimers[t.dataset.id] = setTimeout(function(){ var h = currentCampaign().households.filter(function(x){ return x.id===t.dataset.id; })[0]; if (h && (contactState(h.id).notes||'')!==t.value) writeContact(h, {notes:t.value}); }, 900);
   });
   $('list').addEventListener('focusout', function(e){
-    var t = e.target; if (t.tagName!=='TEXTAREA' || !t.dataset.id) return;
+    var t = e.target;
+    if (t.tagName==='INPUT' && t.dataset.field) { if (pendingRender) { pendingRender=false; setTimeout(render, 0); } return; }
+    if (t.tagName!=='TEXTAREA' || !t.dataset.id) return;
     clearTimeout(noteTimers[t.dataset.id]);
     var h = currentCampaign().households.filter(function(x){ return x.id===t.dataset.id; })[0];
     if (h && (contactState(h.id).notes||'')!==t.value) writeContact(h, {notes:t.value});

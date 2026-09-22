@@ -2,3 +2,11 @@
 belmont/data/raw/
 __pycache__/
 *.pyc
+
+# skip-trace results, hand-collected contact details and merged lists hold phone numbers and emails:
+# they stay on your machine and never enter the repository
+belmont/campaigns/*/skip_trace_results/*
+!belmont/campaigns/*/skip_trace_results/README.txt
+belmont/campaigns/*/manual_contacts.csv
+belmont/campaigns/*/contacts_appended.csv
+belmont/campaigns/*/mailing_list_with_contacts.*

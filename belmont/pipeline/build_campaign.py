@@ -82,6 +82,30 @@ def load_rows():
     return [r for r in rows if not r["owner_type"].startswith("institutional")]
 
 
+def load_appended(camp_id):
+    """Phones / emails appended by merge_contacts.py (skip-trace results + manual_contacts.csv)."""
+    path = os.path.join(CAMP, camp_id, "contacts_appended.csv")
+    out = {}
+    if os.path.exists(path):
+        for r in csv.DictReader(open(path, newline="", encoding="utf-8")):
+            split = lambda s: [x.strip() for x in (s or "").split(";") if x.strip()]
+            out[r["contact_id"]] = {"phones": split(r["phones"]), "emails": split(r["emails"]),
+                                    "dnc": split(r["do_not_call_phones"]), "sources": split(r["sources"])}
+    return out
+
+
+def ensure_manual_template(camp_id, households):
+    """Create manual_contacts.csv (pre-filled with ids and names) once; never overwrite user edits."""
+    path = os.path.join(CAMP, camp_id, "manual_contacts.csv")
+    if os.path.exists(path):
+        return
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["contact_id", "full_name", "phone", "email", "source", "do_not_call", "notes"])
+        for h in households:
+            w.writerow([h["id"], h["contact_name"], "", "", "", "", ""])
+
+
 def build_households(rows, camp_id):
     groups = {}
     for r in rows:
@@ -138,6 +162,7 @@ MAIL_COLS = ["contact_id", "full_name", "salutation", "first_names", "last_name"
              "zip", "property_address", "all_property_addresses", "property_count", "property_type", "mailing_is_property",
              "absentee", "out_of_state", "owner_kind", "life_estate", "estate", "et_al", "care_of", "priority_score",
              "assessed_total", "year_built", "years_since_last_transfer", "parcel_ids", "owner_names_on_record", "letter_property_phrase"]
+CONTACT_COLS = ["phone_1", "phone_2", "phone_3", "email_1", "email_2", "do_not_call_phones", "contact_sources"]
 
 
 def household_row(h):
@@ -276,7 +301,12 @@ def main():
         sel = [r for r in rows if camp["select"](r)]
         hh = build_households(sel, camp["id"])
         d = os.path.join(CAMP, camp["id"])
-        os.makedirs(d, exist_ok=True)
+        os.makedirs(os.path.join(d, "skip_trace_results"), exist_ok=True)
+        note = os.path.join(d, "skip_trace_results", "README.txt")
+        if not os.path.exists(note):
+            open(note, "w").write("Drop skip-trace vendor result CSVs here, then run: python belmont/pipeline/merge_contacts.py --campaign "
+                                  + camp["id"] + "\nThis folder is ignored by git so phone numbers and emails never reach the repository.\n")
+        ensure_manual_template(camp["id"], hh)
         with open(os.path.join(d, "mailing_list.csv"), "w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=MAIL_COLS)
             w.writeheader()

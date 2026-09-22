@@ -119,7 +119,9 @@ address line for USPS. The dashboard's Campaign tab shows each household with a 
 letter 1 sent, replied, interested, do not contact...), notes, a mailing-list export, and print-ready
 letters merged from editable sender settings; statuses live in the artifact's shared database so phone
 and desktop stay in sync. The assessor data carries no phone numbers or emails: run
-`skip_trace_export.csv` through a skip-tracing service before any call or email campaign, and read
+`skip_trace_export.csv` through a skip-tracing service, merge the results with `merge_contacts.py`
+(contact details stay in git-ignored files and the dashboard's private database, never in this public
+repository), and read
 `campaigns/README.md` for the sequence and the rules (M.G.L. c. 93A, 254 CMR 3, TCPA / Do Not Call,
 CAN-SPAM, elder-protection). A life-estate holder cannot sell without the remaindermen, so every
 template invites the family in.
