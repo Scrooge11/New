@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /brand/
+Disallow: /site-src/
+
+Sitemap: https://www.yourdomain.com/sitemap.xml

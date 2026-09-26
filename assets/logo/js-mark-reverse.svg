@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520" role="img" aria-labelledby="t">
+  <title id="t">JS Contracting &amp; Electrical Services logo</title>
+  <defs>
+    <linearGradient id="gLetter" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#2F82F5"/><stop offset="0.55" stop-color="#1655B8"/><stop offset="1" stop-color="#0E3A7A"/>
+    </linearGradient>
+    <linearGradient id="gBolt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#A9E4FF"/><stop offset="0.5" stop-color="#3DB4FF"/><stop offset="1" stop-color="#2F82F5"/>
+    </linearGradient>
+    <linearGradient id="gCord" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0E3A7A"/><stop offset="0.6" stop-color="#1655B8"/><stop offset="1" stop-color="#2F82F5"/>
+    </linearGradient>
+    <linearGradient id="gPlug" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2F82F5"/><stop offset="1" stop-color="#0E3A7A"/>
+    </linearGradient>
+    <linearGradient id="gBlade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F2F5F8"/><stop offset="1" stop-color="#8B96A5"/>
+    </linearGradient>
+  </defs>
+  <g id="mark">
+    <path d="M 200 400 C 150 500, 340 548, 566 494 C 640 476, 660 462, 682 448" fill="none" stroke="url(#gCord)" stroke-width="22" stroke-linecap="round"/>
+    <path d="M 200 400 C 150 500, 340 548, 566 494 C 640 476, 660 462, 682 448" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.28" transform="translate(0 -5)"/>
+    <g transform="translate(682 448) rotate(-32.47)">
+      <rect x="-46" y="-13" width="50" height="26" rx="7" fill="url(#gPlug)"/>
+      <rect x="-38" y="-17" width="7" height="34" rx="3" fill="#0B1F3F" opacity="0.8"/>
+      <rect x="-24" y="-17" width="7" height="34" rx="3" fill="#0B1F3F" opacity="0.8"/>
+      <rect x="0" y="-32" width="84" height="64" rx="16" fill="url(#gPlug)"/>
+      <rect x="82" y="-21" width="40" height="11" rx="3" fill="url(#gBlade)"/>
+      <rect x="82" y="10" width="40" height="11" rx="3" fill="url(#gBlade)"/>
+    </g>
+    <path transform="translate(150 415)" d="M-19.2 0 -2.9 -75.8Q20.1 -75.8 33.6 -77Q47 -78.2 54 -83.5Q60.9 -88.7 64.8 -99.8Q68.6 -110.8 72.9 -130L115.6 -330H227.8L187.5 -138.1Q180.8 -105 174.6 -81.8Q168.4 -58.5 160.4 -43.2Q152.5 -27.8 139.6 -19.2Q126.6 -10.6 106.2 -6.5Q85.9 -2.4 55.4 -1.2Q24.9 0 -19.2 0Z" fill="url(#gLetter)"/>
+    <path transform="translate(388.81 415)" d="M128.5 3.8Q107.9 3.8 84.4 2.6Q60.9 1.4 39.6 -0.5Q18.2 -2.4 2.9 -4.8L18.2 -81.1Q35.5 -79.6 52.5 -78.4Q69.5 -77.2 84.4 -76.7Q99.3 -76.3 109.8 -76.3Q122.8 -76.3 131.2 -76.5Q139.6 -76.7 144.6 -77.7Q149.7 -78.7 152.5 -80.1Q154 -81.1 155.4 -83Q156.8 -84.9 158 -87.3Q159.2 -89.7 160.2 -92.8Q161.2 -95.9 161.6 -99.3Q162.1 -102.6 162.1 -106Q162.1 -110.3 160.2 -112.5Q158.3 -114.6 150.1 -116.6Q142 -118.5 122.8 -121.8L68.6 -130.9Q49.4 -134.3 41.7 -147.3Q34.1 -160.2 34.1 -182.3Q34.1 -193.8 35.7 -207.4Q37.4 -221.1 40.8 -236.5Q48 -268.1 60.9 -287.3Q73.9 -306.5 92.8 -316.6Q111.8 -326.6 136.9 -330.2Q162.1 -333.8 192.8 -333.8Q213 -333.8 234.1 -332.4Q255.2 -331 273.6 -328.8Q292.1 -326.6 304.1 -323.8L287.8 -248.5Q276.3 -249.9 260.2 -251.1Q244.1 -252.3 226.9 -253Q209.6 -253.7 194.3 -253.7Q185.1 -253.7 178.9 -253.3Q172.7 -252.8 168.4 -251.8Q164 -250.9 161.2 -248.5Q158.8 -246.5 156.8 -244.1Q154.9 -241.7 154 -238.9Q153 -236 152.5 -232.6Q152 -229.3 152 -225.4Q152 -219.7 157.1 -217.8Q162.1 -215.8 175.6 -213.4L224.5 -205.3Q238.4 -203.4 251.1 -198.3Q263.8 -193.3 272 -181.3Q280.1 -169.3 280.1 -145.3Q280.1 -139.6 279.6 -132.6Q279.2 -125.7 278 -118Q276.8 -110.3 274.8 -101.2Q266.7 -65.7 254 -44.6Q241.3 -23.5 223.5 -13.2Q205.8 -2.9 182.3 0.5Q158.8 3.8 128.5 3.8Z" fill="url(#gLetter)"/>
+    <g transform="skewX(-9) translate(116 0)">
+      <path d="M 356 40 L 256 238 L 324 238 L 262 452 L 398 212 L 334 212 Z" fill="#0B1F3F" stroke="#0B1F3F" stroke-width="24" stroke-linejoin="miter" stroke-miterlimit="8"/>
+      <path d="M 356 40 L 256 238 L 324 238 L 262 452 L 398 212 L 334 212 Z" fill="url(#gBolt)"/>
+    </g>
+  </g>
+</svg>

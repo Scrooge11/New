@@ -1,0 +1,11 @@
+{
+  "name": "JS Contracting & Electrical Services",
+  "short_name": "JS Electrical",
+  "icons": [
+    { "src": "assets/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#0B1F3F",
+  "background_color": "#F4F7FB",
+  "display": "browser"
+}
