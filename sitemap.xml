@@ -2,6 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.yourdomain.com/</loc><priority>1.0</priority></url>
   <url><loc>https://www.yourdomain.com/services.html</loc><priority>0.9</priority></url>
+  <url><loc>https://www.yourdomain.com/service-area.html</loc><priority>0.7</priority></url>
   <url><loc>https://www.yourdomain.com/about.html</loc><priority>0.6</priority></url>
   <url><loc>https://www.yourdomain.com/contact.html</loc><priority>0.9</priority></url>
+  <url><loc>https://www.yourdomain.com/privacy.html</loc><priority>0.2</priority></url>
+  <url><loc>https://www.yourdomain.com/panel-upgrades.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.yourdomain.com/ev-charger-installation.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.yourdomain.com/generator-installation.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.yourdomain.com/lighting-installation.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.yourdomain.com/electrical-repairs.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.yourdomain.com/remodeling-contractor.html</loc><priority>0.8</priority></url>
 </urlset>

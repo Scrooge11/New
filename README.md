@@ -22,22 +22,32 @@ site-src/                                                        the scripts tha
 
 ## Before going live: fill in the placeholders
 
-Everything below is a placeholder. Search the project for `000-0000`, `yourdomain`, `Your Town`, `00000000` and `[Owner name]`.
+Every business fact lives at the top of `site-src/gen_site.py`. Edit the constants there and run `python3 site-src/gen_site.py .` to rewrite all 13 pages, the sitemap and robots.txt. Editing the HTML directly also works.
 
-| Placeholder | Where | Replace with |
+| Constant | Currently | Replace with |
 |---|---|---|
-| `(000) 000-0000` and `+10000000000` | header, footer, hero, contact page, `site-src/gen_site.py` | the business phone (the `tel:` version needs country code, digits only) |
-| `office@yourdomain.com` | footer, contact page | the business email |
-| `Your Town, ST` | service area section, footer, contact page | the town and state, plus the real service radius (currently "about 30 miles") |
-| `Lic. #00000000` and `#00000000` | footer, about page | electrical license and contractor registration numbers |
-| `[Owner name]` | about page, brand guide mockups | the owner's name |
-| `20+ years in the electrical trade`, manufacturer training line | about page | real credentials, or delete the lines that do not apply |
-| Hours | home and contact pages | real hours |
-| `https://www.yourdomain.com` | every page `<head>`, `sitemap.xml`, `robots.txt` | the final domain |
-
-The fastest way is to edit the constants at the top of `site-src/gen_site.py` and run `python3 site-src/gen_site.py .` which rewrites all five pages. Editing the HTML files directly works too.
+| `PHONE`, `PHONE_TEL` | `(000) 000-0000`, `+10000000000` | the business phone (the `tel:` version is country code plus digits) |
+| `EMAIL` | `office@yourdomain.com` | the business email |
+| `TOWN`, `TOWN_SHORT`, `TOWNS` | Westford, MA and 16 nearby towns (assumed) | the real home base and the towns actually served |
+| `LICENSE`, `HIC` | `Lic. #00000000`, `HIC #000000` | master electrician license and Home Improvement Contractor registration numbers |
+| `SITE_URL` | `https://www.yourdomain.com` | the final domain (feeds canonical tags, sitemap, schema) |
+| `GBP_URL` | placeholder | the Google Business Profile review link (Google Business Profile, "Ask for reviews") |
+| `WARRANTY` | `2-year workmanship warranty` | the real warranty term |
+| `HOURS` | Mon to Fri 7 to 5 | real hours |
+| Prices on the six service pages | typical Massachusetts ranges | the owner's own ranges (`price=` in each `SERVICE_PAGES` entry) |
+| `[Owner name]`, credentials | about page | the owner's name and real credentials |
 
 Also decide whether the site should mention the previous company. It currently does not.
+
+### Pages
+
+| Page | Purpose |
+|---|---|
+| `index.html` | Home: hero, services, why JS, process, reviews, service area, FAQ |
+| `services.html` | All services with the common-jobs table |
+| `panel-upgrades.html`, `ev-charger-installation.html`, `generator-installation.html`, `lighting-installation.html`, `electrical-repairs.html`, `remodeling-contractor.html` | One landing page per money service, each with pricing, FAQ, Service and FAQPage schema |
+| `service-area.html` | Towns served |
+| `about.html`, `contact.html`, `privacy.html`, `404.html` | Company, quote form, privacy policy (needed for Google Ads and Local Services Ads), not-found page |
 
 ## Previewing
 

@@ -311,3 +311,61 @@ strong { font-weight: 600; }
 /* 404 -------------------------------------------------------------------- */
 .notfound { padding-block: clamp(4rem, 10vw, 8rem); }
 .notfound .code { font-family: var(--font-display); font-weight: 800; font-size: clamp(4rem, 12vw, 8rem); line-height: 1; color: var(--electric); margin: 0; }
+
+/* ==========================================================================
+   Service pages, FAQ, service area, reviews (added in launch pass)
+   ========================================================================== */
+.mt { margin-top: 2rem; }
+.breadcrumbs { font-size: 0.9rem; color: var(--muted-on-dark); margin: 0 0 0.75rem; }
+.breadcrumbs a { color: #fff; text-decoration: none; }
+.breadcrumbs a:hover { text-decoration: underline; }
+.breadcrumbs span { margin: 0 0.45rem; opacity: 0.6; }
+.service-layout { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 3rem; align-items: start; }
+.service-layout h2 { font-size: 1.45rem; margin-bottom: 0.9rem; }
+.steps { margin: 0; padding-left: 1.3rem; display: grid; gap: 0.5rem; }
+.steps li { padding-left: 0.25rem; }
+.steps strong { color: var(--navy); }
+.price-box { background: var(--navy); color: #fff; border-radius: var(--radius); padding: 1.5rem; position: sticky; top: 100px; }
+.price-box .label { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75rem; color: var(--electric); font-weight: 700; margin: 0; }
+.price-box .price { font-family: var(--font-display); font-weight: 800; font-size: 1.9rem; line-height: 1.1; margin: 0.25rem 0 0.6rem; color: #fff; }
+.price-box p { color: var(--muted-on-dark); margin: 0 0 1rem; font-size: 0.95rem; }
+.price-box .btn { width: 100%; margin-bottom: 1rem; }
+.price-box .small { font-size: 0.88rem; margin-bottom: 0.5rem; }
+.price-box a:not(.btn) { color: #fff; }
+.faq { display: grid; gap: 0.75rem; max-width: 860px; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.faq details[open] { border-color: var(--blue-bright); }
+.faq summary { cursor: pointer; padding: 1rem 1.25rem; font-family: var(--font-display); font-weight: 700; color: var(--navy); list-style: none; display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.5rem; color: var(--blue-bright); line-height: 1; flex: none; }
+.faq details[open] summary::after { content: "\2212"; }
+.faq .faq-body { padding: 0 1.25rem 1.1rem; }
+.faq .faq-body p { margin: 0; }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.related-card { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.25rem; text-decoration: none; color: var(--navy); font-family: var(--font-display); font-weight: 700; }
+.related-card span { display: block; font-family: var(--font-body); font-weight: 400; color: var(--muted); font-size: 0.92rem; margin-top: 0.3rem; }
+.related-card:hover { border-color: var(--blue-bright); color: var(--blue); }
+.towns-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.6rem 1rem; list-style: none; margin: 0; padding: 0; }
+.towns-grid li { padding: 0.65rem 0.9rem; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; font-weight: 600; color: var(--navy); }
+.towns-grid li small { display: block; font-weight: 400; color: var(--muted); font-size: 0.85rem; }
+.prose { max-width: 70ch; }
+.prose h2 { font-size: 1.35rem; margin-top: 1.75rem; }
+.service-card h3 a { color: inherit; text-decoration: none; }
+.service-card h3 a:hover { color: var(--blue); }
+.service-card .text-link { margin-top: 0.25rem; }
+.reviews-inner { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 3rem; align-items: center; }
+.review-badge { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 2rem; text-align: center; }
+.review-badge .stars { display: flex; justify-content: center; gap: 0.25rem; color: var(--amber); }
+.review-badge .stars svg { width: 32px; height: 32px; }
+.review-badge p { margin: 0.75rem 0 0; font-family: var(--font-display); font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; }
+.btn-outline-navy { background: transparent; color: var(--navy); border-color: var(--navy); }
+.btn-outline-navy:hover { background: var(--navy); color: #fff; }
+.footer-grid-4 { grid-template-columns: 1.6fr 1fr 1fr 1fr; }
+.fieldset-plain { border: 0; padding: 0; margin: 0; }
+.fieldset-plain legend { font-weight: 600; color: var(--navy); padding: 0; margin-bottom: 0.35rem; }
+@media (max-width: 900px) {
+  .service-layout, .reviews-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .price-box { position: static; }
+  .footer-grid-4 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) { .footer-grid-4 { grid-template-columns: 1fr; } }
