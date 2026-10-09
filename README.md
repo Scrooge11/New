@@ -4,6 +4,7 @@ Brand package and website for JS Contracting & Electrical Services.
 
 - **Website**: plain HTML, CSS and a little JavaScript. No build step, no framework. Open `index.html` in a browser or drop the folder on any static host.
 - **Brand**: logo files, colors, type and usage rules. Open `brand/index.html` for the guidelines.
+- **Business plan**: `business/README.md` links the client-ready plan and holds the three-year financial model and the research behind it.
 
 ## What is where
 
@@ -18,6 +19,7 @@ brand/logo/svg/                                                  every logo vari
 brand/logo/png/                                                  same logos as transparent PNG, print resolution
 brand/source/                                                    the script that draws the logos (see "Regenerating the logos")
 site-src/                                                        the scripts that generated the HTML pages and the brand guide
+business/                                                        business plan link, financial model (xlsx), research memos
 ```
 
 ## Before going live: fill in the placeholders
