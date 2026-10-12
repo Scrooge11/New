@@ -2,7 +2,7 @@
 
 Rename the company **Senarian Contracting & Electrical Services** and build it on the domain **senarian.com**. The name is the only candidate that is personal, completely unclaimed and ownable across every domain that matters, and it matches the plan's core promise: the owner on every job. The runner-up is **495 Electric & Contracting** if a regional name is preferred, and **Galvani Electric & Contracting** if the Italian heritage angle is preferred.
 
-The current name, JS Contracting & Electrical Services, is legally available and has a workable domain, but the initials are generic, an unrelated J.S. Electric already operates in Massachusetts, and nothing about "JS" tells a customer who they are hiring.
+The current name, JS Contracting & Electrical Services, is legally available and has a workable domain, but the head-to-head section below shows the cost: twelve similarly named companies in Massachusetts and New Hampshire, four of them within 30 miles, including a one-star "JS Electric" in Nashua and a "JS Electric, Inc." in Wilbraham run by another Jeff. Nothing about "JS" tells a customer who they are hiring, and the exact-match domains are taken.
 
 ## What was checked, and what still needs a human
 
@@ -30,13 +30,13 @@ Three checks must still be done from a browser before any name is final:
 | Check | Result |
 | --- | --- |
 | Exact name in use anywhere | No |
-| Similar names in Massachusetts | J.S. Electric, Inc. in Wilbraham (also listed as JS Electric, Brimfield), about 80 miles away; J & S Electric Company in Somerville, closed |
-| Similar names in New Hampshire | J & S All State Contracting (Salem), J&S General Contractor (Derry); neither is an electrician |
-| Domains | jscontractingelectrical.com available; jscontracting.com, jselectrical.com, jselectric.com and jselectricalservices.com taken |
+| Similar names in Massachusetts | J.S. Electric, Inc. in Wilbraham (also listed as JS Electric, Inc., Brimfield; owner Jeff Steil), about 70 miles away; JS Contractors, Inc. in Belchertown; J & S Electric Company in Somerville and J.A.S. Electric in Gloucester, both closed |
+| Similar names in New Hampshire | JS Electric in Nashua (claimed listing, one star); J & S All State Contracting (Salem) and J&S General Contractor (Derry), neither an electrician; J & S Electric and J&S Technical Electric in Milton |
+| Domains | jscontractingma.com, jscontractingandelectrical.com and jscontractingelectrical.com available; jscontracting.com, jselectrical.com, jselectric.com, jselectricalservices.com and jscontractingservices.com taken |
 
 **Pros.** Legally clear in Massachusetts. The logo, website and plan are already built on it. Says both trades.
 
-**Cons.** Initials carry no meaning and are easy to confuse with the dozen other JS Electric companies nationally. The best domain is 24 characters long. A customer who hears "JS Electric" may find the Wilbraham company first.
+**Cons.** Initials carry no meaning and are shared with a dozen similarly named companies in the region, detailed in the head-to-head section. The usable domains all need a suffix. A customer who hears "JS Electric" in Nashua finds a one-star listing that is not his.
 
 ### B. The owner's name: Senarian Contracting & Electrical Services
 
@@ -86,6 +86,73 @@ Three checks must still be done from a browser before any name is final:
 | --- | --- | --- | --- |
 | Wire & Wall | wireandwall.com available | None found | Says both trades in three words, straight from the plan's line "one crew for the wiring and the walls"; plain words are weak for trademark and it needs "Electrical & Remodeling" beneath it |
 
+## Head to head: JS versus Senarian
+
+JS Contracting & Electrical Services is the name on the table today, so this section compares it directly with Senarian Contracting & Electrical Services on the two things that decide it: how many similarly named companies already exist in the region, and what each option costs to own online. The short version: twelve JS-type names turned up in Massachusetts and New Hampshire, four of them within 30 miles of Westford, including a one-star "JS Electric" in Nashua; no business anywhere uses Senarian.
+
+### Similarly named companies in the region: the JS option
+
+Distances are approximate road miles from Westford. "Status" is what public listings show as of October 12, 2026.
+
+| Company | Location | Distance | Trade | Status | What it means for JS |
+| --- | --- | --- | --- | --- | --- |
+| JS Electric | Nashua, NH | 15 mi | Electrician | Claimed Yelp listing, 1.0 stars (one review); MapQuest shows a one-star review from April 2025 and one positive review; no website or license number found | Inside the service area with the same name and a bad review. A customer in Tyngsborough or Nashua who searches "JS Electric" finds this one first |
+| J & S Electric Company | Somerville, MA | 30 mi | Electrician | Closed; listings persist on Yelp and The Blue Book | Dead business, live listings that still answer a "JS Electric" search in Middlesex County |
+| J&S All State Contracting | Salem, NH | 22 mi | General contractor since 1979 | Active, with a website | Not an electrician, but "J&S Contracting" is one letter from "JS Contracting" on a referral |
+| J&S General Contractor (Granite State Contractor) | Derry, NH | 27 mi | Exterior contractor for condos and HOAs | Active | Same as above, at the edge of the territory |
+| J.A.S. Electric | Gloucester, MA | 45 mi | Electrician | Closed; Yelp listing persists | Minor |
+| JS Contractors, Inc. | Belchertown, MA | 65 mi | General and roofing contractor since 2000 | Active, BBB accredited | Already on the Massachusetts registry as "JS Contractors, Inc."; JS Contracting & Electrical Services LLC should still be distinguishable, but the state decides |
+| J.S. Electric, Inc. (also listed as JS Electric, Inc. and Steil Electric) | Wilbraham and Brimfield, MA | 70 mi | Electrical contractor, 29 years | Active; website jeffsteilelectric.com; owner Jeff Steil | A second "Jeff" running "JS Electric" in Massachusetts. Statewide searches, supplier accounts and the registry will mix the two up |
+| P J's Electrical | Wilbraham, MA | 70 mi | Electrician | Active | Loose match |
+| J & S Electric | Milton, NH | 75 mi | Electrician since 1993 | Active, NH licensed | Outside the territory; shows in New Hampshire searches |
+| J&S Technical Electric | Milton, NH | 75 mi | Commercial electrician since 1987 | Active | Outside the territory; shows in New Hampshire searches |
+| JS Electrical, LLC | Plainville, CT | 95 mi | Electrical and generator contractor | Active, with a website | Outside the region, but it owns the "JS Electrical" search results across New England |
+| J's Contracting | North Adams, MA | 115 mi | Flooring | Active | Minor |
+
+Four of these are within 30 miles, and the one that matters most, JS Electric in Nashua, is the kind of listing a new company cannot fix: it will sit beside Jeff's Business Profile in map results for the northern half of the territory with a one-star rating that is not his.
+
+### Similarly named companies: the Senarian option
+
+| Company | Location | Status |
+| --- | --- | --- |
+| None found | Massachusetts, New Hampshire, or anywhere else, in any trade | The name is unused as a business name and as a domain |
+
+### The JS domain option, made concrete
+
+If the company stays JS Contracting & Electrical Services, the exact-match .coms are gone and the purchase looks like this:
+
+| Domain | Status | Role |
+| --- | --- | --- |
+| jscontractingma.com | Available | Recommended primary: the shortest option that is easy to say on the phone and paint on a van; email jeff@jscontractingma.com |
+| jscontractingandelectrical.com | Available | Redirect: the full name, exactly as written |
+| jscontractingelectrical.com | Available | Redirect: the full name without "and" |
+| jselectricalwestford.com | Available | Optional redirect for "JS Electrical" searches in town |
+| jscontracting.co, jscontractingco.com | Available | Optional; .co addresses get typed as .com and lost |
+| jscontracting.com, jselectrical.com, jselectric.com, jselectricalservices.com, jscontractingservices.com, jsces.com | Taken | Not available at any price short of buying from the owner |
+
+Three domains, about $30 to $45 a year. Every JS domain carries the same problem in a different form: the memorable ones are taken, and the available ones need a suffix ("ma", "and electrical") that customers will forget or mistype, which sends them to jscontracting.com and whoever owns it.
+
+### The comparison
+
+| Factor | JS Contracting & Electrical Services | Senarian Contracting & Electrical Services |
+| --- | --- | --- |
+| Exact or near-exact names within 30 miles | 4 (JS Electric Nashua, J & S Electric Somerville, J&S All State Salem, J&S General Derry) | 0 |
+| Similar names in Massachusetts and New Hampshire | 12 found | 0 |
+| Who owns the search results today | JS Electric (Nashua, one star), Jeff Steil's JS Electric (Wilbraham), JS Electrical LLC (Connecticut) | Nobody; Jeff would be the only result from day one |
+| Primary domain | jscontractingma.com (exact-match .coms taken) | senarian.com (exact match) |
+| Email | jeff@jscontractingma.com | jeff@senarian.com |
+| Domain cost, year one | About $30 to $45 for three | About $40 to $60 for four |
+| Massachusetts registry | Likely distinguishable, but near "JS Contractors, Inc." and "J.S. Electric, Inc." | Clear |
+| Tells the customer who they are hiring | No; initials | Yes; the owner's name |
+| Spelling and pronunciation | Easy | Needs the name printed under the logo and the redirect domains |
+| Trademark strength | Weak; two letters plus descriptive words | Moderate; a surname with no other users |
+| Brand work already done | Logo, website and plan are built on it | Wordmark re-cut and site regenerated; about a day of work, the rest carries over |
+| Reviews and reputation | Shared with strangers who use the same initials | His alone |
+| Selling the business later | Neutral name is easier to transfer | Surname is slightly harder to transfer |
+| Overall | Workable, but he inherits other people's listings and a Nashua one-star rating | Clean start, one spelling hurdle |
+
+The two columns differ mostly on one point, and it is the one that compounds over time: every review, listing, permit and referral under "JS" is shared with a dozen other companies, while every one under "Senarian" is his. The rebrand cost is a day of work now; the shared-name cost is paid on every search for as long as the company exists.
+
 ## Scorecard
 
 Five points each; 25 is the maximum.
@@ -128,7 +195,7 @@ Four domains cost roughly $40 to $60 a year in total. Register them the same day
 | Checked | Available | Taken or in use |
 | --- | --- | --- |
 | Senarian | senarian.com, .net, .co; senariancontracting.com; senarianelectric.com; senarianelectrical.com; senariancontractingelectrical.com | No business found |
-| JS | jscontractingelectrical.com; js-contracting-electrical.com; jscontracting.co; jscontractingco.com; jselectricalwestford.com | jscontracting.com; jselectrical.com; jselectric.com; jselectricalservices.com; J.S. Electric, Inc. (Wilbraham); J & S All State Contracting (Salem NH) |
+| JS | jscontractingma.com; jscontractingandelectrical.com; jscontractingelectrical.com; jscontracting.co; jscontractingco.com; jselectricalwestford.com | jscontracting.com; jselectrical.com; jselectric.com; jselectricalservices.com; jscontractingservices.com; jsces.com; JS Electric (Nashua NH); J.S. Electric, Inc. (Wilbraham, Jeff Steil); JS Contractors, Inc. (Belchertown); J & S All State Contracting (Salem NH); J&S General Contractor (Derry NH); J & S Electric and J&S Technical Electric (Milton NH); JS Electrical LLC (Plainville CT) |
 | Italian | galvanielectric.com; correnteelectric.com; luceelectric.com | voltaelectric.com; Volta Electric (CA, WA); Volta Charging |
 | Fishing and boating | bowlineelectric.com; striperelectric.com; hookandvolt.com; fathomelectric.com | tackleelectric.com; keelelectric.com; helmelectric.com; anchorelectric.com; Helm Electric (IL, MI, GA) |
 | Regional | 495electric.com; nashobaelectric.com; forgevillageelectric.com; merrimackvalleyelectric.com | minutemanelectric.com; middlesexelectric.com; tworiverselectric.com; Merrimack Valley Electrical (Chelmsford); Minuteman Electric (Billerica); Bay State Electric (Peabody) |
