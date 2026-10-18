@@ -1,9 +1,9 @@
 """Generate JEMCO Contracting & Electrical Services logo SVGs.
 Run: python3 logo.py <outdir>
-Letterforms: Saira Black Italic (SIL OFL) converted to outlines. The E is rebuilt as a polygon with its
-middle arm replaced by a lightning bolt; the cord and plug are drawn geometrically.
+Letterforms: Saira Black Italic (SIL OFL) converted to outlines. The lightning bolt under the name is drawn
+geometrically; it is the one device of the brand and it stands in for an underline.
 """
-import sys, os, math, re
+import sys, os, math
 sys.path.insert(0, os.path.dirname(__file__))
 from text2path import TextPath
 
@@ -18,7 +18,6 @@ BLUE    = '#1655B8'
 BLUE_L  = '#2F82F5'
 ELEC    = '#3DB4FF'
 ELEC_L  = '#A9E4FF'
-STEEL_D = '#8B96A5'
 WHITE   = '#FFFFFF'
 
 NAME = "JEMCO Contracting & Electrical Services"
@@ -34,55 +33,36 @@ def tp(font, wght, wdth=100):
     return _tp[k]
 
 # --------------------------------------------------------------------------
-# Mark geometry. Box: 0..1760 x 0..540. Baseline of letters y=390, cap height 330 (cap top y=60).
+# Mark geometry. Box: 0..1760 x 0..600. Baseline of letters y=390, cap height 330 (cap top y=60).
+# The word spans x 73 (hook of the J) .. 1612 (right edge of the O).
 # --------------------------------------------------------------------------
 CAP = 330
 BASE = 390
-X0 = 92            # origin of the J
-GAP_E = 60         # extra space after the E so the bolt has room before the M
-MARK_W, MARK_H = 1760, 540
+X0 = 92
+MARK_W, MARK_H = 1760, 600
+LETTERS_CX = 842
 
-# Bolt that replaces the middle arm of the E: the brand's lightning bolt rotated to point right and a little
-# down, anchored inside the stem so it looks like it comes out of the letter (E-local coordinates, baseline y=0).
-_BOLT_BASE = [(356, 40), (256, 238), (324, 238), (262, 452), (398, 212), (334, 212)]
-def rotated_bolt(theta_deg, k, ax, ay):
-    th = math.radians(theta_deg); c, sn = math.sin(th) * 0 + math.cos(th), math.sin(th)
-    ox, oy = _BOLT_BASE[0]
-    return [(ax + k * ((x - ox) * c - (y - oy) * sn), ay + k * ((x - ox) * sn + (y - oy) * c)) for x, y in _BOLT_BASE]
-BOLT_E = rotated_bolt(-83, 0.64, 82, -170)
+# The bolt: a long zigzag under the word, tucked under the hook of the J, pointing past the O.
+# Local coordinates (y down), then lifted 2 degrees so it rises toward the tip.
+def staple_points(L=1616, tilt=-2.0):
+    A1, A2 = (10, -50), (0, -8)          # left end, cut on the italic slant
+    E1, D1 = (700, -62), (640, -125)     # upper edge: the step up
+    C1, B1 = (760, -30), (820, 36)       # lower edge: the step
+    T = (L, 30)                          # the tip
+    pts = [A1, E1, D1, T, C1, B1, A2]
+    th = math.radians(tilt); c, s = math.cos(th), math.sin(th)
+    return [(x * c - y * s, x * s + y * c) for x, y in pts]
+STAPLE_AT = (X0 - 16, BASE + 150)
 
-# Cord from the hook of the J, under the word, to the plug.
-PLUG_AT = (1562.0, 446.0)
-PLUG_ANG = -8.0
-CORD = (f"M {fmt(X0-14)} {fmt(BASE-38)} C {fmt(X0-86)} {fmt(BASE+58)}, {fmt(X0-30)} {fmt(BASE+82)}, {fmt(X0+300)} {fmt(BASE+82)} "
-        f"C {fmt(X0+900)} {fmt(BASE+82)}, {fmt(PLUG_AT[0]-220)} {fmt(BASE+82)}, {fmt(PLUG_AT[0])} {fmt(PLUG_AT[1])}")
+# The brand bolt on its own (vertical), used for the favicon.
+BOLT_PTS = [(356, 40), (256, 238), (324, 238), (262, 452), (398, 212), (334, 212)]
 
 def poly(pts):
     return 'M ' + ' L '.join('%s %s' % (fmt(x), fmt(y)) for x, y in pts) + ' Z'
 
-def parse_polygon(d):
-    """Absolute M/L/H/V/Z path (straight lines only) -> list of points."""
-    toks = re.findall(r'[MLHVZ]|-?\d+\.?\d*', d)
-    pts, cmd, x, y, i = [], None, 0.0, 0.0, 0
-    while i < len(toks):
-        t = toks[i]
-        if t in 'MLHVZ':
-            cmd = t; i += 1
-            if cmd == 'Z': break
-            continue
-        if cmd in ('M', 'L'):
-            x, y = float(t), float(toks[i+1]); i += 2
-        elif cmd == 'H':
-            x = float(t); i += 1
-        elif cmd == 'V':
-            y = float(t); i += 1
-        pts.append((x, y))
-        if cmd == 'M': cmd = 'L'
-    return pts
-
 _glyphs = None
 def glyphs():
-    """Shaped JEMCO: list of (char, x, path_d) in mark coordinates, plus the E polygon without its middle arm."""
+    """Shaped JEMCO: list of (char, x, path_d) in mark coordinates."""
     global _glyphs
     if _glyphs is None:
         t = tp(SAIRA_I, 900)
@@ -90,87 +70,46 @@ def glyphs():
         s = size / t.upem
         out, x = [], X0
         for ch, (g, adv, xo, yo) in zip("JEMCO", t._shape("JEMCO")):
-            if ch == 'E':
-                d, _ = t.path('E', size)
-                pts = parse_polygon(d)
-                # drop the two outer corners of the middle arm; the stem edge between the arms stays
-                keep = [p for p in pts if not (abs(p[1] + 205.8) < 0.5 and p[0] > 200) and not (abs(p[1] + 127.6) < 0.5 and p[0] > 200)]
-                out.append((ch, x, poly(keep)))
-            else:
-                d, _ = t.path(ch, size)
-                out.append((ch, x, d))
-            x += adv * s + (GAP_E if ch == 'E' else 0)
+            d, _ = t.path(ch, size)
+            out.append((ch, x, d))
+            x += adv * s
         _glyphs = out
     return _glyphs
 
 def letters(fill):
     return '\n    '.join(f'<path transform="translate({fmt(x)} {BASE})" d="{d}" fill="{fill}"/>' for ch, x, d in glyphs())
 
-def e_origin():
-    return [x for ch, x, d in glyphs() if ch == 'E'][0]
-
-def bolt(fill, x=None, y=BASE):
-    """The bolt is drawn before the letters, so the stem of the E covers its root: no knockout needed."""
-    x = e_origin() if x is None else x
-    return f'<path transform="translate({fmt(x)} {fmt(y)})" d="{poly(BOLT_E)}" fill="{fill}"/>'
-
-def plug(x, y, angle, mono=None):
-    body = mono or 'url(#gPlug)'
-    blade = mono or 'url(#gBlade)'
-    ridge = mono or NAVY
-    op = '1' if mono else '0.8'
-    return f'''<g transform="translate({fmt(x)} {fmt(y)}) rotate({fmt(angle)})">
-      <rect x="-46" y="-13" width="50" height="26" rx="7" fill="{body}"/>
-      <rect x="-38" y="-17" width="7" height="34" rx="3" fill="{ridge}" opacity="{op}"/>
-      <rect x="-24" y="-17" width="7" height="34" rx="3" fill="{ridge}" opacity="{op}"/>
-      <rect x="0" y="-32" width="84" height="64" rx="16" fill="{body}"/>
-      <rect x="82" y="-21" width="40" height="11" rx="3" fill="{blade}"/>
-      <rect x="82" y="10" width="40" height="11" rx="3" fill="{blade}"/>
-    </g>'''
+def staple(fill):
+    return f'<path transform="translate({fmt(STAPLE_AT[0])} {fmt(STAPLE_AT[1])})" d="{poly(staple_points())}" fill="{fill}"/>'
 
 def defs(uid=''):
     return f'''<defs>
     <linearGradient id="gLetter{uid}" x1="0" y1="0" x2="0.25" y2="1">
       <stop offset="0" stop-color="{BLUE_L}"/><stop offset="0.55" stop-color="{BLUE}"/><stop offset="1" stop-color="{BLUE_D}"/>
     </linearGradient>
-    <linearGradient id="gBolt{uid}" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="gBolt{uid}" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="{BLUE}"/><stop offset="0.55" stop-color="{ELEC}"/><stop offset="1" stop-color="{ELEC_L}"/>
+    </linearGradient>
+    <linearGradient id="gBoltV{uid}" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="{ELEC_L}"/><stop offset="0.5" stop-color="{ELEC}"/><stop offset="1" stop-color="{BLUE_L}"/>
     </linearGradient>
-    <linearGradient id="gCord{uid}" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="gRoof{uid}" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="{BLUE_D}"/><stop offset="0.6" stop-color="{BLUE}"/><stop offset="1" stop-color="{BLUE_L}"/>
-    </linearGradient>
-    <linearGradient id="gPlug{uid}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="{BLUE_L}"/><stop offset="1" stop-color="{BLUE_D}"/>
-    </linearGradient>
-    <linearGradient id="gBlade{uid}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#F2F5F8"/><stop offset="1" stop-color="{STEEL_D}"/>
     </linearGradient>
   </defs>'''
 
-def mark(mono=None, on_dark=False, cord=True):
-    """JEMCO with the bolt E (+ cord & plug). Coordinates in the 1760x540 mark box."""
+def mark(mono=None, bolt=True):
+    """JEMCO with the bolt underneath. Coordinates in the 1760x600 mark box."""
     letter_fill = mono or 'url(#gLetter)'
     bolt_fill = mono or 'url(#gBolt)'
-    cord_fill = mono or 'url(#gCord)'
     parts = []
-    if cord:
-        parts.append(f'<path d="{CORD}" fill="none" stroke="{cord_fill}" stroke-width="22" stroke-linecap="round"/>')
-        if not mono:
-            parts.append(f'<path d="{CORD}" fill="none" stroke="{WHITE}" stroke-width="5" stroke-linecap="round" opacity="0.28" transform="translate(0 -5)"/>')
-        parts.append(plug(*PLUG_AT, PLUG_ANG, mono))
-    parts.append(bolt(bolt_fill))
+    if bolt:
+        parts.append(staple(bolt_fill))
     parts.append(letters(letter_fill))
     return '<g id="mark">\n    ' + '\n    '.join(parts) + '\n  </g>'
 
-def bolt_e(mono=None, on_dark=False):
-    """The E with the bolt, alone, at the E's own origin (for icons)."""
-    letter_fill = mono or 'url(#gLetter)'
-    bolt_fill = mono or 'url(#gBolt)'
-    d = [d for ch, x, d in glyphs() if ch == 'E'][0]
-    return (f'<g id="bolt-e">\n    ' + bolt(bolt_fill, x=0, y=0) + f'\n    <path d="{d}" fill="{letter_fill}"/>\n  </g>')
-
 # --------------------------------------------------------------------------
-# Wordmark
+# Wordmark (the descriptor line)
 # --------------------------------------------------------------------------
 def fit(text, wght, target_w, tracking):
     t = tp(SAIRA, wght)
@@ -197,7 +136,7 @@ def wordmark_line(cx, top, width, c1, c2):
             f'    <path transform="translate({fmt(x + wa + space * size / 100)} {fmt(y)})" d="{db}" fill="{c2}"/>\n  </g>'), y
 
 def wordmark_side(x, center_y, width, c1, c2):
-    """Two-line wordmark for the horizontal lockup, vertically centred on center_y.
+    """Two-line descriptor for the horizontal lockup, vertically centred on center_y.
     Line 2 is sized at 66% of line 1 so it stays legible at header sizes."""
     d1, s1, w1, cap1 = fit("CONTRACTING &", 800, width, 0.02)
     t2 = tp(SAIRA, 700)
@@ -224,68 +163,64 @@ def svg(vb_w, vb_h, body, bg=None, label=NAME + " logo"):
 # --------------------------------------------------------------------------
 # Lockups
 # --------------------------------------------------------------------------
-LETTERS_CX = 872   # visual centre of the word (J hook at x=73, O right edge at x=1672)
 def primary(mono=None, on_dark=False, bg=None):
     c1 = mono or (WHITE if on_dark else NAVY)
     c2 = mono or (ELEC if on_dark else BLUE)
-    wm, _ = wordmark_line(LETTERS_CX, 548, 1500, c1, c2)
-    return svg(MARK_W, 700, mark(mono, on_dark) + '\n  ' + wm, bg)
+    wm, _ = wordmark_line(LETTERS_CX, 628, 1480, c1, c2)
+    return svg(MARK_W, 760, mark(mono) + '\n  ' + wm, bg)
 
 def horizontal(mono=None, on_dark=False, bg=None):
     c1 = mono or (WHITE if on_dark else NAVY)
     c2 = mono or (ELEC if on_dark else BLUE)
-    s = 0.62
-    m = f'<g transform="translate(0 22) scale({s})">\n  {mark(mono, on_dark)}\n  </g>'
-    x = MARK_W * s + 40
+    s = 0.6
+    m = f'<g transform="translate(0 10) scale({s})">\n  {mark(mono)}\n  </g>'
+    x = MARK_W * s + 30
     wm, _ = wordmark_side(x, 190, 700, c1, c2)
     return svg(int(x + 700 + 40), 380, m + '\n  ' + wm, bg)
 
 def icon(bg=NAVY, mono=None):
-    # 512 square, rounded; the bolt E only, centred (E + bolt spans x -2..354, y -330..0)
-    e = bolt_e(mono=mono, on_dark=True)
-    body = (f'<rect width="512" height="512" rx="96" fill="{bg}"/>\n'
-            f'  <g transform="translate(256 256) scale(1.02) translate(-168 165)">\n  {e}\n  </g>')
-    return svg(512, 512, body, label=NAME)
+    # 512 square, rounded; the mark (name + bolt) centred
+    m = mark(mono)
+    return svg(512, 512, (f'<rect width="512" height="512" rx="96" fill="{bg}"/>\n'
+                          f'  <g transform="translate(256 256) scale(0.255) translate(-880 -330)">\n  {m}\n  </g>'), label=NAME)
 
 def favicon():
-    e = bolt_e(on_dark=True)
+    # the bolt alone on navy: the only thing that reads at 16 px
     body = (f'<rect width="512" height="512" rx="112" fill="{NAVY}"/>\n'
-            f'  <g transform="translate(256 256) scale(1.18) translate(-168 165)">\n  {e}\n  </g>')
+            f'  <g transform="translate(256 256) translate(-327 -246)"><path d="{poly(BOLT_PTS)}" fill="url(#gBoltV)"/></g>')
     return svg(512, 512, body, label="JEMCO")
 
-ROOF_APEX = (868, -290)
-ROOF = f"M 140 24 L {ROOF_APEX[0]} {ROOF_APEX[1]} L 1600 24"
+ROOF_APEX = (842, -290)
+ROOF = f"M 110 24 L {ROOF_APEX[0]} {ROOF_APEX[1]} L 1574 24"
 def _roof(fill):
-    # chimney on the right slope
-    cx = 1400
-    slope = (24 - ROOF_APEX[1]) / (1600 - ROOF_APEX[0])
+    cx = 1380
+    slope = (24 - ROOF_APEX[1]) / (1574 - ROOF_APEX[0])
     ry = ROOF_APEX[1] + (cx - ROOF_APEX[0]) * slope
     return (f'<path d="{ROOF}" fill="none" stroke="{fill}" stroke-width="30" stroke-linejoin="miter" stroke-linecap="butt"/>'
             f'<rect x="{cx}" y="{fmt(ry - 100)}" width="48" height="{fmt(100 + 14)}" fill="{fill}"/>')
 
 def mark_home(mono=None, on_dark=False, bg=None):
-    """Alternate mark: roofline over JEMCO, ridge above the M."""
-    roof_fill = mono or 'url(#gCord)'
-    m = mark(mono, on_dark)
+    """Alternate mark: roofline over JEMCO, ridge above the M, the bolt underneath."""
+    roof_fill = mono or 'url(#gRoof)'
+    m = mark(mono)
     m = m.replace('<g id="mark">\n    ', '<g id="mark">\n    ' + _roof(roof_fill) + '\n    ', 1)
-    body = f'<g transform="translate(0 320)">{m}</g>'
-    return svg(MARK_W, 860, body, bg)
+    return svg(MARK_W, 920, f'<g transform="translate(0 320)">{m}</g>', bg)
 
 def primary_home(mono=None, on_dark=False, bg=None):
     c1 = mono or (WHITE if on_dark else NAVY)
     c2 = mono or (ELEC if on_dark else BLUE)
-    roof_fill = mono or 'url(#gCord)'
-    m = mark(mono, on_dark)
+    roof_fill = mono or 'url(#gRoof)'
+    m = mark(mono)
     m = m.replace('<g id="mark">\n    ', '<g id="mark">\n    ' + _roof(roof_fill) + '\n    ', 1)
-    wm, _ = wordmark_line(LETTERS_CX, 548 + 320, 1500, c1, c2)
-    return svg(MARK_W, 1020, f'<g transform="translate(0 320)">{m}</g>\n  ' + wm, bg)
+    wm, _ = wordmark_line(LETTERS_CX, 628 + 320, 1480, c1, c2)
+    return svg(MARK_W, 1080, f'<g transform="translate(0 320)">{m}</g>\n  ' + wm, bg)
 
 def mark_only(mono=None, on_dark=False, bg=None):
-    return svg(MARK_W, MARK_H, mark(mono, on_dark), bg)
+    return svg(MARK_W, MARK_H, mark(mono), bg)
 
 def word_only(mono=None, on_dark=False, bg=None):
-    """JEMCO with the bolt E, no cord: for places that need the name alone."""
-    return svg(MARK_W, 450, mark(mono, on_dark, cord=False), bg)
+    """JEMCO alone, no bolt: for the smallest spaces."""
+    return svg(MARK_W, 450, mark(mono, bolt=False), bg)
 
 FILES = {
     'jemco-logo-primary.svg': lambda: primary(),

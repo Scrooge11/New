@@ -142,7 +142,7 @@ def header(active):
     return f'''<header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="index.html" aria-label="{NAME_PLAIN} home">
-      <img src="assets/logo/jemco-logo-horizontal.svg" alt="{NAME_PLAIN}" width="1871" height="380">
+      <img src="assets/logo/jemco-logo-horizontal.svg" alt="{NAME_PLAIN}" width="1826" height="380">
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">{ICON['menu']}</button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
@@ -176,7 +176,7 @@ def footer():
   <div class="wrap">
     <div class="footer-grid footer-grid-4">
       <div class="footer-brand">
-        <img src="assets/logo/jemco-logo-horizontal-white.svg" alt="{NAME_PLAIN}" width="1871" height="380" loading="lazy">
+        <img src="assets/logo/jemco-logo-horizontal-white.svg" alt="{NAME_PLAIN}" width="1826" height="380" loading="lazy">
         <p>{TAGLINE} Based in {TOWN}, serving {TOWNS_SHORT}.</p>
       </div>
       <div class="footer-col">
@@ -486,7 +486,7 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
       </div>
     </div>
     <div class="hero-art">
-      <img src="assets/logo/alt-jemco-mark-home-reverse.svg" alt="" width="1760" height="860" fetchpriority="high">
+      <img src="assets/logo/alt-jemco-mark-home-reverse.svg" alt="" width="1760" height="920" fetchpriority="high">
     </div>
   </div>
 </section>

@@ -44,14 +44,14 @@ FILES = [
   ("jemco-logo-horizontal-reverse", "Horizontal on navy", "Dark headers and footers."),
   ("jemco-logo-horizontal-mono", "Horizontal, one-color navy", "One-color print."),
   ("jemco-logo-horizontal-white", "Horizontal, one-color white", "Footer of the website, dark garments."),
-  ("jemco-mark", "Mark: JEMCO with the bolt E, cord and plug", "Hero graphics, hard hats, shirt backs, when the descriptor line is printed nearby or not needed."),
+  ("jemco-mark", "Mark: JEMCO with the bolt underneath", "Hero graphics, hard hats, shirt backs, when the descriptor line is printed nearby or not needed."),
   ("jemco-mark-reverse", "Mark, for dark backgrounds", "Same as above on navy."),
   ("jemco-mark-mono", "Mark, one-color navy", "Embroidery, stamps."),
   ("jemco-mark-white", "Mark, one-color white", "Dark garments, engraving."),
-  ("jemco-word", "The name alone: JEMCO with the bolt E, no cord", "Small spaces: pens, sleeves, invoice footers, social avatars in a wide format."),
+  ("jemco-word", "The name alone, no bolt", "The smallest spaces only: pens, sleeve tags, invoice footers."),
   ("jemco-word-white", "The name alone, one-color white", "Same as above on dark garments."),
-  ("jemco-icon", "Square app icon (the bolt E)", "Social profile avatars, Google Business Profile, app icons."),
-  ("favicon", "Favicon (the bolt E, tighter crop)", "Browser tab icon (also exported as PNG at 32, 48, 192 and 512 px)."),
+  ("jemco-icon", "Square app icon (name and bolt on navy)", "Social profile avatars, Google Business Profile, app icons."),
+  ("favicon", "Favicon (the bolt alone on navy)", "Browser tab icon (also exported as PNG at 32, 48, 192 and 512 px)."),
   ("alt-jemco-mark-home", "Alternate mark with roofline", "Optional. Home-services advertising where the house needs to be explicit (mailers, yard signs). Also the website hero."),
   ("alt-jemco-logo-home", "Alternate stacked lockup with roofline", "Optional. Same uses as above, with the descriptor line."),
 ]
@@ -129,7 +129,7 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
 <body>
 <header class="top">
   <div class="wrap">
-    <img src="logo/svg/jemco-logo-horizontal-reverse.svg" alt="JEMCO Contracting &amp; Electrical Services" width="1871" height="380">
+    <img src="logo/svg/jemco-logo-horizontal-reverse.svg" alt="JEMCO Contracting &amp; Electrical Services" width="1826" height="380">
     <p class="eyebrow">Brand guidelines, version 2.0, October 2026</p>
     <h1>How the JEMCO brand goes together.</h1>
     <p>One mark, two blues, one accent, two typefaces. Everything here is built to look right on a truck door, a shirt, an invoice, and a phone screen without redrawing anything.</p>
@@ -140,7 +140,7 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
   <div class="wrap">
     <p class="eyebrow">The idea</p>
     <h2>Electric, but built.</h2>
-    <p class="intro">The mark is the name itself. JEMCO is set in heavy, slanted letters, and the middle arm of the E is a lightning bolt: that is the one detail that makes the name ours, so it is drawn, never typed. A cord runs out of the hook of the J, under the word, to a two-prong plug. The bolt says electrical; the cord and plug say the job gets finished and plugged in. The descriptor line underneath is set in Saira, a squared industrial sans, with "Contracting" in navy and "&amp; Electrical Services" in blue.</p>
+    <p class="intro">The mark is the name itself. JEMCO is set in heavy, slanted letters, and underneath it a lightning bolt runs the length of the word, tucked under the hook of the J and pointing past the O. The letters say who; the bolt says electrical, and it does the job of an underline, so the name and the bolt always travel together. The descriptor line underneath is set in Saira, a squared industrial sans, with "Contracting" in navy and "&amp; Electrical Services" in blue.</p>
   </div>
 </section>
 
@@ -151,7 +151,7 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
     <div class="grid">
       <div class="tile"><div class="art"><img src="logo/svg/jemco-logo-primary.svg" alt="Primary stacked logo"></div><div class="cap"><strong>Primary</strong><span>The default. Use whenever there is room for a square-ish logo.</span></div></div>
       <div class="tile"><div class="art"><img src="logo/svg/jemco-logo-horizontal.svg" alt="Horizontal logo"></div><div class="cap"><strong>Horizontal</strong><span>Website header, letterhead, email signature, banners.</span></div></div>
-      <div class="tile"><div class="art"><img src="logo/svg/jemco-mark.svg" alt="Mark only"></div><div class="cap"><strong>Mark</strong><span>The name with the cord and plug, no descriptor line: hero graphics, shirt backs, hard hats.</span></div></div>
+      <div class="tile"><div class="art"><img src="logo/svg/jemco-mark.svg" alt="Mark only"></div><div class="cap"><strong>Mark</strong><span>The name with the bolt, no descriptor line: hero graphics, shirt backs, hard hats.</span></div></div>
       <div class="tile"><div class="art"><img src="logo/svg/jemco-icon.svg" alt="Square icon" style="max-height:160px"></div><div class="cap"><strong>Icon</strong><span>Social avatars, Google Business Profile, app icons, favicon.</span></div></div>
     </div>
   </div>
@@ -183,7 +183,7 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
     <h2>Give it room</h2>
     <div class="two">
       <div>
-        <div class="clear"><div class="box"><span class="tag">Clear space = height of the E</span><img src="logo/svg/jemco-logo-primary.svg" alt="Primary logo with clear space"></div></div>
+        <div class="clear"><div class="box"><span class="tag">Clear space = cap height</span><img src="logo/svg/jemco-logo-primary.svg" alt="Primary logo with clear space"></div></div>
         <p class="mock-cap">Keep a margin equal to the cap height of the letters on all sides. Nothing else (text, photos, other logos, the edge of a card) goes inside it.</p>
       </div>
       <div>
@@ -281,9 +281,9 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
       <div class="dont"><h3>Do not</h3><ul>
         <li>Stretch, squash, rotate, or add drop shadows, glows, or outlines.</li>
         <li>Recolor the mark (no red bolt, no black letters) or set it on a busy photo.</li>
-        <li>Retype JEMCO or the descriptor line in another font. The E with the bolt is drawn, not typed.</li>
+        <li>Retype JEMCO or the descriptor line in another font, or redraw the bolt.</li>
         <li>Put the full-color logo on mid-tone or bright backgrounds; use navy or white behind it.</li>
-        <li>Separate the bolt from the letters or use the plug on its own as a logo.</li>
+        <li>Separate the bolt from the letters, or use the bolt on its own anywhere but the favicon.</li>
       </ul></div>
     </div>
   </div>

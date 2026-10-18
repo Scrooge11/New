@@ -4,24 +4,16 @@
     <linearGradient id="gLetter" x1="0" y1="0" x2="0.25" y2="1">
       <stop offset="0" stop-color="#2F82F5"/><stop offset="0.55" stop-color="#1655B8"/><stop offset="1" stop-color="#0E3A7A"/>
     </linearGradient>
-    <linearGradient id="gBolt" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="gBolt" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1655B8"/><stop offset="0.55" stop-color="#3DB4FF"/><stop offset="1" stop-color="#A9E4FF"/>
+    </linearGradient>
+    <linearGradient id="gBoltV" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#A9E4FF"/><stop offset="0.5" stop-color="#3DB4FF"/><stop offset="1" stop-color="#2F82F5"/>
     </linearGradient>
-    <linearGradient id="gCord" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="gRoof" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#0E3A7A"/><stop offset="0.6" stop-color="#1655B8"/><stop offset="1" stop-color="#2F82F5"/>
-    </linearGradient>
-    <linearGradient id="gPlug" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#2F82F5"/><stop offset="1" stop-color="#0E3A7A"/>
-    </linearGradient>
-    <linearGradient id="gBlade" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#F2F5F8"/><stop offset="1" stop-color="#8B96A5"/>
     </linearGradient>
   </defs>
   <rect width="512" height="512" rx="112" fill="#0B1F3F"/>
-  <g transform="translate(256 256) scale(1.18) translate(-168 165)">
-  <g id="bolt-e">
-    <path transform="translate(0 0)" d="M 82 -170 L 200 -91 L 205.3 -134.2 L 336.4 -78.2 L 194.5 -183.3 L 189.5 -142.6 Z" fill="url(#gBolt)"/>
-    <path d="M -2.4 0 L 67.6 -330 L 309.4 -330 L 292.1 -249.9 L 162.1 -249.9 L 153 -205.8 L 136.2 -127.6 L 126.1 -80.1 L 256.1 -80.1 L 238.9 0 Z" fill="url(#gLetter)"/>
-  </g>
-  </g>
+  <g transform="translate(256 256) translate(-327 -246)"><path d="M 356 40 L 256 238 L 324 238 L 262 452 L 398 212 L 334 212 Z" fill="url(#gBoltV)"/></g>
 </svg>
