@@ -1,4 +1,4 @@
-/* JS Contracting & Electrical Services — site behaviour (no dependencies) */
+/* JEMCO Contracting & Electrical Services — site behaviour (no dependencies) */
 (function () {
   'use strict';
 

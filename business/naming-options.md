@@ -1,4 +1,60 @@
+## Update, October 18, 2026: the name is JEMCO Contracting & Electrical Services
+
+The owner has chosen **JEMCO Contracting & Electrical Services**. This section records the same clearance checks that were run for the earlier candidates: similarly named companies in the region, trademark exposure, registration, and domain availability. The sections after it are the original options analysis and are kept as the record of how the choice was made; the recommendation they contain predates the decision.
+
+**The short version.** JEMCO is clearer than JS and not as clean as Senarian. No electrical contractor in Massachusetts uses the name. The one conflict that matters is JEMCORP, an electrical and HVAC contractor in Manchester, New Hampshire, about 30 miles away and licensed to work in Massachusetts. An excavation company in Ludlow has held the corporate name "Jemco Contracting, Inc." since 1973, which makes the state's name check the first thing to do. jemco.com is taken; jemcoelectric.com, jemcocontracting.com and jemcoelectricalservices.com are available.
+
+### Similarly named companies
+
+| Company | Where | From Westford | What they do | Status and impact |
+| --- | --- | --- | --- | --- |
+| JEM Electrical & HVAC Corp., trading as JEMCORP | Manchester and Londonderry, NH | about 30 mi | Electrical and HVAC contractor, commercial, industrial and residential; telecom sites and EV charging; founded 2006 by master electrician Jason Murphy; licensed in NH, MA, ME and VT; jemcorpelectrical.com | Active. The closest conflict: one letter from JEMCO, the same trade, and licensed in Massachusetts. Confusion is plausible with suppliers, inspectors and in search results. |
+| Jemco Builder & Developer, Inc. (with Jemco Building Enterprises, Inc., inactive, and Jemco Properties, LLC, active since 1998) | Londonderry, NH | about 25 mi | Home builder and property company | Listed with the BBB; little web presence. Overlaps the "contracting" half of the name in a neighboring market. |
+| Jemco Contracting, Inc. | Ludlow, MA | about 70 mi | Excavation contractor since 1973; a Massachusetts corporation with a DOT carrier registration | Active. An exact match on "Jemco Contracting" on the Massachusetts corporate records (see Registration below). Different trade; no website found. |
+| Jemco Disposal, Inc. | Plainville, MA | about 45 mi | Waste hauling | Active. Different trade; negligible. |
+| JEMCO Electrical Contractors, Inc. | Jamaica, Queens, NY | about 200 mi | Union electrical contractor founded 1990, roughly 30 to 200 employees, public-agency work | Active. Not in the market, but it holds the first page of Google for "JEMCO electrical" and almost certainly jemcoelectrical.com. |
+| Jemco, Inc. | Ijamsville, MD (one directory also shows a Boston address) | not local | Subcontractor, established 1961 | Appears to be Maryland only; the Boston listing looks like a directory error. |
+| JEMCO Incorporated | Massachusetts | n/a | Former name of a pizza-shop corporation, inactive | No current conflict; shows the word has been on the state's records before. |
+
+### Trademark
+
+No live federal registration for JEMCO turned up in the trademark aggregators. A Malaysian excavator-parts company's "JSB / Jemco Sdn Bhd" application was abandoned, JEMCORP Ltd. of Ontario has filings of its own, and "JEM" has been registered since 1978 for electric energy meters, which is a different mark on different goods. The USPTO database itself could not be reached from here, so the direct search is still required. Unlike "JS" or "Mass Electric", JEMCO is a coined word, so it can be protected once it is in use. The nearest prior users in this trade, JEMCO Electrical Contractors in New York since 1990 and JEMCORP in New Hampshire since 2006, have common-law rights in their own markets. That does not prevent use in Massachusetts, but it argues for filing the logo (the E with the bolt) as a design mark rather than the bare word.
+
+### Registration
+
+Jemco Contracting, Inc. is an active Massachusetts corporation. The Secretary of the Commonwealth requires a new LLC name to be distinguishable from names already on file. "JEMCO Contracting & Electrical Services LLC" adds three words and in practice is likely to be accepted, but it is the examiner's call. Two ways to take the risk off the table: file the entity as **JEMCO Electric LLC** (or JEMCO Electrical Services LLC) and register "JEMCO Contracting & Electrical Services" as its d/b/a with the town clerk; or reserve the full name first ($30 for 60 days), which gets the state's answer before anything is printed.
+
+### Domains
+
+| Domain | Status, October 18, 2026 | Role |
+| --- | --- | --- |
+| jemco.com | Taken | |
+| jemcoelectrical.com | Taken (most likely the New York contractor) | |
+| jemcoelectric.com | Available | Recommended primary: short, says the trade, easy to say on the phone |
+| jemcocontracting.com | Available | Redirect to the primary; protects the first half of the name |
+| jemcoelectricalservices.com | Available | Redirect; catches the New York spelling |
+| jemcocontractingandelectrical.com | Available | Optional: the full name, for print where the whole name is wanted |
+| jemcoma.com | Available | Optional regional short form |
+| jemco.co, jemco-electric.com, jemcoelectric.net | Available | Defensive |
+
+Email becomes office@jemcoelectric.com. The website, sitemap and schema are already set to www.jemcoelectric.com and change in one place if a different domain is bought. Availability comes from the domain-suggestion service, so the registrar check comes first.
+
+### How JEMCO compares
+
+- **Against JS.** Fewer and less direct conflicts. JS had twelve similarly named electrical companies in Massachusetts and New Hampshire, four inside 30 miles. JEMCO has three "Jemco"-type companies inside 30 miles (JEMCORP, Jemco Builder & Developer, Jemco Properties), and only JEMCORP is in the same trade. A coined word is also protectable where initials are not.
+- **Against Senarian.** Not as clean. Senarian had no conflicts anywhere and the exact .com. JEMCO carries the JEMCORP and Jemco Contracting items above, and the .com is taken.
+- **The deciding factor** is JEMCORP: a Manchester electrician with a nearly identical name who is licensed in Massachusetts. It does not block the name, but it is the one competitor to watch, and the reason the domain, the Google Business Profile and the truck lettering should always carry the full name rather than "Jemco" alone.
+
+### Next steps for this name
+
+1. Confirm jemcoelectric.com and the redirects at a registrar and buy them.
+2. Run the Massachusetts entity search, then reserve the name or file the LLC (with the JEMCO Electric LLC fallback ready).
+3. Run the USPTO search for JEMCO; once the name is in use, consider filing the logo as a design mark.
+4. Claim the Google Business Profile under the full name, with the roofline logo, as soon as the business phone number exists.
+
 ## Recommendation
+
+*Written October 12, before the decision, and kept as the record of the analysis.*
 
 Rename the company **Senarian Contracting & Electrical Services** and build it on the domain **senarian.com**. The name is the only candidate that is personal, completely unclaimed and ownable across every domain that matters, and it matches the plan's core promise: the owner on every job. The runner-up is **495 Electric & Contracting** if a regional name is preferred, and **Galvani Electric & Contracting** if the Italian heritage angle is preferred.
 
@@ -194,6 +250,7 @@ Four domains cost roughly $40 to $60 a year in total. Register them the same day
 
 | Checked | Available | Taken or in use |
 | --- | --- | --- |
+| JEMCO (chosen, October 18) | jemcoelectric.com; jemcocontracting.com; jemcoelectricalservices.com; jemcocontractingandelectrical.com; jemcoma.com; jemco.co | jemco.com; jemcoelectrical.com; JEMCORP / JEM Electrical & HVAC (Manchester NH); Jemco Builder & Developer and Jemco Properties (Londonderry NH); Jemco Contracting, Inc. (Ludlow MA, excavation); Jemco Disposal (Plainville MA); JEMCO Electrical Contractors (Queens NY) |
 | Senarian | senarian.com, .net, .co; senariancontracting.com; senarianelectric.com; senarianelectrical.com; senariancontractingelectrical.com | No business found |
 | JS | jscontractingma.com; jscontractingandelectrical.com; jscontractingelectrical.com; jscontracting.co; jscontractingco.com; jselectricalwestford.com | jscontracting.com; jselectrical.com; jselectric.com; jselectricalservices.com; jscontractingservices.com; jsces.com; JS Electric (Nashua NH); J.S. Electric, Inc. (Wilbraham, Jeff Steil); JS Contractors, Inc. (Belchertown); J & S All State Contracting (Salem NH); J&S General Contractor (Derry NH); J & S Electric and J&S Technical Electric (Milton NH); JS Electrical LLC (Plainville CT) |
 | Italian | galvanielectric.com; correnteelectric.com; luceelectric.com | voltaelectric.com; Volta Electric (CA, WA); Volta Charging |

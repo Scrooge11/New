@@ -3,4 +3,4 @@ Allow: /
 Disallow: /brand/
 Disallow: /site-src/
 
-Sitemap: https://www.yourdomain.com/sitemap.xml
+Sitemap: https://www.jemcoelectric.com/sitemap.xml

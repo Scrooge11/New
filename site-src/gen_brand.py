@@ -4,7 +4,7 @@ REPO = sys.argv[1]
 PALETTE = [
   ("Navy", "#0B1F3F", "Primary dark. Headers, footers, wordmark on light backgrounds."),
   ("Deep Blue", "#0E3A7A", "Bottom of the letter gradient. Hover states on dark."),
-  ("JS Blue", "#1655B8", "The brand blue. Buttons, links, the second line of the wordmark."),
+  ("JEMCO Blue", "#1655B8", "The brand blue. Buttons, links, the second half of the descriptor line."),
   ("Bright Blue", "#2F82F5", "Top of the letter gradient. Eyebrow labels, hover states on light."),
   ("Electric", "#3DB4FF", "The bolt. Accents and labels on navy. Never for body text on white."),
   ("Electric Light", "#A9E4FF", "Highlight in the bolt. Large text on navy only."),
@@ -36,22 +36,24 @@ def swatches():
     return '\n'.join(out)
 
 FILES = [
-  ("js-logo-primary", "Primary stacked lockup, full color", "Default. Business cards, invoices, truck doors, signage, social profiles with room."),
-  ("js-logo-primary-reverse", "Primary on navy", "Dark backgrounds: shirts, dark website sections, vehicle wraps on dark paint."),
-  ("js-logo-primary-mono", "Primary, one-color navy", "Single-color print, embroidery, stamps, fax cover sheets."),
-  ("js-logo-primary-white", "Primary, one-color white", "Embroidery or screen print on dark garments; etched or engraved surfaces."),
-  ("js-logo-horizontal", "Horizontal lockup, full color", "Website header, email signatures, letterhead, banners: anywhere wide and short."),
-  ("js-logo-horizontal-reverse", "Horizontal on navy", "Dark headers and footers."),
-  ("js-logo-horizontal-mono", "Horizontal, one-color navy", "One-color print."),
-  ("js-logo-horizontal-white", "Horizontal, one-color white", "Footer of the website, dark garments."),
-  ("js-mark", "Mark only (JS, bolt, cord, plug)", "Hero graphics, hard hats, shirt sleeves, when the name is printed nearby."),
-  ("js-mark-reverse", "Mark only, for dark backgrounds", "Same as above on navy."),
-  ("js-mark-mono", "Mark only, one-color navy", "Embroidery, stamps."),
-  ("js-mark-white", "Mark only, one-color white", "Dark garments, engraving."),
-  ("js-icon", "Square app icon", "Social profile avatars, Google Business Profile, app icons."),
-  ("favicon", "Favicon", "Browser tab icon (also exported as PNG at 32, 48, 192 and 512 px)."),
-  ("alt-js-mark-home", "Alternate mark with roofline", "Optional. Home-services advertising where the house needs to be explicit (mailers, yard signs)."),
-  ("alt-js-logo-home", "Alternate stacked lockup with roofline", "Optional. Same uses as above, with the name."),
+  ("jemco-logo-primary", "Primary stacked lockup, full color", "Default. Business cards, invoices, truck doors, signage, social profiles with room."),
+  ("jemco-logo-primary-reverse", "Primary on navy", "Dark backgrounds: shirts, dark website sections, vehicle wraps on dark paint."),
+  ("jemco-logo-primary-mono", "Primary, one-color navy", "Single-color print, embroidery, stamps."),
+  ("jemco-logo-primary-white", "Primary, one-color white", "Embroidery or screen print on dark garments; etched or engraved surfaces."),
+  ("jemco-logo-horizontal", "Horizontal lockup, full color", "Website header, email signatures, letterhead, banners: anywhere wide and short."),
+  ("jemco-logo-horizontal-reverse", "Horizontal on navy", "Dark headers and footers."),
+  ("jemco-logo-horizontal-mono", "Horizontal, one-color navy", "One-color print."),
+  ("jemco-logo-horizontal-white", "Horizontal, one-color white", "Footer of the website, dark garments."),
+  ("jemco-mark", "Mark: JEMCO with the bolt E, cord and plug", "Hero graphics, hard hats, shirt backs, when the descriptor line is printed nearby or not needed."),
+  ("jemco-mark-reverse", "Mark, for dark backgrounds", "Same as above on navy."),
+  ("jemco-mark-mono", "Mark, one-color navy", "Embroidery, stamps."),
+  ("jemco-mark-white", "Mark, one-color white", "Dark garments, engraving."),
+  ("jemco-word", "The name alone: JEMCO with the bolt E, no cord", "Small spaces: pens, sleeves, invoice footers, social avatars in a wide format."),
+  ("jemco-word-white", "The name alone, one-color white", "Same as above on dark garments."),
+  ("jemco-icon", "Square app icon (the bolt E)", "Social profile avatars, Google Business Profile, app icons."),
+  ("favicon", "Favicon (the bolt E, tighter crop)", "Browser tab icon (also exported as PNG at 32, 48, 192 and 512 px)."),
+  ("alt-jemco-mark-home", "Alternate mark with roofline", "Optional. Home-services advertising where the house needs to be explicit (mailers, yard signs). Also the website hero."),
+  ("alt-jemco-logo-home", "Alternate stacked lockup with roofline", "Optional. Same uses as above, with the descriptor line."),
 ]
 
 def file_rows():
@@ -62,8 +64,8 @@ HTML = f'''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JS Brand Guidelines</title>
-<meta name="description" content="Logo, color, typography and usage rules for JS Contracting & Electrical Services.">
+<title>JEMCO Brand Guidelines</title>
+<meta name="description" content="Logo, color, typography and usage rules for JEMCO Contracting & Electrical Services.">
 <link rel="icon" href="logo/svg/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -127,9 +129,9 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
 <body>
 <header class="top">
   <div class="wrap">
-    <img src="logo/svg/js-logo-horizontal-reverse.svg" alt="JS Contracting &amp; Electrical Services" width="1280" height="380">
-    <p class="eyebrow">Brand guidelines, version 1.0, September 2026</p>
-    <h1>How the JS brand goes together.</h1>
+    <img src="logo/svg/jemco-logo-horizontal-reverse.svg" alt="JEMCO Contracting &amp; Electrical Services" width="1871" height="380">
+    <p class="eyebrow">Brand guidelines, version 2.0, October 2026</p>
+    <h1>How the JEMCO brand goes together.</h1>
     <p>One mark, two blues, one accent, two typefaces. Everything here is built to look right on a truck door, a shirt, an invoice, and a phone screen without redrawing anything.</p>
   </div>
 </header>
@@ -138,7 +140,7 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
   <div class="wrap">
     <p class="eyebrow">The idea</p>
     <h2>Electric, but built.</h2>
-    <p class="intro">The mark is the JS monogram with a lightning bolt through the gap and a cord that runs out of the J to a two-prong plug. The letters are heavy and slanted for momentum; the bolt says electrical, the cord and plug say the job gets finished and plugged in. The wordmark underneath is set in Saira, a squared industrial sans, with "Contracting" carrying the weight and "&amp; Electrical Services" spaced out beneath it.</p>
+    <p class="intro">The mark is the name itself. JEMCO is set in heavy, slanted letters, and the middle arm of the E is a lightning bolt: that is the one detail that makes the name ours, so it is drawn, never typed. A cord runs out of the hook of the J, under the word, to a two-prong plug. The bolt says electrical; the cord and plug say the job gets finished and plugged in. The descriptor line underneath is set in Saira, a squared industrial sans, with "Contracting" in navy and "&amp; Electrical Services" in blue.</p>
   </div>
 </section>
 
@@ -147,10 +149,10 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
     <p class="eyebrow">Logo system</p>
     <h2>Four ways to use the logo</h2>
     <div class="grid">
-      <div class="tile"><div class="art"><img src="logo/svg/js-logo-primary.svg" alt="Primary stacked logo"></div><div class="cap"><strong>Primary</strong><span>The default. Use whenever there is room for a square-ish logo.</span></div></div>
-      <div class="tile"><div class="art"><img src="logo/svg/js-logo-horizontal.svg" alt="Horizontal logo"></div><div class="cap"><strong>Horizontal</strong><span>Website header, letterhead, email signature, banners.</span></div></div>
-      <div class="tile"><div class="art"><img src="logo/svg/js-mark.svg" alt="Mark only"></div><div class="cap"><strong>Mark</strong><span>When the full name is already nearby: hard hats, sleeves, hero graphics.</span></div></div>
-      <div class="tile"><div class="art"><img src="logo/svg/js-icon.svg" alt="Square icon" style="max-height:160px"></div><div class="cap"><strong>Icon</strong><span>Social avatars, Google Business Profile, app icons, favicon.</span></div></div>
+      <div class="tile"><div class="art"><img src="logo/svg/jemco-logo-primary.svg" alt="Primary stacked logo"></div><div class="cap"><strong>Primary</strong><span>The default. Use whenever there is room for a square-ish logo.</span></div></div>
+      <div class="tile"><div class="art"><img src="logo/svg/jemco-logo-horizontal.svg" alt="Horizontal logo"></div><div class="cap"><strong>Horizontal</strong><span>Website header, letterhead, email signature, banners.</span></div></div>
+      <div class="tile"><div class="art"><img src="logo/svg/jemco-mark.svg" alt="Mark only"></div><div class="cap"><strong>Mark</strong><span>The name with the cord and plug, no descriptor line: hero graphics, shirt backs, hard hats.</span></div></div>
+      <div class="tile"><div class="art"><img src="logo/svg/jemco-icon.svg" alt="Square icon" style="max-height:160px"></div><div class="cap"><strong>Icon</strong><span>Social avatars, Google Business Profile, app icons, favicon.</span></div></div>
     </div>
   </div>
 </section>
@@ -161,16 +163,16 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
     <h2>Full color first, one color when you must</h2>
     <p class="intro">Use the full-color version on white or very light backgrounds and the reverse version on navy. The one-color versions exist for embroidery, single-color print, engraving, and anywhere gradients will not reproduce.</p>
     <div class="grid">
-      <div class="tile"><div class="art"><img src="logo/svg/js-logo-primary.svg" alt="Full color on white"></div><div class="cap"><strong>Full color on white</strong><span>Default.</span></div></div>
-      <div class="tile"><div class="art dark"><img src="logo/svg/js-logo-primary-reverse.svg" alt="Full color on navy"></div><div class="cap"><strong>Reverse on navy</strong><span>Dark backgrounds and garments.</span></div></div>
-      <div class="tile"><div class="art"><img src="logo/svg/js-logo-primary-mono.svg" alt="One color navy"></div><div class="cap"><strong>One-color navy</strong><span>Single-color print, stamps, embroidery on light fabric.</span></div></div>
-      <div class="tile"><div class="art dark"><img src="logo/svg/js-logo-primary-white.svg" alt="One color white"></div><div class="cap"><strong>One-color white</strong><span>Embroidery and screen print on dark fabric, engraving.</span></div></div>
+      <div class="tile"><div class="art"><img src="logo/svg/jemco-logo-primary.svg" alt="Full color on white"></div><div class="cap"><strong>Full color on white</strong><span>Default.</span></div></div>
+      <div class="tile"><div class="art dark"><img src="logo/svg/jemco-logo-primary-reverse.svg" alt="Full color on navy"></div><div class="cap"><strong>Reverse on navy</strong><span>Dark backgrounds and garments.</span></div></div>
+      <div class="tile"><div class="art"><img src="logo/svg/jemco-logo-primary-mono.svg" alt="One color navy"></div><div class="cap"><strong>One-color navy</strong><span>Single-color print, stamps, embroidery on light fabric.</span></div></div>
+      <div class="tile"><div class="art dark"><img src="logo/svg/jemco-logo-primary-white.svg" alt="One color white"></div><div class="cap"><strong>One-color white</strong><span>Embroidery and screen print on dark fabric, engraving.</span></div></div>
     </div>
     <h3 style="margin-top:2rem">Alternate: the roofline mark</h3>
     <p class="intro">An optional version with a roof over the letters for home-services advertising (mailers, yard signs, home-show banners) where the house needs to be explicit. Keep the primary mark as the default everywhere else so the brand stays consistent.</p>
     <div class="two">
-      <div class="tile"><div class="art"><img src="logo/svg/alt-js-mark-home.svg" alt="Alternate mark with roofline"></div><div class="cap"><strong>Roofline mark</strong><span>alt-js-mark-home.svg</span></div></div>
-      <div class="tile"><div class="art"><img src="logo/svg/alt-js-logo-home.svg" alt="Alternate stacked logo with roofline"></div><div class="cap"><strong>Roofline stacked lockup</strong><span>alt-js-logo-home.svg</span></div></div>
+      <div class="tile"><div class="art"><img src="logo/svg/alt-jemco-mark-home.svg" alt="Alternate mark with roofline"></div><div class="cap"><strong>Roofline mark</strong><span>alt-jemco-mark-home.svg</span></div></div>
+      <div class="tile"><div class="art"><img src="logo/svg/alt-jemco-logo-home.svg" alt="Alternate stacked logo with roofline"></div><div class="cap"><strong>Roofline stacked lockup</strong><span>alt-jemco-logo-home.svg</span></div></div>
     </div>
   </div>
 </section>
@@ -181,17 +183,17 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
     <h2>Give it room</h2>
     <div class="two">
       <div>
-        <div class="clear"><div class="box"><span class="tag">Clear space = height of the S</span><img src="logo/svg/js-logo-primary.svg" alt="Primary logo with clear space"></div></div>
-        <p class="mock-cap">Keep a margin equal to the cap height of the S on all sides. Nothing else (text, photos, other logos, the edge of a card) goes inside it.</p>
+        <div class="clear"><div class="box"><span class="tag">Clear space = height of the E</span><img src="logo/svg/jemco-logo-primary.svg" alt="Primary logo with clear space"></div></div>
+        <p class="mock-cap">Keep a margin equal to the cap height of the letters on all sides. Nothing else (text, photos, other logos, the edge of a card) goes inside it.</p>
       </div>
       <div>
         <div class="minsize">
-          <figure><img src="logo/svg/js-logo-primary.svg" width="120" alt=""><figcaption>Primary: 120 px / 1.25 in wide</figcaption></figure>
-          <figure><img src="logo/svg/js-logo-horizontal.svg" width="180" alt=""><figcaption>Horizontal: 180 px / 2 in wide</figcaption></figure>
-          <figure><img src="logo/svg/js-mark.svg" width="56" alt=""><figcaption>Mark: 56 px / 0.6 in</figcaption></figure>
-          <figure><img src="logo/svg/js-icon.svg" width="32" alt=""><figcaption>Icon: 32 px</figcaption></figure>
+          <figure><img src="logo/svg/jemco-logo-primary.svg" width="220" alt=""><figcaption>Primary: 220 px / 2.25 in wide</figcaption></figure>
+          <figure><img src="logo/svg/jemco-logo-horizontal.svg" width="260" alt=""><figcaption>Horizontal: 260 px / 2.75 in wide</figcaption></figure>
+          <figure><img src="logo/svg/jemco-word.svg" width="110" alt=""><figcaption>Name alone: 110 px / 1.1 in wide</figcaption></figure>
+          <figure><img src="logo/svg/jemco-icon.svg" width="32" alt=""><figcaption>Icon: 32 px</figcaption></figure>
         </div>
-        <p class="mock-cap">Below these sizes the wordmark stops being readable. Use the mark or the icon instead.</p>
+        <p class="mock-cap">Below these sizes the descriptor line stops being readable. Use the name alone or the icon instead.</p>
       </div>
     </div>
   </div>
@@ -233,8 +235,8 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
     <p class="eyebrow">Voice</p>
     <h2>Say it like the person doing the work</h2>
     <div class="rules">
-      <div><h3>Sounds like JS</h3><ul><li>"Written quote before we start."</li><li>"Breaker keeps tripping? Call today, not next week."</li><li>"We pull the permit and meet the inspector."</li><li>"One crew for the wiring and the walls."</li></ul></div>
-      <div><h3>Does not sound like JS</h3><ul><li>"Your premier full-service solution provider."</li><li>"We go above and beyond to exceed expectations."</li><li>"Synergy", "best-in-class", "world-class".</li><li>Exclamation points. The work speaks for itself.</li></ul></div>
+      <div><h3>Sounds like JEMCO</h3><ul><li>"Written quote before we start."</li><li>"Breaker keeps tripping? Call today, not next week."</li><li>"We pull the permit and meet the inspector."</li><li>"One crew for the wiring and the walls."</li></ul></div>
+      <div><h3>Does not sound like JEMCO</h3><ul><li>"Your premier full-service solution provider."</li><li>"We go above and beyond to exceed expectations."</li><li>"Synergy", "best-in-class", "world-class".</li><li>Exclamation points. The work speaks for itself.</li></ul></div>
     </div>
   </div>
 </section>
@@ -245,19 +247,19 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
     <h2>How it looks in the real world</h2>
     <div class="mock">
       <div>
-        <div class="card"><img src="logo/svg/js-logo-horizontal.svg" alt=""><div class="who"><strong>[Owner name]</strong><span>Owner, Master Electrician</span><span>(000) 000-0000 &middot; office@yourdomain.com</span></div></div>
+        <div class="card"><img src="logo/svg/jemco-logo-horizontal.svg" alt=""><div class="who"><strong>[Owner name]</strong><span>Owner, Master Electrician</span><span>(000) 000-0000 &middot; office@jemcoelectric.com</span></div></div>
         <p class="mock-cap">Business card, front. 3.5 x 2 in, white stock, horizontal logo top-left.</p>
       </div>
       <div>
-        <div class="card back"><img src="logo/svg/js-logo-primary-reverse.svg" alt=""></div>
+        <div class="card back"><img src="logo/svg/jemco-logo-primary-reverse.svg" alt=""></div>
         <p class="mock-cap">Business card, back. Solid navy with the reverse primary logo centered.</p>
       </div>
       <div>
-        <div class="door"><img src="logo/svg/js-logo-primary.svg" alt=""><div class="phone">(000) 000-0000</div><div class="lic">Licensed &amp; insured &middot; Lic. #00000000</div></div>
+        <div class="door"><img src="logo/svg/jemco-logo-primary.svg" alt=""><div class="phone">(000) 000-0000</div><div class="lic">Licensed &amp; insured &middot; Lic. #00000000</div></div>
         <p class="mock-cap">Truck door on white or silver paint. Primary logo, phone number in Saira 800, license line under it.</p>
       </div>
       <div>
-        <div class="shirt"><img src="logo/svg/js-mark-white.svg" alt=""></div>
+        <div class="shirt"><img src="logo/svg/jemco-mark-white.svg" alt=""></div>
         <p class="mock-cap">Navy work shirt, left chest: one-color white mark, 3.5 in wide. Full name and phone across the back in white.</p>
       </div>
     </div>
@@ -279,7 +281,7 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
       <div class="dont"><h3>Do not</h3><ul>
         <li>Stretch, squash, rotate, or add drop shadows, glows, or outlines.</li>
         <li>Recolor the mark (no red bolt, no black letters) or set it on a busy photo.</li>
-        <li>Retype the wordmark in another font or rearrange the lines.</li>
+        <li>Retype JEMCO or the descriptor line in another font. The E with the bolt is drawn, not typed.</li>
         <li>Put the full-color logo on mid-tone or bright backgrounds; use navy or white behind it.</li>
         <li>Separate the bolt from the letters or use the plug on its own as a logo.</li>
       </ul></div>
@@ -301,7 +303,7 @@ footer{{padding-block:2rem;color:var(--muted);font-size:.9rem}}
   </div>
 </section>
 
-<footer><div class="wrap">JS Contracting &amp; Electrical Services brand guidelines. Saira and Barlow are used under the SIL Open Font License.</div></footer>
+<footer><div class="wrap">JEMCO Contracting &amp; Electrical Services brand guidelines. Saira and Barlow are used under the SIL Open Font License.</div></footer>
 </body>
 </html>
 '''

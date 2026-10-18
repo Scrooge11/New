@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JS Contracting & Electrical Services — site styles
+   JEMCO Contracting & Electrical Services — site styles
    Brand tokens are defined once here. See brand/index.html for the guide.
    ========================================================================== */
 :root {
@@ -142,15 +142,15 @@ strong { font-weight: 600; }
   background: var(--navy) radial-gradient(60% 80% at 82% 30%, rgba(61, 180, 255, 0.22), transparent 65%);
   color: #fff; padding-block: clamp(3rem, 7vw, 6rem);
 }
-.hero-inner { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3rem; align-items: center; }
+.hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
 .hero h1 { color: #fff; }
 .hero .lede { color: var(--muted-on-dark); max-width: 36em; }
 .hero .eyebrow { color: var(--electric); }
-.hero-art img { width: min(100%, 520px); margin-inline: auto; }
+.hero-art img { width: min(100%, 600px); margin-inline: auto; }
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
   .hero-art { order: -1; }
-  .hero-art img { width: min(72%, 320px); margin-inline: 0; }
+  .hero-art img { width: min(90%, 380px); margin-inline: 0; }
 }
 
 /* Trust bar -------------------------------------------------------------- */

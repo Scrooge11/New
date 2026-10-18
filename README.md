@@ -1,6 +1,8 @@
-# JS Contracting & Electrical Services
+# JEMCO Contracting & Electrical Services
 
-Brand package and website for JS Contracting & Electrical Services.
+Brand package and website for JEMCO Contracting & Electrical Services.
+
+> **Name change, October 18, 2026.** The company was going to be called JS Contracting & Electrical Services; it is now JEMCO Contracting & Electrical Services. The website, the logo files and the brand guide carry the new name. The business plan, marketing playbook, financial model and research PDFs in `business/deliverables/` still carry the old name until they are re-cut.
 
 - **Website**: plain HTML, CSS and a little JavaScript. No build step, no framework. Open `index.html` in a browser or drop the folder on any static host.
 - **Brand**: logo files, colors, type and usage rules. Open `brand/index.html` for the guidelines.
@@ -29,10 +31,10 @@ Every business fact lives at the top of `site-src/gen_site.py`. Edit the constan
 | Constant | Currently | Replace with |
 |---|---|---|
 | `PHONE`, `PHONE_TEL` | `(000) 000-0000`, `+10000000000` | the business phone (the `tel:` version is country code plus digits) |
-| `EMAIL` | `office@yourdomain.com` | the business email |
+| `EMAIL` | `office@jemcoelectric.com` | the business email, once the domain is bought |
 | `TOWN`, `TOWN_SHORT`, `TOWNS` | Westford, MA and 16 nearby towns (assumed) | the real home base and the towns actually served |
 | `LICENSE`, `HIC` | `Lic. #00000000`, `HIC #000000` | master electrician license and Home Improvement Contractor registration numbers |
-| `SITE_URL` | `https://www.yourdomain.com` | the final domain (feeds canonical tags, sitemap, schema) |
+| `SITE_URL` | `https://www.jemcoelectric.com` | the final domain once bought (feeds canonical tags, sitemap, schema). jemcoelectric.com was available on October 18, 2026; confirm at the registrar before relying on it |
 | `GBP_URL` | placeholder | the Google Business Profile review link (Google Business Profile, "Ask for reviews") |
 | `WARRANTY` | `2-year workmanship warranty` | the real warranty term |
 | `HOURS` | Mon to Fri 7 to 5 | real hours |
@@ -45,7 +47,7 @@ Also decide whether the site should mention the previous company. It currently d
 
 | Page | Purpose |
 |---|---|
-| `index.html` | Home: hero, services, why JS, process, reviews, service area, FAQ |
+| `index.html` | Home: hero, services, why JEMCO, process, reviews, service area, FAQ |
 | `services.html` | All services with the common-jobs table |
 | `panel-upgrades.html`, `ev-charger-installation.html`, `generator-installation.html`, `lighting-installation.html`, `electrical-repairs.html`, `remodeling-contractor.html` | One landing page per money service, each with pricing, FAQ, Service and FAQPage schema |
 | `service-area.html` | Towns served |
@@ -67,7 +69,7 @@ Any static host works. Two easy options:
 
 **GitHub Pages.** Settings, Pages, deploy from the `main` branch root. The `.nojekyll` file is already there. GitHub Pages cannot process forms, so either point the form's `action` at a service like Formspree (`https://formspree.io/f/your-id`) or keep the phone and email as the contact path. If the form cannot send, the page shows the phone and email instead.
 
-After the domain is live, submit `sitemap.xml` in Google Search Console and create a Google Business Profile using `brand/logo/png/js-icon-1024.png` as the profile image and `assets/og-image.png` as a cover.
+After the domain is live, submit `sitemap.xml` in Google Search Console and create a Google Business Profile using `brand/logo/png/jemco-icon-1024.png` as the profile image and `assets/og-image.png` as a cover.
 
 ## Fonts
 

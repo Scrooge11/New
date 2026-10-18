@@ -1,4 +1,4 @@
-"""Generates the static pages for the JS Contracting & Electrical Services site.
+"""Generates the static pages for the JEMCO Contracting & Electrical Services site.
 Plain HTML output, no build step needed to edit the result. Run: python3 site-src/gen_site.py .
 All business facts live in the constants below. Items marked TODO are placeholders.
 """
@@ -7,17 +7,17 @@ import sys, os, json
 REPO = sys.argv[1]
 
 # ---- Business facts. TODO placeholders are listed in README.md ----
-NAME = "JS Contracting &amp; Electrical Services"
-NAME_PLAIN = "JS Contracting & Electrical Services"
+NAME = "JEMCO Contracting &amp; Electrical Services"
+NAME_PLAIN = "JEMCO Contracting & Electrical Services"
 PHONE = "(000) 000-0000"          # TODO
 PHONE_TEL = "+10000000000"        # TODO
-EMAIL = "office@yourdomain.com"   # TODO
+EMAIL = "office@jemcoelectric.com"   # TODO confirm once the domain is bought
 TOWN = "Westford, MA"             # TODO confirm home base (assumed)
 TOWN_SHORT = "Westford"
 STATE = "MA"
 LICENSE = "Lic. #00000000"        # TODO
 HIC = "HIC #000000"               # TODO
-SITE_URL = "https://www.yourdomain.com"  # TODO
+SITE_URL = "https://www.jemcoelectric.com"  # TODO confirm once the domain is bought (jemcoelectric.com was available on Oct 18, 2026)
 GBP_URL = "https://g.page/r/your-google-business-profile/review"  # TODO Google Business Profile review link
 FACEBOOK_URL = ""                 # TODO optional
 HOURS = [("Mon to Fri", "7:00 am to 5:00 pm"), ("Saturday", "By appointment"), ("Sunday", "Closed")]
@@ -57,7 +57,7 @@ def business_ld():
         "@id": SITE_URL + "/#business",
         "name": NAME_PLAIN,
         "url": SITE_URL + "/",
-        "logo": SITE_URL + "/assets/logo/js-logo-primary.svg",
+        "logo": SITE_URL + "/assets/logo/jemco-logo-primary.svg",
         "image": SITE_URL + "/assets/og-image.png",
         "telephone": PHONE_TEL,
         "email": EMAIL,
@@ -142,7 +142,7 @@ def header(active):
     return f'''<header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="index.html" aria-label="{NAME_PLAIN} home">
-      <img src="assets/logo/js-logo-horizontal.svg" alt="{NAME_PLAIN}" width="1280" height="380">
+      <img src="assets/logo/jemco-logo-horizontal.svg" alt="{NAME_PLAIN}" width="1871" height="380">
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">{ICON['menu']}</button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
@@ -176,7 +176,7 @@ def footer():
   <div class="wrap">
     <div class="footer-grid footer-grid-4">
       <div class="footer-brand">
-        <img src="assets/logo/js-logo-horizontal-white.svg" alt="{NAME_PLAIN}" width="1280" height="380" loading="lazy">
+        <img src="assets/logo/jemco-logo-horizontal-white.svg" alt="{NAME_PLAIN}" width="1871" height="380" loading="lazy">
         <p>{TAGLINE} Based in {TOWN}, serving {TOWNS_SHORT}.</p>
       </div>
       <div class="footer-col">
@@ -486,7 +486,7 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
       </div>
     </div>
     <div class="hero-art">
-      <img src="assets/logo/js-mark-reverse.svg" alt="" width="800" height="520" fetchpriority="high">
+      <img src="assets/logo/alt-jemco-mark-home-reverse.svg" alt="" width="1760" height="860" fetchpriority="high">
     </div>
   </div>
 </section>
@@ -519,7 +519,7 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
 <section class="section section-alt" id="why">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">Why JS</p>
+      <p class="eyebrow">Why JEMCO</p>
       <h2>Small company. Straight answers.</h2>
     </div>
     <div class="why-grid">
@@ -766,7 +766,7 @@ ABOUT = head("About", f"{NAME_PLAIN} is an owner-operated electrical and contrac
 <section class="section">
   <div class="wrap about-grid">
     <div class="prose">
-      <p>{NAME} is owner-operated. After years running crews and large projects, <strong>[Owner name]</strong> started JS to get back to what he likes best: doing the work himself, for people he will see again around town.</p>
+      <p>{NAME} is owner-operated. After years running crews and large projects, <strong>[Owner name]</strong> started JEMCO to get back to what he likes best: doing the work himself, for people he will see again around town.</p>
       <p>That means a smaller crew, a direct line to the person responsible for your job, and the same face at the estimate, the install, and the walkthrough.</p>
       <p>We do residential and light-commercial electrical, and we handle the remodel work around it so you are not coordinating three contractors for one project. Every job is quoted in writing, permitted where required, and inspected.</p>
       <p><a class="text-link" href="contact.html">Get in touch</a></p>
