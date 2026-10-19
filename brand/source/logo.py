@@ -38,21 +38,27 @@ def tp(font, wght, wdth=100):
 # --------------------------------------------------------------------------
 CAP = 330
 BASE = 390
-X0 = 92
+X0 = 110
 MARK_W, MARK_H = 1760, 600
-LETTERS_CX = 842
+LETTERS_CX = 860
 
 # The bolt: a long zigzag under the word, tucked under the hook of the J, pointing past the O.
 # Local coordinates (y down), then lifted 2 degrees so it rises toward the tip.
-def staple_points(L=1616, tilt=-2.0):
-    A1, A2 = (10, -50), (0, -8)          # left end, cut on the italic slant
-    E1, D1 = (700, -62), (640, -125)     # upper edge: the step up
-    C1, B1 = (760, -30), (820, 36)       # lower edge: the step
-    T = (L, 30)                          # the tip
+def staple_points(L=1640, tilt=-2.5):
+    A1, A2 = (8, -40), (0, -4)           # left end, cut on the italic slant
+    E1, D1 = (430, -50), (376, -104)     # upper edge: the step up, under the E
+    C1, B1 = (470, -22), (526, 30)       # lower edge: the step
+    T = (L, 14)                          # the tip, a long taper past the O
     pts = [A1, E1, D1, T, C1, B1, A2]
     th = math.radians(tilt); c, s = math.cos(th), math.sin(th)
     return [(x * c - y * s, x * s + y * c) for x, y in pts]
-STAPLE_AT = (X0 - 16, BASE + 150)
+STAPLE_AT = (X0 - 20, BASE + 128)
+
+# The bolt that strikes through the stem of the J, pointing down and to the left, out of the letter.
+def jbolt_points(theta_deg=60.0, k=0.72, ax=X0 + 190, ay=BASE - 215):
+    th = math.radians(theta_deg); c, s = math.cos(th), math.sin(th)
+    ox, oy = BOLT_PTS[0]
+    return [(ax + k * ((x - ox) * c - (y - oy) * s), ay + k * ((x - ox) * s + (y - oy) * c)) for x, y in BOLT_PTS]
 
 # The brand bolt on its own (vertical), used for the favicon.
 BOLT_PTS = [(356, 40), (256, 238), (324, 238), (262, 452), (398, 212), (334, 212)]
@@ -82,10 +88,19 @@ def letters(fill):
 def staple(fill):
     return f'<path transform="translate({fmt(STAPLE_AT[0])} {fmt(STAPLE_AT[1])})" d="{poly(staple_points())}" fill="{fill}"/>'
 
+def jbolt(fill, knock, dx=0, dy=0):
+    d = poly(jbolt_points())
+    g = f'<g transform="translate({fmt(dx)} {fmt(dy)})">' if (dx or dy) else '<g>'
+    return (g + f'\n      <path d="{d}" fill="{knock}" stroke="{knock}" stroke-width="26" stroke-linejoin="miter" stroke-miterlimit="8"/>'
+            f'\n      <path d="{d}" fill="{fill}"/>\n    </g>')
+
 def defs(uid=''):
     return f'''<defs>
     <linearGradient id="gLetter{uid}" x1="0" y1="0" x2="0.25" y2="1">
       <stop offset="0" stop-color="{BLUE_L}"/><stop offset="0.55" stop-color="{BLUE}"/><stop offset="1" stop-color="{BLUE_D}"/>
+    </linearGradient>
+    <linearGradient id="gLetterW{uid}" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="{WHITE}"/><stop offset="0.6" stop-color="#EEF4FF"/><stop offset="1" stop-color="#BFD3F2"/>
     </linearGradient>
     <linearGradient id="gBolt{uid}" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="{BLUE}"/><stop offset="0.55" stop-color="{ELEC}"/><stop offset="1" stop-color="{ELEC_L}"/>
@@ -98,14 +113,17 @@ def defs(uid=''):
     </linearGradient>
   </defs>'''
 
-def mark(mono=None, bolt=True):
-    """JEMCO with the bolt underneath. Coordinates in the 1760x600 mark box."""
-    letter_fill = mono or 'url(#gLetter)'
-    bolt_fill = mono or 'url(#gBolt)'
+def mark(mono=None, bolt=True, on_dark=False, jb=True):
+    """JEMCO with the bolt through the J and the streak underneath. Coordinates in the 1760x600 mark box."""
+    letter_fill = mono or ('url(#gLetterW)' if on_dark else 'url(#gLetter)')
+    bolt_fill = mono or ('url(#gBoltV)' if on_dark else 'url(#gBolt)')
+    knock = NAVY if on_dark else WHITE
     parts = []
     if bolt:
         parts.append(staple(bolt_fill))
     parts.append(letters(letter_fill))
+    if jb:
+        parts.append(jbolt(mono or 'url(#gBoltV)', knock))
     return '<g id="mark">\n    ' + '\n    '.join(parts) + '\n  </g>'
 
 # --------------------------------------------------------------------------
@@ -167,60 +185,63 @@ def primary(mono=None, on_dark=False, bg=None):
     c1 = mono or (WHITE if on_dark else NAVY)
     c2 = mono or (ELEC if on_dark else BLUE)
     wm, _ = wordmark_line(LETTERS_CX, 628, 1480, c1, c2)
-    return svg(MARK_W, 760, mark(mono) + '\n  ' + wm, bg)
+    return svg(MARK_W, 760, mark(mono, on_dark=on_dark) + '\n  ' + wm, bg)
 
 def horizontal(mono=None, on_dark=False, bg=None):
     c1 = mono or (WHITE if on_dark else NAVY)
     c2 = mono or (ELEC if on_dark else BLUE)
     s = 0.6
-    m = f'<g transform="translate(0 10) scale({s})">\n  {mark(mono)}\n  </g>'
+    m = f'<g transform="translate(0 10) scale({s})">\n  {mark(mono, on_dark=on_dark)}\n  </g>'
     x = MARK_W * s + 30
     wm, _ = wordmark_side(x, 190, 700, c1, c2)
     return svg(int(x + 700 + 40), 380, m + '\n  ' + wm, bg)
 
+def jmark(scale, fill='url(#gLetterW)'):
+    """The J with the bolt through it, centred on the origin (J spans x 73..320, y 60..390; bolt tip to x ~24)."""
+    ch, x, d = glyphs()[0]
+    body = (f'<path transform="translate({fmt(x)} {BASE})" d="{d}" fill="{fill}"/>\n    ' + jbolt('url(#gBoltV)', NAVY))
+    return f'<g transform="scale({fmt(scale)}) translate(-174 -225)">\n    {body}\n  </g>'
+
 def icon(bg=NAVY, mono=None):
-    # 512 square, rounded; the mark (name + bolt) centred
-    m = mark(mono)
+    # 512 square, rounded; the J with the bolt, as on the reference
     return svg(512, 512, (f'<rect width="512" height="512" rx="96" fill="{bg}"/>\n'
-                          f'  <g transform="translate(256 256) scale(0.255) translate(-880 -330)">\n  {m}\n  </g>'), label=NAME)
+                          f'  <g transform="translate(262 256)">{jmark(1.05)}</g>'), label=NAME)
 
 def favicon():
-    # the bolt alone on navy: the only thing that reads at 16 px
-    body = (f'<rect width="512" height="512" rx="112" fill="{NAVY}"/>\n'
-            f'  <g transform="translate(256 256) translate(-327 -246)"><path d="{poly(BOLT_PTS)}" fill="url(#gBoltV)"/></g>')
-    return svg(512, 512, body, label="JEMCO")
+    return svg(512, 512, (f'<rect width="512" height="512" rx="112" fill="{NAVY}"/>\n'
+                          f'  <g transform="translate(266 256)">{jmark(1.22)}</g>'), label="JEMCO")
 
-ROOF_APEX = (842, -290)
-ROOF = f"M 110 24 L {ROOF_APEX[0]} {ROOF_APEX[1]} L 1574 24"
+ROOF_APEX = (860, -290)
+ROOF = f"M 128 24 L {ROOF_APEX[0]} {ROOF_APEX[1]} L 1592 24"
 def _roof(fill):
-    cx = 1380
-    slope = (24 - ROOF_APEX[1]) / (1574 - ROOF_APEX[0])
+    cx = 1400
+    slope = (24 - ROOF_APEX[1]) / (1592 - ROOF_APEX[0])
     ry = ROOF_APEX[1] + (cx - ROOF_APEX[0]) * slope
     return (f'<path d="{ROOF}" fill="none" stroke="{fill}" stroke-width="30" stroke-linejoin="miter" stroke-linecap="butt"/>'
             f'<rect x="{cx}" y="{fmt(ry - 100)}" width="48" height="{fmt(100 + 14)}" fill="{fill}"/>')
 
 def mark_home(mono=None, on_dark=False, bg=None):
     """Alternate mark: roofline over JEMCO, ridge above the M, the bolt underneath."""
-    roof_fill = mono or 'url(#gRoof)'
-    m = mark(mono)
+    roof_fill = mono or ('url(#gBoltV)' if on_dark else 'url(#gRoof)')
+    m = mark(mono, on_dark=on_dark)
     m = m.replace('<g id="mark">\n    ', '<g id="mark">\n    ' + _roof(roof_fill) + '\n    ', 1)
     return svg(MARK_W, 920, f'<g transform="translate(0 320)">{m}</g>', bg)
 
 def primary_home(mono=None, on_dark=False, bg=None):
     c1 = mono or (WHITE if on_dark else NAVY)
     c2 = mono or (ELEC if on_dark else BLUE)
-    roof_fill = mono or 'url(#gRoof)'
-    m = mark(mono)
+    roof_fill = mono or ('url(#gBoltV)' if on_dark else 'url(#gRoof)')
+    m = mark(mono, on_dark=on_dark)
     m = m.replace('<g id="mark">\n    ', '<g id="mark">\n    ' + _roof(roof_fill) + '\n    ', 1)
     wm, _ = wordmark_line(LETTERS_CX, 628 + 320, 1480, c1, c2)
     return svg(MARK_W, 1080, f'<g transform="translate(0 320)">{m}</g>\n  ' + wm, bg)
 
 def mark_only(mono=None, on_dark=False, bg=None):
-    return svg(MARK_W, MARK_H, mark(mono), bg)
+    return svg(MARK_W, MARK_H, mark(mono, on_dark=on_dark), bg)
 
 def word_only(mono=None, on_dark=False, bg=None):
-    """JEMCO alone, no bolt: for the smallest spaces."""
-    return svg(MARK_W, 450, mark(mono, bolt=False), bg)
+    """JEMCO with the bolt through the J, no streak: for narrow spaces."""
+    return svg(MARK_W, 450, mark(mono, bolt=False, on_dark=on_dark), bg)
 
 FILES = {
     'jemco-logo-primary.svg': lambda: primary(),
@@ -231,9 +252,11 @@ FILES = {
     'jemco-logo-horizontal-reverse.svg': lambda: horizontal(on_dark=True, bg=NAVY),
     'jemco-logo-horizontal-mono.svg': lambda: horizontal(mono=NAVY),
     'jemco-logo-horizontal-white.svg': lambda: horizontal(mono=WHITE, on_dark=True),
+    'jemco-logo-horizontal-ondark.svg': lambda: horizontal(on_dark=True),
     'jemco-mark.svg': lambda: mark_only(),
     'jemco-mark-mono.svg': lambda: mark_only(mono=NAVY),
     'jemco-mark-reverse.svg': lambda: mark_only(on_dark=True),
+    'jemco-mark-reverse-bg.svg': lambda: mark_only(on_dark=True, bg=NAVY),
     'jemco-mark-white.svg': lambda: mark_only(mono=WHITE, on_dark=True),
     'jemco-word.svg': lambda: word_only(),
     'jemco-word-white.svg': lambda: word_only(mono=WHITE, on_dark=True),

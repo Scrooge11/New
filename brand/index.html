@@ -52,8 +52,9 @@ td{padding:.7rem .9rem;border-top:1px solid var(--line);vertical-align:top}
 .card{aspect-ratio:3.5/2;border-radius:10px;box-shadow:0 12px 30px rgba(11,31,63,.14);padding:6%;display:flex;flex-direction:column;justify-content:space-between;background:#fff;border:1px solid var(--line)}
 .card img{width:62%} .card .who{font-family:var(--display);color:var(--navy)} .card .who strong{display:block;font-size:1.05rem} .card .who span{display:block;color:var(--muted);font-size:.85rem;font-family:var(--body)}
 .card.back{background:var(--navy);align-items:center;justify-content:center} .card.back img{width:55%}
-.door{aspect-ratio:4/3;border-radius:14px;background:linear-gradient(180deg,#F6F8FB,#E3E8EF);border:1px solid #C9D1DC;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:8%}
-.door img{width:70%} .door .phone{font-family:var(--display);font-weight:800;font-size:clamp(1.4rem,3vw,2rem);color:var(--navy);letter-spacing:.02em} .door .lic{font-family:var(--display);font-weight:600;font-size:.85rem;letter-spacing:.12em;color:var(--blue);text-transform:uppercase}
+.door{aspect-ratio:3/2;border-radius:14px;background:linear-gradient(180deg,#FFFFFF,#EEF2F7);border:1px solid #C9D1DC;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.45rem;padding:7% 8% 0;position:relative;overflow:hidden;isolation:isolate}
+.door::before{content:"";position:absolute;left:-15%;right:-15%;bottom:-10%;height:34%;z-index:-1;transform:skewY(-6deg);background:linear-gradient(100deg,transparent 0 16%,var(--blue) 16% 44%,transparent 44% 49%,var(--electric) 49% 66%,transparent 66%)}
+.door img{width:50%} .door .phone{font-family:var(--display);font-weight:800;font-size:clamp(1.1rem,2.2vw,1.5rem);color:var(--navy);letter-spacing:.02em;line-height:1} .door .lic{font-family:var(--display);font-weight:600;font-size:.68rem;letter-spacing:.1em;color:var(--blue);text-transform:uppercase;white-space:nowrap}
 .shirt{aspect-ratio:4/3;border-radius:14px;background:#0B1F3F;display:flex;align-items:flex-start;justify-content:flex-end;padding:10% 12%} .shirt img{width:30%}
 .mock-cap{font-size:.9rem;color:var(--muted);margin:.5rem 0 0}
 .clear{position:relative;background:#fff;border:1px solid var(--line);border-radius:10px;padding:2rem;display:flex;justify-content:center}
@@ -79,7 +80,7 @@ footer{padding-block:2rem;color:var(--muted);font-size:.9rem}
   <div class="wrap">
     <p class="eyebrow">The idea</p>
     <h2>Electric, but built.</h2>
-    <p class="intro">The mark is the name itself. JEMCO is set in heavy, slanted letters, and underneath it a lightning bolt runs the length of the word, tucked under the hook of the J and pointing past the O. The letters say who; the bolt says electrical, and it does the job of an underline, so the name and the bolt always travel together. The descriptor line underneath is set in Saira, a squared industrial sans, with "Contracting" in navy and "&amp; Electrical Services" in blue.</p>
+    <p class="intro">The mark is the name itself. JEMCO is set in heavy, slanted letters. A lightning bolt strikes through the stem of the J, and a second, longer bolt runs under the whole word as a streak, tucked under the J and pointing past the O. The letters say who; the bolts say electrical. The J with its bolt stands alone as the icon. The descriptor line underneath is set in Saira, a squared industrial sans, with "Contracting" in navy and "&amp; Electrical Services" in blue.</p>
   </div>
 </section>
 
@@ -91,7 +92,7 @@ footer{padding-block:2rem;color:var(--muted);font-size:.9rem}
       <div class="tile"><div class="art"><img src="logo/svg/jemco-logo-primary.svg" alt="Primary stacked logo"></div><div class="cap"><strong>Primary</strong><span>The default. Use whenever there is room for a square-ish logo.</span></div></div>
       <div class="tile"><div class="art"><img src="logo/svg/jemco-logo-horizontal.svg" alt="Horizontal logo"></div><div class="cap"><strong>Horizontal</strong><span>Website header, letterhead, email signature, banners.</span></div></div>
       <div class="tile"><div class="art"><img src="logo/svg/jemco-mark.svg" alt="Mark only"></div><div class="cap"><strong>Mark</strong><span>The name with the bolt, no descriptor line: hero graphics, shirt backs, hard hats.</span></div></div>
-      <div class="tile"><div class="art"><img src="logo/svg/jemco-icon.svg" alt="Square icon" style="max-height:160px"></div><div class="cap"><strong>Icon</strong><span>Social avatars, Google Business Profile, app icons, favicon.</span></div></div>
+      <div class="tile"><div class="art"><img src="logo/svg/jemco-icon.svg" alt="Square icon" style="max-height:160px"></div><div class="cap"><strong>Icon</strong><span>The J with the bolt: social avatars, Google Business Profile, app icons, favicon.</span></div></div>
     </div>
   </div>
 </section>
@@ -238,7 +239,7 @@ footer{padding-block:2rem;color:var(--muted);font-size:.9rem}
       </div>
       <div>
         <div class="door"><img src="logo/svg/jemco-logo-primary.svg" alt=""><div class="phone">(000) 000-0000</div><div class="lic">Licensed &amp; insured &middot; Lic. #00000000</div></div>
-        <p class="mock-cap">Truck door on white or silver paint. Primary logo, phone number in Saira 800, license line under it.</p>
+        <p class="mock-cap">Van side on white paint. Primary logo, phone number in Saira 800, license line, and the two blue streak stripes low on the panel.</p>
       </div>
       <div>
         <div class="shirt"><img src="logo/svg/jemco-mark-white.svg" alt=""></div>
@@ -265,7 +266,7 @@ footer{padding-block:2rem;color:var(--muted);font-size:.9rem}
         <li>Recolor the mark (no red bolt, no black letters) or set it on a busy photo.</li>
         <li>Retype JEMCO or the descriptor line in another font, or redraw the bolt.</li>
         <li>Put the full-color logo on mid-tone or bright backgrounds; use navy or white behind it.</li>
-        <li>Separate the bolt from the letters, or use the bolt on its own anywhere but the favicon.</li>
+        <li>Separate the bolts from the letters, or use a bolt on its own as a logo.</li>
       </ul></div>
     </div>
   </div>
@@ -287,14 +288,15 @@ footer{padding-block:2rem;color:var(--muted);font-size:.9rem}
 <tr><td><code>jemco-logo-horizontal-reverse.svg</code></td><td>Horizontal on navy</td><td>Dark headers and footers.</td></tr>
 <tr><td><code>jemco-logo-horizontal-mono.svg</code></td><td>Horizontal, one-color navy</td><td>One-color print.</td></tr>
 <tr><td><code>jemco-logo-horizontal-white.svg</code></td><td>Horizontal, one-color white</td><td>Footer of the website, dark garments.</td></tr>
+<tr><td><code>jemco-logo-horizontal-ondark.svg</code></td><td>Horizontal, full color for dark backgrounds, no background of its own</td><td>The website header and anything placed on navy that is already there.</td></tr>
 <tr><td><code>jemco-mark.svg</code></td><td>Mark: JEMCO with the bolt underneath</td><td>Hero graphics, hard hats, shirt backs, when the descriptor line is printed nearby or not needed.</td></tr>
 <tr><td><code>jemco-mark-reverse.svg</code></td><td>Mark, for dark backgrounds</td><td>Same as above on navy.</td></tr>
 <tr><td><code>jemco-mark-mono.svg</code></td><td>Mark, one-color navy</td><td>Embroidery, stamps.</td></tr>
 <tr><td><code>jemco-mark-white.svg</code></td><td>Mark, one-color white</td><td>Dark garments, engraving.</td></tr>
-<tr><td><code>jemco-word.svg</code></td><td>The name alone, no bolt</td><td>The smallest spaces only: pens, sleeve tags, invoice footers.</td></tr>
+<tr><td><code>jemco-word.svg</code></td><td>The name with the bolt through the J, no streak</td><td>Narrow spaces: pens, sleeve tags, invoice footers.</td></tr>
 <tr><td><code>jemco-word-white.svg</code></td><td>The name alone, one-color white</td><td>Same as above on dark garments.</td></tr>
-<tr><td><code>jemco-icon.svg</code></td><td>Square app icon (name and bolt on navy)</td><td>Social profile avatars, Google Business Profile, app icons.</td></tr>
-<tr><td><code>favicon.svg</code></td><td>Favicon (the bolt alone on navy)</td><td>Browser tab icon (also exported as PNG at 32, 48, 192 and 512 px).</td></tr>
+<tr><td><code>jemco-icon.svg</code></td><td>Square app icon: the J with the bolt on navy</td><td>Social profile avatars, Google Business Profile, app icons.</td></tr>
+<tr><td><code>favicon.svg</code></td><td>Favicon: the J with the bolt, tighter crop</td><td>Browser tab icon (also exported as PNG at 32, 48, 192 and 512 px).</td></tr>
 <tr><td><code>alt-jemco-mark-home.svg</code></td><td>Alternate mark with roofline</td><td>Optional. Home-services advertising where the house needs to be explicit (mailers, yard signs). Also the website hero.</td></tr>
 <tr><td><code>alt-jemco-logo-home.svg</code></td><td>Alternate stacked lockup with roofline</td><td>Optional. Same uses as above, with the descriptor line.</td></tr>
       </tbody>

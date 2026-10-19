@@ -40,6 +40,7 @@ Every business fact lives at the top of `site-src/gen_site.py`. Edit the constan
 | `HOURS` | Mon to Fri 7 to 5 | real hours |
 | Prices on the six service pages | typical Massachusetts ranges | the owner's own ranges (`price=` in each `SERVICE_PAGES` entry) |
 | `[Owner name]`, credentials | about page | the owner's name and real credentials |
+| `assets/hero.jpg` | an AI-generated placeholder photo of a New England house at dusk | a real photo of the owner's work or truck, 1600 px wide or more, landscape |
 
 Also decide whether the site should mention the previous company. It currently does not.
 

@@ -96,7 +96,7 @@ strong { font-weight: 600; }
 /* Header ----------------------------------------------------------------- */
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: var(--surface); border-bottom: 1px solid var(--line);
+  background: var(--navy); border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .header-inner { display: flex; align-items: center; gap: 1.5rem; min-height: 84px; position: relative; }
 .brand { display: inline-flex; align-items: center; }
@@ -105,14 +105,14 @@ strong { font-weight: 600; }
 .site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.75rem; }
 .site-nav a {
   font-family: var(--font-display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
-  font-size: 0.9rem; color: var(--navy); text-decoration: none; padding: 0.5rem 0;
+  font-size: 0.9rem; color: #fff; text-decoration: none; padding: 0.5rem 0;
   border-bottom: 2px solid transparent; display: inline-block;
 }
-.site-nav a:hover, .site-nav a.is-active { border-bottom-color: var(--electric); color: var(--blue); }
+.site-nav a:hover, .site-nav a.is-active { border-bottom-color: var(--electric); color: var(--electric); }
 .header-cta .cta-short { display: none; }
 .nav-toggle {
   display: none; align-items: center; justify-content: center;
-  width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 6px; background: #fff; color: var(--navy); cursor: pointer;
+  width: 44px; height: 44px; border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 6px; background: transparent; color: #fff; cursor: pointer;
 }
 .nav-toggle svg { width: 24px; height: 24px; }
 .nav-toggle .icon-close { display: none; }
@@ -124,12 +124,12 @@ strong { font-weight: 600; }
   .brand img { height: 46px; }
   .site-nav {
     display: none; position: absolute; left: calc(-1 * var(--gutter)); right: calc(-1 * var(--gutter)); top: 100%;
-    background: #fff; border-bottom: 1px solid var(--line); padding: 0.75rem var(--gutter) 1rem;
-    box-shadow: 0 12px 24px rgba(11, 31, 63, 0.08);
+    background: var(--navy); border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 0.75rem var(--gutter) 1rem;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
   }
   .site-header.is-open .site-nav { display: block; }
   .site-nav ul { flex-direction: column; gap: 0; }
-  .site-nav a { display: block; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
+  .site-nav a { display: block; padding: 0.8rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
   .site-nav li:last-child a { border-bottom: 0; }
   .nav-toggle { display: inline-flex; margin-left: auto; }
   .header-cta { padding: 0.65rem 0.9rem; font-size: 0.85rem; }
@@ -139,18 +139,27 @@ strong { font-weight: 600; }
 
 /* Hero ------------------------------------------------------------------- */
 .hero {
+  position: relative; isolation: isolate; color: #fff;
   background: var(--navy) radial-gradient(60% 80% at 82% 30%, rgba(61, 180, 255, 0.22), transparent 65%);
-  color: #fff; padding-block: clamp(3rem, 7vw, 6rem);
+  min-height: clamp(520px, 64vh, 760px); display: flex; align-items: center;
+  padding-block: clamp(3rem, 7vw, 5.5rem);
 }
-.hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-.hero h1 { color: #fff; }
-.hero .lede { color: var(--muted-on-dark); max-width: 36em; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background: url("../assets/hero.jpg") center / cover no-repeat;
+}
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(90deg, rgba(11, 31, 63, 0.96) 0%, rgba(11, 31, 63, 0.86) 38%, rgba(11, 31, 63, 0.38) 72%, rgba(11, 31, 63, 0.22) 100%);
+}
+.hero-inner { width: 100%; }
+.hero-copy { max-width: 640px; }
+.hero h1 { color: #fff; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35); }
+.hero .lede { color: #DCE6F5; max-width: 36em; }
 .hero .eyebrow { color: var(--electric); }
-.hero-art img { width: min(100%, 600px); margin-inline: auto; }
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
-  .hero-art { order: -1; }
-  .hero-art img { width: min(90%, 380px); margin-inline: 0; }
+  .hero { min-height: 0; }
+  .hero::after { background: linear-gradient(180deg, rgba(11, 31, 63, 0.72) 0%, rgba(11, 31, 63, 0.94) 60%); }
 }
 
 /* Trust bar -------------------------------------------------------------- */

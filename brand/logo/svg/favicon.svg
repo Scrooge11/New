@@ -4,6 +4,9 @@
     <linearGradient id="gLetter" x1="0" y1="0" x2="0.25" y2="1">
       <stop offset="0" stop-color="#2F82F5"/><stop offset="0.55" stop-color="#1655B8"/><stop offset="1" stop-color="#0E3A7A"/>
     </linearGradient>
+    <linearGradient id="gLetterW" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset="0.6" stop-color="#EEF4FF"/><stop offset="1" stop-color="#BFD3F2"/>
+    </linearGradient>
     <linearGradient id="gBolt" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#1655B8"/><stop offset="0.55" stop-color="#3DB4FF"/><stop offset="1" stop-color="#A9E4FF"/>
     </linearGradient>
@@ -15,5 +18,11 @@
     </linearGradient>
   </defs>
   <rect width="512" height="512" rx="112" fill="#0B1F3F"/>
-  <g transform="translate(256 256) translate(-327 -246)"><path d="M 356 40 L 256 238 L 324 238 L 262 452 L 398 212 L 334 212 Z" fill="url(#gBoltV)"/></g>
+  <g transform="translate(266 256)"><g transform="scale(1.2) translate(-174 -225)">
+    <path transform="translate(110 390)" d="M-19.2 0 -2.9 -75.8Q20.1 -75.8 33.6 -77Q47 -78.2 54 -83.5Q60.9 -88.7 64.8 -99.8Q68.6 -110.8 72.9 -130L115.6 -330H227.8L187.5 -138.1Q180.8 -105 174.6 -81.8Q168.4 -58.5 160.4 -43.2Q152.5 -27.8 139.6 -19.2Q126.6 -10.6 106.2 -6.5Q85.9 -2.4 55.4 -1.2Q24.9 0 -19.2 0Z" fill="url(#gLetterW)"/>
+    <g>
+      <path d="M 300 175 L 140.5 183.9 L 165 226.3 L 9.3 264.7 L 207.9 263.1 L 184.8 223.2 Z" fill="#0B1F3F" stroke="#0B1F3F" stroke-width="26" stroke-linejoin="miter" stroke-miterlimit="8"/>
+      <path d="M 300 175 L 140.5 183.9 L 165 226.3 L 9.3 264.7 L 207.9 263.1 L 184.8 223.2 Z" fill="url(#gBoltV)"/>
+    </g>
+  </g></g>
 </svg>
