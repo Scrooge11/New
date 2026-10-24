@@ -207,8 +207,21 @@ def footer():
       <p>&copy; <span data-year>2026</span> {NAME}. All rights reserved.</p>
       <p>MA Master Electrician {LICENSE} &middot; {HIC} &middot; Licensed and insured</p>
     </div>
+    <div class="nwdc-credit">
+      <a href="https://www.nextwavedigitalconsulting.com" target="_blank" rel="noopener">
+        <picture>
+          <source srcset="assets/nwdc/nwdc-wave-mark.webp" type="image/webp">
+          <img src="assets/nwdc/nwdc-wave-mark.png" alt="Next Wave Digital Consulting" width="38" height="26" loading="lazy" decoding="async">
+        </picture>
+        <span>Site Designed By: Next Wave Digital Consulting</span>
+      </a>
+    </div>
   </div>
 </footer>
+<nav class="callbar" aria-label="Quick contact">
+  <a class="callbar-call" href="tel:{PHONE_TEL}">{ICON['phone']}Call now</a>
+  <a class="callbar-quote" href="contact.html">Free quote</a>
+</nav>
 <script src="js/main.js"></script>
 </body>
 </html>
@@ -510,6 +523,29 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
 {service_cards()}
     </div>
     <p class="section-foot"><a class="text-link" href="services.html">See all services</a></p>
+  </div>
+</section>
+
+<section class="section work" id="work" aria-labelledby="work-h">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">The work</p>
+      <h2 id="work-h">Done neat. Labeled. Inspected.</h2>
+    </div>
+    <div class="work-bento">
+      <a class="work-tile work-tile-lg" href="panel-upgrades.html">
+        <img src="assets/work/panel-upgrade.jpg" alt="A new 200-amp breaker panel with neatly dressed, labeled circuits" width="1200" height="896" loading="lazy" decoding="async">
+        <span class="work-cap"><strong>Panel upgrades</strong><span>Every circuit labeled before we leave.</span></span>
+      </a>
+      <a class="work-tile" href="ev-charger-installation.html">
+        <img src="assets/work/ev-charger.jpg" alt="A wall-mounted EV charger in a home garage, plugged into an electric car" width="1200" height="896" loading="lazy" decoding="async">
+        <span class="work-cap"><strong>EV chargers</strong><span>Load calculation first, then the install.</span></span>
+      </a>
+      <a class="work-tile" href="generator-installation.html">
+        <img src="assets/work/generator.jpg" alt="A standby generator on a concrete pad beside a white clapboard house" width="1200" height="896" loading="lazy" decoding="async">
+        <span class="work-cap"><strong>Standby generators</strong><span>Pad, gas, transfer switch, permit.</span></span>
+      </a>
+    </div>
   </div>
 </section>
 

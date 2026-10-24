@@ -378,3 +378,67 @@ strong { font-weight: 600; }
   .footer-grid-4 { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 600px) { .footer-grid-4 { grid-template-columns: 1fr; } }
+
+
+/* ==========================================================================
+   Enhancements: work band, photo page heroes, reveal, call bar, NWDC credit
+   ========================================================================== */
+
+/* Header firms up once the page scrolls */
+.site-header { transition: box-shadow 240ms ease, background-color 240ms ease; }
+.site-header.is-scrolled { background: rgba(11, 31, 63, 0.97); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28); }
+
+/* Service cards: a lift and a bolt-blue rule on hover */
+.service-card { position: relative; transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease; }
+.service-card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--electric)); opacity: 0; transition: opacity 240ms ease; }
+.service-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(11, 31, 63, 0.12); }
+.service-card:hover::before { opacity: 1; }
+
+/* Work band: one large tile and two stacked */
+.work-bento { display: grid; grid-template-columns: 1.35fr 1fr; grid-template-rows: 1fr 1fr; gap: 1rem; min-height: 520px; }
+.work-tile { position: relative; display: block; overflow: hidden; border-radius: 12px; background: var(--navy); color: #fff; text-decoration: none; min-width: 0; isolation: isolate; }
+.work-tile-lg { grid-row: span 2; }
+.work-tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 280ms ease; }
+.work-tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11, 31, 63, 0) 45%, rgba(11, 31, 63, 0.88) 100%); z-index: 0; }
+.work-cap { position: absolute; left: 1.25rem; right: 1.25rem; bottom: 1.1rem; z-index: 1; display: grid; gap: 0.15rem; }
+.work-cap strong { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 0.01em; }
+.work-cap span { color: #DCE6F5; font-size: 0.95rem; }
+.work-tile:hover img, .work-tile:focus-visible img { transform: scale(1.04); }
+.work-tile:focus-visible { outline: 3px solid var(--electric); outline-offset: 3px; }
+@media (max-width: 760px) {
+  .work-bento { grid-template-columns: 1fr; grid-template-rows: none; min-height: 0; }
+  .work-tile-lg { grid-row: auto; }
+  .work-tile { aspect-ratio: 4 / 3; }
+}
+
+/* Inner page heroes sit on the same photo, darker */
+.page-hero { position: relative; isolation: isolate; overflow: hidden; }
+.page-hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("../assets/hero.jpg") center 40% / cover no-repeat; }
+.page-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(11, 31, 63, 0.97) 0%, rgba(11, 31, 63, 0.9) 50%, rgba(11, 31, 63, 0.7) 100%); }
+
+/* Scroll reveal: 280ms, no bounce, content always visible without JS or with reduced motion */
+.js .rv { opacity: 0; transform: translateY(12px); transition: opacity 280ms ease, transform 280ms ease; }
+.js .rv.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .js .rv { opacity: 1; transform: none; transition: none; }
+  .work-tile img, .service-card, .site-header { transition: none; }
+}
+
+/* NWDC credit (house rule) */
+.nwdc-credit { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.12); }
+.nwdc-credit a { display: inline-flex; align-items: center; gap: 0.6rem; min-height: 44px; color: var(--muted-on-dark); font-family: var(--font-display); font-weight: 600; font-size: 0.82rem; letter-spacing: 0.04em; text-decoration: none; }
+.nwdc-credit a:hover { color: #fff; }
+.nwdc-credit img { width: 38px; height: 26px; object-fit: contain; display: block; }
+
+/* Sticky call bar on phones */
+.callbar { display: none; }
+@media (max-width: 760px) {
+  .callbar { display: grid; grid-template-columns: 1fr 1fr; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; background: var(--navy); border-top: 1px solid rgba(255, 255, 255, 0.12); padding: 0.6rem var(--gutter) calc(0.6rem + env(safe-area-inset-bottom)); gap: 0.6rem; box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.25); }
+  .callbar a { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 48px; border-radius: 6px; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.9rem; text-decoration: none; }
+  .callbar svg { width: 18px; height: 18px; }
+  .callbar-call { background: var(--amber); color: var(--navy); }
+  .callbar-quote { border: 2px solid rgba(255, 255, 255, 0.55); color: #fff; }
+  body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+}
+
+@media print { .js .rv { opacity: 1 !important; transform: none !important; } .callbar { display: none !important; } }

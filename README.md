@@ -41,6 +41,7 @@ Every business fact lives at the top of `site-src/gen_site.py`. Edit the constan
 | Prices on the six service pages | typical Massachusetts ranges | the owner's own ranges (`price=` in each `SERVICE_PAGES` entry) |
 | `[Owner name]`, credentials | about page | the owner's name and real credentials |
 | `assets/hero.jpg` | an AI-generated placeholder photo of a New England house at dusk | a real photo of the owner's work or truck, 1600 px wide or more, landscape |
+| `assets/work/panel-upgrade.jpg`, `ev-charger.jpg`, `generator.jpg` | AI-generated placeholder photos for the home page work band | the owner's own job photos, landscape 4:3, 1200 px wide or more. They must not be presented as JEMCO's own jobs until they are |
 
 Also decide whether the site should mention the previous company. It currently does not.
 
@@ -89,3 +90,8 @@ cd ..
 python3 brand/source/logo.py brand/logo/svg          # expects ../fonts relative to the script; adjust FONTS in logo.py if needed
 node brand/source/export.js brand/logo/svg brand/logo/png assets   # needs Playwright: npm i -g playwright
 ```
+
+## Credit and images
+
+- The footer on every page carries the Next Wave Digital Consulting credit (wave mark plus "Site Designed By: Next Wave Digital Consulting", linking to nextwavedigitalconsulting.com). The mark lives in `assets/nwdc/`. Keep it on every build.
+- Image log: `assets/hero.jpg` and the three photos in `assets/work/` were generated with AI image tools (Figma, file "JEMCO website hero photo") as placeholders. Replace them with the owner's job photos before launch.
