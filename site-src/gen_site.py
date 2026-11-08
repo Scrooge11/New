@@ -113,7 +113,7 @@ def head(title, desc, path, lds=None):
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{SITE_URL}/{path}">
 <meta property="og:image" content="{SITE_URL}/assets/og-image.png">
-<meta property="og:image:alt" content="{NAME_PLAIN} logo">
+<meta property="og:image:alt" content="{NAME_PLAIN}: licensed electrician and contractor">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0B1F3F">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -124,6 +124,7 @@ def head(title, desc, path, lds=None):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="css/styles.css">
+{'<link rel="preload" as="image" type="image/webp" href="assets/hero.webp" imagesrcset="assets/hero-900.webp 900w, assets/hero.webp 1584w" imagesizes="100vw">' if path == '' else ''}
 {ld}
 <!-- Analytics: paste the Google tag (GA4) or Tag Manager snippet here once the property exists. -->
 </head>
@@ -225,6 +226,46 @@ def footer():
 <script src="js/main.js"></script>
 </body>
 </html>
+'''
+
+def quick_quote():
+    opts = ''.join(f'<option value="{v}">{l}</option>' for v, l in [
+        ('Repair or troubleshooting', 'Repair or troubleshooting'), ('Panel upgrade', 'Panel upgrade or service change'),
+        ('EV charger', 'EV charger'), ('Generator', 'Generator or transfer switch'), ('Lighting or fans', 'Lighting or fans'),
+        ('Remodel or addition', 'Remodel or addition'), ('Other', 'Something else')])
+    return f'''
+<section class="section quick-quote" id="quote" aria-labelledby="qq-h">
+  <div class="wrap qq-grid">
+    <div class="qq-copy">
+      <p class="eyebrow">Free quote</p>
+      <h2 id="qq-h">Tell us about the job. Get a number back.</h2>
+      <p>Two minutes here saves a round of phone tag. The owner reads every request and replies within one business day, usually the same day.</p>
+      <ol class="qq-steps">
+        <li><strong>You describe it.</strong> A sentence is enough. Photos of the panel help.</li>
+        <li><strong>We call or text back.</strong> A ballpark on the phone for most repairs.</li>
+        <li><strong>Written quote.</strong> For bigger jobs, after a short site visit.</li>
+      </ol>
+      <p class="qq-call">Rather talk? <a href="tel:{PHONE_TEL}">{ICON['phone']}{PHONE}</a></p>
+    </div>
+    <form class="quote-form qq-form" name="quote" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" data-fallback="Call or text {PHONE}, or email {EMAIL}, and we will take it from there." novalidate>
+      <input type="hidden" name="form-name" value="quote">
+      <input type="hidden" name="source" value="Home page quick quote">
+      <p class="visually-hidden" aria-hidden="true"><label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="field-row">
+        <div class="field"><label for="h-name">Name</label><input id="h-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="h-phone">Phone</label><input id="h-phone" name="phone" type="tel" autocomplete="tel" required></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="h-town">Town</label><input id="h-town" name="town" type="text" autocomplete="address-level2" placeholder="{TOWN_SHORT}"></div>
+        <div class="field"><label for="h-type">Type of work</label><select id="h-type" name="type">{opts}</select></div>
+      </div>
+      <div class="field"><label for="h-details">What is going on?</label><textarea id="h-details" name="details" rows="4" required placeholder="For example: half the kitchen outlets stopped working this morning."></textarea></div>
+      <div class="form-status" role="status" aria-live="polite"></div>
+      <button class="btn btn-primary btn-lg qq-submit" type="submit">Send request</button>
+      <p class="form-note">No mailing lists, no sales calls. See our <a href="privacy.html">privacy policy</a>.</p>
+    </form>
+  </div>
+</section>
 '''
 
 def checklist(items):
@@ -405,11 +446,34 @@ SERVICE_PAGES = [
 ]
 SP = {s['slug']: s for s in SERVICE_PAGES}
 
-def service_cards():
+# Placeholder job photos (AI-generated, see README image log). Replace with the owner's own work before launch.
+PHOTOS = {
+    'panel-upgrades': ('panel-upgrade', 'A new 200-amp breaker panel with neatly dressed, labeled circuits'),
+    'ev-charger-installation': ('ev-charger', 'A wall-mounted EV charger in a home garage, plugged into an electric car'),
+    'generator-installation': ('generator', 'A standby generator on a concrete pad beside a white clapboard house'),
+    'lighting-installation': ('lighting', 'A kitchen with recessed ceiling lights, under-cabinet lighting and pendants over the island'),
+    'electrical-repairs': ('repairs', 'An electrician testing a wall outlet with a multimeter'),
+    'remodeling-contractor': ('remodel', 'A basement being finished, with new framing, electrical boxes and wiring'),
+}
+
+def picture(key, alt, cls='', sizes='(max-width: 760px) 100vw, 50vw', eager=False):
+    w, h = (1000, 747) if key == 'generator' else (1200, 896)
+    load = 'fetchpriority="high"' if eager else 'loading="lazy"'
+    c = f' class="{cls}"' if cls else ''
+    return (f'<picture><source type="image/webp" srcset="assets/work/{key}-640.webp 640w, assets/work/{key}.webp {w}w" sizes="{sizes}">'
+            f'<img{c} src="assets/work/{key}.jpg" alt="{alt}" width="{w}" height="{h}" {load} decoding="async"></picture>')
+
+def service_cards(photos=False):
     out = []
     for s in SERVICE_PAGES:
-        out.append(f'''      <article class="service-card">
-        {ICON[s['icon']]}
+        if photos:
+            key, alt = PHOTOS[s['slug']]
+            top = f'<a class="service-photo" href="{s["slug"]}.html" tabindex="-1" aria-hidden="true">' + picture(key, '', sizes='(max-width: 760px) 100vw, 33vw') + '</a>'
+            cls = 'service-card has-photo'
+        else:
+            top, cls = ICON[s['icon']], 'service-card'
+        out.append(f'''      <article class="{cls}">
+        {top}
         <span class="spec">{s['spec']}</span>
         <h3><a href="{s['slug']}.html">{s['card']}</a></h3>
         <p>{s['card_p']}</p>
@@ -434,8 +498,10 @@ def related_block(slugs):
 
 def service_page(sp):
     lds = [service_ld(sp), breadcrumb_ld([('Home', ''), ('Services', 'services.html'), (sp['title'], sp['slug'] + '.html')]), faq_ld(sp['faqs'])]
+    pkey, palt = PHOTOS[sp['slug']]
     return head(sp['title'] + f' in {TOWN_SHORT}, MA', sp['desc'], sp['slug'] + '.html', lds) + header('services') + f'''
-<section class="page-hero">
+<section class="page-hero has-photo">
+  {picture(pkey, '', cls='page-hero-img', sizes='100vw', eager=True)}
   <div class="wrap">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="services.html">Services</a><span>/</span>{sp['title']}</nav>
     <h1>{sp['h1']}</h1>
@@ -534,15 +600,15 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
     </div>
     <div class="work-bento">
       <a class="work-tile work-tile-lg" href="panel-upgrades.html">
-        <img src="assets/work/panel-upgrade.jpg" alt="A new 200-amp breaker panel with neatly dressed, labeled circuits" width="1200" height="896" loading="lazy" decoding="async">
+        {picture('panel-upgrade', 'A new 200-amp breaker panel with neatly dressed, labeled circuits', sizes='(max-width: 760px) 100vw, 58vw')}
         <span class="work-cap"><strong>Panel upgrades</strong><span>Every circuit labeled before we leave.</span></span>
       </a>
       <a class="work-tile" href="ev-charger-installation.html">
-        <img src="assets/work/ev-charger.jpg" alt="A wall-mounted EV charger in a home garage, plugged into an electric car" width="1200" height="896" loading="lazy" decoding="async">
+        {picture('ev-charger', 'A wall-mounted EV charger in a home garage, plugged into an electric car', sizes='(max-width: 760px) 100vw, 42vw')}
         <span class="work-cap"><strong>EV chargers</strong><span>Load calculation first, then the install.</span></span>
       </a>
       <a class="work-tile" href="generator-installation.html">
-        <img src="assets/work/generator.jpg" alt="A standby generator on a concrete pad beside a white clapboard house" width="1200" height="896" loading="lazy" decoding="async">
+        {picture('generator', 'A standby generator on a concrete pad beside a white clapboard house', sizes='(max-width: 760px) 100vw, 42vw')}
         <span class="work-cap"><strong>Standby generators</strong><span>Pad, gas, transfer switch, permit.</span></span>
       </a>
     </div>
@@ -631,7 +697,7 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
   </div>
 </section>
 
-''' + faq_block(HOME_FAQS) + cta_strip("Breaker keeps tripping? Burning smell at the panel?", "Those are the calls to make today, not next week.") + footer()
+''' + quick_quote() + faq_block(HOME_FAQS) + cta_strip("Breaker keeps tripping? Burning smell at the panel?", "Those are the calls to make today, not next week.") + footer()
 
 # ---------------------------------------------------------------------------
 # Services overview
@@ -649,7 +715,7 @@ SERVICES_PAGE = head("Services", f"Residential and commercial electrical service
 <section class="section" id="main-services">
   <div class="wrap">
     <div class="services-grid">
-{service_cards()}
+{service_cards(photos=True)}
     </div>
   </div>
 </section>
@@ -850,6 +916,7 @@ CONTACT = head("Get a quote", f"Request a quote from {NAME_PLAIN} in {TOWN}. Cal
   <div class="wrap contact-grid">
     <form class="quote-form" name="quote" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" data-fallback="Call or text {PHONE}, or email {EMAIL}, and we will take it from there." novalidate>
       <input type="hidden" name="form-name" value="quote">
+      <input type="hidden" name="source" value="Contact page">
       <p class="visually-hidden" aria-hidden="true"><label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <div class="field-row">
         <div class="field">

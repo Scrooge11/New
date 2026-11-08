@@ -41,7 +41,7 @@ Every business fact lives at the top of `site-src/gen_site.py`. Edit the constan
 | Prices on the six service pages | typical Massachusetts ranges | the owner's own ranges (`price=` in each `SERVICE_PAGES` entry) |
 | `[Owner name]`, credentials | about page | the owner's name and real credentials |
 | `assets/hero.jpg` | an AI-generated placeholder photo of a New England house at dusk | a real photo of the owner's work or truck, 1600 px wide or more, landscape |
-| `assets/work/panel-upgrade.jpg`, `ev-charger.jpg`, `generator.jpg` | AI-generated placeholder photos for the home page work band | the owner's own job photos, landscape 4:3, 1200 px wide or more. They must not be presented as JEMCO's own jobs until they are |
+| `assets/work/panel-upgrade.jpg`, `ev-charger.jpg`, `generator.jpg`, `lighting.jpg`, `repairs.jpg`, `remodel.jpg` (plus `.webp` and `-640.webp` versions) | AI-generated placeholder photos for the home page work band | the owner's own job photos, landscape 4:3, 1200 px wide or more. They must not be presented as JEMCO's own jobs until they are |
 
 Also decide whether the site should mention the previous company. It currently does not.
 
@@ -94,4 +94,10 @@ node brand/source/export.js brand/logo/svg brand/logo/png assets   # needs Playw
 ## Credit and images
 
 - The footer on every page carries the Next Wave Digital Consulting credit (wave mark plus "Site Designed By: Next Wave Digital Consulting", linking to nextwavedigitalconsulting.com). The mark lives in `assets/nwdc/`. Keep it on every build.
-- Image log: `assets/hero.jpg` and the three photos in `assets/work/` were generated with AI image tools (Figma, file "JEMCO website hero photo") as placeholders. Replace them with the owner's job photos before launch.
+- Image log: `assets/hero.jpg` and the six photos in `assets/work/` were generated with AI image tools (Figma, file "JEMCO website hero photo") as placeholders. Replace them with the owner's job photos before launch.
+
+## Images and performance
+
+Every photo ships as JPEG plus WebP at two widths (640 px and full size), served through `<picture>` with `srcset`, so phones download the small WebP. The home hero is preloaded. To swap in real photos, replace the JPEG in `assets/work/` with the same file name and regenerate the WebP versions (any image tool; quality 72 to 75 is right). The social share image is `assets/og-image.png` (1200 x 630).
+
+The home page has a short quote form (`#quote`) that posts to the same Netlify form as the contact page. A hidden `source` field records which page a request came from.

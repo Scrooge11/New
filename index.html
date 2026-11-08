@@ -13,7 +13,7 @@
 <meta property="og:description" content="Licensed electrician and general contractor in Westford, MA. Panel upgrades, EV chargers, generators, lighting, troubleshooting and remodels. Owner on every job, written quotes before work starts.">
 <meta property="og:url" content="https://www.jemcoelectric.com/">
 <meta property="og:image" content="https://www.jemcoelectric.com/assets/og-image.png">
-<meta property="og:image:alt" content="JEMCO Contracting & Electrical Services logo">
+<meta property="og:image:alt" content="JEMCO Contracting & Electrical Services: licensed electrician and contractor">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0B1F3F">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="preload" as="image" type="image/webp" href="assets/hero.webp" imagesrcset="assets/hero-900.webp 900w, assets/hero.webp 1584w" imagesizes="100vw">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -306,15 +307,15 @@
     </div>
     <div class="work-bento">
       <a class="work-tile work-tile-lg" href="panel-upgrades.html">
-        <img src="assets/work/panel-upgrade.jpg" alt="A new 200-amp breaker panel with neatly dressed, labeled circuits" width="1200" height="896" loading="lazy" decoding="async">
+        <picture><source type="image/webp" srcset="assets/work/panel-upgrade-640.webp 640w, assets/work/panel-upgrade.webp 1200w" sizes="(max-width: 760px) 100vw, 58vw"><img src="assets/work/panel-upgrade.jpg" alt="A new 200-amp breaker panel with neatly dressed, labeled circuits" width="1200" height="896" loading="lazy" decoding="async"></picture>
         <span class="work-cap"><strong>Panel upgrades</strong><span>Every circuit labeled before we leave.</span></span>
       </a>
       <a class="work-tile" href="ev-charger-installation.html">
-        <img src="assets/work/ev-charger.jpg" alt="A wall-mounted EV charger in a home garage, plugged into an electric car" width="1200" height="896" loading="lazy" decoding="async">
+        <picture><source type="image/webp" srcset="assets/work/ev-charger-640.webp 640w, assets/work/ev-charger.webp 1200w" sizes="(max-width: 760px) 100vw, 42vw"><img src="assets/work/ev-charger.jpg" alt="A wall-mounted EV charger in a home garage, plugged into an electric car" width="1200" height="896" loading="lazy" decoding="async"></picture>
         <span class="work-cap"><strong>EV chargers</strong><span>Load calculation first, then the install.</span></span>
       </a>
       <a class="work-tile" href="generator-installation.html">
-        <img src="assets/work/generator.jpg" alt="A standby generator on a concrete pad beside a white clapboard house" width="1200" height="896" loading="lazy" decoding="async">
+        <picture><source type="image/webp" srcset="assets/work/generator-640.webp 640w, assets/work/generator.webp 1000w" sizes="(max-width: 760px) 100vw, 42vw"><img src="assets/work/generator.jpg" alt="A standby generator on a concrete pad beside a white clapboard house" width="1000" height="747" loading="lazy" decoding="async"></picture>
         <span class="work-cap"><strong>Standby generators</strong><span>Pad, gas, transfer switch, permit.</span></span>
       </a>
     </div>
@@ -403,6 +404,39 @@
   </div>
 </section>
 
+
+<section class="section quick-quote" id="quote" aria-labelledby="qq-h">
+  <div class="wrap qq-grid">
+    <div class="qq-copy">
+      <p class="eyebrow">Free quote</p>
+      <h2 id="qq-h">Tell us about the job. Get a number back.</h2>
+      <p>Two minutes here saves a round of phone tag. The owner reads every request and replies within one business day, usually the same day.</p>
+      <ol class="qq-steps">
+        <li><strong>You describe it.</strong> A sentence is enough. Photos of the panel help.</li>
+        <li><strong>We call or text back.</strong> A ballpark on the phone for most repairs.</li>
+        <li><strong>Written quote.</strong> For bigger jobs, after a short site visit.</li>
+      </ol>
+      <p class="qq-call">Rather talk? <a href="tel:+10000000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>(000) 000-0000</a></p>
+    </div>
+    <form class="quote-form qq-form" name="quote" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" data-fallback="Call or text (000) 000-0000, or email office@jemcoelectric.com, and we will take it from there." novalidate>
+      <input type="hidden" name="form-name" value="quote">
+      <input type="hidden" name="source" value="Home page quick quote">
+      <p class="visually-hidden" aria-hidden="true"><label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="field-row">
+        <div class="field"><label for="h-name">Name</label><input id="h-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="h-phone">Phone</label><input id="h-phone" name="phone" type="tel" autocomplete="tel" required></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="h-town">Town</label><input id="h-town" name="town" type="text" autocomplete="address-level2" placeholder="Westford"></div>
+        <div class="field"><label for="h-type">Type of work</label><select id="h-type" name="type"><option value="Repair or troubleshooting">Repair or troubleshooting</option><option value="Panel upgrade">Panel upgrade or service change</option><option value="EV charger">EV charger</option><option value="Generator">Generator or transfer switch</option><option value="Lighting or fans">Lighting or fans</option><option value="Remodel or addition">Remodel or addition</option><option value="Other">Something else</option></select></div>
+      </div>
+      <div class="field"><label for="h-details">What is going on?</label><textarea id="h-details" name="details" rows="4" required placeholder="For example: half the kitchen outlets stopped working this morning."></textarea></div>
+      <div class="form-status" role="status" aria-live="polite"></div>
+      <button class="btn btn-primary btn-lg qq-submit" type="submit">Send request</button>
+      <p class="form-note">No mailing lists, no sales calls. See our <a href="privacy.html">privacy policy</a>.</p>
+    </form>
+  </div>
+</section>
 <section class="section section-alt" id="faq">
   <div class="wrap">
     <div class="section-head">

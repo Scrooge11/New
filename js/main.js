@@ -75,7 +75,7 @@
 
   // Reveal sections and cards as they enter the viewport (skipped without IntersectionObserver)
   if ('IntersectionObserver' in window) {
-    var targets = document.querySelectorAll('.section-head, .service-card, .why-item, .process li, .work-tile, .faq-item, .price-box, .hours-card');
+    var targets = document.querySelectorAll('.section-head, .service-card, .why-item, .process li, .work-tile, .faq-item, .price-box, .hours-card, .qq-copy, .qq-form');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
@@ -101,4 +101,8 @@
       for (var n = 0; n < all.length; n++) all[n].classList.add('in');
     });
   }
+
+  var qq = document.getElementById('quote');
+  var barQuote = document.querySelector('.callbar-quote');
+  if (qq && barQuote) barQuote.setAttribute('href', '#quote');
 })();
