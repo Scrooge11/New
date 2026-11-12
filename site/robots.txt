@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /brand/
-Disallow: /site-src/
 
 Sitemap: https://www.jemcoelectric.com/sitemap.xml

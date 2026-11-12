@@ -2,6 +2,13 @@
    JEMCO Contracting & Electrical Services — site styles
    Brand tokens are defined once here. See brand/index.html for the guide.
    ========================================================================== */
+/* Self-hosted fonts (SIL OFL 1.1, licences in assets/fonts/). No third-party font requests. */
+@font-face { font-family: "Saira"; font-style: normal; font-weight: 100 900; font-display: optional;
+  src: url("../assets/fonts/saira-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "Barlow"; font-style: normal; font-weight: 400; font-display: optional;
+  src: url("../assets/fonts/barlow-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Barlow"; font-style: normal; font-weight: 600; font-display: optional;
+  src: url("../assets/fonts/barlow-latin-600-normal.woff2") format("woff2"); }
 :root {
   --navy: #0B1F3F;
   --navy-deep: #071630;

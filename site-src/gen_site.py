@@ -1,10 +1,10 @@
 """Generates the static pages for the JEMCO Contracting & Electrical Services site.
-Plain HTML output, no build step needed to edit the result. Run: python3 site-src/gen_site.py .
+Plain HTML output, no build step needed to edit the result. Run: python3 site-src/gen_site.py site
 All business facts live in the constants below. Items marked TODO are placeholders.
 """
 import sys, os, json
 
-REPO = sys.argv[1]
+REPO = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "site")
 
 # ---- Business facts. TODO placeholders are listed in README.md ----
 NAME = "JEMCO Contracting &amp; Electrical Services"
@@ -120,9 +120,8 @@ def head(title, desc, path, lds=None):
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/saira-latin-wght-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/barlow-latin-400-normal.woff2" crossorigin>
 <link rel="stylesheet" href="css/styles.css">
 {'<link rel="preload" as="image" type="image/webp" href="assets/hero.webp" imagesrcset="assets/hero-900.webp 900w, assets/hero.webp 1584w" imagesizes="100vw">' if path == '' else ''}
 {ld}
@@ -1064,5 +1063,5 @@ for name in pages:
 with open(os.path.join(REPO, 'sitemap.xml'), 'w') as f:
     f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(urls) + '\n</urlset>\n')
 with open(os.path.join(REPO, 'robots.txt'), 'w') as f:
-    f.write(f'User-agent: *\nAllow: /\nDisallow: /brand/\nDisallow: /site-src/\n\nSitemap: {SITE_URL}/sitemap.xml\n')
+    f.write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n')
 print('wrote sitemap.xml with', len(urls), 'urls')
