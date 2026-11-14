@@ -140,6 +140,7 @@ def head(title, desc, path, lds=None, index=True):
 <meta property="og:image:alt" content="{NAME_PLAIN}: licensed electrician and contractor">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0B1F3F">
+<meta name="color-scheme" content="light dark">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
