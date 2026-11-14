@@ -258,6 +258,55 @@
     });
   }
 
+  // "Check your town" on the service area page: marks the towns that match what is typed
+  var townBox = document.querySelector('.town-check');
+  var townItems = document.querySelectorAll('.towns-grid li[data-town]');
+  if (townBox && townItems.length) {
+    var townInput = townBox.querySelector('input');
+    var townResult = townBox.querySelector('.town-check-result');
+    var plain = function (text) {
+      return text.toLowerCase().replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').replace(/ (ma|mass|massachusetts)$/, '').trim();
+    };
+    var say = function (kind, text, withPhone) {
+      townResult.className = 'town-check-result' + (kind ? ' is-' + kind : '');
+      townResult.textContent = text;
+      if (withPhone) {
+        var call = document.createElement('a');
+        call.href = 'tel:' + townBox.getAttribute('data-tel');
+        call.textContent = 'call ' + townBox.getAttribute('data-phone');
+        townResult.appendChild(call);
+        townResult.appendChild(document.createTextNode('; the answer is usually yes.'));
+      }
+    };
+    var checkTown = function () {
+      var typed = townInput.value.trim();
+      var q = plain(typed);
+      var hits = [];
+      var exact = null;
+      for (var t = 0; t < townItems.length; t++) {
+        var name = townItems[t].getAttribute('data-town');
+        var key = plain(name);
+        var hit = q !== '' && (key.indexOf(q) === 0 || (q.length > 2 && key.indexOf(q) > 0));
+        townItems[t].classList.toggle('is-match', hit);
+        townItems[t].classList.toggle('is-other', q !== '' && !hit);
+        if (hit) hits.push(name);
+        if (key === q) exact = townItems[t];
+      }
+      if (q === '') { say('', ''); return; }
+      if (exact || hits.length === 1) {
+        var town = exact ? exact.getAttribute('data-town') : hits[0];
+        var note = (exact || townBox.parentNode.querySelector('li.is-match')).querySelector('small');
+        say('yes', 'Yes, we work in ' + town + (note ? ' (' + note.textContent.toLowerCase() + ')' : '') + '. Same pricing and same crew, and no trip fee.');
+      } else if (hits.length) {
+        say('yes', hits.length + ' towns on the list match: ' + hits.join(', ') + '.');
+      } else {
+        say('no', '\u201C' + typed + '\u201D is not on the list. If it is within about 30 miles of ' + townBox.getAttribute('data-home') + ', ', true);
+      }
+    };
+    townInput.addEventListener('input', checkTown);
+    checkTown();
+  }
+
   var qq = document.getElementById('quote');
   var barQuote = document.querySelector('.callbar-quote');
   if (qq && barQuote) barQuote.setAttribute('href', '#quote');

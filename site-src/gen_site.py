@@ -885,7 +885,7 @@ SERVICES_PAGE = head("Services", f"Residential and commercial electrical service
 # ---------------------------------------------------------------------------
 # Service area
 # ---------------------------------------------------------------------------
-towns_li = '\n'.join(f'      <li>{t}, {STATE}{("<small>" + n + "</small>") if n else ""}</li>' for t, n in TOWNS)
+towns_li = '\n'.join(f'      <li data-town="{t}">{t}, {STATE}{("<small>" + n + "</small>") if n else ""}</li>' for t, n in TOWNS)
 AREA = head("Service Area", f"{BRAND_SHORT} serves {TOWN_SHORT}, {', '.join(TOWN_NAMES[1:6])} and nearby Massachusetts towns with electrical and remodeling work.", "service-area.html",
             [breadcrumb_ld([('Home', ''), ('Service area', 'service-area.html')])]) + header('area') + f'''
 <section class="page-hero">
@@ -901,6 +901,11 @@ AREA = head("Service Area", f"{BRAND_SHORT} serves {TOWN_SHORT}, {', '.join(TOWN
     <div class="section-head">
       <h2>Towns we serve</h2>
       <p>Same pricing and same crew everywhere on this list. No trip fee inside the service area.</p>
+    </div>
+    <div class="town-check field" data-phone="{PHONE}" data-tel="{PHONE_TEL}" data-home="{TOWN_SHORT}">
+      <label for="town-check-input">Check your town</label>
+      <input id="town-check-input" type="text" maxlength="40" autocomplete="address-level2" spellcheck="false" enterkeyhint="search" placeholder="Start typing, for example {TOWN_NAMES[3]}" aria-describedby="town-check-result">
+      <p class="town-check-result" id="town-check-result" role="status"></p>
     </div>
     <ul class="towns-grid">
 {towns_li}
