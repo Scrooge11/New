@@ -46,6 +46,8 @@ ICON = {
  'bulb': '<svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
  'bolt': '<svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>',
  'house': '<svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3l9 8M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>',
+ 'chevron': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
+ 'arrow': '<svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
  'moon': '<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
  'sun': '<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
  'crew': '<svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>',
@@ -161,11 +163,28 @@ def head(title, desc, path, lds=None, index=True):
 NAV = [('index.html', 'Home', 'home'), ('services.html', 'Services', 'services'), ('service-area.html', 'Service area', 'area'),
        ('about.html', 'About', 'about'), ('contact.html', 'Contact', 'contact')]
 
-def header(active):
-    def li(h, l, k):
-        attr = ' class="is-active" aria-current="page"' if k == active else ''
-        return f'<li><a href="{h}"{attr}>{l}</a></li>'
-    items = ''.join(li(h, l, k) for h, l, k in NAV)
+def header(active, current=None):
+    """active: which top-level item is highlighted. current: slug of the service page being shown, if any."""
+    def top(h, l, k):
+        # aria-current="page" only on the link to the page itself; a service page highlights "Services" without claiming to be it
+        attr = ''
+        if k == active:
+            attr = ' class="is-active"' + ('' if current else ' aria-current="page"')
+        return f'<a href="{h}"{attr}>{l}</a>'
+    def service(s):
+        here = ' aria-current="page"' if s['slug'] == current else ''
+        icon = ICON[s['icon']].replace(' class="service-icon"', '')
+        return (f'<li><a href="{s["slug"]}.html"{here}>{icon}'
+                f'<span><strong>{s["nav"]}</strong><small>{s["spec"]}</small></span></a></li>')
+    items = ''
+    for h, l, k in NAV:
+        if k == 'services':
+            items += (f'<li class="has-menu">{top(h, l, k)}'
+                      f'<button class="submenu-toggle" type="button" aria-expanded="false" aria-controls="services-menu" aria-label="Show the list of services">{ICON["chevron"]}</button>'
+                      f'<ul class="submenu" id="services-menu">{"".join(service(s) for s in SERVICE_PAGES)}'
+                      f'<li class="submenu-all"><a href="services.html">All services{ICON["arrow"]}</a></li></ul></li>')
+        else:
+            items += f'<li>{top(h, l, k)}</li>'
     return f'''<header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="index.html" aria-label="{NAME_PLAIN} home">
@@ -173,7 +192,7 @@ def header(active):
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">{ICON['menu']}</button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
-      <ul>{items}</ul>
+      <ul class="nav-list">{items}</ul>
       <button class="theme-toggle" type="button" aria-label="Switch between light and dark theme">{ICON['moon']}{ICON['sun']}<span class="theme-toggle-text">Dark theme</span></button>
     </nav>
     <a class="btn btn-primary header-cta" href="tel:{PHONE_TEL}">{ICON['phone']}<span class="cta-long">Call {PHONE}</span><span class="cta-short">Call</span></a>
@@ -526,7 +545,7 @@ def related_block(slugs):
 def service_page(sp):
     lds = [service_ld(sp), breadcrumb_ld([('Home', ''), ('Services', 'services.html'), (sp['title'], sp['slug'] + '.html')]), faq_ld(sp['faqs'])]
     pkey, palt = PHOTOS[sp['slug']]
-    return head(sp['title'] + f' in {TOWN_SHORT}, MA', sp['desc'], sp['slug'] + '.html', lds) + header('services') + f'''
+    return head(sp['title'] + f' in {TOWN_SHORT}, MA', sp['desc'], sp['slug'] + '.html', lds) + header('services', sp['slug']) + f'''
 <section class="page-hero has-photo">
   {picture(pkey, '', cls='page-hero-img', sizes='100vw', eager=True)}
   <div class="wrap">

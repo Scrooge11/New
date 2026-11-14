@@ -3,22 +3,50 @@
   'use strict';
   document.documentElement.classList.add('js');
 
-  // Mobile navigation toggle
+  // Mobile menu: opens as a sheet under the header, closes on Escape, on a tap outside, or when the window widens
   var header = document.querySelector('.site-header');
   var toggle = document.querySelector('.nav-toggle');
+  var setNav = function (open) {
+    header.classList.toggle('is-open', open);
+    document.documentElement.classList.toggle('nav-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+  };
   if (header && toggle) {
-    toggle.addEventListener('click', function () {
-      var open = header.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.addEventListener('click', function () { setNav(!header.classList.contains('is-open')); });
+    document.addEventListener('click', function (e) {
+      if (header.classList.contains('is-open') && !e.target.closest('.site-nav, .nav-toggle')) setNav(false);
     });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && header.classList.contains('is-open')) {
-        header.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.focus();
-      }
+    if (window.matchMedia) {
+      var wide = window.matchMedia('(min-width: 1001px)');
+      var onWide = function () { if (wide.matches) setNav(false); };
+      if (wide.addEventListener) wide.addEventListener('change', onWide);
+    }
+  }
+
+  // Services menu: the button beside "Services" shows and hides the list (a mouse can also hover)
+  var menuItem = document.querySelector('.has-menu');
+  var menuBtn = menuItem && menuItem.querySelector('.submenu-toggle');
+  var setMenu = function (open) {
+    menuItem.classList.toggle('is-open', open);
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.setAttribute('aria-label', open ? 'Hide the list of services' : 'Show the list of services');
+  };
+  if (menuBtn) {
+    menuBtn.addEventListener('click', function () { setMenu(!menuItem.classList.contains('is-open')); });
+    document.addEventListener('click', function (e) {
+      if (menuItem.classList.contains('is-open') && !menuItem.contains(e.target)) setMenu(false);
+    });
+    menuItem.addEventListener('focusout', function (e) {
+      if (e.relatedTarget && !menuItem.contains(e.relatedTarget)) setMenu(false);
     });
   }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (menuBtn && menuItem.classList.contains('is-open')) { setMenu(false); menuBtn.focus(); }
+    else if (header && toggle && header.classList.contains('is-open')) { setNav(false); toggle.focus(); }
+  });
 
   // Theme button. The choice is stored, and js/theme-init.js applies it before the next page paints.
   var themeBtn = document.querySelector('.theme-toggle');
