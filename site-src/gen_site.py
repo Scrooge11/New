@@ -204,11 +204,11 @@ def footer():
         <p>{TAGLINE} Based in {TOWN}, serving {TOWNS_SHORT}.</p>
       </div>
       <div class="footer-col">
-        <h4>Services</h4>
+        <h2 class="footer-h">Services</h2>
         <ul>{svc}</ul>
       </div>
       <div class="footer-col">
-        <h4>Company</h4>
+        <h2 class="footer-h">Company</h2>
         <ul>
           <li><a href="about.html">About</a></li>
           <li><a href="service-area.html">Service area</a></li>
@@ -218,7 +218,7 @@ def footer():
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contact</h4>
+        <h2 class="footer-h">Contact</h2>
         <ul>
           <li><a href="tel:{PHONE_TEL}">{PHONE}</a></li>
           <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
@@ -735,8 +735,9 @@ SERVICES_PAGE = head("Services", f"Residential and commercial electrical service
   </div>
 </section>
 
-<section class="section" id="main-services">
+<section class="section" id="main-services" aria-labelledby="main-services-h">
   <div class="wrap">
+    <h2 class="visually-hidden" id="main-services-h">Main services</h2>
     <div class="services-grid">
 {service_cards(photos=True)}
     </div>
@@ -894,7 +895,7 @@ ABOUT = head("About", f"{BRAND_SHORT} is an owner-operated electrical and contra
       <p><a class="text-link" href="contact.html">Get in touch</a></p>
     </div>
     <aside class="cred-card" aria-label="Credentials">
-      <h3>Credentials</h3>
+      <h2 class="h3">Credentials</h2>
       <ul>
         <li>Massachusetts Master Electrician, {LICENSE}</li>
         <li>Home Improvement Contractor registration, {HIC}</li>

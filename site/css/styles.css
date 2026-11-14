@@ -57,7 +57,7 @@ h1, h2, h3, h4 {
 }
 h1 { font-size: clamp(2.25rem, 4.5vw, 3.5rem); font-weight: 800; }
 h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 800; }
-h3 { font-size: 1.25rem; font-weight: 700; }
+h3, .h3 { font-size: 1.25rem; font-weight: 700; }
 p { margin: 0 0 1em; }
 a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { color: var(--blue-bright); }
@@ -71,7 +71,7 @@ strong { font-weight: 600; }
   letter-spacing: 0.14em;
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--blue-bright);
+  color: var(--blue);
   margin: 0 0 0.75rem;
 }
 .lede { font-size: 1.2rem; line-height: 1.55; color: var(--muted); }
@@ -246,7 +246,7 @@ strong { font-weight: 600; }
 .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 2.5rem; }
 .footer-brand img { width: min(100%, 300px); margin-bottom: 1rem; }
 .footer-brand p { margin: 0; max-width: 34em; }
-.site-footer h4 { color: #fff; font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; margin: 0 0 0.75rem; }
+.site-footer .footer-h { color: #fff; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; margin: 0 0 0.75rem; }
 .site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
 .site-footer a { color: #fff; text-decoration: none; }
 .site-footer a:hover { color: var(--electric); }
@@ -287,7 +287,7 @@ strong { font-weight: 600; }
 .about-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 3rem; align-items: start; }
 .about-grid .prose p { font-size: 1.1rem; }
 .cred-card { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--amber); border-radius: var(--radius); padding: 1.5rem; }
-.cred-card h3 { margin-bottom: 0.75rem; }
+.cred-card h2 { margin-bottom: 0.75rem; }
 .cred-card ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.5rem; }
 .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
 .values-grid p { color: var(--muted); margin: 0; }
@@ -327,7 +327,7 @@ strong { font-weight: 600; }
 
 /* 404 -------------------------------------------------------------------- */
 .notfound { padding-block: clamp(4rem, 10vw, 8rem); }
-.notfound .code { font-family: var(--font-display); font-weight: 800; font-size: clamp(4rem, 12vw, 8rem); line-height: 1; color: var(--electric); margin: 0; }
+.notfound .code { font-family: var(--font-display); font-weight: 800; font-size: clamp(4rem, 12vw, 8rem); line-height: 1; color: var(--blue-bright); margin: 0; }
 
 /* ==========================================================================
    Service pages, FAQ, service area, reviews (added in launch pass)
