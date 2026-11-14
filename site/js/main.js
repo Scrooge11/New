@@ -20,6 +20,32 @@
     });
   }
 
+  // Theme button. The choice is stored, and js/theme-init.js applies it before the next page paints.
+  var themeBtn = document.querySelector('.theme-toggle');
+  if (themeBtn) {
+    var root = document.documentElement;
+    var themeText = themeBtn.querySelector('.theme-toggle-text');
+    var systemDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    var currentTheme = function () {
+      return root.getAttribute('data-theme') || (systemDark && systemDark.matches ? 'dark' : 'light');
+    };
+    var describe = function () {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      themeBtn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+      if (themeText) themeText.textContent = next === 'dark' ? 'Dark theme' : 'Light theme';
+    };
+    themeBtn.addEventListener('click', function () {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      var apply = function () { root.setAttribute('data-theme', next); describe(); };
+      var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // Cross-fade between the themes where the browser can; switch at once where it cannot.
+      if (document.startViewTransition && !calm) document.startViewTransition(apply); else apply();
+      try { localStorage.setItem('jemco-theme', next); } catch (e) { /* choice lasts for this page only */ }
+    });
+    if (systemDark && systemDark.addEventListener) systemDark.addEventListener('change', describe);
+    describe();
+  }
+
   // Current year in the footer
   var yearEls = document.querySelectorAll('[data-year]');
   for (var i = 0; i < yearEls.length; i++) yearEls[i].textContent = String(new Date().getFullYear());

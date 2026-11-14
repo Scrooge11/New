@@ -46,6 +46,8 @@ ICON = {
  'bulb': '<svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
  'bolt': '<svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>',
  'house': '<svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3l9 8M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>',
+ 'moon': '<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+ 'sun': '<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
  'crew': '<svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>',
  'badge': '<svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>',
  'doc': '<svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg>',
@@ -140,6 +142,7 @@ def head(title, desc, path, lds=None, index=True):
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0B1F3F">
 <meta name="color-scheme" content="light dark">
+<script src="js/theme-init.js"></script>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -171,6 +174,7 @@ def header(active):
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">{ICON['menu']}</button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
       <ul>{items}</ul>
+      <button class="theme-toggle" type="button" aria-label="Switch between light and dark theme">{ICON['moon']}{ICON['sun']}<span class="theme-toggle-text">Dark theme</span></button>
     </nav>
     <a class="btn btn-primary header-cta" href="tel:{PHONE_TEL}">{ICON['phone']}<span class="cta-long">Call {PHONE}</span><span class="cta-short">Call</span></a>
   </div>
@@ -1134,6 +1138,17 @@ def preflight():
     if '000000' in HIC: todo.append('HIC is still #000000')
     if 'your-google-business-profile' in GBP_URL: todo.append('GBP_URL is a dummy link, so the review buttons and footer link go nowhere')
     if any('[Owner name]' in html for html in pages.values()): todo.append('[Owner name] is still on the about page')
+    # The dark theme's colour list is written out twice in the stylesheet (system setting, and
+    # the theme button). If the two copies drift, one of those routes shows the wrong colours.
+    css_path = os.path.join(REPO, 'css', 'styles.css')
+    if os.path.isfile(css_path):
+        import re
+        css = open(css_path, encoding='utf-8').read()
+        by_system = re.search(r':root:not\(\[data-theme="light"\]\)\s*\{(.*?)\}', css, re.S)
+        by_button = re.search(r':root\[data-theme="dark"\]\s*\{(.*?)\}', css, re.S)
+        squash = lambda m: ' '.join(m.group(1).split()) if m else None
+        if not by_system or squash(by_system) != squash(by_button):
+            todo.append('css/styles.css: the two dark-theme colour lists are not identical')
     for page, title, desc in META:
         if len(title) > TITLE_MAX: todo.append(f'{page}: title is {len(title)} characters, limit {TITLE_MAX}')
         if len(desc) > DESC_MAX: todo.append(f'{page}: description is {len(desc)} characters, limit {DESC_MAX}')
