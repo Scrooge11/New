@@ -106,6 +106,8 @@ python3 brand/source/logo.py brand/logo/svg          # expects ../fonts relative
 node brand/source/export.js brand/logo/svg brand/logo/png   # needs Playwright: npm i -g playwright
 ```
 
+`export.js` accepts a third folder argument and then also draws a logo-only share image named `og-image.png`. The site does not use that file; it uses `site/assets/og-image.jpg`, the version with the hero photo.
+
 ## Credit and images
 
 - The footer on every page carries the Next Wave Digital Consulting credit (wave mark plus "Site Designed By: Next Wave Digital Consulting", linking to nextwavedigitalconsulting.com). The mark lives in `site/assets/nwdc/`. Keep it on every build.
