@@ -270,7 +270,7 @@ def quick_quote():
       </ol>
       <p class="qq-call">Rather talk? <a href="tel:{PHONE_TEL}">{ICON['phone']}{PHONE}</a></p>
     </div>
-    <form class="quote-form qq-form" name="quote" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" data-fallback="Call or text {PHONE}, or email {EMAIL}, and we will take it from there." novalidate>
+    <form class="quote-form qq-form" name="quote" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field" data-fallback="Call or text {PHONE}, or email {EMAIL}, and we will take it from there.">
       <input type="hidden" name="form-name" value="quote">
       <input type="hidden" name="source" value="Home page quick quote">
       <p class="visually-hidden" aria-hidden="true"><label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
@@ -937,7 +937,7 @@ CONTACT = head("Get a quote", f"Request a quote from {NAME_PLAIN} in {TOWN}. Cal
 
 <section class="section">
   <div class="wrap contact-grid">
-    <form class="quote-form" name="quote" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" data-fallback="Call or text {PHONE}, or email {EMAIL}, and we will take it from there." novalidate>
+    <form class="quote-form" name="quote" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field" data-fallback="Call or text {PHONE}, or email {EMAIL}, and we will take it from there.">
       <input type="hidden" name="form-name" value="quote">
       <input type="hidden" name="source" value="Contact page">
       <p class="visually-hidden" aria-hidden="true"><label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
@@ -1022,7 +1022,7 @@ CONTACT = head("Get a quote", f"Request a quote from {NAME_PLAIN} in {TOWN}. Cal
 ''' + footer()
 
 # ---------------------------------------------------------------------------
-# Privacy and 404
+# Privacy, thank-you and 404
 # ---------------------------------------------------------------------------
 PRIVACY = head("Privacy Policy", f"How {NAME_PLAIN} handles the information you send through this website.", "privacy.html") + header('') + f'''
 <section class="page-hero">
@@ -1063,6 +1063,22 @@ def root_absolute(html):
         return f'{m.group(1)}="' + ', '.join(' '.join([fix(p[0])] + p[1:]) for p in parts) + '"'
     return re.sub(r'\b(srcset|imagesrcset)="([^"]*)"', fix_set, html)
 
+THANKS = head("Request received", "Your request is in. We reply within one business day, usually the same day.", "thanks.html", index=False) + header('') + f'''
+<section class="notfound">
+  <div class="wrap">
+    <p class="eyebrow">Request received</p>
+    <h1>Thanks. Your request is in.</h1>
+    <p class="lede">The owner reads every request and replies within one business day, usually the same day.</p>
+    <p>Photos of the panel help. You can text them to <a href="tel:{PHONE_TEL}">{PHONE}</a>.</p>
+    <p class="muted">Burning smell, sparks, or a hot panel: shut off the main if you can reach it safely, then call us. If there is smoke or fire, call 911 first.</p>
+    <div class="btn-row">
+      <a class="btn btn-navy" href="index.html">Back to home</a>
+      <a class="btn btn-primary" href="tel:{PHONE_TEL}">{ICON['phone']}Call {PHONE}</a>
+    </div>
+  </div>
+</section>
+''' + footer()
+
 NOTFOUND = head("Page not found", "That page is not here.", "404.html", index=False) + header('') + f'''
 <section class="notfound">
   <div class="wrap">
@@ -1081,10 +1097,10 @@ NOTFOUND = head("Page not found", "That page is not here.", "404.html", index=Fa
 # Write everything
 # ---------------------------------------------------------------------------
 pages = {'index.html': INDEX, 'services.html': SERVICES_PAGE, 'service-area.html': AREA, 'about.html': ABOUT,
-         'contact.html': CONTACT, 'privacy.html': PRIVACY, '404.html': root_absolute(NOTFOUND)}
+         'contact.html': CONTACT, 'privacy.html': PRIVACY, 'thanks.html': THANKS, '404.html': root_absolute(NOTFOUND)}
 for sp in SERVICE_PAGES:
     pages[sp['slug'] + '.html'] = service_page(sp)
-NOINDEX = {'404.html'}   # kept out of the sitemap
+NOINDEX = {'404.html', 'thanks.html'}   # kept out of the sitemap
 
 for name, html in pages.items():
     with open(os.path.join(REPO, name), 'w') as f:

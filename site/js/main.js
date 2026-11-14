@@ -24,7 +24,8 @@
   var yearEls = document.querySelectorAll('[data-year]');
   for (var i = 0; i < yearEls.length; i++) yearEls[i].textContent = String(new Date().getFullYear());
 
-  // Quote form: posts to the form's action (Netlify Forms by default) and shows the result inline
+  // Quote form: posts to the form's action (Netlify Forms by default) and shows the result inline.
+  // Without JavaScript the browser submits the form itself and lands on thanks.html.
   var form = document.querySelector('form.quote-form');
   if (form) {
     var status = form.querySelector('.form-status');
@@ -75,7 +76,7 @@
 
   // Reveal sections and cards as they enter the viewport (skipped without IntersectionObserver)
   if ('IntersectionObserver' in window) {
-    var targets = document.querySelectorAll('.section-head, .service-card, .why-item, .process li, .work-tile, .faq-item, .price-box, .hours-card, .qq-copy, .qq-form');
+    var targets = document.querySelectorAll('.section-head, .service-card, .why-item, .process li, .work-tile, .faq details, .price-box, .hours-card, .qq-copy, .qq-form');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
