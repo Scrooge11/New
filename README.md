@@ -8,6 +8,44 @@ Brand package and website for JEMCO Contracting & Electrical Services.
 - **Brand**: logo files, colors, type and usage rules. Open `brand/index.html` for the guidelines.
 - **Business plan**: `business/README.md` links the client-ready plan and holds the three-year financial model and the research behind it.
 
+## Working on this from another computer
+
+Everything the site needs is in this repository: pages, styles, fonts, photos and the scripts that build them. There is nothing to install with npm, no account keys and no files to copy across by hand.
+
+**One-time setup**
+
+1. Install Git and Python 3.9 or newer.
+   - Mac: run `xcode-select --install` in Terminal. That installs both.
+   - Windows: install [Git for Windows](https://git-scm.com/download/win) and Python from [python.org](https://www.python.org/downloads/) (tick "Add python.exe to PATH").
+2. Sign in to GitHub on that computer (the first `git clone` or `git push` asks; the Cursor and GitHub Desktop apps can do it for you).
+3. Get the code. The JEMCO work lives on a branch, not on `main`, which holds only a short README:
+
+   ```
+   git clone --branch claude/js-contracting-branding-website-xtl811 https://github.com/Scrooge11/New.git jemco
+   cd jemco
+   ```
+
+**Every time**
+
+```
+git pull                           # pick up what was done on the other computer
+python3 site-src/preview.py        # Windows: py site-src\preview.py
+```
+
+The preview opens the site at `http://localhost:8080` and keeps running. Edit `site-src/gen_site.py` (wording, prices, phone, towns), `site/css/styles.css` (looks) or `site/js/main.js` (behaviour), then refresh the browser. Quote forms can be submitted in the preview: nothing is sent, and the fields are printed in the terminal window.
+
+When a piece of work is done:
+
+```
+git add -A
+git commit -m "What changed, in a few words"
+git push
+```
+
+Pull before you start and push when you finish, and the two computers never drift apart. `.gitattributes` keeps line endings the same on Windows and Mac, so switching between them does not create noise in the history.
+
+Only two jobs need more than Git and Python: redrawing the logos (see "Regenerating the logos") and re-cutting photos.
+
 ## What is where
 
 ```
@@ -22,7 +60,9 @@ brand/index.html                                                 brand guideline
 brand/logo/svg/                                                  every logo variant as vector art
 brand/logo/png/                                                  same logos as transparent PNG, print resolution
 brand/source/                                                    the script that draws the logos (see "Regenerating the logos")
-site-src/                                                        the scripts that generated the HTML pages and the brand guide
+site-src/gen_site.py                                             builds every page from the business facts at the top of the file
+site-src/preview.py                                              local preview server (see "Previewing")
+site-src/                                                        also holds the script for the brand guide
 business/                                                        business plan link, financial model (xlsx), research memos
 ```
 
@@ -63,11 +103,13 @@ Also decide whether the site should mention the previous company. It currently d
 
 ## Previewing
 
-Open `site/index.html` directly, or for a local server:
+```
+python3 site-src/preview.py        # Windows: py site-src\preview.py
+```
 
-```
-npx http-server site -p 8080
-```
+This rebuilds the pages, serves `site/` at `http://localhost:8080` and opens the browser. It sends the same security headers as the live host, shows `404.html` for a wrong address and `thanks.html` after a form is submitted, so what works here works once deployed. `--port 8081` picks another port; `--no-open` leaves the browser alone.
+
+Opening `site/index.html` straight from the folder also works for a quick look, apart from the 404 page.
 
 The site follows the visitor's light or dark system setting. To see the other one, switch the system appearance or use the browser's developer tools (Rendering, "Emulate CSS prefers-color-scheme").
 

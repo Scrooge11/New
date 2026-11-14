@@ -1104,9 +1104,13 @@ for sp in SERVICE_PAGES:
     pages[sp['slug'] + '.html'] = service_page(sp)
 NOINDEX = {'404.html', 'thanks.html'}   # kept out of the sitemap
 
+def write(name, text):
+    # Always UTF-8 with Unix line endings, so a run on Windows and a run on a Mac produce identical files.
+    with open(os.path.join(REPO, name), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(text)
+
 for name, html in pages.items():
-    with open(os.path.join(REPO, name), 'w') as f:
-        f.write(html)
+    write(name, html)
     print('wrote', name, len(html), 'bytes')
 
 # sitemap.xml and robots.txt stay in sync with the page list
@@ -1116,10 +1120,8 @@ for name in pages:
     if name in NOINDEX: continue
     loc = SITE_URL + '/' + ('' if name == 'index.html' else name)
     urls.append(f'  <url><loc>{loc}</loc><priority>{prio.get(name, "0.8")}</priority></url>')
-with open(os.path.join(REPO, 'sitemap.xml'), 'w') as f:
-    f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(urls) + '\n</urlset>\n')
-with open(os.path.join(REPO, 'robots.txt'), 'w') as f:
-    f.write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n')
+write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(urls) + '\n</urlset>\n')
+write('robots.txt', f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n')
 print('wrote sitemap.xml with', len(urls), 'urls')
 
 # ---------------------------------------------------------------------------
