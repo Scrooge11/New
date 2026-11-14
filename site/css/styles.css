@@ -46,6 +46,7 @@
   --panel-edge: transparent;       /* outline on navy panels; only needed where the page itself is navy */
   --ok-bg: #E8F7EE; --ok-ink: #16613A; --ok-line: #B7E3C8;
   --warn-bg: #FFF4E5; --warn-ink: #7A4A00; --warn-line: #FFD699;
+  --err-ink: #B42318; --err-line: #D92D20; --err-glow: rgba(217, 45, 32, 0.14); --ok-mark: #1B8A54;
   --show-in-light: block; --show-in-dark: none;   /* swaps the icon on the theme button */
 }
 
@@ -77,6 +78,7 @@
     --panel-edge: var(--line);
     --ok-bg: #0F3A2A; --ok-ink: #B9F0D0; --ok-line: #1F6B4A;
     --warn-bg: #3D2A06; --warn-ink: #FFD99A; --warn-line: #7A5410;
+    --err-ink: #FFA59C; --err-line: #F97066; --err-glow: rgba(249, 112, 102, 0.2); --ok-mark: #5EE0A0;
     --show-in-light: none; --show-in-dark: block;
   }
 }
@@ -101,6 +103,7 @@
     --panel-edge: var(--line);
     --ok-bg: #0F3A2A; --ok-ink: #B9F0D0; --ok-line: #1F6B4A;
     --warn-bg: #3D2A06; --warn-ink: #FFD99A; --warn-line: #7A5410;
+    --err-ink: #FFA59C; --err-line: #F97066; --err-glow: rgba(249, 112, 102, 0.2); --ok-mark: #5EE0A0;
     --show-in-light: none; --show-in-dark: block;
 }
 :root[data-theme="light"] { color-scheme: light; }
@@ -480,7 +483,29 @@ html:not(.js) .has-menu:focus-within > .submenu { visibility: visible; opacity: 
 }
 .field textarea { min-height: 140px; resize: vertical; }
 .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--blue-bright); outline: 3px solid rgba(47, 130, 245, 0.25); outline-offset: 0; }
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; align-items: start; }
+/* A problem is explained under its own field (main.js adds the note) */
+.field.has-error input, .field.has-error textarea { border-color: var(--err-line); box-shadow: 0 0 0 3px var(--err-glow); }
+.field-error { margin: 0; font-size: 0.9rem; font-weight: 600; color: var(--err-ink); display: flex; align-items: baseline; gap: 0.4rem; }
+.field-error::before { content: "!"; flex: none; display: inline-grid; place-items: center; width: 1.15em; height: 1.15em; border-radius: 50%; background: var(--err-ink); color: var(--surface); font-size: 0.8em; font-weight: 800; transform: translateY(-0.05em); }
+/* While the request is on its way */
+.btn.is-busy { cursor: progress; opacity: 0.85; }
+.btn.is-busy::before { content: ""; width: 1em; height: 1em; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+/* Confirmation: takes the form's place once the request is in */
+.form-done { text-align: center; padding: clamp(1rem, 4vw, 2.5rem) 0.5rem; outline: none; scroll-margin-top: 120px; }
+/* A field that receives focus after a failed send must not hide under the sticky header */
+.field input, .field textarea, .field select, .form-status { scroll-margin-top: 150px; }
+.form-done[hidden] { display: none; }
+.quote-form.is-sent > :not(.form-done) { display: none; }
+.form-done-icon { width: 64px; height: 64px; color: var(--ok-mark); margin: 0 auto 1rem; }
+.form-done-icon circle { stroke-dasharray: 132; stroke-dashoffset: 132; animation: draw 500ms ease-out forwards; }
+.form-done-icon path { stroke-dasharray: 30; stroke-dashoffset: 30; animation: draw 300ms ease-out 400ms forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.form-done-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.4rem, 3vw, 1.75rem); line-height: 1.15; color: var(--heading); margin: 0 0 0.75rem; }
+.form-done p { max-width: 34em; margin-inline: auto; color: var(--muted); }
+.form-done .form-again { background: none; border: 0; padding: 0.5rem; color: var(--link); cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .form-done-icon circle, .form-done-icon path { stroke-dashoffset: 0; } }
 .radio-row { display: flex; flex-wrap: wrap; gap: 1rem; }
 .radio-row label { display: flex; align-items: center; gap: 0.4rem; font-weight: 500; }
 .radio-row input { accent-color: var(--blue); width: 18px; height: 18px; }

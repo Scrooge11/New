@@ -190,11 +190,11 @@
       <div class="field-row">
         <div class="field">
           <label for="q-name">Name</label>
-          <input id="q-name" name="name" type="text" autocomplete="name" required>
+          <input id="q-name" name="name" type="text" autocomplete="name" required data-required="Please add your name.">
         </div>
         <div class="field">
           <label for="q-phone">Phone</label>
-          <input id="q-phone" name="phone" type="tel" autocomplete="tel" required>
+          <input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required data-required="Please add a number we can reach you on.">
         </div>
       </div>
       <div class="field-row">
@@ -209,20 +209,11 @@
       </div>
       <div class="field">
         <label for="q-type">Type of work</label>
-        <select id="q-type" name="type">
-          <option value="Repair or troubleshooting">Repair or troubleshooting</option>
-          <option value="Panel upgrade">Panel upgrade or service change</option>
-          <option value="EV charger">EV charger</option>
-          <option value="Generator">Generator or transfer switch</option>
-          <option value="Lighting or fans">Lighting or fans</option>
-          <option value="Remodel or addition">Remodel or addition</option>
-          <option value="Commercial">Commercial</option>
-          <option value="Other">Something else</option>
-        </select>
+        <select id="q-type" name="type"><option value="Repair or troubleshooting">Repair or troubleshooting</option><option value="Panel upgrade">Panel upgrade or service change</option><option value="EV charger">EV charger</option><option value="Generator">Generator or transfer switch</option><option value="Lighting or fans">Lighting or fans</option><option value="Remodel or addition">Remodel or addition</option><option value="Commercial">Commercial</option><option value="Other">Something else</option></select>
       </div>
       <div class="field">
         <label for="q-details">Describe the job</label>
-        <textarea id="q-details" name="details" required placeholder="What is happening, where, and when you need it done. Photos of the panel help; you can text them to us after you submit."></textarea>
+        <textarea id="q-details" name="details" required data-required="Tell us a little about the job." placeholder="What is happening, where, and when you need it done. Photos of the panel help; you can text them to us after you submit."></textarea>
       </div>
       <fieldset class="field fieldset-plain">
         <legend>Best way to reach you</legend>
@@ -237,6 +228,13 @@
         <button class="btn btn-primary btn-lg" type="submit">Send request</button>
       </div>
       <p class="form-note">No mailing lists and no sales calls. We only use this to reply about your job. See our <a href="privacy.html">privacy policy</a>.</p>
+      <div class="form-done" tabindex="-1" hidden>
+        <svg class="form-done-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m14.5 24.5 6.5 6.5 12.5-13"/></svg>
+        <p class="form-done-title">Thanks. Your request is in.</p>
+        <p>The owner reads every request and replies within one business day, usually the same day.</p>
+        <p>Photos of the panel help. You can text them to <a href="tel:+10000000000">(000) 000-0000</a>.</p>
+        <p><button class="text-link form-again" type="button">Send another request</button></p>
+      </div>
     </form>
 
     <aside class="contact-aside">

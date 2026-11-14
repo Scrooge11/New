@@ -78,33 +78,108 @@
   var yearEls = document.querySelectorAll('[data-year]');
   for (var i = 0; i < yearEls.length; i++) yearEls[i].textContent = String(new Date().getFullYear());
 
-  // Quote form: posts to the form's action (Netlify Forms by default) and shows the result inline.
-  // Without JavaScript the browser submits the form itself and lands on thanks.html.
+  // Quote form. Without JavaScript the browser checks the required fields itself, submits the
+  // form and lands on thanks.html. With it, problems are explained under each field, the request
+  // is sent in the background and the confirmation replaces the form on the same page.
   var form = document.querySelector('form.quote-form');
   if (form) {
     var status = form.querySelector('.form-status');
     var button = form.querySelector('button[type="submit"]');
+    var done = form.querySelector('.form-done');
     var fallback = form.getAttribute('data-fallback') || 'Please call or email us instead.';
+    var checked = form.querySelectorAll('input[required], textarea[required], input[type="email"], input[type="tel"]');
+    var digits = function (value) { return value.replace(/\D/g, ''); };
 
-    function show(kind, message) {
-      if (!status) return;
-      status.className = 'form-status ' + (kind === 'ok' ? 'is-ok' : 'is-err');
-      status.textContent = message;
-      status.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    form.noValidate = true;   // our messages replace the browser's pop-up bubbles
+
+    // Arriving from a service page (contact.html?type=EV%20charger) selects that type of work
+    var typeSelect = form.querySelector('select[name="type"]');
+    var asked = null;
+    try { asked = new URLSearchParams(window.location.search).get('type'); } catch (e) { /* older browser: leave the default */ }
+    if (typeSelect && asked) {
+      for (var t = 0; t < typeSelect.options.length; t++) {
+        if (typeSelect.options[t].value === asked) typeSelect.selectedIndex = t;
+      }
     }
+
+    var problemWith = function (el) {
+      var value = el.value.trim();
+      if (el.required && !value) return el.getAttribute('data-required') || 'This one is needed.';
+      if (el.type === 'tel' && value && digits(value).length < 10) return 'Please include the area code, 10 digits in all.';
+      if (el.type === 'email' && value && el.validity && el.validity.typeMismatch) return 'That email address looks incomplete.';
+      return '';
+    };
+
+    var review = function (el) {
+      var field = el.closest('.field');
+      var note = field.querySelector('.field-error');
+      var problem = problemWith(el);
+      if (problem) {
+        if (!note) {
+          note = document.createElement('p');
+          note.className = 'field-error';
+          note.id = el.id + '-error';
+          field.appendChild(note);
+        }
+        note.textContent = problem;
+        el.setAttribute('aria-invalid', 'true');
+        el.setAttribute('aria-describedby', note.id);
+      } else if (note) {
+        field.removeChild(note);
+        el.removeAttribute('aria-invalid');
+        el.removeAttribute('aria-describedby');
+      }
+      field.classList.toggle('has-error', !!problem);
+      return !problem;
+    };
+
+    for (var c = 0; c < checked.length; c++) {
+      // A field is only judged once the visitor has left it, and is cleared as soon as they fix it
+      checked[c].addEventListener('blur', function () {
+        if (this.type === 'tel') {
+          var d = digits(this.value);
+          if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
+          if (d.length === 10) this.value = '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
+        }
+        if (this.value.trim() || this.getAttribute('aria-invalid')) review(this);
+      });
+      checked[c].addEventListener('input', function () {
+        if (this.getAttribute('aria-invalid')) review(this);
+      });
+    }
+
+    var show = function (message) {
+      if (!status) return;
+      status.className = 'form-status' + (message ? ' is-err' : '');
+      status.textContent = message;
+      if (message) status.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    };
+
+    var busy = function (on) {
+      if (!button) return;
+      if (on) button.dataset.label = button.textContent;
+      button.disabled = on;
+      button.classList.toggle('is-busy', on);
+      button.textContent = on ? 'Sending…' : (button.dataset.label || 'Send request');
+    };
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var honeypot = form.querySelector('input[name="bot-field"]');
       if (honeypot && honeypot.value) return; // silently drop bots
-      if (!form.checkValidity()) { form.reportValidity(); return; }
+
+      var firstBad = null;
+      for (var i = 0; i < checked.length; i++) {
+        if (!review(checked[i]) && !firstBad) firstBad = checked[i];
+      }
+      if (firstBad) { firstBad.focus(); return; }
 
       var data = new FormData(form);
       var body = new URLSearchParams();
       data.forEach(function (value, key) { body.append(key, value); });
 
-      if (button) { button.disabled = true; button.dataset.label = button.textContent; button.textContent = 'Sending…'; }
-
+      show('');
+      busy(true);
       fetch(form.getAttribute('action') || window.location.pathname, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -112,13 +187,26 @@
       }).then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         form.reset();
-        show('ok', 'Thanks. Your request is in. We reply within one business day, usually sooner.');
+        if (done) {
+          form.classList.add('is-sent');
+          done.hidden = false;
+          done.focus();
+          done.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
       }).catch(function () {
-        show('err', 'The form could not be sent from this page. ' + fallback);
-      }).finally(function () {
-        if (button) { button.disabled = false; button.textContent = button.dataset.label || 'Send request'; }
-      });
+        show('The form could not be sent from this page. ' + fallback);
+      }).then(function () { busy(false); });
     });
+
+    var again = form.querySelector('.form-again');
+    if (again && done) {
+      again.addEventListener('click', function () {
+        form.classList.remove('is-sent');
+        done.hidden = true;
+        var first = form.querySelector('input:not([type="hidden"]):not([name="bot-field"])');
+        if (first) first.focus();
+      });
+    }
   }
 
   // Header firms up after a short scroll

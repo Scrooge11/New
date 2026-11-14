@@ -430,17 +430,24 @@
       <input type="hidden" name="source" value="Home page quick quote">
       <p class="visually-hidden" aria-hidden="true"><label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <div class="field-row">
-        <div class="field"><label for="h-name">Name</label><input id="h-name" name="name" type="text" autocomplete="name" required></div>
-        <div class="field"><label for="h-phone">Phone</label><input id="h-phone" name="phone" type="tel" autocomplete="tel" required></div>
+        <div class="field"><label for="h-name">Name</label><input id="h-name" name="name" type="text" autocomplete="name" required data-required="Please add your name."></div>
+        <div class="field"><label for="h-phone">Phone</label><input id="h-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required data-required="Please add a number we can reach you on."></div>
       </div>
       <div class="field-row">
         <div class="field"><label for="h-town">Town</label><input id="h-town" name="town" type="text" autocomplete="address-level2" placeholder="Westford"></div>
         <div class="field"><label for="h-type">Type of work</label><select id="h-type" name="type"><option value="Repair or troubleshooting">Repair or troubleshooting</option><option value="Panel upgrade">Panel upgrade or service change</option><option value="EV charger">EV charger</option><option value="Generator">Generator or transfer switch</option><option value="Lighting or fans">Lighting or fans</option><option value="Remodel or addition">Remodel or addition</option><option value="Other">Something else</option></select></div>
       </div>
-      <div class="field"><label for="h-details">What is going on?</label><textarea id="h-details" name="details" rows="4" required placeholder="For example: half the kitchen outlets stopped working this morning."></textarea></div>
+      <div class="field"><label for="h-details">What is going on?</label><textarea id="h-details" name="details" rows="4" required data-required="Tell us a little about the job." placeholder="For example: half the kitchen outlets stopped working this morning."></textarea></div>
       <div class="form-status" role="status" aria-live="polite"></div>
       <button class="btn btn-primary btn-lg qq-submit" type="submit">Send request</button>
       <p class="form-note">No mailing lists, no sales calls. See our <a href="privacy.html">privacy policy</a>.</p>
+      <div class="form-done" tabindex="-1" hidden>
+        <svg class="form-done-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m14.5 24.5 6.5 6.5 12.5-13"/></svg>
+        <p class="form-done-title">Thanks. Your request is in.</p>
+        <p>The owner reads every request and replies within one business day, usually the same day.</p>
+        <p>Photos of the panel help. You can text them to <a href="tel:+10000000000">(000) 000-0000</a>.</p>
+        <p><button class="text-link form-again" type="button">Send another request</button></p>
+      </div>
     </form>
   </div>
 </section>

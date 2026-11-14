@@ -5,6 +5,7 @@ Every run ends with a list of what still blocks a launch (placeholders, over-lon
 titles). Add --strict to make the run fail while that list is not empty.
 """
 import sys, os, json
+from urllib.parse import quote as url_quote
 
 ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
 STRICT = '--strict' in sys.argv[1:]
@@ -201,7 +202,7 @@ def header(active, current=None):
 <main id="main">
 '''
 
-def cta_strip(h, p):
+def cta_strip(h, p, form_type=None):
     return f'''<section class="cta-strip" aria-label="Call now">
   <div class="wrap cta-inner">
     <div>
@@ -210,13 +211,13 @@ def cta_strip(h, p):
     </div>
     <div class="btn-row">
       <a class="btn btn-primary btn-lg" href="tel:{PHONE_TEL}">{ICON['phone']}Call {PHONE}</a>
-      <a class="btn btn-outline-light btn-lg" href="contact.html">Request a quote</a>
+      <a class="btn btn-outline-light btn-lg" href="{quote_href(form_type)}">Request a quote</a>
     </div>
   </div>
 </section>
 '''
 
-def footer():
+def footer(form_type=None):
     svc = ''.join(f'<li><a href="{s["slug"]}.html">{s["nav"]}</a></li>' for s in SERVICE_PAGES)
     return f'''</main>
 <footer class="site-footer">
@@ -267,18 +268,38 @@ def footer():
 </footer>
 <nav class="callbar" aria-label="Quick contact">
   <a class="callbar-call" href="tel:{PHONE_TEL}">{ICON['phone']}Call now</a>
-  <a class="callbar-quote" href="contact.html">Free quote</a>
+  <a class="callbar-quote" href="{quote_href(form_type)}">Free quote</a>
 </nav>
 <script src="js/main.js"></script>
 </body>
 </html>
 '''
 
+# "Type of work" choices on both quote forms: (value sent with the form, label shown).
+# Each service page's form_type is one of these values, so its quote links arrive with it selected.
+FORM_TYPES = [('Repair or troubleshooting', 'Repair or troubleshooting'), ('Panel upgrade', 'Panel upgrade or service change'),
+              ('EV charger', 'EV charger'), ('Generator', 'Generator or transfer switch'), ('Lighting or fans', 'Lighting or fans'),
+              ('Remodel or addition', 'Remodel or addition'), ('Commercial', 'Commercial'), ('Other', 'Something else')]
+
+def type_options(skip=()):
+    return ''.join(f'<option value="{v}">{l}</option>' for v, l in FORM_TYPES if v not in skip)
+
+def quote_href(form_type=None):
+    """Link to the quote form. With a form_type, the form opens with that type of work already selected."""
+    return 'contact.html' + (f'?type={url_quote(form_type)}' if form_type else '')
+
+def form_done():
+    """Confirmation shown in place of the form once it has been sent (main.js reveals it)."""
+    return f'''<div class="form-done" tabindex="-1" hidden>
+        <svg class="form-done-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m14.5 24.5 6.5 6.5 12.5-13"/></svg>
+        <p class="form-done-title">Thanks. Your request is in.</p>
+        <p>The owner reads every request and replies within one business day, usually the same day.</p>
+        <p>Photos of the panel help. You can text them to <a href="tel:{PHONE_TEL}">{PHONE}</a>.</p>
+        <p><button class="text-link form-again" type="button">Send another request</button></p>
+      </div>'''
+
 def quick_quote():
-    opts = ''.join(f'<option value="{v}">{l}</option>' for v, l in [
-        ('Repair or troubleshooting', 'Repair or troubleshooting'), ('Panel upgrade', 'Panel upgrade or service change'),
-        ('EV charger', 'EV charger'), ('Generator', 'Generator or transfer switch'), ('Lighting or fans', 'Lighting or fans'),
-        ('Remodel or addition', 'Remodel or addition'), ('Other', 'Something else')])
+    opts = type_options(skip=('Commercial',))
     return f'''
 <section class="section quick-quote" id="quote" aria-labelledby="qq-h">
   <div class="wrap qq-grid">
@@ -298,17 +319,18 @@ def quick_quote():
       <input type="hidden" name="source" value="Home page quick quote">
       <p class="visually-hidden" aria-hidden="true"><label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <div class="field-row">
-        <div class="field"><label for="h-name">Name</label><input id="h-name" name="name" type="text" autocomplete="name" required></div>
-        <div class="field"><label for="h-phone">Phone</label><input id="h-phone" name="phone" type="tel" autocomplete="tel" required></div>
+        <div class="field"><label for="h-name">Name</label><input id="h-name" name="name" type="text" autocomplete="name" required data-required="Please add your name."></div>
+        <div class="field"><label for="h-phone">Phone</label><input id="h-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required data-required="Please add a number we can reach you on."></div>
       </div>
       <div class="field-row">
         <div class="field"><label for="h-town">Town</label><input id="h-town" name="town" type="text" autocomplete="address-level2" placeholder="{TOWN_SHORT}"></div>
         <div class="field"><label for="h-type">Type of work</label><select id="h-type" name="type">{opts}</select></div>
       </div>
-      <div class="field"><label for="h-details">What is going on?</label><textarea id="h-details" name="details" rows="4" required placeholder="For example: half the kitchen outlets stopped working this morning."></textarea></div>
+      <div class="field"><label for="h-details">What is going on?</label><textarea id="h-details" name="details" rows="4" required data-required="Tell us a little about the job." placeholder="For example: half the kitchen outlets stopped working this morning."></textarea></div>
       <div class="form-status" role="status" aria-live="polite"></div>
       <button class="btn btn-primary btn-lg qq-submit" type="submit">Send request</button>
       <p class="form-note">No mailing lists, no sales calls. See our <a href="privacy.html">privacy policy</a>.</p>
+      {form_done()}
     </form>
   </div>
 </section>
@@ -339,7 +361,7 @@ def faq_block(faqs, heading="Questions we get a lot"):
 # Service pages (data)
 # ---------------------------------------------------------------------------
 SERVICE_PAGES = [
- dict(slug='panel-upgrades', nav='Panel upgrades', icon='panel', spec='100A to 200A', card='Panel upgrades &amp; service changes',
+ dict(slug='panel-upgrades', form_type='Panel upgrade', nav='Panel upgrades', icon='panel', spec='100A to 200A', card='Panel upgrades &amp; service changes',
       card_p='Replace fuse boxes and undersized panels, add capacity for new loads, and clear up double-taps, missing grounds, and other code corrections. Utility coordination, permit, and inspection included.',
       service_type='Electrical panel upgrade', title='Electrical Panel Upgrades',
       h1=f'Electrical panel upgrades in {TOWN_SHORT} and nearby towns',
@@ -365,7 +387,7 @@ SERVICE_PAGES = [
             ('Will a new panel lower my insurance?', 'Many insurers decline or surcharge homes with fuse boxes or known-defective panels. A new panel often removes the surcharge; ask your agent before and after.'),
             ('Can you upgrade to 200 amps if the utility service is 100 amps?', 'Usually yes. We confirm the service drop with the utility and replace the meter socket and service cable as part of the job.')],
       related=['ev-charger-installation', 'generator-installation', 'electrical-repairs']),
- dict(slug='ev-charger-installation', nav='EV chargers', icon='plug', spec='Level 2 &middot; 40 to 60A', card='EV charger installation',
+ dict(slug='ev-charger-installation', form_type='EV charger', nav='EV chargers', icon='plug', spec='Level 2 &middot; 40 to 60A', card='EV charger installation',
       card_p='A dedicated circuit and a NEMA 14-50 outlet or hardwired charger in your garage or driveway. We run a load calculation first so the panel can handle it.',
       service_type='EV charger installation', title='EV Charger Installation',
       h1=f'EV charger installation in {TOWN_SHORT} and nearby towns',
@@ -389,7 +411,7 @@ SERVICE_PAGES = [
             ('Do I need a permit to install an EV charger in Massachusetts?', 'Yes. Any new circuit needs an electrical permit and an inspection. It is included in our price.'),
             ('Can my 100-amp panel handle an EV charger?', 'Often yes, with a load calculation and the right breaker. If not, a load-managed charger or a panel upgrade solves it, and we price both options.')],
       related=['panel-upgrades', 'generator-installation', 'lighting-installation']),
- dict(slug='generator-installation', nav='Generators', icon='generator', spec='Portable inlet or standby', card='Generators &amp; transfer switches',
+ dict(slug='generator-installation', form_type='Generator', nav='Generators', icon='generator', spec='Portable inlet or standby', card='Generators &amp; transfer switches',
       card_p='Interlock kits and inlets for portable generators, or automatic transfer switches for standby units, so the essentials stay on when the grid does not.',
       service_type='Generator installation', title='Standby Generators and Transfer Switches',
       h1=f'Standby generators and transfer switches in {TOWN_SHORT} and nearby towns',
@@ -413,7 +435,7 @@ SERVICE_PAGES = [
             ('How long does it take?', 'One to two days on site once the unit arrives. Lead times on standby units are usually one to three weeks.'),
             ('Can I run my furnace from a portable generator?', 'Yes, with an interlock kit or manual transfer switch and an inlet box. Never backfeed through a dryer outlet; it is dangerous for line workers and illegal.')],
       related=['panel-upgrades', 'ev-charger-installation', 'electrical-repairs']),
- dict(slug='lighting-installation', nav='Lighting &amp; fans', icon='bulb', spec='Recessed &middot; exterior &middot; dimmers', card='Lighting &amp; ceiling fans',
+ dict(slug='lighting-installation', form_type='Lighting or fans', nav='Lighting &amp; fans', icon='bulb', spec='Recessed &middot; exterior &middot; dimmers', card='Lighting &amp; ceiling fans',
       card_p='Recessed and under-cabinet lighting, exterior and landscape fixtures, fan installs with proper bracing, and dimmers that actually match the bulbs.',
       service_type='Lighting installation', title='Lighting and Ceiling Fan Installation',
       h1=f'Lighting and ceiling fan installation in {TOWN_SHORT} and nearby towns',
@@ -438,7 +460,7 @@ SERVICE_PAGES = [
             ('My dimmer flickers with LED bulbs. Why?', 'The dimmer and the bulbs are not compatible. A dimmer rated for LED loads, matched to the bulbs, fixes it.'),
             ('Can you install a smart switch with no neutral wire?', 'There are models that work without a neutral, and we can often add one. We check the box before we recommend a switch.')],
       related=['electrical-repairs', 'remodeling-contractor', 'ev-charger-installation']),
- dict(slug='electrical-repairs', nav='Repairs &amp; troubleshooting', icon='bolt', spec='Same-week scheduling', card='Troubleshooting &amp; repairs',
+ dict(slug='electrical-repairs', form_type='Repair or troubleshooting', nav='Repairs &amp; troubleshooting', icon='bolt', spec='Same-week scheduling', card='Troubleshooting &amp; repairs',
       card_p='Tripping breakers, dead outlets, flickering lights, buzzing at the panel. We find the cause, fix it, and tell you what we found.',
       service_type='Electrical repair', title='Electrical Repairs and Troubleshooting',
       h1=f'Electrical repairs and troubleshooting in {TOWN_SHORT} and nearby towns',
@@ -464,7 +486,7 @@ SERVICE_PAGES = [
             ('My house has aluminum wiring. Do I need a rewire?', 'Usually not. Approved connector repairs at every device and junction are accepted by insurers and far cheaper than a rewire.'),
             ('Do you charge a trip fee?', 'No separate trip fee inside our service area. The first-hour rate covers travel and diagnosis.')],
       related=['panel-upgrades', 'lighting-installation', 'generator-installation']),
- dict(slug='remodeling-contractor', nav='Remodels &amp; additions', icon='house', spec='Kitchens &middot; baths &middot; basements', card='Remodels &amp; additions',
+ dict(slug='remodeling-contractor', form_type='Remodel or addition', nav='Remodels &amp; additions', icon='house', spec='Kitchens &middot; baths &middot; basements', card='Remodels &amp; additions',
       card_p='New circuits, relocated outlets, GFCI and AFCI protection, and the framing, drywall, and finish work around it. One contractor, one schedule.',
       service_type='Home remodeling', title='Kitchen, Bath and Basement Remodels',
       h1=f'Kitchen, bath and basement remodels in {TOWN_SHORT} and nearby towns',
@@ -574,7 +596,7 @@ def service_page(sp):
       <p class="label">Typical price</p>
       <p class="price">{sp['price'][0]}</p>
       <p>{sp['price'][1]}</p>
-      <a class="btn btn-primary" href="contact.html">Get a written quote</a>
+      <a class="btn btn-primary" href="{quote_href(sp['form_type'])}">Get a written quote</a>
       <p class="small">Or call <a href="tel:{PHONE_TEL}">{PHONE}</a>. Serving {TOWNS_SHORT}.</p>
       <p class="small">{WARRANTY}. Licensed and insured. Permit included.</p>
     </aside>
@@ -582,7 +604,7 @@ def service_page(sp):
 </section>
 
 ''' + faq_block(sp['faqs'], f"{sp['title']}: questions we get") + related_block(sp['related']) + cta_strip(
-        f"Ready to talk about {sp['nav'].replace('&amp;', '&').lower()}?", f"Send a photo and a few details and we will come back with a number. No charge for the conversation.") + footer()
+        f"Ready to talk about {sp['nav'].replace('&amp;', '&').lower()}?", f"Send a photo and a few details and we will come back with a number. No charge for the conversation.", sp['form_type']) + footer(sp['form_type'])
 
 # ---------------------------------------------------------------------------
 # Home
@@ -969,11 +991,11 @@ CONTACT = head("Get a quote", f"Request a quote from {NAME_PLAIN} in {TOWN}. Cal
       <div class="field-row">
         <div class="field">
           <label for="q-name">Name</label>
-          <input id="q-name" name="name" type="text" autocomplete="name" required>
+          <input id="q-name" name="name" type="text" autocomplete="name" required data-required="Please add your name.">
         </div>
         <div class="field">
           <label for="q-phone">Phone</label>
-          <input id="q-phone" name="phone" type="tel" autocomplete="tel" required>
+          <input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required data-required="Please add a number we can reach you on.">
         </div>
       </div>
       <div class="field-row">
@@ -988,20 +1010,11 @@ CONTACT = head("Get a quote", f"Request a quote from {NAME_PLAIN} in {TOWN}. Cal
       </div>
       <div class="field">
         <label for="q-type">Type of work</label>
-        <select id="q-type" name="type">
-          <option value="Repair or troubleshooting">Repair or troubleshooting</option>
-          <option value="Panel upgrade">Panel upgrade or service change</option>
-          <option value="EV charger">EV charger</option>
-          <option value="Generator">Generator or transfer switch</option>
-          <option value="Lighting or fans">Lighting or fans</option>
-          <option value="Remodel or addition">Remodel or addition</option>
-          <option value="Commercial">Commercial</option>
-          <option value="Other">Something else</option>
-        </select>
+        <select id="q-type" name="type">{type_options()}</select>
       </div>
       <div class="field">
         <label for="q-details">Describe the job</label>
-        <textarea id="q-details" name="details" required placeholder="What is happening, where, and when you need it done. Photos of the panel help; you can text them to us after you submit."></textarea>
+        <textarea id="q-details" name="details" required data-required="Tell us a little about the job." placeholder="What is happening, where, and when you need it done. Photos of the panel help; you can text them to us after you submit."></textarea>
       </div>
       <fieldset class="field fieldset-plain">
         <legend>Best way to reach you</legend>
@@ -1016,6 +1029,7 @@ CONTACT = head("Get a quote", f"Request a quote from {NAME_PLAIN} in {TOWN}. Cal
         <button class="btn btn-primary btn-lg" type="submit">Send request</button>
       </div>
       <p class="form-note">No mailing lists and no sales calls. We only use this to reply about your job. See our <a href="privacy.html">privacy policy</a>.</p>
+      {form_done()}
     </form>
 
     <aside class="contact-aside">
@@ -1168,6 +1182,10 @@ def preflight():
         squash = lambda m: ' '.join(m.group(1).split()) if m else None
         if not by_system or squash(by_system) != squash(by_button):
             todo.append('css/styles.css: the two dark-theme colour lists are not identical')
+    known = {v for v, _ in FORM_TYPES}
+    for sp in SERVICE_PAGES:
+        if sp['form_type'] not in known:
+            todo.append(f"{sp['slug']}: form_type \"{sp['form_type']}\" is not one of the quote form's choices")
     for page, title, desc in META:
         if len(title) > TITLE_MAX: todo.append(f'{page}: title is {len(title)} characters, limit {TITLE_MAX}')
         if len(desc) > DESC_MAX: todo.append(f'{page}: description is {len(desc)} characters, limit {DESC_MAX}')
