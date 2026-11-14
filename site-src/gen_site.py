@@ -152,6 +152,7 @@ def head(title, desc, path, lds=None, index=True):
 <link rel="manifest" href="site.webmanifest">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/saira-latin-wght-normal.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/barlow-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/barlow-latin-600-normal.woff2" crossorigin>
 <link rel="stylesheet" href="css/styles.css">
 {'<link rel="preload" as="image" type="image/webp" href="assets/hero.webp" imagesrcset="assets/hero-900.webp 900w, assets/hero.webp 1584w" imagesizes="100vw">' if path == '' else ''}
 {ld}
