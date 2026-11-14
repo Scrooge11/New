@@ -25,6 +25,8 @@ Everything the site needs is in this repository: pages, styles, fonts, photos an
    cd jemco
    ```
 
+   Work that is still waiting in a pull request sits on its own branch. To pick that up instead, run `git switch` with the branch name shown at the top of the pull request, for example `git switch cursor/jemco-site-enhancements-8194`. `git branch -a` lists every branch.
+
 **Every time**
 
 ```
@@ -51,7 +53,8 @@ Only two jobs need more than Git and Python: redrawing the logos (see "Regenerat
 ```
 site/index.html, services.html, about.html, contact.html, ...    the site (14 pages, listed under "Pages")
 site/css/styles.css                                              all styling (brand colors and the light and dark themes are the variables at the top)
-site/js/main.js                                                  mobile menu, footer year, quote form submit
+site/js/main.js                                                  menus, theme button, quote forms, town checker, scroll effects
+site/js/theme-init.js                                            runs first on every page: applies the visitor's saved light or dark choice before anything is drawn
 site/assets/logo/                                                SVG logos the site uses
 site/assets/fonts/                                               Saira and Barlow, served from the site, with their licences
 site/assets/favicon*.png, favicon.svg, apple-touch-icon.png, og-image.jpg
@@ -70,7 +73,7 @@ business/                                                        business plan l
 
 Every business fact lives at the top of `site-src/gen_site.py`. Edit the constants there and run `python3 site-src/gen_site.py site` to rewrite all 14 pages, the sitemap and robots.txt. Editing the HTML directly also works, but the next run of the script overwrites it.
 
-Each run ends with a "Not ready to launch" list while any of these are still in place: the placeholder phone number, licence numbers, review link or owner name, or a page title or description too long for search results. `python3 site-src/gen_site.py site --strict` exits with an error until that list is empty, which makes it usable as a pre-launch check.
+Each run ends with a "Not ready to launch" list while any of these are still in place: the placeholder phone number, licence numbers, review link or owner name, a page title or description too long for search results, a service page whose `form_type` is not one of the choices in the quote form, or dark-theme colors in `styles.css` that differ between the two places they are written. `python3 site-src/gen_site.py site --strict` exits with an error until that list is empty, which makes it usable as a pre-launch check.
 
 | Constant | Currently | Replace with |
 |---|---|---|
@@ -96,7 +99,7 @@ Also decide whether the site should mention the previous company. It currently d
 | `index.html` | Home: hero, services, why JEMCO, process, reviews, service area, FAQ |
 | `services.html` | All services with the common-jobs table |
 | `panel-upgrades.html`, `ev-charger-installation.html`, `generator-installation.html`, `lighting-installation.html`, `electrical-repairs.html`, `remodeling-contractor.html` | One landing page per money service, each with pricing, FAQ, Service and FAQPage schema |
-| `service-area.html` | Towns served |
+| `service-area.html` | Towns served, with a "check your town" box |
 | `about.html`, `contact.html`, `privacy.html` | Company, quote form, privacy policy (needed for Google Ads and Local Services Ads) |
 | `thanks.html` | Confirmation page after a quote request, for visitors whose browser has JavaScript off or blocked. Not indexed, not in the sitemap |
 | `404.html` | Not-found page. Not indexed. Its links start at the site root so it works for a mistyped address at any depth, which also means it only looks right through a server, not opened as a file |
@@ -111,7 +114,17 @@ This rebuilds the pages, serves `site/` at `http://localhost:8080` and opens the
 
 Opening `site/index.html` straight from the folder also works for a quick look, apart from the 404 page.
 
-The site follows the visitor's light or dark system setting. To see the other one, switch the system appearance or use the browser's developer tools (Rendering, "Emulate CSS prefers-color-scheme").
+The site follows the visitor's light or dark system setting until they press the moon or sun button in the header; after that it keeps their choice. Press the same button to see the other theme while previewing.
+
+## How the site behaves
+
+- **Light and dark.** The header button switches theme and the choice is remembered on that device (browser storage, key `jemco-theme`; nothing is sent anywhere). The dark colors are written twice at the top of `styles.css`, once for "system is dark" and once for "visitor chose dark". Change both together; the generator refuses to stay quiet if they differ.
+- **Services menu.** On a computer, "Services" opens a menu of the six service pages on hover, on click of the small arrow, or from the keyboard (Escape closes it). On a phone the menu button opens a full-width sheet with the same links.
+- **Quote forms.** A missing name, phone or description is explained under that field instead of in a browser pop-up. A ten-digit phone number is tidied to `(978) 555-0100` style. After a successful send the form is replaced by a confirmation; if sending fails, the typed request stays and the phone and email are offered instead.
+- **Service preselected.** Buttons on a service page link to `contact.html?type=...`, so the "Type of work" list is already set when the visitor arrives. The choices are `FORM_TYPES` in `gen_site.py`, and each `SERVICE_PAGES` entry names its own with `form_type=`. Add a new service to both.
+- **Check your town.** On the service area page, typing a town marks it in the list. A town that is not listed gets the "call; the answer is usually yes" line. The towns come from `TOWNS`.
+- **Movement.** Sections fade up as they scroll into view, cards lift on hover, FAQ answers slide open and pages cross-fade in browsers that support it. All of it is switched off for visitors whose system asks for reduced motion.
+- **Without JavaScript.** Everything is still reachable: the phone menu becomes a plain list of links, the forms use the browser's own checks and land on `thanks.html`, and the theme follows the system setting. The theme button and town box are hidden because they would do nothing.
 
 ## Hosting
 
