@@ -1,14 +1,20 @@
 """Generates the static pages for the JEMCO Contracting & Electrical Services site.
 Plain HTML output, no build step needed to edit the result. Run: python3 site-src/gen_site.py site
 All business facts live in the constants below. Items marked TODO are placeholders.
+Every run ends with a list of what still blocks a launch (placeholders, over-long search
+titles). Add --strict to make the run fail while that list is not empty.
 """
 import sys, os, json
 
-REPO = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "site")
+ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
+STRICT = '--strict' in sys.argv[1:]
+REPO = ARGS[0] if ARGS else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "site")
 
 # ---- Business facts. TODO placeholders are listed in README.md ----
 NAME = "JEMCO Contracting &amp; Electrical Services"
 NAME_PLAIN = "JEMCO Contracting & Electrical Services"
+BRAND_SHORT = "JEMCO"             # used after long page titles so they are not cut off in search results
+OG_IMAGE = "assets/og-image.jpg"  # 1200 x 630 share card
 PHONE = "(000) 000-0000"          # TODO
 PHONE_TEL = "+10000000000"        # TODO
 EMAIL = "office@jemcoelectric.com"   # TODO confirm once the domain is bought
@@ -58,7 +64,7 @@ def business_ld():
         "name": NAME_PLAIN,
         "url": SITE_URL + "/",
         "logo": SITE_URL + "/assets/logo/jemco-logo-primary.svg",
-        "image": SITE_URL + "/assets/og-image.png",
+        "image": SITE_URL + "/" + OG_IMAGE,
         "telephone": PHONE_TEL,
         "email": EMAIL,
         "description": TAGLINE,
@@ -94,8 +100,22 @@ def strip_tags(s):
 # ---------------------------------------------------------------------------
 # Page chrome
 # ---------------------------------------------------------------------------
-def head(title, desc, path, lds=None):
-    full = f"{title} | {NAME_PLAIN}" if title else f"{NAME_PLAIN} | Electrician in {TOWN}"
+# Search results cut off long titles and descriptions. 70 is the studio QA limit for titles;
+# descriptions are held to 160 so they are not clipped mid-sentence.
+TITLE_MAX, DESC_MAX = 70, 160
+META = []   # (page, title, description) for every page, checked in preflight()
+
+def page_title(title):
+    """Full company name after the page title when it fits, the short brand when it does not."""
+    if not title:
+        return f"{NAME_PLAIN} | Electrician in {TOWN}"
+    full = f"{title} | {NAME_PLAIN}"
+    return full if len(full) <= TITLE_MAX else f"{title} | {BRAND_SHORT}"
+
+def head(title, desc, path, lds=None, index=True):
+    full = page_title(title)
+    META.append((path or 'index.html', full, desc))
+    robots = 'index, follow, max-image-preview:large' if index else 'noindex, follow'
     lds = [business_ld()] + (lds or [])
     ld = '\n'.join(f'<script type="application/ld+json">\n{json.dumps(d, indent=1)}\n</script>' for d in lds)
     return f'''<!doctype html>
@@ -105,14 +125,18 @@ def head(title, desc, path, lds=None):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{full}</title>
 <meta name="description" content="{desc}">
-<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="robots" content="{robots}">
 <link rel="canonical" href="{SITE_URL}/{path}">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="{NAME_PLAIN}">
 <meta property="og:title" content="{full}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{SITE_URL}/{path}">
-<meta property="og:image" content="{SITE_URL}/assets/og-image.png">
+<meta property="og:image" content="{SITE_URL}/{OG_IMAGE}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="{NAME_PLAIN}: licensed electrician and contractor">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0B1F3F">
@@ -296,7 +320,7 @@ SERVICE_PAGES = [
       card_p='Replace fuse boxes and undersized panels, add capacity for new loads, and clear up double-taps, missing grounds, and other code corrections. Utility coordination, permit, and inspection included.',
       service_type='Electrical panel upgrade', title='Electrical Panel Upgrades',
       h1=f'Electrical panel upgrades in {TOWN_SHORT} and nearby towns',
-      desc=f'200-amp electrical panel upgrades, fuse box replacement and service changes in {TOWN_SHORT}, MA and nearby towns. Licensed master electrician. Permit and inspection included.',
+      desc=f'200-amp panel upgrades, fuse box replacement and service changes in {TOWN_SHORT}, MA and nearby towns. Licensed master electrician. Permit and inspection included.',
       intro='A 100-amp panel was fine in 1985. Add an EV charger, a heat pump and an induction range and it is not. We replace fuse boxes and undersized panels with a new 200-amp service, bring grounding and bonding up to code, and handle the utility, the permit and the inspection.',
       includes=['New 200-amp panel with copper bus and arc-fault and ground-fault breakers where code requires them',
                 'Meter socket, mast and service entrance cable replaced if undersized or damaged',
@@ -322,7 +346,7 @@ SERVICE_PAGES = [
       card_p='A dedicated circuit and a NEMA 14-50 outlet or hardwired charger in your garage or driveway. We run a load calculation first so the panel can handle it.',
       service_type='EV charger installation', title='EV Charger Installation',
       h1=f'EV charger installation in {TOWN_SHORT} and nearby towns',
-      desc=f'Level 2 home EV charger installation in {TOWN_SHORT}, MA and nearby towns. Dedicated 40 to 60 amp circuits, NEMA 14-50 outlets and hardwired chargers, permit included, rebate paperwork handled.',
+      desc=f'Level 2 home EV charger installation in {TOWN_SHORT}, MA and nearby towns. 40 to 60 amp circuits, NEMA 14-50 outlets and hardwired chargers. Permit included.',
       intro='A Level 2 charger adds 25 to 40 miles of range an hour instead of four. We run the dedicated circuit, install the outlet or hardwire the charger you chose, and make sure your panel can carry it before we quote.',
       includes=['Load calculation on your existing panel, the step most installers skip',
                 'Dedicated 40, 50 or 60-amp circuit on a breaker sized to the charger',
@@ -346,7 +370,7 @@ SERVICE_PAGES = [
       card_p='Interlock kits and inlets for portable generators, or automatic transfer switches for standby units, so the essentials stay on when the grid does not.',
       service_type='Generator installation', title='Standby Generators and Transfer Switches',
       h1=f'Standby generators and transfer switches in {TOWN_SHORT} and nearby towns',
-      desc=f'Standby generator installation, automatic transfer switches, interlock kits and generator inlets in {TOWN_SHORT}, MA and nearby towns. Sized to your loads, permitted and inspected.',
+      desc=f'Standby generators, automatic transfer switches, interlock kits and inlets in {TOWN_SHORT}, MA and nearby towns. Sized to your loads, permitted and inspected.',
       intro='When a nor\'easter takes the grid down, a standby generator starts itself in seconds. On a tighter budget, a transfer switch or interlock lets you run the essentials from a portable generator safely.',
       includes=['Load sizing for what you want covered: furnace or heat pump, well pump, sump, refrigerator, or the whole house',
                 'Automatic standby generators (Generac, Kohler, Cummins) with an automatic transfer switch',
@@ -370,7 +394,7 @@ SERVICE_PAGES = [
       card_p='Recessed and under-cabinet lighting, exterior and landscape fixtures, fan installs with proper bracing, and dimmers that actually match the bulbs.',
       service_type='Lighting installation', title='Lighting and Ceiling Fan Installation',
       h1=f'Lighting and ceiling fan installation in {TOWN_SHORT} and nearby towns',
-      desc=f'Recessed LED lighting, under-cabinet lights, chandeliers, exterior and landscape lighting, ceiling fans and dimmers in {TOWN_SHORT}, MA and nearby towns. Clean installs with patching included.',
+      desc=f'Recessed LED lighting, under-cabinet lights, exterior lighting, ceiling fans and dimmers in {TOWN_SHORT}, MA and nearby towns. Clean installs, patching included.',
       intro='Good lighting is the cheapest renovation there is. We add recessed and under-cabinet lighting where there was none, hang fixtures on high ceilings, brace and wire ceiling fans properly, and set up dimmers that do not flicker.',
       includes=['Recessed LED lighting with slim wafer or can fixtures, laid out for even light',
                 'Under-cabinet, pendant and chandelier installation, including vaulted and two-story ceilings',
@@ -395,7 +419,7 @@ SERVICE_PAGES = [
       card_p='Tripping breakers, dead outlets, flickering lights, buzzing at the panel. We find the cause, fix it, and tell you what we found.',
       service_type='Electrical repair', title='Electrical Repairs and Troubleshooting',
       h1=f'Electrical repairs and troubleshooting in {TOWN_SHORT} and nearby towns',
-      desc=f'Electrical troubleshooting and repairs in {TOWN_SHORT}, MA and nearby towns: tripping breakers, dead outlets, flickering lights, GFCI and AFCI problems, aluminum wiring, home inspection repair lists.',
+      desc=f'Electrical troubleshooting and repairs in {TOWN_SHORT}, MA and nearby towns: tripping breakers, dead outlets, flickering lights and home inspection repair lists.',
       intro='A breaker that keeps tripping is telling you something. We find the cause, fix it properly and explain what we found, with a clear first-hour rate and a written quote for anything bigger.',
       includes=['Tripping breakers, dead outlets and circuits, flickering or dimming lights',
                 'GFCI and AFCI breakers and receptacles that will not reset',
@@ -421,7 +445,7 @@ SERVICE_PAGES = [
       card_p='New circuits, relocated outlets, GFCI and AFCI protection, and the framing, drywall, and finish work around it. One contractor, one schedule.',
       service_type='Home remodeling', title='Kitchen, Bath and Basement Remodels',
       h1=f'Kitchen, bath and basement remodels in {TOWN_SHORT} and nearby towns',
-      desc=f'Kitchen, bathroom and basement remodeling in {TOWN_SHORT}, MA and nearby towns by a licensed electrician and registered home improvement contractor. One contractor for the wiring and the walls.',
+      desc=f'Kitchen, bathroom and basement remodeling in {TOWN_SHORT}, MA and nearby towns by a licensed electrician and registered home improvement contractor.',
       intro='Most remodels are electrical, plumbing and the walls around them. As a licensed master electrician and registered home improvement contractor, we run the job from permit to paint-ready, so you are not scheduling three contractors for one room.',
       includes=['Kitchen and bath electrical: dedicated appliance circuits, GFCI protection, under-cabinet lighting, exhaust fans',
                 'Basement finishing: framing, insulation, electrical, drywall, lighting, egress review',
@@ -551,7 +575,7 @@ HOME_FAQS = [
  ('How do payments work?', 'Service calls are paid at completion. Installs take a deposit (no more than one-third in Massachusetts) and the balance at completion. Card, check or bank transfer.'),
 ]
 
-INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel upgrades, EV chargers, generators, lighting, troubleshooting and remodels. Owner on every job, written quotes before work starts.", "", [faq_ld(HOME_FAQS)]) + header('home') + f'''
+INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel upgrades, EV chargers, generators, lighting, repairs and remodels. Owner on every job.", "", [faq_ld(HOME_FAQS)]) + header('home') + f'''
 <section class="hero">
   <div class="wrap hero-inner">
     <div class="hero-copy">
@@ -701,7 +725,7 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
 # ---------------------------------------------------------------------------
 # Services overview
 # ---------------------------------------------------------------------------
-SERVICES_PAGE = head("Services", f"Residential and commercial electrical services plus remodels in {TOWN}: panel upgrades, EV chargers, generators, lighting, rewiring, troubleshooting and finish work.", "services.html",
+SERVICES_PAGE = head("Services", f"Residential and commercial electrical services plus remodels in {TOWN}: panel upgrades, EV chargers, generators, lighting, rewiring and troubleshooting.", "services.html",
                      [breadcrumb_ld([('Home', ''), ('Services', 'services.html')])]) + header('services') + f'''
 <section class="page-hero">
   <div class="wrap">
@@ -808,7 +832,7 @@ SERVICES_PAGE = head("Services", f"Residential and commercial electrical service
 # Service area
 # ---------------------------------------------------------------------------
 towns_li = '\n'.join(f'      <li>{t}, {STATE}{("<small>" + n + "</small>") if n else ""}</li>' for t, n in TOWNS)
-AREA = head("Service Area", f"{NAME_PLAIN} serves {TOWN_SHORT}, {', '.join(TOWN_NAMES[1:8])} and nearby Massachusetts towns with electrical and remodeling work.", "service-area.html",
+AREA = head("Service Area", f"{BRAND_SHORT} serves {TOWN_SHORT}, {', '.join(TOWN_NAMES[1:6])} and nearby Massachusetts towns with electrical and remodeling work.", "service-area.html",
             [breadcrumb_ld([('Home', ''), ('Service area', 'service-area.html')])]) + header('area') + f'''
 <section class="page-hero">
   <div class="wrap">
@@ -851,7 +875,7 @@ AREA = head("Service Area", f"{NAME_PLAIN} serves {TOWN_SHORT}, {', '.join(TOWN_
 # ---------------------------------------------------------------------------
 # About
 # ---------------------------------------------------------------------------
-ABOUT = head("About", f"{NAME_PLAIN} is an owner-operated electrical and contracting company in {TOWN}. Licensed, insured, and built on years in the trade.", "about.html",
+ABOUT = head("About", f"{BRAND_SHORT} is an owner-operated electrical and contracting company in {TOWN}. Licensed, insured, and built on years in the trade.", "about.html",
              [breadcrumb_ld([('Home', ''), ('About', 'about.html')])]) + header('about') + f'''
 <section class="page-hero">
   <div class="wrap">
@@ -1026,7 +1050,20 @@ PRIVACY = head("Privacy Policy", f"How {NAME_PLAIN} handles the information you 
 </section>
 ''' + footer()
 
-NOTFOUND = head("Page not found", "That page is not here.", "404.html") + header('') + f'''
+def root_absolute(html):
+    """Rewrite relative href, src, srcset and imagesrcset values to start at the site root.
+    The host serves 404.html at whatever address was mistyped, including ones inside a
+    folder (/old/page), where relative paths to the CSS, logo and links would all miss."""
+    import re
+    def fix(url):
+        return url if re.match(r'(?:[a-z][a-z0-9+.-]*:|/|#)', url, re.I) else '/' + url
+    html = re.sub(r'\b(href|src)="([^"]*)"', lambda m: f'{m.group(1)}="{fix(m.group(2))}"', html)
+    def fix_set(m):
+        parts = [c.strip().split(' ', 1) for c in m.group(2).split(',')]
+        return f'{m.group(1)}="' + ', '.join(' '.join([fix(p[0])] + p[1:]) for p in parts) + '"'
+    return re.sub(r'\b(srcset|imagesrcset)="([^"]*)"', fix_set, html)
+
+NOTFOUND = head("Page not found", "That page is not here.", "404.html", index=False) + header('') + f'''
 <section class="notfound">
   <div class="wrap">
     <p class="code">404</p>
@@ -1044,9 +1081,10 @@ NOTFOUND = head("Page not found", "That page is not here.", "404.html") + header
 # Write everything
 # ---------------------------------------------------------------------------
 pages = {'index.html': INDEX, 'services.html': SERVICES_PAGE, 'service-area.html': AREA, 'about.html': ABOUT,
-         'contact.html': CONTACT, 'privacy.html': PRIVACY, '404.html': NOTFOUND}
+         'contact.html': CONTACT, 'privacy.html': PRIVACY, '404.html': root_absolute(NOTFOUND)}
 for sp in SERVICE_PAGES:
     pages[sp['slug'] + '.html'] = service_page(sp)
+NOINDEX = {'404.html'}   # kept out of the sitemap
 
 for name, html in pages.items():
     with open(os.path.join(REPO, name), 'w') as f:
@@ -1057,7 +1095,7 @@ for name, html in pages.items():
 prio = {'index.html': '1.0', 'services.html': '0.9', 'contact.html': '0.9', 'service-area.html': '0.7', 'about.html': '0.6', 'privacy.html': '0.2'}
 urls = []
 for name in pages:
-    if name == '404.html': continue
+    if name in NOINDEX: continue
     loc = SITE_URL + '/' + ('' if name == 'index.html' else name)
     urls.append(f'  <url><loc>{loc}</loc><priority>{prio.get(name, "0.8")}</priority></url>')
 with open(os.path.join(REPO, 'sitemap.xml'), 'w') as f:
@@ -1065,3 +1103,27 @@ with open(os.path.join(REPO, 'sitemap.xml'), 'w') as f:
 with open(os.path.join(REPO, 'robots.txt'), 'w') as f:
     f.write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n')
 print('wrote sitemap.xml with', len(urls), 'urls')
+
+# ---------------------------------------------------------------------------
+# Preflight: what still stands between this build and a launch
+# ---------------------------------------------------------------------------
+def preflight():
+    todo = []
+    if '000-0000' in PHONE or '0000000' in PHONE_TEL: todo.append('PHONE and PHONE_TEL are still (000) 000-0000')
+    if '00000000' in LICENSE: todo.append('LICENSE is still #00000000')
+    if '000000' in HIC: todo.append('HIC is still #000000')
+    if 'your-google-business-profile' in GBP_URL: todo.append('GBP_URL is a dummy link, so the review buttons and footer link go nowhere')
+    if any('[Owner name]' in html for html in pages.values()): todo.append('[Owner name] is still on the about page')
+    for page, title, desc in META:
+        if len(title) > TITLE_MAX: todo.append(f'{page}: title is {len(title)} characters, limit {TITLE_MAX}')
+        if len(desc) > DESC_MAX: todo.append(f'{page}: description is {len(desc)} characters, limit {DESC_MAX}')
+    return todo
+
+problems = preflight()
+if problems:
+    print('\nNot ready to launch:')
+    for p in problems:
+        print('  -', p)
+    print('See "Before going live" in README.md.')
+    if STRICT:
+        sys.exit(1)
