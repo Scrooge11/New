@@ -339,16 +339,17 @@ def quick_quote():
 def checklist(items):
     return '<ul class="checklist">\n' + '\n'.join(f'  <li>{i}</li>' for i in items) + '\n</ul>'
 
-def faq_block(faqs, heading="Questions we get a lot"):
+def faq_block(faqs, heading="Questions we get a lot", form_type=None):
     items = '\n'.join(f'''      <details>
         <summary>{q}</summary>
         <div class="faq-body"><p>{a}</p></div>
       </details>''' for q, a in faqs)
     return f'''<section class="section section-alt" id="faq">
-  <div class="wrap">
-    <div class="section-head">
+  <div class="wrap faq-layout">
+    <div class="faq-intro">
       <p class="eyebrow">FAQ</p>
       <h2>{heading}</h2>
+      <p>Not on the list? Call or text <a href="tel:{PHONE_TEL}">{PHONE}</a>, or <a href="{quote_href(form_type)}">send a message</a>. No charge for the conversation.</p>
     </div>
     <div class="faq">
 {items}
@@ -532,25 +533,27 @@ def picture(key, alt, cls='', sizes='(max-width: 760px) 100vw, 50vw', eager=Fals
             f'<img{c} src="assets/work/{key}.jpg" alt="{alt}" width="{w}" height="{h}" {load} decoding="async"></picture>')
 
 def service_cards(photos=False):
+    """One link per card (the title). CSS stretches it over the whole card, so the photo, the text
+    and "Learn more" are all clickable without repeating the same link three times for screen readers."""
     out = []
     for s in SERVICE_PAGES:
         if photos:
             key, alt = PHOTOS[s['slug']]
-            top = f'<a class="service-photo" href="{s["slug"]}.html" tabindex="-1" aria-hidden="true">' + picture(key, '', sizes='(max-width: 760px) 100vw, 33vw') + '</a>'
+            top = '<div class="service-photo">' + picture(key, '', sizes='(max-width: 760px) 100vw, 33vw') + '</div>'
             cls = 'service-card has-photo'
         else:
-            top, cls = ICON[s['icon']], 'service-card'
+            top, cls = f'<span class="icon-tile">{ICON[s["icon"]]}</span>', 'service-card'
         out.append(f'''      <article class="{cls}">
         {top}
         <span class="spec">{s['spec']}</span>
-        <h3><a href="{s['slug']}.html">{s['card']}</a></h3>
+        <h3><a class="card-link" href="{s['slug']}.html">{s['card']}</a></h3>
         <p>{s['card_p']}</p>
-        <a class="text-link" href="{s['slug']}.html">Learn more</a>
+        <span class="card-more" aria-hidden="true">Learn more{ICON['arrow']}</span>
       </article>''')
     return '\n'.join(out)
 
 def related_block(slugs):
-    cards = '\n'.join(f'''      <a class="related-card" href="{SP[s]['slug']}.html">{SP[s]['title']}<span>{SP[s]['spec']}</span></a>''' for s in slugs)
+    cards = '\n'.join(f'''      <a class="related-card" href="{SP[s]['slug']}.html">{SP[s]['title']}<span>{SP[s]['spec']}</span>{ICON['arrow']}</a>''' for s in slugs)
     return f'''<section class="section">
   <div class="wrap">
     <div class="section-head">
@@ -574,6 +577,10 @@ def service_page(sp):
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="services.html">Services</a><span>/</span>{sp['title']}</nav>
     <h1>{sp['h1']}</h1>
     <p>{sp['intro']}</p>
+    <div class="btn-row">
+      <a class="btn btn-primary btn-lg" href="{quote_href(sp['form_type'])}">Get a written quote</a>
+      <a class="btn btn-outline-light btn-lg" href="tel:{PHONE_TEL}">{ICON['phone']}Call {PHONE}</a>
+    </div>
   </div>
 </section>
 
@@ -603,7 +610,7 @@ def service_page(sp):
   </div>
 </section>
 
-''' + faq_block(sp['faqs'], f"{sp['title']}: questions we get") + related_block(sp['related']) + cta_strip(
+''' + faq_block(sp['faqs'], f"{sp['title']}: questions we get", sp['form_type']) + related_block(sp['related']) + cta_strip(
         f"Ready to talk about {sp['nav'].replace('&amp;', '&').lower()}?", f"Send a photo and a few details and we will come back with a number. No charge for the conversation.", sp['form_type']) + footer(sp['form_type'])
 
 # ---------------------------------------------------------------------------
@@ -691,22 +698,22 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
     </div>
     <div class="why-grid">
       <div class="why-item">
-        {ICON['crew']}
+        <span class="icon-tile">{ICON['crew']}</span>
         <h3>One call, one crew</h3>
         <p>Electrical and general contracting from the same team means no waiting on a second trade, and no finger-pointing when something needs to change.</p>
       </div>
       <div class="why-item">
-        {ICON['badge']}
+        <span class="icon-tile">{ICON['badge']}</span>
         <h3>Owner on every job</h3>
         <p>You talk to the person doing the work, not a dispatcher. Same face at the estimate, the install, and the walkthrough.</p>
       </div>
       <div class="why-item">
-        {ICON['doc']}
+        <span class="icon-tile">{ICON['doc']}</span>
         <h3>Priced up front, in writing</h3>
         <p>You get a clear scope and a number before we start. If something changes, you hear about it before it costs you anything.</p>
       </div>
       <div class="why-item">
-        {ICON['stamp']}
+        <span class="icon-tile">{ICON['stamp']}</span>
         <h3>Permitted, inspected, warrantied</h3>
         <p>Every job is permitted where required, inspected, and backed by our {WARRANTY.lower()}.</p>
       </div>

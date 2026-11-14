@@ -216,17 +216,30 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
-  // Reveal sections and cards as they enter the viewport (skipped without IntersectionObserver)
+  // Reveal sections and cards as they enter the viewport (skipped without IntersectionObserver).
+  // Once an element has arrived its reveal classes are removed, so its own hover movement
+  // (cards lift, tiles zoom) is not overridden by the reveal's "stay put" rule.
   if ('IntersectionObserver' in window) {
-    var targets = document.querySelectorAll('.section-head, .service-card, .why-item, .process li, .work-tile, .faq details, .price-box, .hours-card, .qq-copy, .qq-form');
+    var targets = document.querySelectorAll('.section-head, .faq-intro, .related-card, .service-card, .why-item, .process li, .work-tile, .faq details, .price-box, .hours-card, .qq-copy, .qq-form');
+    var settle = function (e) {
+      if (e.target !== this || e.propertyName !== 'opacity') return;
+      this.classList.remove('rv', 'in');
+      this.style.transitionDelay = '';
+      this.removeEventListener('transitionend', settle);
+    };
+    var reveal = function (el) {
+      if (el.classList.contains('in')) return;
+      el.addEventListener('transitionend', settle);
+      el.classList.add('in');
+    };
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        if (en.isIntersecting) { reveal(en.target); io.unobserve(en.target); }
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     for (var k = 0; k < targets.length; k++) {
       targets[k].classList.add('rv');
-      targets[k].style.transitionDelay = ((k % 3) * 60) + 'ms';
+      targets[k].style.transitionDelay = ((k % 3) * 70) + 'ms';
       io.observe(targets[k]);
     }
     // Safety net: anything the reader has already scrolled to or past is shown, even after a jump
@@ -235,7 +248,7 @@
       pending = false;
       var left = document.querySelectorAll('.rv:not(.in)');
       for (var m = 0; m < left.length; m++) {
-        if (left[m].getBoundingClientRect().top < window.innerHeight) left[m].classList.add('in');
+        if (left[m].getBoundingClientRect().top < window.innerHeight) reveal(left[m]);
       }
     };
     window.addEventListener('scroll', function () { if (!pending) { pending = true; window.requestAnimationFrame(sweep); } }, { passive: true });
