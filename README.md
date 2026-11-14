@@ -118,7 +118,7 @@ The site follows the visitor's light or dark system setting until they press the
 
 ## How the site behaves
 
-- **Light and dark.** The header button switches theme and the choice is remembered on that device (browser storage, key `jemco-theme`; nothing is sent anywhere). The dark colors are written twice at the top of `styles.css`, once for "system is dark" and once for "visitor chose dark". Change both together; the generator refuses to stay quiet if they differ.
+- **Light and dark.** The header button switches theme and the choice is remembered on that device (browser storage, key `jemco-theme`; nothing is sent anywhere). The dark colors are written twice at the top of `styles.css`, once for "system is dark" and once for "visitor chose dark". Change both together; the generator lists it under "Not ready to launch" if they differ.
 - **Services menu.** On a computer, "Services" opens a menu of the six service pages on hover, on click of the small arrow, or from the keyboard (Escape closes it). On a phone the menu button opens a full-width sheet with the same links.
 - **Quote forms.** A missing name, phone or description is explained under that field instead of in a browser pop-up. A ten-digit phone number is tidied to `(978) 555-0100` style. After a successful send the form is replaced by a confirmation; if sending fails, the typed request stays and the phone and email are offered instead.
 - **Service preselected.** Buttons on a service page link to `contact.html?type=...`, so the "Type of work" list is already set when the visitor arrives. The choices are `FORM_TYPES` in `gen_site.py`, and each `SERVICE_PAGES` entry names its own with `form_type=`. Add a new service to both.
