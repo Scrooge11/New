@@ -1,0 +1,17 @@
+# Files that computers create on their own and that should never be committed.
+# Without this, "git add -A" on a Mac or Windows laptop would pick them up.
+
+# macOS
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Python
+__pycache__/
+*.pyc
+
+# Netlify CLI
+.netlify/

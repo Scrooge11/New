@@ -1,14 +1,21 @@
 """Generates the static pages for the JEMCO Contracting & Electrical Services site.
 Plain HTML output, no build step needed to edit the result. Run: python3 site-src/gen_site.py site
 All business facts live in the constants below. Items marked TODO are placeholders.
+Every run ends with a list of what still blocks a launch (placeholders, over-long search
+titles). Add --strict to make the run fail while that list is not empty.
 """
 import sys, os, json
+from urllib.parse import quote as url_quote
 
-REPO = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "site")
+ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
+STRICT = '--strict' in sys.argv[1:]
+REPO = ARGS[0] if ARGS else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "site")
 
 # ---- Business facts. TODO placeholders are listed in README.md ----
 NAME = "JEMCO Contracting &amp; Electrical Services"
 NAME_PLAIN = "JEMCO Contracting & Electrical Services"
+BRAND_SHORT = "JEMCO"             # used after long page titles so they are not cut off in search results
+OG_IMAGE = "assets/og-image.jpg"  # 1200 x 630 share card
 PHONE = "(000) 000-0000"          # TODO
 PHONE_TEL = "+10000000000"        # TODO
 EMAIL = "office@jemcoelectric.com"   # TODO confirm once the domain is bought
@@ -40,11 +47,14 @@ ICON = {
  'bulb': '<svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
  'bolt': '<svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>',
  'house': '<svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3l9 8M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>',
+ 'chevron': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
+ 'arrow': '<svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+ 'moon': '<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+ 'sun': '<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
  'crew': '<svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>',
  'badge': '<svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>',
  'doc': '<svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg>',
  'stamp': '<svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5"/></svg>',
- 'star': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>',
 }
 
 # ---------------------------------------------------------------------------
@@ -58,7 +68,7 @@ def business_ld():
         "name": NAME_PLAIN,
         "url": SITE_URL + "/",
         "logo": SITE_URL + "/assets/logo/jemco-logo-primary.svg",
-        "image": SITE_URL + "/assets/og-image.png",
+        "image": SITE_URL + "/" + OG_IMAGE,
         "telephone": PHONE_TEL,
         "email": EMAIL,
         "description": TAGLINE,
@@ -94,8 +104,22 @@ def strip_tags(s):
 # ---------------------------------------------------------------------------
 # Page chrome
 # ---------------------------------------------------------------------------
-def head(title, desc, path, lds=None):
-    full = f"{title} | {NAME_PLAIN}" if title else f"{NAME_PLAIN} | Electrician in {TOWN}"
+# Search results cut off long titles and descriptions. 70 is the studio QA limit for titles;
+# descriptions are held to 160 so they are not clipped mid-sentence.
+TITLE_MAX, DESC_MAX = 70, 160
+META = []   # (page, title, description) for every page, checked in preflight()
+
+def page_title(title):
+    """Full company name after the page title when it fits, the short brand when it does not."""
+    if not title:
+        return f"{NAME_PLAIN} | Electrician in {TOWN}"
+    full = f"{title} | {NAME_PLAIN}"
+    return full if len(full) <= TITLE_MAX else f"{title} | {BRAND_SHORT}"
+
+def head(title, desc, path, lds=None, index=True):
+    full = page_title(title)
+    META.append((path or 'index.html', full, desc))
+    robots = 'index, follow, max-image-preview:large' if index else 'noindex, follow'
     lds = [business_ld()] + (lds or [])
     ld = '\n'.join(f'<script type="application/ld+json">\n{json.dumps(d, indent=1)}\n</script>' for d in lds)
     return f'''<!doctype html>
@@ -105,23 +129,30 @@ def head(title, desc, path, lds=None):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{full}</title>
 <meta name="description" content="{desc}">
-<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="robots" content="{robots}">
 <link rel="canonical" href="{SITE_URL}/{path}">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="{NAME_PLAIN}">
 <meta property="og:title" content="{full}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{SITE_URL}/{path}">
-<meta property="og:image" content="{SITE_URL}/assets/og-image.png">
+<meta property="og:image" content="{SITE_URL}/{OG_IMAGE}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="{NAME_PLAIN}: licensed electrician and contractor">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0B1F3F">
+<meta name="color-scheme" content="light dark">
+<script src="js/theme-init.js"></script>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/saira-latin-wght-normal.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/barlow-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/barlow-latin-600-normal.woff2" crossorigin>
 <link rel="stylesheet" href="css/styles.css">
 {'<link rel="preload" as="image" type="image/webp" href="assets/hero.webp" imagesrcset="assets/hero-900.webp 900w, assets/hero.webp 1584w" imagesizes="100vw">' if path == '' else ''}
 {ld}
@@ -134,11 +165,28 @@ def head(title, desc, path, lds=None):
 NAV = [('index.html', 'Home', 'home'), ('services.html', 'Services', 'services'), ('service-area.html', 'Service area', 'area'),
        ('about.html', 'About', 'about'), ('contact.html', 'Contact', 'contact')]
 
-def header(active):
-    def li(h, l, k):
-        attr = ' class="is-active" aria-current="page"' if k == active else ''
-        return f'<li><a href="{h}"{attr}>{l}</a></li>'
-    items = ''.join(li(h, l, k) for h, l, k in NAV)
+def header(active, current=None):
+    """active: which top-level item is highlighted. current: slug of the service page being shown, if any."""
+    def top(h, l, k):
+        # aria-current="page" only on the link to the page itself; a service page highlights "Services" without claiming to be it
+        attr = ''
+        if k == active:
+            attr = ' class="is-active"' + ('' if current else ' aria-current="page"')
+        return f'<a href="{h}"{attr}>{l}</a>'
+    def service(s):
+        here = ' aria-current="page"' if s['slug'] == current else ''
+        icon = ICON[s['icon']].replace(' class="service-icon"', '')
+        return (f'<li><a href="{s["slug"]}.html"{here}>{icon}'
+                f'<span><strong>{s["nav"]}</strong><small>{s["spec"]}</small></span></a></li>')
+    items = ''
+    for h, l, k in NAV:
+        if k == 'services':
+            items += (f'<li class="has-menu">{top(h, l, k)}'
+                      f'<button class="submenu-toggle" type="button" aria-expanded="false" aria-controls="services-menu" aria-label="Show the list of services">{ICON["chevron"]}</button>'
+                      f'<ul class="submenu" id="services-menu">{"".join(service(s) for s in SERVICE_PAGES)}'
+                      f'<li class="submenu-all"><a href="services.html">All services{ICON["arrow"]}</a></li></ul></li>')
+        else:
+            items += f'<li>{top(h, l, k)}</li>'
     return f'''<header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="index.html" aria-label="{NAME_PLAIN} home">
@@ -146,7 +194,8 @@ def header(active):
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">{ICON['menu']}</button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
-      <ul>{items}</ul>
+      <ul class="nav-list">{items}</ul>
+      <button class="theme-toggle" type="button" aria-label="Switch between light and dark theme">{ICON['moon']}{ICON['sun']}<span class="theme-toggle-text">Dark theme</span></button>
     </nav>
     <a class="btn btn-primary header-cta" href="tel:{PHONE_TEL}">{ICON['phone']}<span class="cta-long">Call {PHONE}</span><span class="cta-short">Call</span></a>
   </div>
@@ -154,7 +203,7 @@ def header(active):
 <main id="main">
 '''
 
-def cta_strip(h, p):
+def cta_strip(h, p, form_type=None):
     return f'''<section class="cta-strip" aria-label="Call now">
   <div class="wrap cta-inner">
     <div>
@@ -163,13 +212,13 @@ def cta_strip(h, p):
     </div>
     <div class="btn-row">
       <a class="btn btn-primary btn-lg" href="tel:{PHONE_TEL}">{ICON['phone']}Call {PHONE}</a>
-      <a class="btn btn-outline-light btn-lg" href="contact.html">Request a quote</a>
+      <a class="btn btn-outline-light btn-lg" href="{quote_href(form_type)}">Request a quote</a>
     </div>
   </div>
 </section>
 '''
 
-def footer():
+def footer(form_type=None):
     svc = ''.join(f'<li><a href="{s["slug"]}.html">{s["nav"]}</a></li>' for s in SERVICE_PAGES)
     return f'''</main>
 <footer class="site-footer">
@@ -180,11 +229,11 @@ def footer():
         <p>{TAGLINE} Based in {TOWN}, serving {TOWNS_SHORT}.</p>
       </div>
       <div class="footer-col">
-        <h4>Services</h4>
+        <h2 class="footer-h">Services</h2>
         <ul>{svc}</ul>
       </div>
       <div class="footer-col">
-        <h4>Company</h4>
+        <h2 class="footer-h">Company</h2>
         <ul>
           <li><a href="about.html">About</a></li>
           <li><a href="service-area.html">Service area</a></li>
@@ -194,7 +243,7 @@ def footer():
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contact</h4>
+        <h2 class="footer-h">Contact</h2>
         <ul>
           <li><a href="tel:{PHONE_TEL}">{PHONE}</a></li>
           <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
@@ -220,18 +269,38 @@ def footer():
 </footer>
 <nav class="callbar" aria-label="Quick contact">
   <a class="callbar-call" href="tel:{PHONE_TEL}">{ICON['phone']}Call now</a>
-  <a class="callbar-quote" href="contact.html">Free quote</a>
+  <a class="callbar-quote" href="{quote_href(form_type)}">Free quote</a>
 </nav>
 <script src="js/main.js"></script>
 </body>
 </html>
 '''
 
+# "Type of work" choices on both quote forms: (value sent with the form, label shown).
+# Each service page's form_type is one of these values, so its quote links arrive with it selected.
+FORM_TYPES = [('Repair or troubleshooting', 'Repair or troubleshooting'), ('Panel upgrade', 'Panel upgrade or service change'),
+              ('EV charger', 'EV charger'), ('Generator', 'Generator or transfer switch'), ('Lighting or fans', 'Lighting or fans'),
+              ('Remodel or addition', 'Remodel or addition'), ('Commercial', 'Commercial'), ('Other', 'Something else')]
+
+def type_options(skip=()):
+    return ''.join(f'<option value="{v}">{l}</option>' for v, l in FORM_TYPES if v not in skip)
+
+def quote_href(form_type=None):
+    """Link to the quote form. With a form_type, the form opens with that type of work already selected."""
+    return 'contact.html' + (f'?type={url_quote(form_type)}' if form_type else '')
+
+def form_done():
+    """Confirmation shown in place of the form once it has been sent (main.js reveals it)."""
+    return f'''<div class="form-done" tabindex="-1" hidden>
+        <svg class="form-done-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m14.5 24.5 6.5 6.5 12.5-13"/></svg>
+        <p class="form-done-title">Thanks. Your request is in.</p>
+        <p>The owner reads every request and replies within one business day, usually the same day.</p>
+        <p>Photos of the panel help. You can text them to <a href="tel:{PHONE_TEL}">{PHONE}</a>.</p>
+        <p><button class="text-link form-again" type="button">Send another request</button></p>
+      </div>'''
+
 def quick_quote():
-    opts = ''.join(f'<option value="{v}">{l}</option>' for v, l in [
-        ('Repair or troubleshooting', 'Repair or troubleshooting'), ('Panel upgrade', 'Panel upgrade or service change'),
-        ('EV charger', 'EV charger'), ('Generator', 'Generator or transfer switch'), ('Lighting or fans', 'Lighting or fans'),
-        ('Remodel or addition', 'Remodel or addition'), ('Other', 'Something else')])
+    opts = type_options(skip=('Commercial',))
     return f'''
 <section class="section quick-quote" id="quote" aria-labelledby="qq-h">
   <div class="wrap qq-grid">
@@ -246,22 +315,23 @@ def quick_quote():
       </ol>
       <p class="qq-call">Rather talk? <a href="tel:{PHONE_TEL}">{ICON['phone']}{PHONE}</a></p>
     </div>
-    <form class="quote-form qq-form" name="quote" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" data-fallback="Call or text {PHONE}, or email {EMAIL}, and we will take it from there." novalidate>
+    <form class="quote-form qq-form" name="quote" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field" data-fallback="Call or text {PHONE}, or email {EMAIL}, and we will take it from there.">
       <input type="hidden" name="form-name" value="quote">
       <input type="hidden" name="source" value="Home page quick quote">
       <p class="visually-hidden" aria-hidden="true"><label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <div class="field-row">
-        <div class="field"><label for="h-name">Name</label><input id="h-name" name="name" type="text" autocomplete="name" required></div>
-        <div class="field"><label for="h-phone">Phone</label><input id="h-phone" name="phone" type="tel" autocomplete="tel" required></div>
+        <div class="field"><label for="h-name">Name</label><input id="h-name" name="name" type="text" autocomplete="name" required data-required="Please add your name."></div>
+        <div class="field"><label for="h-phone">Phone</label><input id="h-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required data-required="Please add a number we can reach you on."></div>
       </div>
       <div class="field-row">
         <div class="field"><label for="h-town">Town</label><input id="h-town" name="town" type="text" autocomplete="address-level2" placeholder="{TOWN_SHORT}"></div>
         <div class="field"><label for="h-type">Type of work</label><select id="h-type" name="type">{opts}</select></div>
       </div>
-      <div class="field"><label for="h-details">What is going on?</label><textarea id="h-details" name="details" rows="4" required placeholder="For example: half the kitchen outlets stopped working this morning."></textarea></div>
+      <div class="field"><label for="h-details">What is going on?</label><textarea id="h-details" name="details" rows="4" required data-required="Tell us a little about the job." placeholder="For example: half the kitchen outlets stopped working this morning."></textarea></div>
       <div class="form-status" role="status" aria-live="polite"></div>
       <button class="btn btn-primary btn-lg qq-submit" type="submit">Send request</button>
       <p class="form-note">No mailing lists, no sales calls. See our <a href="privacy.html">privacy policy</a>.</p>
+      {form_done()}
     </form>
   </div>
 </section>
@@ -270,16 +340,17 @@ def quick_quote():
 def checklist(items):
     return '<ul class="checklist">\n' + '\n'.join(f'  <li>{i}</li>' for i in items) + '\n</ul>'
 
-def faq_block(faqs, heading="Questions we get a lot"):
+def faq_block(faqs, heading="Questions we get a lot", form_type=None):
     items = '\n'.join(f'''      <details>
         <summary>{q}</summary>
         <div class="faq-body"><p>{a}</p></div>
       </details>''' for q, a in faqs)
     return f'''<section class="section section-alt" id="faq">
-  <div class="wrap">
-    <div class="section-head">
+  <div class="wrap faq-layout">
+    <div class="faq-intro">
       <p class="eyebrow">FAQ</p>
       <h2>{heading}</h2>
+      <p>Not on the list? Call or text <a href="tel:{PHONE_TEL}">{PHONE}</a>, or <a href="{quote_href(form_type)}">send a message</a>. No charge for the conversation.</p>
     </div>
     <div class="faq">
 {items}
@@ -292,11 +363,11 @@ def faq_block(faqs, heading="Questions we get a lot"):
 # Service pages (data)
 # ---------------------------------------------------------------------------
 SERVICE_PAGES = [
- dict(slug='panel-upgrades', nav='Panel upgrades', icon='panel', spec='100A to 200A', card='Panel upgrades &amp; service changes',
+ dict(slug='panel-upgrades', form_type='Panel upgrade', nav='Panel upgrades', icon='panel', spec='100A to 200A', card='Panel upgrades &amp; service changes',
       card_p='Replace fuse boxes and undersized panels, add capacity for new loads, and clear up double-taps, missing grounds, and other code corrections. Utility coordination, permit, and inspection included.',
       service_type='Electrical panel upgrade', title='Electrical Panel Upgrades',
       h1=f'Electrical panel upgrades in {TOWN_SHORT} and nearby towns',
-      desc=f'200-amp electrical panel upgrades, fuse box replacement and service changes in {TOWN_SHORT}, MA and nearby towns. Licensed master electrician. Permit and inspection included.',
+      desc=f'200-amp panel upgrades, fuse box replacement and service changes in {TOWN_SHORT}, MA and nearby towns. Licensed master electrician. Permit and inspection included.',
       intro='A 100-amp panel was fine in 1985. Add an EV charger, a heat pump and an induction range and it is not. We replace fuse boxes and undersized panels with a new 200-amp service, bring grounding and bonding up to code, and handle the utility, the permit and the inspection.',
       includes=['New 200-amp panel with copper bus and arc-fault and ground-fault breakers where code requires them',
                 'Meter socket, mast and service entrance cable replaced if undersized or damaged',
@@ -318,11 +389,11 @@ SERVICE_PAGES = [
             ('Will a new panel lower my insurance?', 'Many insurers decline or surcharge homes with fuse boxes or known-defective panels. A new panel often removes the surcharge; ask your agent before and after.'),
             ('Can you upgrade to 200 amps if the utility service is 100 amps?', 'Usually yes. We confirm the service drop with the utility and replace the meter socket and service cable as part of the job.')],
       related=['ev-charger-installation', 'generator-installation', 'electrical-repairs']),
- dict(slug='ev-charger-installation', nav='EV chargers', icon='plug', spec='Level 2 &middot; 40 to 60A', card='EV charger installation',
+ dict(slug='ev-charger-installation', form_type='EV charger', nav='EV chargers', icon='plug', spec='Level 2 &middot; 40 to 60A', card='EV charger installation',
       card_p='A dedicated circuit and a NEMA 14-50 outlet or hardwired charger in your garage or driveway. We run a load calculation first so the panel can handle it.',
       service_type='EV charger installation', title='EV Charger Installation',
       h1=f'EV charger installation in {TOWN_SHORT} and nearby towns',
-      desc=f'Level 2 home EV charger installation in {TOWN_SHORT}, MA and nearby towns. Dedicated 40 to 60 amp circuits, NEMA 14-50 outlets and hardwired chargers, permit included, rebate paperwork handled.',
+      desc=f'Level 2 home EV charger installation in {TOWN_SHORT}, MA and nearby towns. 40 to 60 amp circuits, NEMA 14-50 outlets and hardwired chargers. Permit included.',
       intro='A Level 2 charger adds 25 to 40 miles of range an hour instead of four. We run the dedicated circuit, install the outlet or hardwire the charger you chose, and make sure your panel can carry it before we quote.',
       includes=['Load calculation on your existing panel, the step most installers skip',
                 'Dedicated 40, 50 or 60-amp circuit on a breaker sized to the charger',
@@ -342,11 +413,11 @@ SERVICE_PAGES = [
             ('Do I need a permit to install an EV charger in Massachusetts?', 'Yes. Any new circuit needs an electrical permit and an inspection. It is included in our price.'),
             ('Can my 100-amp panel handle an EV charger?', 'Often yes, with a load calculation and the right breaker. If not, a load-managed charger or a panel upgrade solves it, and we price both options.')],
       related=['panel-upgrades', 'generator-installation', 'lighting-installation']),
- dict(slug='generator-installation', nav='Generators', icon='generator', spec='Portable inlet or standby', card='Generators &amp; transfer switches',
+ dict(slug='generator-installation', form_type='Generator', nav='Generators', icon='generator', spec='Portable inlet or standby', card='Generators &amp; transfer switches',
       card_p='Interlock kits and inlets for portable generators, or automatic transfer switches for standby units, so the essentials stay on when the grid does not.',
       service_type='Generator installation', title='Standby Generators and Transfer Switches',
       h1=f'Standby generators and transfer switches in {TOWN_SHORT} and nearby towns',
-      desc=f'Standby generator installation, automatic transfer switches, interlock kits and generator inlets in {TOWN_SHORT}, MA and nearby towns. Sized to your loads, permitted and inspected.',
+      desc=f'Standby generators, automatic transfer switches, interlock kits and inlets in {TOWN_SHORT}, MA and nearby towns. Sized to your loads, permitted and inspected.',
       intro='When a nor\'easter takes the grid down, a standby generator starts itself in seconds. On a tighter budget, a transfer switch or interlock lets you run the essentials from a portable generator safely.',
       includes=['Load sizing for what you want covered: furnace or heat pump, well pump, sump, refrigerator, or the whole house',
                 'Automatic standby generators (Generac, Kohler, Cummins) with an automatic transfer switch',
@@ -366,11 +437,11 @@ SERVICE_PAGES = [
             ('How long does it take?', 'One to two days on site once the unit arrives. Lead times on standby units are usually one to three weeks.'),
             ('Can I run my furnace from a portable generator?', 'Yes, with an interlock kit or manual transfer switch and an inlet box. Never backfeed through a dryer outlet; it is dangerous for line workers and illegal.')],
       related=['panel-upgrades', 'ev-charger-installation', 'electrical-repairs']),
- dict(slug='lighting-installation', nav='Lighting &amp; fans', icon='bulb', spec='Recessed &middot; exterior &middot; dimmers', card='Lighting &amp; ceiling fans',
+ dict(slug='lighting-installation', form_type='Lighting or fans', nav='Lighting &amp; fans', icon='bulb', spec='Recessed &middot; exterior &middot; dimmers', card='Lighting &amp; ceiling fans',
       card_p='Recessed and under-cabinet lighting, exterior and landscape fixtures, fan installs with proper bracing, and dimmers that actually match the bulbs.',
       service_type='Lighting installation', title='Lighting and Ceiling Fan Installation',
       h1=f'Lighting and ceiling fan installation in {TOWN_SHORT} and nearby towns',
-      desc=f'Recessed LED lighting, under-cabinet lights, chandeliers, exterior and landscape lighting, ceiling fans and dimmers in {TOWN_SHORT}, MA and nearby towns. Clean installs with patching included.',
+      desc=f'Recessed LED lighting, under-cabinet lights, exterior lighting, ceiling fans and dimmers in {TOWN_SHORT}, MA and nearby towns. Clean installs, patching included.',
       intro='Good lighting is the cheapest renovation there is. We add recessed and under-cabinet lighting where there was none, hang fixtures on high ceilings, brace and wire ceiling fans properly, and set up dimmers that do not flicker.',
       includes=['Recessed LED lighting with slim wafer or can fixtures, laid out for even light',
                 'Under-cabinet, pendant and chandelier installation, including vaulted and two-story ceilings',
@@ -391,11 +462,11 @@ SERVICE_PAGES = [
             ('My dimmer flickers with LED bulbs. Why?', 'The dimmer and the bulbs are not compatible. A dimmer rated for LED loads, matched to the bulbs, fixes it.'),
             ('Can you install a smart switch with no neutral wire?', 'There are models that work without a neutral, and we can often add one. We check the box before we recommend a switch.')],
       related=['electrical-repairs', 'remodeling-contractor', 'ev-charger-installation']),
- dict(slug='electrical-repairs', nav='Repairs &amp; troubleshooting', icon='bolt', spec='Same-week scheduling', card='Troubleshooting &amp; repairs',
+ dict(slug='electrical-repairs', form_type='Repair or troubleshooting', nav='Repairs &amp; troubleshooting', icon='bolt', spec='Same-week scheduling', card='Troubleshooting &amp; repairs',
       card_p='Tripping breakers, dead outlets, flickering lights, buzzing at the panel. We find the cause, fix it, and tell you what we found.',
       service_type='Electrical repair', title='Electrical Repairs and Troubleshooting',
       h1=f'Electrical repairs and troubleshooting in {TOWN_SHORT} and nearby towns',
-      desc=f'Electrical troubleshooting and repairs in {TOWN_SHORT}, MA and nearby towns: tripping breakers, dead outlets, flickering lights, GFCI and AFCI problems, aluminum wiring, home inspection repair lists.',
+      desc=f'Electrical troubleshooting and repairs in {TOWN_SHORT}, MA and nearby towns: tripping breakers, dead outlets, flickering lights and home inspection repair lists.',
       intro='A breaker that keeps tripping is telling you something. We find the cause, fix it properly and explain what we found, with a clear first-hour rate and a written quote for anything bigger.',
       includes=['Tripping breakers, dead outlets and circuits, flickering or dimming lights',
                 'GFCI and AFCI breakers and receptacles that will not reset',
@@ -417,11 +488,11 @@ SERVICE_PAGES = [
             ('My house has aluminum wiring. Do I need a rewire?', 'Usually not. Approved connector repairs at every device and junction are accepted by insurers and far cheaper than a rewire.'),
             ('Do you charge a trip fee?', 'No separate trip fee inside our service area. The first-hour rate covers travel and diagnosis.')],
       related=['panel-upgrades', 'lighting-installation', 'generator-installation']),
- dict(slug='remodeling-contractor', nav='Remodels &amp; additions', icon='house', spec='Kitchens &middot; baths &middot; basements', card='Remodels &amp; additions',
+ dict(slug='remodeling-contractor', form_type='Remodel or addition', nav='Remodels &amp; additions', icon='house', spec='Kitchens &middot; baths &middot; basements', card='Remodels &amp; additions',
       card_p='New circuits, relocated outlets, GFCI and AFCI protection, and the framing, drywall, and finish work around it. One contractor, one schedule.',
       service_type='Home remodeling', title='Kitchen, Bath and Basement Remodels',
       h1=f'Kitchen, bath and basement remodels in {TOWN_SHORT} and nearby towns',
-      desc=f'Kitchen, bathroom and basement remodeling in {TOWN_SHORT}, MA and nearby towns by a licensed electrician and registered home improvement contractor. One contractor for the wiring and the walls.',
+      desc=f'Kitchen, bathroom and basement remodeling in {TOWN_SHORT}, MA and nearby towns by a licensed electrician and registered home improvement contractor.',
       intro='Most remodels are electrical, plumbing and the walls around them. As a licensed master electrician and registered home improvement contractor, we run the job from permit to paint-ready, so you are not scheduling three contractors for one room.',
       includes=['Kitchen and bath electrical: dedicated appliance circuits, GFCI protection, under-cabinet lighting, exhaust fans',
                 'Basement finishing: framing, insulation, electrical, drywall, lighting, egress review',
@@ -463,25 +534,27 @@ def picture(key, alt, cls='', sizes='(max-width: 760px) 100vw, 50vw', eager=Fals
             f'<img{c} src="assets/work/{key}.jpg" alt="{alt}" width="{w}" height="{h}" {load} decoding="async"></picture>')
 
 def service_cards(photos=False):
+    """One link per card (the title). CSS stretches it over the whole card, so the photo, the text
+    and "Learn more" are all clickable without repeating the same link three times for screen readers."""
     out = []
     for s in SERVICE_PAGES:
         if photos:
             key, alt = PHOTOS[s['slug']]
-            top = f'<a class="service-photo" href="{s["slug"]}.html" tabindex="-1" aria-hidden="true">' + picture(key, '', sizes='(max-width: 760px) 100vw, 33vw') + '</a>'
+            top = '<div class="service-photo">' + picture(key, '', sizes='(max-width: 760px) 100vw, 33vw') + '</div>'
             cls = 'service-card has-photo'
         else:
-            top, cls = ICON[s['icon']], 'service-card'
+            top, cls = f'<span class="icon-tile">{ICON[s["icon"]]}</span>', 'service-card'
         out.append(f'''      <article class="{cls}">
         {top}
         <span class="spec">{s['spec']}</span>
-        <h3><a href="{s['slug']}.html">{s['card']}</a></h3>
+        <h3><a class="card-link" href="{s['slug']}.html">{s['card']}</a></h3>
         <p>{s['card_p']}</p>
-        <a class="text-link" href="{s['slug']}.html">Learn more</a>
+        <span class="card-more" aria-hidden="true">Learn more{ICON['arrow']}</span>
       </article>''')
     return '\n'.join(out)
 
 def related_block(slugs):
-    cards = '\n'.join(f'''      <a class="related-card" href="{SP[s]['slug']}.html">{SP[s]['title']}<span>{SP[s]['spec']}</span></a>''' for s in slugs)
+    cards = '\n'.join(f'''      <a class="related-card" href="{SP[s]['slug']}.html">{SP[s]['title']}<span>{SP[s]['spec']}</span>{ICON['arrow']}</a>''' for s in slugs)
     return f'''<section class="section">
   <div class="wrap">
     <div class="section-head">
@@ -498,13 +571,17 @@ def related_block(slugs):
 def service_page(sp):
     lds = [service_ld(sp), breadcrumb_ld([('Home', ''), ('Services', 'services.html'), (sp['title'], sp['slug'] + '.html')]), faq_ld(sp['faqs'])]
     pkey, palt = PHOTOS[sp['slug']]
-    return head(sp['title'] + f' in {TOWN_SHORT}, MA', sp['desc'], sp['slug'] + '.html', lds) + header('services') + f'''
+    return head(sp['title'] + f' in {TOWN_SHORT}, MA', sp['desc'], sp['slug'] + '.html', lds) + header('services', sp['slug']) + f'''
 <section class="page-hero has-photo">
   {picture(pkey, '', cls='page-hero-img', sizes='100vw', eager=True)}
   <div class="wrap">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="services.html">Services</a><span>/</span>{sp['title']}</nav>
     <h1>{sp['h1']}</h1>
     <p>{sp['intro']}</p>
+    <div class="btn-row">
+      <a class="btn btn-primary btn-lg" href="{quote_href(sp['form_type'])}">Get a written quote</a>
+      <a class="btn btn-outline-light btn-lg" href="tel:{PHONE_TEL}">{ICON['phone']}Call {PHONE}</a>
+    </div>
   </div>
 </section>
 
@@ -527,15 +604,15 @@ def service_page(sp):
       <p class="label">Typical price</p>
       <p class="price">{sp['price'][0]}</p>
       <p>{sp['price'][1]}</p>
-      <a class="btn btn-primary" href="contact.html">Get a written quote</a>
+      <a class="btn btn-primary" href="{quote_href(sp['form_type'])}">Get a written quote</a>
       <p class="small">Or call <a href="tel:{PHONE_TEL}">{PHONE}</a>. Serving {TOWNS_SHORT}.</p>
       <p class="small">{WARRANTY}. Licensed and insured. Permit included.</p>
     </aside>
   </div>
 </section>
 
-''' + faq_block(sp['faqs'], f"{sp['title']}: questions we get") + related_block(sp['related']) + cta_strip(
-        f"Ready to talk about {sp['nav'].replace('&amp;', '&').lower()}?", f"Send a photo and a few details and we will come back with a number. No charge for the conversation.") + footer()
+''' + faq_block(sp['faqs'], f"{sp['title']}: questions we get", sp['form_type']) + related_block(sp['related']) + cta_strip(
+        f"Ready to talk about {sp['nav'].replace('&amp;', '&').lower()}?", f"Send a photo and a few details and we will come back with a number. No charge for the conversation.", sp['form_type']) + footer(sp['form_type'])
 
 # ---------------------------------------------------------------------------
 # Home
@@ -551,7 +628,7 @@ HOME_FAQS = [
  ('How do payments work?', 'Service calls are paid at completion. Installs take a deposit (no more than one-third in Massachusetts) and the balance at completion. Card, check or bank transfer.'),
 ]
 
-INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel upgrades, EV chargers, generators, lighting, troubleshooting and remodels. Owner on every job, written quotes before work starts.", "", [faq_ld(HOME_FAQS)]) + header('home') + f'''
+INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel upgrades, EV chargers, generators, lighting, repairs and remodels. Owner on every job.", "", [faq_ld(HOME_FAQS)]) + header('home') + f'''
 <section class="hero">
   <div class="wrap hero-inner">
     <div class="hero-copy">
@@ -622,22 +699,22 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
     </div>
     <div class="why-grid">
       <div class="why-item">
-        {ICON['crew']}
+        <span class="icon-tile">{ICON['crew']}</span>
         <h3>One call, one crew</h3>
         <p>Electrical and general contracting from the same team means no waiting on a second trade, and no finger-pointing when something needs to change.</p>
       </div>
       <div class="why-item">
-        {ICON['badge']}
+        <span class="icon-tile">{ICON['badge']}</span>
         <h3>Owner on every job</h3>
         <p>You talk to the person doing the work, not a dispatcher. Same face at the estimate, the install, and the walkthrough.</p>
       </div>
       <div class="why-item">
-        {ICON['doc']}
+        <span class="icon-tile">{ICON['doc']}</span>
         <h3>Priced up front, in writing</h3>
         <p>You get a clear scope and a number before we start. If something changes, you hear about it before it costs you anything.</p>
       </div>
       <div class="why-item">
-        {ICON['stamp']}
+        <span class="icon-tile">{ICON['stamp']}</span>
         <h3>Permitted, inspected, warrantied</h3>
         <p>Every job is permitted where required, inspected, and backed by our {WARRANTY.lower()}.</p>
       </div>
@@ -671,10 +748,11 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
         <a class="btn btn-outline-navy" href="{GBP_URL}" rel="noopener">Leave a review</a>
       </div>
     </div>
-    <div class="review-badge" aria-hidden="true">
-      <div class="stars">{ICON['star'] * 5}</div>
-      <p>Google reviews</p>
-    </div>
+    <aside class="promise-card" aria-label="Our guarantee">
+      <p class="label">Our guarantee</p>
+      <p class="promise">{WARRANTY[0].upper() + WARRANTY[1:]}</p>
+      <p>On our work, plus the manufacturer warranty on equipment we install.</p>
+    </aside>
   </div>
 </section>
 
@@ -701,7 +779,7 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
 # ---------------------------------------------------------------------------
 # Services overview
 # ---------------------------------------------------------------------------
-SERVICES_PAGE = head("Services", f"Residential and commercial electrical services plus remodels in {TOWN}: panel upgrades, EV chargers, generators, lighting, rewiring, troubleshooting and finish work.", "services.html",
+SERVICES_PAGE = head("Services", f"Residential and commercial electrical services plus remodels in {TOWN}: panel upgrades, EV chargers, generators, lighting, rewiring and troubleshooting.", "services.html",
                      [breadcrumb_ld([('Home', ''), ('Services', 'services.html')])]) + header('services') + f'''
 <section class="page-hero">
   <div class="wrap">
@@ -711,8 +789,9 @@ SERVICES_PAGE = head("Services", f"Residential and commercial electrical service
   </div>
 </section>
 
-<section class="section" id="main-services">
+<section class="section" id="main-services" aria-labelledby="main-services-h">
   <div class="wrap">
+    <h2 class="visually-hidden" id="main-services-h">Main services</h2>
     <div class="services-grid">
 {service_cards(photos=True)}
     </div>
@@ -807,8 +886,8 @@ SERVICES_PAGE = head("Services", f"Residential and commercial electrical service
 # ---------------------------------------------------------------------------
 # Service area
 # ---------------------------------------------------------------------------
-towns_li = '\n'.join(f'      <li>{t}, {STATE}{("<small>" + n + "</small>") if n else ""}</li>' for t, n in TOWNS)
-AREA = head("Service Area", f"{NAME_PLAIN} serves {TOWN_SHORT}, {', '.join(TOWN_NAMES[1:8])} and nearby Massachusetts towns with electrical and remodeling work.", "service-area.html",
+towns_li = '\n'.join(f'      <li data-town="{t}">{t}, {STATE}{("<small>" + n + "</small>") if n else ""}</li>' for t, n in TOWNS)
+AREA = head("Service Area", f"{BRAND_SHORT} serves {TOWN_SHORT}, {', '.join(TOWN_NAMES[1:6])} and nearby Massachusetts towns with electrical and remodeling work.", "service-area.html",
             [breadcrumb_ld([('Home', ''), ('Service area', 'service-area.html')])]) + header('area') + f'''
 <section class="page-hero">
   <div class="wrap">
@@ -823,6 +902,11 @@ AREA = head("Service Area", f"{NAME_PLAIN} serves {TOWN_SHORT}, {', '.join(TOWN_
     <div class="section-head">
       <h2>Towns we serve</h2>
       <p>Same pricing and same crew everywhere on this list. No trip fee inside the service area.</p>
+    </div>
+    <div class="town-check field" data-phone="{PHONE}" data-tel="{PHONE_TEL}" data-home="{TOWN_SHORT}">
+      <label for="town-check-input">Check your town</label>
+      <input id="town-check-input" type="text" maxlength="40" autocomplete="address-level2" spellcheck="false" enterkeyhint="search" placeholder="Start typing, for example {TOWN_NAMES[3]}" aria-describedby="town-check-result">
+      <p class="town-check-result" id="town-check-result" role="status"></p>
     </div>
     <ul class="towns-grid">
 {towns_li}
@@ -851,7 +935,7 @@ AREA = head("Service Area", f"{NAME_PLAIN} serves {TOWN_SHORT}, {', '.join(TOWN_
 # ---------------------------------------------------------------------------
 # About
 # ---------------------------------------------------------------------------
-ABOUT = head("About", f"{NAME_PLAIN} is an owner-operated electrical and contracting company in {TOWN}. Licensed, insured, and built on years in the trade.", "about.html",
+ABOUT = head("About", f"{BRAND_SHORT} is an owner-operated electrical and contracting company in {TOWN}. Licensed, insured, and built on years in the trade.", "about.html",
              [breadcrumb_ld([('Home', ''), ('About', 'about.html')])]) + header('about') + f'''
 <section class="page-hero">
   <div class="wrap">
@@ -870,7 +954,7 @@ ABOUT = head("About", f"{NAME_PLAIN} is an owner-operated electrical and contrac
       <p><a class="text-link" href="contact.html">Get in touch</a></p>
     </div>
     <aside class="cred-card" aria-label="Credentials">
-      <h3>Credentials</h3>
+      <h2 class="h3">Credentials</h2>
       <ul>
         <li>Massachusetts Master Electrician, {LICENSE}</li>
         <li>Home Improvement Contractor registration, {HIC}</li>
@@ -913,18 +997,18 @@ CONTACT = head("Get a quote", f"Request a quote from {NAME_PLAIN} in {TOWN}. Cal
 
 <section class="section">
   <div class="wrap contact-grid">
-    <form class="quote-form" name="quote" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" data-fallback="Call or text {PHONE}, or email {EMAIL}, and we will take it from there." novalidate>
+    <form class="quote-form" name="quote" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field" data-fallback="Call or text {PHONE}, or email {EMAIL}, and we will take it from there.">
       <input type="hidden" name="form-name" value="quote">
       <input type="hidden" name="source" value="Contact page">
       <p class="visually-hidden" aria-hidden="true"><label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <div class="field-row">
         <div class="field">
           <label for="q-name">Name</label>
-          <input id="q-name" name="name" type="text" autocomplete="name" required>
+          <input id="q-name" name="name" type="text" autocomplete="name" required data-required="Please add your name.">
         </div>
         <div class="field">
           <label for="q-phone">Phone</label>
-          <input id="q-phone" name="phone" type="tel" autocomplete="tel" required>
+          <input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required data-required="Please add a number we can reach you on.">
         </div>
       </div>
       <div class="field-row">
@@ -939,20 +1023,11 @@ CONTACT = head("Get a quote", f"Request a quote from {NAME_PLAIN} in {TOWN}. Cal
       </div>
       <div class="field">
         <label for="q-type">Type of work</label>
-        <select id="q-type" name="type">
-          <option value="Repair or troubleshooting">Repair or troubleshooting</option>
-          <option value="Panel upgrade">Panel upgrade or service change</option>
-          <option value="EV charger">EV charger</option>
-          <option value="Generator">Generator or transfer switch</option>
-          <option value="Lighting or fans">Lighting or fans</option>
-          <option value="Remodel or addition">Remodel or addition</option>
-          <option value="Commercial">Commercial</option>
-          <option value="Other">Something else</option>
-        </select>
+        <select id="q-type" name="type">{type_options()}</select>
       </div>
       <div class="field">
         <label for="q-details">Describe the job</label>
-        <textarea id="q-details" name="details" required placeholder="What is happening, where, and when you need it done. Photos of the panel help; you can text them to us after you submit."></textarea>
+        <textarea id="q-details" name="details" required data-required="Tell us a little about the job." placeholder="What is happening, where, and when you need it done. Photos of the panel help; you can text them to us after you submit."></textarea>
       </div>
       <fieldset class="field fieldset-plain">
         <legend>Best way to reach you</legend>
@@ -967,6 +1042,7 @@ CONTACT = head("Get a quote", f"Request a quote from {NAME_PLAIN} in {TOWN}. Cal
         <button class="btn btn-primary btn-lg" type="submit">Send request</button>
       </div>
       <p class="form-note">No mailing lists and no sales calls. We only use this to reply about your job. See our <a href="privacy.html">privacy policy</a>.</p>
+      {form_done()}
     </form>
 
     <aside class="contact-aside">
@@ -998,7 +1074,7 @@ CONTACT = head("Get a quote", f"Request a quote from {NAME_PLAIN} in {TOWN}. Cal
 ''' + footer()
 
 # ---------------------------------------------------------------------------
-# Privacy and 404
+# Privacy, thank-you and 404
 # ---------------------------------------------------------------------------
 PRIVACY = head("Privacy Policy", f"How {NAME_PLAIN} handles the information you send through this website.", "privacy.html") + header('') + f'''
 <section class="page-hero">
@@ -1026,7 +1102,36 @@ PRIVACY = head("Privacy Policy", f"How {NAME_PLAIN} handles the information you 
 </section>
 ''' + footer()
 
-NOTFOUND = head("Page not found", "That page is not here.", "404.html") + header('') + f'''
+def root_absolute(html):
+    """Rewrite relative href, src, srcset and imagesrcset values to start at the site root.
+    The host serves 404.html at whatever address was mistyped, including ones inside a
+    folder (/old/page), where relative paths to the CSS, logo and links would all miss."""
+    import re
+    def fix(url):
+        return url if re.match(r'(?:[a-z][a-z0-9+.-]*:|/|#)', url, re.I) else '/' + url
+    html = re.sub(r'\b(href|src)="([^"]*)"', lambda m: f'{m.group(1)}="{fix(m.group(2))}"', html)
+    def fix_set(m):
+        parts = [c.strip().split(' ', 1) for c in m.group(2).split(',')]
+        return f'{m.group(1)}="' + ', '.join(' '.join([fix(p[0])] + p[1:]) for p in parts) + '"'
+    return re.sub(r'\b(srcset|imagesrcset)="([^"]*)"', fix_set, html)
+
+THANKS = head("Request received", "Your request is in. We reply within one business day, usually the same day.", "thanks.html", index=False) + header('') + f'''
+<section class="notfound">
+  <div class="wrap">
+    <p class="eyebrow">Request received</p>
+    <h1>Thanks. Your request is in.</h1>
+    <p class="lede">The owner reads every request and replies within one business day, usually the same day.</p>
+    <p>Photos of the panel help. You can text them to <a href="tel:{PHONE_TEL}">{PHONE}</a>.</p>
+    <p class="muted">Burning smell, sparks, or a hot panel: shut off the main if you can reach it safely, then call us. If there is smoke or fire, call 911 first.</p>
+    <div class="btn-row">
+      <a class="btn btn-navy" href="index.html">Back to home</a>
+      <a class="btn btn-primary" href="tel:{PHONE_TEL}">{ICON['phone']}Call {PHONE}</a>
+    </div>
+  </div>
+</section>
+''' + footer()
+
+NOTFOUND = head("Page not found", "That page is not here.", "404.html", index=False) + header('') + f'''
 <section class="notfound">
   <div class="wrap">
     <p class="code">404</p>
@@ -1044,24 +1149,66 @@ NOTFOUND = head("Page not found", "That page is not here.", "404.html") + header
 # Write everything
 # ---------------------------------------------------------------------------
 pages = {'index.html': INDEX, 'services.html': SERVICES_PAGE, 'service-area.html': AREA, 'about.html': ABOUT,
-         'contact.html': CONTACT, 'privacy.html': PRIVACY, '404.html': NOTFOUND}
+         'contact.html': CONTACT, 'privacy.html': PRIVACY, 'thanks.html': THANKS, '404.html': root_absolute(NOTFOUND)}
 for sp in SERVICE_PAGES:
     pages[sp['slug'] + '.html'] = service_page(sp)
+NOINDEX = {'404.html', 'thanks.html'}   # kept out of the sitemap
+
+def write(name, text):
+    # Always UTF-8 with Unix line endings, so a run on Windows and a run on a Mac produce identical files.
+    with open(os.path.join(REPO, name), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(text)
 
 for name, html in pages.items():
-    with open(os.path.join(REPO, name), 'w') as f:
-        f.write(html)
+    write(name, html)
     print('wrote', name, len(html), 'bytes')
 
 # sitemap.xml and robots.txt stay in sync with the page list
 prio = {'index.html': '1.0', 'services.html': '0.9', 'contact.html': '0.9', 'service-area.html': '0.7', 'about.html': '0.6', 'privacy.html': '0.2'}
 urls = []
 for name in pages:
-    if name == '404.html': continue
+    if name in NOINDEX: continue
     loc = SITE_URL + '/' + ('' if name == 'index.html' else name)
     urls.append(f'  <url><loc>{loc}</loc><priority>{prio.get(name, "0.8")}</priority></url>')
-with open(os.path.join(REPO, 'sitemap.xml'), 'w') as f:
-    f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(urls) + '\n</urlset>\n')
-with open(os.path.join(REPO, 'robots.txt'), 'w') as f:
-    f.write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n')
+write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(urls) + '\n</urlset>\n')
+write('robots.txt', f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n')
 print('wrote sitemap.xml with', len(urls), 'urls')
+
+# ---------------------------------------------------------------------------
+# Preflight: what still stands between this build and a launch
+# ---------------------------------------------------------------------------
+def preflight():
+    todo = []
+    if '000-0000' in PHONE or '0000000' in PHONE_TEL: todo.append('PHONE and PHONE_TEL are still (000) 000-0000')
+    if '00000000' in LICENSE: todo.append('LICENSE is still #00000000')
+    if '000000' in HIC: todo.append('HIC is still #000000')
+    if 'your-google-business-profile' in GBP_URL: todo.append('GBP_URL is a dummy link, so the review buttons and footer link go nowhere')
+    if any('[Owner name]' in html for html in pages.values()): todo.append('[Owner name] is still on the about page')
+    # The dark theme's colour list is written out twice in the stylesheet (system setting, and
+    # the theme button). If the two copies drift, one of those routes shows the wrong colours.
+    css_path = os.path.join(REPO, 'css', 'styles.css')
+    if os.path.isfile(css_path):
+        import re
+        css = open(css_path, encoding='utf-8').read()
+        by_system = re.search(r':root:not\(\[data-theme="light"\]\)\s*\{(.*?)\}', css, re.S)
+        by_button = re.search(r':root\[data-theme="dark"\]\s*\{(.*?)\}', css, re.S)
+        squash = lambda m: ' '.join(m.group(1).split()) if m else None
+        if not by_system or squash(by_system) != squash(by_button):
+            todo.append('css/styles.css: the two dark-theme colour lists are not identical')
+    known = {v for v, _ in FORM_TYPES}
+    for sp in SERVICE_PAGES:
+        if sp['form_type'] not in known:
+            todo.append(f"{sp['slug']}: form_type \"{sp['form_type']}\" is not one of the quote form's choices")
+    for page, title, desc in META:
+        if len(title) > TITLE_MAX: todo.append(f'{page}: title is {len(title)} characters, limit {TITLE_MAX}')
+        if len(desc) > DESC_MAX: todo.append(f'{page}: description is {len(desc)} characters, limit {DESC_MAX}')
+    return todo
+
+problems = preflight()
+if problems:
+    print('\nNot ready to launch:')
+    for p in problems:
+        print('  -', p)
+    print('See "Before going live" in README.md.')
+    if STRICT:
+        sys.exit(1)

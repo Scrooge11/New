@@ -1,14 +1,26 @@
 [build]
   publish = "site"
 
+# Security headers for every response.
+# The Content-Security-Policy allows only files served from this site. Before adding
+# Google Analytics, Tag Manager, an embedded map or any other third-party script,
+# add its hosts to script-src / connect-src / img-src here, or the browser blocks it.
+# (Netlify's Deploy Preview toolbar is also blocked on previews; production is unaffected.)
 [[headers]]
   for = "/*"
   [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
+    Strict-Transport-Security = "max-age=31536000"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    Cross-Origin-Opener-Policy = "same-origin"
 
+# Only the font files are cached long-term: their names never change. Photos, logos,
+# CSS and JS keep Netlify's default (revalidate on each visit), so a replaced photo
+# or an edited stylesheet shows up immediately instead of a year later.
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
