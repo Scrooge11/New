@@ -50,7 +50,6 @@ ICON = {
  'badge': '<svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>',
  'doc': '<svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg>',
  'stamp': '<svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5"/></svg>',
- 'star': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>',
 }
 
 # ---------------------------------------------------------------------------
@@ -696,10 +695,11 @@ INDEX = head("", f"Licensed electrician and general contractor in {TOWN}. Panel 
         <a class="btn btn-outline-navy" href="{GBP_URL}" rel="noopener">Leave a review</a>
       </div>
     </div>
-    <div class="review-badge" aria-hidden="true">
-      <div class="stars">{ICON['star'] * 5}</div>
-      <p>Google reviews</p>
-    </div>
+    <aside class="promise-card" aria-label="Our guarantee">
+      <p class="label">Our guarantee</p>
+      <p class="promise">{WARRANTY[0].upper() + WARRANTY[1:]}</p>
+      <p>On our work, plus the manufacturer warranty on equipment we install.</p>
+    </aside>
   </div>
 </section>
 

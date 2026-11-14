@@ -412,10 +412,10 @@ strong { font-weight: 600; }
 .service-card h3 a:hover { color: var(--link); }
 .service-card .text-link { margin-top: 0.25rem; }
 .reviews-inner { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 3rem; align-items: center; }
-.review-badge { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 2rem; text-align: center; }
-.review-badge .stars { display: flex; justify-content: center; gap: 0.25rem; color: var(--amber); }
-.review-badge .stars svg { width: 32px; height: 32px; }
-.review-badge p { margin: 0.75rem 0 0; font-family: var(--font-display); font-weight: 700; color: var(--heading); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; }
+.promise-card { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--amber); border-radius: var(--radius); padding: 1.75rem; }
+.promise-card .label { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75rem; font-weight: 700; color: var(--accent); margin: 0 0 0.4rem; }
+.promise-card .promise { font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; line-height: 1.15; color: var(--heading); margin: 0 0 0.5rem; text-wrap: balance; }
+.promise-card p:last-child { margin: 0; color: var(--muted); }
 .btn-outline-navy { background: transparent; color: var(--heading); border-color: var(--heading); }
 .btn-outline-navy:hover { background: var(--btn-solid); border-color: var(--btn-solid); color: #fff; }
 .footer-grid-4 { grid-template-columns: 1.6fr 1fr 1fr 1fr; }
